@@ -1,6 +1,7 @@
 .phpcs.xml.dist
 .travis.yml
 bin/
+node_modules/
 phpunit.xml.dist
 tests/bootstrap.php
 tests/test-sample.php
