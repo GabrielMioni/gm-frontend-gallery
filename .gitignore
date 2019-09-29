@@ -1,0 +1,6 @@
+.phpcs.xml.dist
+.travis.yml
+bin/
+phpunit.xml.dist
+tests/bootstrap.php
+tests/test-sample.php
