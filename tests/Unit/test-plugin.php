@@ -5,9 +5,6 @@
  * @package Gm_Frontend_Gallery
  */
 
-/**
- * Sample test case.
- */
 class PluginTest extends WP_UnitTestCase {
 
     /** @test */
