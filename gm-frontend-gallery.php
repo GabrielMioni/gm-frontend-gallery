@@ -6,12 +6,53 @@ Author: Gabriel Mioni
 Version: 0.1
 Author URI: gabrielmioni.com
 */
-function gmFrontendGalleryActivate() {
-    file_put_contents(dirname(__FILE__) . '/log', print_r('This is the water' . "\n", true), FILE_APPEND);
-}
-register_activation_hook( __FILE__, 'gmFrontendGalleryActivate');
 
-function gmFrontendGalleryDeactivate() {
-    file_put_contents(dirname(__FILE__) . '/log', print_r("And this is the well\n", true), FILE_APPEND);
+add_action( 'init', ['gmFrontendGallery', 'createPostType']);
+register_deactivation_hook(__FILE__, ['gmFrontendGallery', 'deactivate']);
+
+class gmFrontendGallery
+{
+    protected static $postType = 'gallery';
+
+    public static function createPostType()
+    {
+        $postType = self::$postType;
+
+        $labels = [
+            'name' => 'Gallery Images',
+            'singular_name' => 'Gallery'
+        ];
+
+        $args = [
+            'labels' => $labels,
+            'public' => true,
+            'has_archive' => true,
+            'rewrite' => ['slug' => $postType],
+        ];
+
+        register_post_type($postType, $args);
+    }
+
+    public static function activate()
+    {
+
+    }
+
+    public static function deactivate()
+    {
+        if (!self::checkUserAbility()) {
+            return;
+        }
+        unregister_post_type(self::$postType);
+    }
+
+    public static function uninstall()
+    {
+
+    }
+
+    protected static function checkUserAbility()
+    {
+        return current_user_can('activate_plugins');
+    }
 }
-register_deactivation_hook( __FILE__, 'gmFrontendGalleryDeactivate' );
