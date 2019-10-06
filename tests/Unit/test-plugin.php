@@ -5,7 +5,18 @@
  * @package Gm_Frontend_Gallery
  */
 
-class PluginTest extends WP_UnitTestCase {
+class PluginTest extends WP_UnitTestCase
+{
+    /** @test */
+    public function plugin_can_create_gallery_post_type()
+    {
+        $this->assertFalse($this->galleryPostTypeExists());
+
+        $gmFactory = new gmFrontendGallery();
+        $gmFactory::createPostType();
+
+        $this->assertTrue($this->galleryPostTypeExists());
+    }
 
     /** @test */
     public function plugin_can_be_activated()
@@ -24,8 +35,12 @@ class PluginTest extends WP_UnitTestCase {
 
         $this->assertTrue(post_type_exists('gallery'));
     }
-    
 
+    protected function galleryPostTypeExists()
+    {
+        return post_type_exists('gallery');
+    }
+    
     protected function activatePlugins($plugin )
     {
         $activePlugins = get_option( 'active_plugins' );
