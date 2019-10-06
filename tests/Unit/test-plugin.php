@@ -28,14 +28,6 @@ class PluginTest extends WP_UnitTestCase
         $this->assertContains('gm-frontend-gallery/gm-frontend-gallery.php', $activePlugins);
     }
 
-    /** @test */
-    public function gallery_post_type_exists_after_plugin_activation() {
-        $activationRan = $this->activatePlugins('gm-frontend-gallery/gm-frontend-gallery.php');
-        $this->assertTrue($activationRan);
-
-        $this->assertTrue(post_type_exists('gallery'));
-    }
-
     protected function galleryPostTypeExists()
     {
         return post_type_exists('gallery');
