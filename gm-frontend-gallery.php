@@ -7,8 +7,10 @@ Version: 0.1
 Author URI: gabrielmioni.com
 */
 
-add_action( 'init', ['gmFrontendGallery', 'createPostType']);
-register_deactivation_hook(__FILE__, ['gmFrontendGallery', 'deactivate']);
+if (!defined('WP_TEST_RUNNING')) {
+    add_action( 'init', ['gmFrontendGallery', 'createPostType']);
+    register_deactivation_hook(__FILE__, ['gmFrontendGallery', 'deactivate']);
+}
 
 class gmFrontendGallery
 {
