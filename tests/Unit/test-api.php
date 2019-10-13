@@ -4,7 +4,7 @@
 class ApiTest extends WP_UnitTestCase
 {
     protected $server;
-    protected $namespaced_route = 'gm-frontend-gallery/v1';
+    protected $namespaced_route = '/gm-frontend-gallery/v1';
 
     public function setUp()
     {
@@ -20,7 +20,7 @@ class ApiTest extends WP_UnitTestCase
     /** @test */
     public function plugin_can_register_submit_route()
     {
-        $request = new WP_REST_Request('POST', '/gm-frontend-gallery/v1/submit');
+        $request = new WP_REST_Request('POST', $this->namespaced_route . '/submit');
         $response = $this->server->dispatch($request);
         $this->assertEquals(200, $response->get_status());
     }
