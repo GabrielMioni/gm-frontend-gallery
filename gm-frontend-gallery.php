@@ -9,6 +9,7 @@ Author URI: gabrielmioni.com
 
 if (!defined('WP_TEST_RUNNING')) {
     add_action( 'init', ['gmFrontendGallery', 'createPostType']);
+    add_action('rest_api_init', ['gmFrontendGallery', 'registerApiSubmitRoute']);
     register_deactivation_hook(__FILE__, ['gmFrontendGallery', 'deactivate']);
 }
 
@@ -35,6 +36,14 @@ class gmFrontendGallery
         register_post_type($postType, $args);
     }
 
+    public static function registerApiSubmitRoute()
+    {
+        register_rest_route( 'gm-frontend-gallery/v1', '/submit/', [
+            'methods' => 'POST',
+            'callback' => [self::class, 'show_me_what_you_got'],
+        ]);
+    }
+
     public static function activate()
     {
 
@@ -56,5 +65,18 @@ class gmFrontendGallery
     protected static function checkUserAbility()
     {
         return current_user_can('activate_plugins');
+    }
+
+    public static function show_me_what_you_got()
+    {
+        $data = [];
+        $data['one'] = 'This is the water';
+        $data['two'] = 'And this is the well';
+
+        $response = new WP_REST_Response($data);
+        $response->set_status(200);
+
+        return $response;
+
     }
 }
