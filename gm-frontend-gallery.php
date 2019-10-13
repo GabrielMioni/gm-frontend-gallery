@@ -67,8 +67,11 @@ class gmFrontendGallery
         return current_user_can('activate_plugins');
     }
 
-    public static function show_me_what_you_got()
+    public static function show_me_what_you_got(WP_REST_Request $request)
     {
+        $postData = $request->get_param('data');
+        $fileData = $request->get_file_params();
+        
         $data = [];
         $data['one'] = 'This is the water';
         $data['two'] = 'And this is the well';
