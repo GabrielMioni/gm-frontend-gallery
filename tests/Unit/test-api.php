@@ -39,12 +39,22 @@ class ApiTest extends WP_UnitTestCase
             'tmp_name' => 'abc',
         ];
 
-        $request = new WP_REST_Request('POST', $this->namespaced_route . '/submit');
+        $request = $this->createGalleryPostRequest();
         $request->set_header('Content-Type', 'multipart/form-data');
         $request->set_param('data', 'so much fun');
         $request->set_file_params($fileParams);
         $response = $this->server->dispatch($request);
         $this->assertEquals(200, $response->get_status());
+    }
+
+    public function plug_can_create_gallery_post_item()
+    {
+
+    }
+
+    protected function createGalleryPostRequest()
+    {
+        return new WP_REST_Request('POST', $this->namespaced_route . '/submit');
     }
 
     protected function registerPluginSubmitRoute()
