@@ -43,13 +43,16 @@ class ApiTest extends WP_UnitTestCase
         $request->set_header('Content-Type', 'multipart/form-data');
         $request->set_param('data', 'so much fun');
         $request->set_file_params($fileParams);
-        $response = $this->server->dispatch($request);
+//        $response = $this->server->dispatch($request);
+        $response = $this->dispatchRequest($request);
         $this->assertEquals(200, $response->get_status());
     }
 
     public function plug_can_create_gallery_post_item()
     {
+        $request = $this->createGalleryPostRequest();
 
+        $response = $this->server->dispatch($request);
     }
 
     protected function createGalleryPostRequest()
@@ -61,6 +64,11 @@ class ApiTest extends WP_UnitTestCase
     {
         $gmFrontendGallery = new gmFrontendGallery();
         $gmFrontendGallery::registerApiSubmitRoute();
+    }
+
+    protected function dispatchRequest(WP_REST_Request $request)
+    {
+        return $this->server->dispatch($request);
     }
 
     protected function getPluginFilePath()
