@@ -40,8 +40,32 @@ class gmFrontendGallery
     {
         register_rest_route( 'gm-frontend-gallery/v1', '/submit/', [
             'methods' => 'POST',
-            'callback' => [self::class, 'show_me_what_you_got'],
+            'callback' => [self::class, 'processGallerySubmission'],
         ]);
+    }
+
+    public static function processGallerySubmission(WP_REST_Request $request)
+    {
+        $post_title   = $request->get_param('post_title');
+        $post_content = $request->get_param('post_content');
+//        $fileData = $request->get_file_params();
+
+        $postArray = [];
+        $postArray['post_content'] = $post_content;
+        $postArray['post_title']   = $post_title;
+
+        $newPost = wp_insert_post($postArray, true);
+
+        $data = [];
+
+        if (!is_wp_error($newPost)) {
+            $data['postID'] = $newPost;
+        }
+
+        $response = new WP_REST_Response($data);
+        $response->set_status(200);
+
+        return $response;
     }
 
     public static function activate()
@@ -65,21 +89,5 @@ class gmFrontendGallery
     protected static function checkUserAbility()
     {
         return current_user_can('activate_plugins');
-    }
-
-    public static function show_me_what_you_got(WP_REST_Request $request)
-    {
-        $postData = $request->get_param('data');
-        $fileData = $request->get_file_params();
-        
-        $data = [];
-        $data['one'] = 'This is the water';
-        $data['two'] = 'And this is the well';
-
-        $response = new WP_REST_Response($data);
-        $response->set_status(200);
-
-        return $response;
-
     }
 }
