@@ -56,8 +56,8 @@ class ApiTest extends WP_UnitTestCase
 
         $postResponse = $response->get_data();
 
-        $newPost = get_posts($postResponse['postID']);
-        $this->assertTrue(!is_null($newPost));
+        $newPost = get_post($postResponse['postID']);
+        $this->assertNotNull($newPost);
     }
 
     protected function createGalleryPostRequest()
