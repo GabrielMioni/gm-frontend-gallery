@@ -50,6 +50,13 @@ class gmFrontendGallery
         $post_content = $request->get_param('post_content');
 //        $fileData = $request->get_file_params();
 
+        if (is_null($post_title) || is_null($post_content)) {
+            return new WP_Error(
+                'gallery_incomplete',
+                'Gallery submissions must include a title and content',
+                ['status' => 404]);
+        }
+
         $postArray = [];
         $postArray['post_content'] = $post_content;
         $postArray['post_title']   = $post_title;
