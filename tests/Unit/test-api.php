@@ -40,10 +40,9 @@ class ApiTest extends WP_UnitTestCase
         ];
 
         $request = $this->createGalleryPostRequest();
-        $request->set_header('Content-Type', 'multipart/form-data');
+//        $request->set_header('Content-Type', 'multipart/form-data');
         $request->set_param('data', 'so much fun');
         $request->set_file_params($fileParams);
-//        $response = $this->server->dispatch($request);
         $response = $this->dispatchRequest($request);
         $this->assertEquals(200, $response->get_status());
     }
@@ -51,13 +50,15 @@ class ApiTest extends WP_UnitTestCase
     public function plug_can_create_gallery_post_item()
     {
         $request = $this->createGalleryPostRequest();
-
-        $response = $this->server->dispatch($request);
+        $response = $this->dispatchRequest($request);
     }
 
     protected function createGalleryPostRequest()
     {
-        return new WP_REST_Request('POST', $this->namespaced_route . '/submit');
+        $request =  new WP_REST_Request('POST', $this->namespaced_route . '/submit');
+        $request->set_header('Content-Type', 'multipart/form-data');
+
+        return $request;
     }
 
     protected function registerPluginSubmitRoute()
