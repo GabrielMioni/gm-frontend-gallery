@@ -21,6 +21,8 @@ class ApiTest extends WP_UnitTestCase
     public function plugin_can_register_submit_route()
     {
         $request = new WP_REST_Request('POST', $this->namespaced_route . '/submit');
+        $request->set_param('post_title', 'so much fun');
+        $request->set_param('post_content', 'so much content');
         $response = $this->server->dispatch($request);
         $this->assertEquals(200, $response->get_status());
     }
@@ -40,7 +42,8 @@ class ApiTest extends WP_UnitTestCase
         ];
 
         $request = $this->createGalleryPostRequest();
-        $request->set_param('data', 'so much fun');
+        $request->set_param('post_title', 'so much fun');
+        $request->set_param('post_content', 'so much content');
         $request->set_file_params($fileParams);
         $response = $this->dispatchRequest($request);
         $this->assertEquals(200, $response->get_status());
@@ -58,6 +61,20 @@ class ApiTest extends WP_UnitTestCase
 
         $newPost = get_post($postResponse['postID']);
         $this->assertNotNull($newPost);
+    }
+
+    /** @test */
+    public function gallery_submissions_must_include_title_and_content()
+    {
+        $request = $this->createGalleryPostRequest();
+        $request->set_param('post_title', null);
+        $request->set_param('post_content', null);
+        $response = $this->dispatchRequest($request);
+
+        $this->assertEquals(404, $response->get_status());
+
+        $responseData = $response->get_data();
+        $this->assertTrue(isset($responseData['code']));
     }
 
     protected function createGalleryPostRequest()
