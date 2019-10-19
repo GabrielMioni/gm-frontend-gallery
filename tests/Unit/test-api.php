@@ -50,12 +50,13 @@ class ApiTest extends WP_UnitTestCase
     public function plug_can_create_gallery_post_item()
     {
         $request = $this->createGalleryPostRequest();
+        $request->set_param('post_title', 'so much fun');
+        $request->set_param('post_content', 'so much content');
         $response = $this->dispatchRequest($request);
 
         $postResponse = $response->get_data();
-        $postData = json_decode($postResponse, true);
 
-        $newPost = get_posts($postData['ID']);
+        $newPost = get_posts($postResponse['postID']);
         $this->assertTrue(!is_null($newPost));
     }
 
