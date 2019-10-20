@@ -5,9 +5,15 @@ class ApiTest extends WP_UnitTestCase
 {
     protected $server;
     protected $namespaced_route = '/gm-frontend-gallery/v1';
+    protected $default_request_values = [];
 
     public function setUp()
     {
+        $this->default_request_values = [
+            'post_title' => 'So much default title',
+            'post_content' => 'So much default content'
+        ];
+
         parent::setUp();
         /** @var WP_REST_Server $wp_rest_server */
         global $wp_rest_server;
@@ -21,8 +27,7 @@ class ApiTest extends WP_UnitTestCase
     public function plugin_can_register_submit_route()
     {
         $request = new WP_REST_Request('POST', $this->namespaced_route . '/submit');
-        $request->set_param('post_title', 'so much fun');
-        $request->set_param('post_content', 'so much content');
+        $this->requestDataProvider($request);
         $response = $this->server->dispatch($request);
         $this->assertEquals(200, $response->get_status());
     }
@@ -42,8 +47,7 @@ class ApiTest extends WP_UnitTestCase
         ];
 
         $request = $this->createGalleryPostRequest();
-        $request->set_param('post_title', 'so much fun');
-        $request->set_param('post_content', 'so much content');
+        $this->requestDataProvider($request);
         $request->set_file_params($fileParams);
         $response = $this->dispatchRequest($request);
         $this->assertEquals(200, $response->get_status());
@@ -53,8 +57,8 @@ class ApiTest extends WP_UnitTestCase
     public function plug_can_create_gallery_post_item()
     {
         $request = $this->createGalleryPostRequest();
-        $request->set_param('post_title', 'so much fun');
-        $request->set_param('post_content', 'so much content');
+        $this->requestDataProvider($request);
+
         $response = $this->dispatchRequest($request);
 
         $postResponse = $response->get_data();
@@ -67,14 +71,28 @@ class ApiTest extends WP_UnitTestCase
     public function gallery_submissions_must_include_title_and_content()
     {
         $request = $this->createGalleryPostRequest();
-        $request->set_param('post_title', null);
-        $request->set_param('post_content', null);
+        $this->requestDataProvider($request, [
+            'post_title' => null,
+            'post_content' => null
+        ]);
         $response = $this->dispatchRequest($request);
 
         $this->assertEquals(404, $response->get_status());
 
         $responseData = $response->get_data();
         $this->assertTrue(isset($responseData['code']));
+    }
+
+    protected function requestDataProvider(WP_REST_Request $request, array $setRequestValues = [])
+    {
+        if (empty($setRequestValues)) {
+            $setRequestValues = $this->default_request_values;
+        } else {
+            array_replace($this->default_request_values, $setRequestValues);
+        }
+
+        $request->set_param('post_title', $setRequestValues['post_title']);
+        $request->set_param('post_content', $setRequestValues['post_content']);
     }
 
     protected function createGalleryPostRequest()
