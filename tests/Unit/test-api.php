@@ -75,8 +75,8 @@ class ApiTest extends WP_UnitTestCase
             'post_title' => null,
             'post_content' => null
         ]);
+        
         $response = $this->dispatchRequest($request);
-
         $this->assertEquals(404, $response->get_status());
 
         $responseData = $response->get_data();
