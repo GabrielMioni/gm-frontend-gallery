@@ -72,10 +72,10 @@ class ApiTest extends WP_UnitTestCase
     {
         $request = $this->createGalleryPostRequest();
         $this->requestDataProvider($request, [
-            'post_title' => null,
-            'post_content' => null
+            'post_title' => '',
+            'post_content' => ''
         ]);
-        
+
         $response = $this->dispatchRequest($request);
         $this->assertEquals(404, $response->get_status());
 
