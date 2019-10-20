@@ -27,7 +27,7 @@ class ApiTest extends WP_UnitTestCase
     public function plugin_can_register_submit_route()
     {
         $request = new WP_REST_Request('POST', $this->namespaced_route . '/submit');
-        $this->requestDataProvider($request);
+        $this->requestDataProviderParams($request);
         $response = $this->server->dispatch($request);
         $this->assertEquals(200, $response->get_status());
     }
@@ -35,20 +35,9 @@ class ApiTest extends WP_UnitTestCase
     /** @test */
     public function file_data_can_be_submitted_to_api()
     {
-        $path = $this->getPluginFilePath();
-
-        $testImagePath = $path . '/tests/images/conceited-ape.jpg';
-        //example: '/app/wp-content/plugins/gm-frontend-gallery/tests/images/conceited-ape.jpg';
-        $fileParams['file'] = [
-            'file' => file_get_contents($testImagePath),
-            'name' => 'conceited-ape.jpg',
-            'size' => filesize($testImagePath),
-            'tmp_name' => 'abc',
-        ];
-
         $request = $this->createGalleryPostRequest();
-        $this->requestDataProvider($request);
-        $request->set_file_params($fileParams);
+        $this->requestDataProviderParams($request);
+        $this->requestDataProviderImage($request);
         $response = $this->dispatchRequest($request);
         $this->assertEquals(200, $response->get_status());
     }
@@ -57,7 +46,7 @@ class ApiTest extends WP_UnitTestCase
     public function plug_can_create_gallery_post_item()
     {
         $request = $this->createGalleryPostRequest();
-        $this->requestDataProvider($request);
+        $this->requestDataProviderParams($request);
 
         $response = $this->dispatchRequest($request);
 
@@ -71,7 +60,7 @@ class ApiTest extends WP_UnitTestCase
     public function gallery_submissions_must_include_title_and_content()
     {
         $request = $this->createGalleryPostRequest();
-        $this->requestDataProvider($request, [
+        $this->requestDataProviderParams($request, [
             'post_title' => '',
             'post_content' => ''
         ]);
@@ -83,7 +72,7 @@ class ApiTest extends WP_UnitTestCase
         $this->assertTrue(isset($responseData['code']));
     }
 
-    protected function requestDataProvider(WP_REST_Request $request, array $nonDefaultValues = [])
+    protected function requestDataProviderParams(WP_REST_Request $request, array $nonDefaultValues = [])
     {
         $setValues = $this->default_request_values;
 
@@ -93,6 +82,22 @@ class ApiTest extends WP_UnitTestCase
 
         $request->set_param('post_title', $setValues['post_title']);
         $request->set_param('post_content', $setValues['post_content']);
+    }
+
+    protected function requestDataProviderImage(WP_REST_Request $request)
+    {
+        $path = $this->getPluginFilePath();
+
+        $testImagePath = $path . '/tests/images/conceited-ape.jpg';
+        //example: '/app/wp-content/plugins/gm-frontend-gallery/tests/images/conceited-ape.jpg';
+        $fileParams['file'] = [
+            'file' => file_get_contents($testImagePath),
+            'name' => 'conceited-ape.jpg',
+            'size' => filesize($testImagePath),
+            'tmp_name' => 'abc',
+        ];
+
+        $request->set_file_params($fileParams);
     }
 
     protected function createGalleryPostRequest()
