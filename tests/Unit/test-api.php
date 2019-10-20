@@ -83,16 +83,16 @@ class ApiTest extends WP_UnitTestCase
         $this->assertTrue(isset($responseData['code']));
     }
 
-    protected function requestDataProvider(WP_REST_Request $request, array $setRequestValues = [])
+    protected function requestDataProvider(WP_REST_Request $request, array $nonDefaultValues = [])
     {
-        if (empty($setRequestValues)) {
-            $setRequestValues = $this->default_request_values;
-        } else {
-            array_replace($this->default_request_values, $setRequestValues);
+        $setValues = $this->default_request_values;
+
+        if (!empty($nonDefaultValues)) {
+            $setValues = array_replace($setValues, $nonDefaultValues);
         }
 
-        $request->set_param('post_title', $setRequestValues['post_title']);
-        $request->set_param('post_content', $setRequestValues['post_content']);
+        $request->set_param('post_title', $setValues['post_title']);
+        $request->set_param('post_content', $setValues['post_content']);
     }
 
     protected function createGalleryPostRequest()
