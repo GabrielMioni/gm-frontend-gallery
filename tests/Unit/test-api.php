@@ -72,6 +72,23 @@ class ApiTest extends WP_UnitTestCase
         $this->assertTrue(isset($responseData['code']));
     }
 
+    /** @test */
+    public function gallery_submissions_include_image_attachments()
+    {
+        $request = $this->createGalleryPostRequest();
+        $this->requestDataProviderParams($request);
+        $this->requestDataProviderImage($request);
+
+        $response = $this->dispatchRequest($request);
+
+        $postResponse = $response->get_data();
+        $postID = $postResponse['postID'];
+
+        $postThumbnailID = get_post_thumbnail_id($postID);
+
+        $this->assertNotEquals('', $postThumbnailID);
+    }
+
     protected function requestDataProviderParams(WP_REST_Request $request, array $nonDefaultValues = [])
     {
         $setValues = $this->default_request_values;
