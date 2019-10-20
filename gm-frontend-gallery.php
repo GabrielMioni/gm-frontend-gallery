@@ -46,8 +46,8 @@ class gmFrontendGallery
 
     public static function processGallerySubmission(WP_REST_Request $request)
     {
-        $post_title   = $request->get_param('post_title');
-        $post_content = $request->get_param('post_content');
+        $post_title   = self::setRequestParams($request, 'post_title');
+        $post_content = self::setRequestParams($request, 'post_content');
 //        $fileData = $request->get_file_params();
 
         if (is_null($post_title) || is_null($post_content)) {
@@ -91,6 +91,11 @@ class gmFrontendGallery
     public static function uninstall()
     {
 
+    }
+
+    protected static function setRequestParams(WP_REST_Request $request, $key){
+        $parameter = trim($request->get_param($key));
+        return $parameter !== '' ? $parameter : null;
     }
 
     protected static function checkUserAbility()
