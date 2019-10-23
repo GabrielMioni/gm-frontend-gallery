@@ -7,6 +7,10 @@ Version: 0.1
 Author URI: gabrielmioni.com
 */
 
+//require_once( ABSPATH . 'wp-admin/includes/image.php' );
+//require_once( ABSPATH . 'wp-admin/includes/file.php' );
+//require_once( ABSPATH . 'wp-admin/includes/media.php' );
+
 if (!defined('WP_TEST_RUNNING')) {
     add_action( 'init', ['gmFrontendGallery', 'createPostType']);
     add_action('rest_api_init', ['gmFrontendGallery', 'registerApiSubmitRoute']);
@@ -48,7 +52,6 @@ class gmFrontendGallery
     {
         $post_title   = self::setRequestParams($request, 'post_title');
         $post_content = self::setRequestParams($request, 'post_content');
-//        $fileData = $request->get_file_params();
 
         if (is_null($post_title) || is_null($post_content)) {
             return new WP_Error(
@@ -61,13 +64,17 @@ class gmFrontendGallery
         $postArray['post_content'] = $post_content;
         $postArray['post_title']   = $post_title;
 
-        $newPost = wp_insert_post($postArray, true);
+        $newPostId = wp_insert_post($postArray, true);
 
         $data = [];
 
-        if (!is_wp_error($newPost)) {
-            $data['postID'] = $newPost;
+        if (!is_wp_error($newPostId)) {
+            $data['postID'] = $newPostId;
         }
+
+//        $imageAttachment = self::createImageAttachment($request);
+        $imageAttachment = self::createImageAttachment($request, $newPostId);
+//        file_put_contents(dirname(__FILE__) . '/log', print_r($imageAttachment, true), FILE_APPEND);
 
         $response = new WP_REST_Response($data);
         $response->set_status(200);
@@ -93,7 +100,8 @@ class gmFrontendGallery
 
     }
 
-    protected static function setRequestParams(WP_REST_Request $request, $key){
+    protected static function setRequestParams(WP_REST_Request $request, $key)
+    {
         $parameter = trim($request->get_param($key));
         return $parameter !== '' ? $parameter : null;
     }
@@ -101,5 +109,43 @@ class gmFrontendGallery
     protected static function checkUserAbility()
     {
         return current_user_can('activate_plugins');
+    }
+
+    /*protected static function createImageAttachment(WP_REST_Request $request)
+    {
+        $fileParams = $request->get_file_params();
+        $imageData = $fileParams['image'];
+
+        $imageData = wp_upload_bits($imageData['name'], null, $imageData['file']);
+
+        return $imageData;
+    }*/
+    
+    protected static function createImageAttachment(WP_REST_Request $request, $postId)
+    {
+        $fileParams = $request->get_file_params();
+        $imageData = $fileParams['image'];
+
+        $imageData = wp_upload_bits($imageData['name'], null, $imageData['file']);
+
+        $file_path = $imageData['file'];
+        $file_name = basename( $file_path );
+        $file_type = wp_check_filetype( $file_name, null );
+        $attachment_title = sanitize_file_name( pathinfo( $file_name, PATHINFO_FILENAME ) );
+        $wp_upload_dir = wp_upload_dir();
+
+        $post_info = array(
+            'guid'           => $wp_upload_dir['url'] . '/' . $file_name,
+            'post_mime_type' => $file_type['type'],
+            'post_title'     => $attachment_title,
+            'post_content'   => '',
+            'post_status'    => 'inherit',
+        );
+
+        $attach_id = wp_insert_attachment( $post_info, $file_path, $postId );
+        require_once( ABSPATH . 'wp-admin/includes/image.php' );
+        $attach_data = wp_generate_attachment_metadata( $attach_id, $file_path );
+        wp_update_attachment_metadata( $attach_id,  $attach_data );
+        return $attach_id;
     }
 }
