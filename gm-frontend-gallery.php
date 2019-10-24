@@ -48,6 +48,16 @@ class gmFrontendGallery
 
     public static function processGallerySubmission(WP_REST_Request $request)
     {
+        $nonceParam   = self::setRequestParams($request, 'post_nonce');
+        $nonceIsValid = wp_verify_nonce($nonceParam, 'gm_gallery_submit');
+
+        if ($nonceIsValid === false) {
+            return new WP_Error(
+                'invalid_request',
+                'Invalid Nonce',
+                ['status' => 401]);
+        }
+
         $post_title   = self::setRequestParams($request, 'post_title');
         $post_content = self::setRequestParams($request, 'post_content');
 
