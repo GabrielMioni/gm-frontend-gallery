@@ -60,7 +60,7 @@ class ApiTest extends WP_UnitTestCase
     }
 
     /** @test */
-    public function gallery_submissions_must_include_title_and_content()
+    public function gallery_submissions_require_title_and_content()
     {
         $request = $this->createGalleryPostRequest();
         $this->requestDataProviderParams($request, [
