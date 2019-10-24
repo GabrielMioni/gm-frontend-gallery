@@ -7,9 +7,7 @@ Version: 0.1
 Author URI: gabrielmioni.com
 */
 
-//require_once( ABSPATH . 'wp-admin/includes/image.php' );
-//require_once( ABSPATH . 'wp-admin/includes/file.php' );
-//require_once( ABSPATH . 'wp-admin/includes/media.php' );
+require_once(ABSPATH . 'wp-admin/includes/image.php');
 
 if (!defined('WP_TEST_RUNNING')) {
     add_action( 'init', ['gmFrontendGallery', 'createPostType']);
@@ -72,9 +70,7 @@ class gmFrontendGallery
             $data['postID'] = $newPostId;
         }
 
-//        $imageAttachment = self::createImageAttachment($request);
         $imageAttachment = self::createImageAttachment($request, $newPostId);
-//        file_put_contents(dirname(__FILE__) . '/log', print_r($imageAttachment, true), FILE_APPEND);
 
         $response = new WP_REST_Response($data);
         $response->set_status(200);
@@ -110,28 +106,18 @@ class gmFrontendGallery
     {
         return current_user_can('activate_plugins');
     }
-
-    /*protected static function createImageAttachment(WP_REST_Request $request)
-    {
-        $fileParams = $request->get_file_params();
-        $imageData = $fileParams['image'];
-
-        $imageData = wp_upload_bits($imageData['name'], null, $imageData['file']);
-
-        return $imageData;
-    }*/
     
     protected static function createImageAttachment(WP_REST_Request $request, $postId)
     {
         $fileParams = $request->get_file_params();
-        $imageData = $fileParams['image'];
+        $imageData  = $fileParams['image'];
 
-        $imageData = wp_upload_bits($imageData['name'], null, $imageData['file']);
+        $uploadData = wp_upload_bits($imageData['name'], null, $imageData['file']);
 
-        $file_path = $imageData['file'];
-        $file_name = basename( $file_path );
-        $file_type = wp_check_filetype( $file_name, null );
-        $attachment_title = sanitize_file_name( pathinfo( $file_name, PATHINFO_FILENAME ) );
+        $file_path = $uploadData['file'];
+        $file_name = basename($file_path);
+        $file_type = wp_check_filetype($file_name, null);
+        $attachment_title = sanitize_file_name(pathinfo($file_name, PATHINFO_FILENAME));
         $wp_upload_dir = wp_upload_dir();
 
         $post_info = array(
@@ -143,9 +129,10 @@ class gmFrontendGallery
         );
 
         $attach_id = wp_insert_attachment( $post_info, $file_path, $postId );
-        require_once( ABSPATH . 'wp-admin/includes/image.php' );
         $attach_data = wp_generate_attachment_metadata( $attach_id, $file_path );
-        wp_update_attachment_metadata( $attach_id,  $attach_data );
+
+        wp_update_attachment_metadata($attach_id, $attach_data);
+        set_post_thumbnail($postId, $attach_id);
         return $attach_id;
     }
 }
