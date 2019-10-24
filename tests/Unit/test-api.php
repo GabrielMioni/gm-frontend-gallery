@@ -11,7 +11,8 @@ class ApiTest extends WP_UnitTestCase
     {
         $this->default_request_values = [
             'post_title' => 'So much default title',
-            'post_content' => 'So much default content'
+            'post_content' => 'So much default content',
+            'post_nonce' => wp_create_nonce('gm_gallery_submit')
         ];
 
         parent::setUp();
@@ -28,6 +29,7 @@ class ApiTest extends WP_UnitTestCase
     {
         $request = new WP_REST_Request('POST', $this->namespaced_route . '/submit');
         $this->requestDataProviderParams($request);
+        $this->requestDataProviderImage($request);
         $response = $this->server->dispatch($request);
         $this->assertEquals(200, $response->get_status());
     }
@@ -47,6 +49,7 @@ class ApiTest extends WP_UnitTestCase
     {
         $request = $this->createGalleryPostRequest();
         $this->requestDataProviderParams($request);
+        $this->requestDataProviderImage($request);
 
         $response = $this->dispatchRequest($request);
 
@@ -70,6 +73,19 @@ class ApiTest extends WP_UnitTestCase
 
         $responseData = $response->get_data();
         $this->assertTrue(isset($responseData['code']));
+    }
+
+    /** @test */
+    public function gallery_submissions_require_nonce()
+    {
+        $request = $this->createGalleryPostRequest();
+        $this->requestDataProviderParams($request, [
+            'post_nonce' => 'I am an invalid nonce, nice to meet you!'
+        ]);
+        $this->requestDataProviderImage($request);
+
+        $response = $this->dispatchRequest($request);
+        $this->assertEquals(401, $response->get_status());
     }
 
     /** @test */
@@ -99,6 +115,7 @@ class ApiTest extends WP_UnitTestCase
 
         $request->set_param('post_title', $setValues['post_title']);
         $request->set_param('post_content', $setValues['post_content']);
+        $request->set_param('post_nonce', $setValues['post_nonce']);
     }
 
     protected function requestDataProviderImage(WP_REST_Request $request)
