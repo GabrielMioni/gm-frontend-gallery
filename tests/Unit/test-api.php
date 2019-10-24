@@ -107,11 +107,12 @@ class ApiTest extends WP_UnitTestCase
 
         $testImagePath = $path . '/tests/images/conceited-ape.jpg';
         //example: '/app/wp-content/plugins/gm-frontend-gallery/tests/images/conceited-ape.jpg';
-        $fileParams['file'] = [
+        $fileParams['image'] = [
             'file' => file_get_contents($testImagePath),
             'name' => 'conceited-ape.jpg',
             'size' => filesize($testImagePath),
             'tmp_name' => 'abc',
+            'path' => $testImagePath,
         ];
 
         $request->set_file_params($fileParams);
