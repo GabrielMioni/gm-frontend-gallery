@@ -68,6 +68,15 @@ class gmFrontendGallery
                 ['status' => 404]);
         }
 
+        $imageData = self::setRequestImage($request);
+
+        if (is_null($imageData)) {
+            return new WP_Error(
+                'gallery_incomplete',
+                'Gallery submissions must include an image',
+                ['status' => 404]);
+        }
+
         $postArray = [];
         $postArray['post_content'] = $post_content;
         $postArray['post_title']   = $post_title;
@@ -80,7 +89,7 @@ class gmFrontendGallery
             $data['postID'] = $newPostId;
         }
 
-        $imageAttachment = self::createImageAttachment($request, $newPostId);
+        $imageAttachment = self::createImageAttachment($imageData, $newPostId);
 
         $response = new WP_REST_Response($data);
         $response->set_status(200);
@@ -112,16 +121,19 @@ class gmFrontendGallery
         return $parameter !== '' ? $parameter : null;
     }
 
+    protected static function setRequestImage(WP_REST_Request $request)
+    {
+        $fileParams = $request->get_file_params();
+        return isset($fileParams['image']) ? $fileParams['image'] : null;
+    }
+
     protected static function checkUserAbility()
     {
         return current_user_can('activate_plugins');
     }
     
-    protected static function createImageAttachment(WP_REST_Request $request, $postId)
+    protected static function createImageAttachment(array $imageData, $postId)
     {
-        $fileParams = $request->get_file_params();
-        $imageData  = $fileParams['image'];
-
         $uploadData = wp_upload_bits($imageData['name'], null, $imageData['file']);
 
         $file_path = $uploadData['file'];
