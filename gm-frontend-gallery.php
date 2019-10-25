@@ -18,6 +18,7 @@ if (!defined('WP_TEST_RUNNING')) {
 class gmFrontendGallery
 {
     protected static $postType = 'gallery';
+    protected static $galleryIncompleteCode = 'gallery_incomplete';
 
     public static function createPostType()
     {
@@ -52,29 +53,20 @@ class gmFrontendGallery
         $nonceIsValid = wp_verify_nonce($nonceParam, 'gm_gallery_submit');
 
         if ($nonceIsValid === false) {
-            return new WP_Error(
-                'invalid_request',
-                'Invalid Nonce',
-                ['status' => 401]);
+            return self::createWPError('invalid_request', 'Invalid nonce', 401);
         }
 
         $post_title   = self::setRequestParams($request, 'post_title');
         $post_content = self::setRequestParams($request, 'post_content');
 
         if (is_null($post_title) || is_null($post_content)) {
-            return new WP_Error(
-                'gallery_incomplete',
-                'Gallery submissions must include a title and content',
-                ['status' => 404]);
+            return self::createWPError(self::$galleryIncompleteCode, 'Gallery submissions must include a title and content', 404);
         }
 
         $imageData = self::setRequestImage($request);
 
         if (is_null($imageData)) {
-            return new WP_Error(
-                'gallery_incomplete',
-                'Gallery submissions must include an image',
-                ['status' => 404]);
+            return self::createWPError(self::$galleryIncompleteCode, 'Gallery submissions must include an image', 404);
         }
 
         $postArray = [];
@@ -125,6 +117,11 @@ class gmFrontendGallery
     {
         $fileParams = $request->get_file_params();
         return isset($fileParams['image']) ? $fileParams['image'] : null;
+    }
+
+    protected static function createWPError($code, $message, $status)
+    {
+        return new WP_Error($code, $message, ['status' => $status]);
     }
 
     protected static function checkUserAbility()
