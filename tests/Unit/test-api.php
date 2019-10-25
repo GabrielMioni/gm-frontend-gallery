@@ -76,6 +76,16 @@ class ApiTest extends WP_UnitTestCase
     }
 
     /** @test */
+    public function gallery_submissions_require_image()
+    {
+        $request = $this->createGalleryPostRequest();
+        $this->requestDataProviderParams($request);
+
+        $response = $this->dispatchRequest($request);
+        $this->assertEquals(404, $response->get_status());
+    }
+
+    /** @test */
     public function gallery_submissions_require_nonce()
     {
         $request = $this->createGalleryPostRequest();
