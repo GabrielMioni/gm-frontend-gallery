@@ -22,6 +22,7 @@ class ApiTest extends WP_UnitTestCase
         do_action('rest_api_init');
 
         $this->registerPluginSubmitRoute();
+        $this->registerPluginGetRoute();
     }
 
     /** @test */
@@ -115,6 +116,27 @@ class ApiTest extends WP_UnitTestCase
         $this->assertNotEquals('', $postThumbnailID);
     }
 
+    /** @test */
+    public function gallery_posts_can_be_retrieved()
+    {
+        $responses = [];
+
+        while (count($responses) < 5) {
+            $request = $this->createGalleryPostRequest();
+            $this->requestDataProviderParams($request);
+            $this->requestDataProviderImage($request);
+
+            $response = $this->dispatchRequest($request);
+            $responses[] = $response;
+        }
+
+        $request = $this->createGalleryGetRequest();
+        $response = $this->dispatchRequest($request);
+        $responseData = $response->get_data();
+
+        $this->assertEquals(5, count($responseData));
+    }
+
     protected function requestDataProviderParams(WP_REST_Request $request, array $nonDefaultValues = [])
     {
         $setValues = $this->default_request_values;
@@ -153,10 +175,24 @@ class ApiTest extends WP_UnitTestCase
         return $request;
     }
 
+    protected function createGalleryGetRequest()
+    {
+        $request =  new WP_REST_Request('GET', $this->namespaced_route . '/get');
+        $request->set_header('Content-Type', 'application/json');
+
+        return $request;
+    }
+
     protected function registerPluginSubmitRoute()
     {
         $gmFrontendGallery = new gmFrontendGallery();
         $gmFrontendGallery::registerApiSubmitRoute();
+    }
+
+    protected function registerPluginGetRoute()
+    {
+        $gmFrontendGallery = new gmFrontendGallery();
+        $gmFrontendGallery::registerApiGetRoute();
     }
 
     protected function dispatchRequest(WP_REST_Request $request)
