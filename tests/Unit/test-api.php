@@ -21,8 +21,10 @@ class ApiTest extends WP_UnitTestCase
         $this->server = $wp_rest_server = new \WP_REST_Server;
         do_action('rest_api_init');
 
-        $this->registerPluginSubmitRoute();
-        $this->registerPluginGetRoute();
+        $gmFrontendGallery = new gmFrontendGallery();
+        $gmFrontendGallery::createPostType();
+        $gmFrontendGallery::registerApiGetRoute();
+        $gmFrontendGallery::registerApiSubmitRoute();
     }
 
     /** @test */
@@ -119,22 +121,29 @@ class ApiTest extends WP_UnitTestCase
     /** @test */
     public function gallery_posts_can_be_retrieved()
     {
-        $responses = [];
+        $postIDs = [];
+        $responseCount = 5;
 
-        while (count($responses) < 5) {
+        // Create some gallery Posts
+        while (count($postIDs) < $responseCount) {
             $request = $this->createGalleryPostRequest();
             $this->requestDataProviderParams($request);
             $this->requestDataProviderImage($request);
 
             $response = $this->dispatchRequest($request);
-            $responses[] = $response;
+            $postResponse = $response->get_data();
+            $postID = $postResponse['postID'];
+            $postIDs[] = $postID;
         }
 
-        $request = $this->createGalleryGetRequest();
-        $response = $this->dispatchRequest($request);
-        $responseData = $response->get_data();
+        // Retrieve Post data from route
+        $getRequest = $this->createGalleryGetRequest();
+        $getResponse = $this->dispatchRequest($getRequest);
+        $responseData = $getResponse->get_data();
 
-        $this->assertEquals(5, count($responseData));
+        // Show that post data retrieved matches that which was created
+        $newIds = wp_list_pluck($responseData, 'ID');
+        $this->assertEqualSets($newIds, $postIDs);
     }
 
     protected function requestDataProviderParams(WP_REST_Request $request, array $nonDefaultValues = [])
