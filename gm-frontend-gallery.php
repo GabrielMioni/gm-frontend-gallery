@@ -47,6 +47,27 @@ class gmFrontendGallery
         ]);
     }
 
+    public static function registerApiGetRoute()
+    {
+        register_rest_route( 'gm-frontend-gallery/v1', '/get/', [
+            'methods' => 'GET',
+            'callback' => [self::class, 'retrieveGalleryPosts'],
+        ]);
+    }
+
+    public static function retrieveGalleryPosts(WP_REST_Request $request)
+    {
+        $args = [
+            'post_type'=> self::$postType,
+            'order'    => 'ASC',
+            'post_status' => 'draft',
+        ];
+
+        $posts = get_posts($args);
+
+        return $posts;
+    }
+
     public static function processGallerySubmission(WP_REST_Request $request)
     {
         $nonceParam   = self::setRequestParams($request, 'post_nonce');
@@ -72,6 +93,7 @@ class gmFrontendGallery
         $postArray = [];
         $postArray['post_content'] = $post_content;
         $postArray['post_title']   = $post_title;
+        $postArray['post_type']    = self::$postType;
 
         $newPostId = wp_insert_post($postArray, true);
 
