@@ -18,6 +18,7 @@ if (!defined('WP_TEST_RUNNING')) {
 class gmFrontendGallery
 {
     protected static $postType = 'gallery';
+    protected static $postStatus = 'published';
     protected static $galleryIncompleteCode = 'gallery_incomplete';
 
     public static function createPostType()
@@ -60,7 +61,7 @@ class gmFrontendGallery
         $args = [
             'post_type'=> self::$postType,
             'order'    => 'ASC',
-            'post_status' => 'draft',
+            'post_status' => self::$postStatus,
         ];
 
         $posts = get_posts($args);
@@ -124,6 +125,7 @@ class gmFrontendGallery
         $postArray['post_content'] = $post_content;
         $postArray['post_title']   = $post_title;
         $postArray['post_type']    = self::$postType;
+        $postArray['post_status']  = self::$postStatus;
 
         $newPostId = wp_insert_post($postArray, true);
 
