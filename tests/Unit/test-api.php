@@ -143,6 +143,8 @@ class ApiTest extends WP_UnitTestCase
 
         // Show that post data retrieved matches that which was created
         $newIds = wp_list_pluck($responseData, 'ID');
+        sort($newIds);
+        sort($postIDs);
         $this->assertEqualSets($newIds, $postIDs);
     }
 
