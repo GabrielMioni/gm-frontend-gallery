@@ -65,7 +65,33 @@ class gmFrontendGallery
 
         $posts = get_posts($args);
 
-        return $posts;
+        $data = [];
+        $sizes = ['thumbnail', 'medium', 'full'];
+
+        foreach ($posts as $post) {
+
+            $images = [];
+
+            foreach ($sizes as $size) {
+                $postImage = wp_get_attachment_image_url(get_post_thumbnail_id($post->ID), $size);
+                $postImage = $postImage !== false ? $postImage : null;
+                $images[$size] = $postImage;
+            }
+
+            $postVariables = self::multiPluck($post, [
+                'ID',
+                'post_author',
+                'post_date',
+                'post_content',
+                'post_title'
+            ]);
+
+            $postVariables['images'] = $images;
+
+            $data[] = $postVariables;
+        }
+
+        return $data;
     }
 
     public static function processGallerySubmission(WP_REST_Request $request)
@@ -175,5 +201,19 @@ class gmFrontendGallery
         wp_update_attachment_metadata($attach_id, $attach_data);
         set_post_thumbnail($postId, $attach_id);
         return $attach_id;
+    }
+
+    protected static function multiPluck($input, array $indexKeys)
+    {
+        $out = [];
+
+        if (is_object($input))
+            $input = get_object_vars($input);
+
+        foreach ($indexKeys as $indexKey) {
+            $out[$indexKey] = $input[$indexKey];
+        }
+
+        return $out;
     }
 }
