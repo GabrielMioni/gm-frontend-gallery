@@ -27,6 +27,20 @@ class ApiTest extends WP_UnitTestCase
         $gmFrontendGallery::registerApiSubmitRoute();
     }
 
+    public function tearDown()
+    {
+        parent::tearDown();
+
+        $uploadDirectory = wp_get_upload_dir();
+        $uploadDirectory = $uploadDirectory['basedir'];
+
+        $dirs = glob($uploadDirectory . '/*');
+
+        foreach ($dirs as $dir) {
+            system('rm -rf ' . escapeshellarg($dir), $retval);
+        }
+    }
+
     /** @test */
     public function plugin_can_register_submit_route()
     {
