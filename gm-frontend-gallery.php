@@ -74,8 +74,7 @@ class gmFrontendGallery
 
             foreach ($sizes as $size) {
                 $postImage = wp_get_attachment_image_url(get_post_thumbnail_id($post->ID), $size);
-                $postImage = $postImage !== false ? $postImage : null;
-                $images[$size] = $postImage;
+                $images[$size] = $postImage !== false ? $postImage : null;
             }
 
             $postVariables = self::multiPluck($post, [
