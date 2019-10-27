@@ -66,16 +66,8 @@ class gmFrontendGallery
         $posts = get_posts($args);
 
         $data = [];
-        $sizes = ['thumbnail', 'medium', 'full'];
 
         foreach ($posts as $post) {
-
-            $images = [];
-
-            foreach ($sizes as $size) {
-                $postImage = wp_get_attachment_image_url(get_post_thumbnail_id($post->ID), $size);
-                $images[$size] = $postImage !== false ? $postImage : null;
-            }
 
             $postVariables = self::multiPluck($post, [
                 'ID',
@@ -85,12 +77,25 @@ class gmFrontendGallery
                 'post_title'
             ]);
 
-            $postVariables['images'] = $images;
+            $postVariables['images'] = self::retrieveGalleryImages($post);
 
             $data[] = $postVariables;
         }
 
         return $data;
+    }
+
+    protected static function retrieveGalleryImages(WP_Post $post)
+    {
+        $images = [];
+        $sizes = ['thumbnail', 'medium', 'full'];
+
+        foreach ($sizes as $size) {
+            $postImage = wp_get_attachment_image_url(get_post_thumbnail_id($post->ID), $size);
+            $images[$size] = $postImage !== false ? $postImage : null;
+        }
+
+        return $images;
     }
 
     public static function processGallerySubmission(WP_REST_Request $request)
