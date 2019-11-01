@@ -165,11 +165,12 @@ class ApiTest extends WP_UnitTestCase
     /** @test */
     public function gallery_posts_can_be_paginated()
     {
-        $postArray = [];
-        $postArray['post_content'] = 'I am some words for the Content';
-        $postArray['post_title']   = 'I am a default title';
-        $postArray['post_type']    = 'gallery';
-        $postArray['post_status']  = 'published';
+        $postArray = [
+            'post_content' => 'I am some words for the Content',
+            'post_title'   => 'I am a default title',
+            'post_type'    => 'gallery',
+            'post_status'  => 'published'
+        ];
 
         $postIds = $this->factory->post->create_many(31, $postArray);
 
