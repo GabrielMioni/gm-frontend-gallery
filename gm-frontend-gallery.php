@@ -73,8 +73,9 @@ class gmFrontendGallery
         $isPaged = !is_null($postsPerPage) && !(is_null($numberPosts));
 
         $args = [
-            'post_type'=> self::$postType,
-            'order'    => 'ASC',
+            'post_type' => self::$postType,
+            'order'     => 'ASC',
+            'orderby'   => 'ID',
             'post_status' => self::$postStatus,
             'offset' => $isPaged === true ? $numberPosts * ($postsPerPage - 1) : -1,
             'numberposts'=> $isPaged === true ? $numberPosts : -1,
