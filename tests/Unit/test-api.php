@@ -167,26 +167,26 @@ class ApiTest extends WP_UnitTestCase
     {
         $postArray = [];
         $postArray['post_content'] = 'I am some words for the Content';
-        $postArray['post_title']   = 'default title';
+        $postArray['post_title']   = 'I am a default title';
         $postArray['post_type']    = 'gallery';
         $postArray['post_status']  = 'published';
 
         $postIds = $this->factory->post->create_many(31, $postArray);
 
-        $results = 10;
         $pages = range(1, 4);
+        $resultsPerPage = 10;
 
-        $chunkedIds = array_chunk($postIds, $results);
-        
-        $responses = [];
+        $chunkedIDs = array_chunk($postIds, $resultsPerPage);
+
+        $paginatedIDs = [];
 
         foreach ($pages as $page) {
-            $getRequest = $this->createGalleryGetRequest($page, $results);
+            $getRequest = $this->createGalleryGetRequest($page, $resultsPerPage);
             $getResponse = $this->dispatchRequest($getRequest);
-            $responses[] = $getResponse->get_data();
+            $paginatedIDs[] = wp_list_pluck($getResponse->get_data(), 'ID');
         }
 
-        var_dump($responses);
+        $this->assertEqualSets($chunkedIDs, $paginatedIDs);
     }
 
     protected function requestDataProviderParams(WP_REST_Request $request, array $nonDefaultValues = [])
