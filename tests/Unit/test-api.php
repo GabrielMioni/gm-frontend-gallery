@@ -162,6 +162,33 @@ class ApiTest extends WP_UnitTestCase
         $this->assertEqualSets($newIds, $postIDs);
     }
 
+    /** @test */
+    public function gallery_posts_can_be_paginated()
+    {
+        $postArray = [];
+        $postArray['post_content'] = 'I am some words for the Content';
+        $postArray['post_title']   = 'default title';
+        $postArray['post_type']    = 'gallery';
+        $postArray['post_status']  = 'published';
+
+        $postIds = $this->factory->post->create_many(31, $postArray);
+
+        $results = 10;
+        $pages = range(1, 4);
+
+        $chunkedIds = array_chunk($postIds, $results);
+        
+        $responses = [];
+
+        foreach ($pages as $page) {
+            $getRequest = $this->createGalleryGetRequest($page, $results);
+            $getResponse = $this->dispatchRequest($getRequest);
+            $responses[] = $getResponse->get_data();
+        }
+
+        var_dump($responses);
+    }
+
     protected function requestDataProviderParams(WP_REST_Request $request, array $nonDefaultValues = [])
     {
         $setValues = $this->default_request_values;
@@ -200,9 +227,16 @@ class ApiTest extends WP_UnitTestCase
         return $request;
     }
 
-    protected function createGalleryGetRequest()
+    protected function createGalleryGetRequest($page = null, $results = null)
     {
-        $request =  new WP_REST_Request('GET', $this->namespaced_route . '/get');
+        $route = $this->namespaced_route . '/get';
+
+        if (!is_null($page) && !is_null($results)) {
+            $route .= "/$page/$results";
+        }
+
+//        $request =  new WP_REST_Request('GET', $this->namespaced_route . '/get');
+        $request =  new WP_REST_Request('GET', $route);
         $request->set_header('Content-Type', 'application/json');
 
         return $request;
