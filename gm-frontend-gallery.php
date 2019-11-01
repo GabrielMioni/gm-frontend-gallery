@@ -54,14 +54,30 @@ class gmFrontendGallery
             'methods' => 'GET',
             'callback' => [self::class, 'retrieveGalleryPosts'],
         ]);
+
+        register_rest_route( 'gm-frontend-gallery/v1', '/get/(?P<page>\d+)/(?P<results>\d+)', [
+            'methods' => WP_REST_Server::READABLE,
+            'callback' => [self::class, 'retrieveGalleryPosts'],
+            'args' => [
+                'page',
+                'results'
+            ],
+        ]);
     }
 
     public static function retrieveGalleryPosts(WP_REST_Request $request)
     {
+        $postsPerPage = self::setRequestParams($request, 'page');
+        $numberPosts  = self::setRequestParams($request, 'results');
+
+        $isPaged = !is_null($postsPerPage) && !(is_null($numberPosts));
+
         $args = [
             'post_type'=> self::$postType,
             'order'    => 'ASC',
             'post_status' => self::$postStatus,
+            'offset' => $isPaged === true ? $numberPosts * ($postsPerPage - 1) : -1,
+            'numberposts'=> $isPaged === true ? $numberPosts : -1,
         ];
 
         $posts = get_posts($args);
