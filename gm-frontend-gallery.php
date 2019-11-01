@@ -21,6 +21,17 @@ class gmFrontendGallery
     protected static $postStatus = 'published';
     protected static $galleryIncompleteCode = 'gallery_incomplete';
 
+    protected static $orderByOptions = [
+        'author',
+        'title',
+        'date'
+    ];
+
+    protected static $orderDirectionOptions = [
+        'asc',
+        'desc'
+    ];
+
     public static function createPostType()
     {
         $postType = self::$postType;
@@ -55,12 +66,22 @@ class gmFrontendGallery
             'callback' => [self::class, 'retrieveGalleryPosts'],
         ]);
 
-        register_rest_route( 'gm-frontend-gallery/v1', '/get/(?P<page>\d+)/(?P<results>\d+)', [
+        register_rest_route( 'gm-frontend-gallery/v1', '/get/(?:/(?P<order>[a-zA-Z\s]+))?', [
+            'methods' => 'GET',
+            'callback' => [self::class, 'retrieveGalleryPosts'],
+            'args' => [
+                'order',
+            ],
+        ]);
+
+//        register_rest_route( 'gm-frontend-gallery/v1', '/get/(?P<page>\d+)/(?P<results>\d+)/(?P<order>[a-zA-Z\s]+)', [
+        register_rest_route( 'gm-frontend-gallery/v1', '/get/(?P<page>\d+)/(?P<results>\d+)(?:/(?P<order>[a-zA-Z\s]+))?', [
             'methods' => WP_REST_Server::READABLE,
             'callback' => [self::class, 'retrieveGalleryPosts'],
             'args' => [
                 'page',
-                'results'
+                'results',
+                'order'
             ],
         ]);
     }
@@ -69,13 +90,14 @@ class gmFrontendGallery
     {
         $postsPerPage = self::setRequestParams($request, 'page');
         $numberPosts  = self::setRequestParams($request, 'results');
+        $orderData    = self::setOrderData($request);
 
         $isPaged = !is_null($postsPerPage) && !(is_null($numberPosts));
 
         $args = [
             'post_type' => self::$postType,
-            'order'     => 'ASC',
-            'orderby'   => 'ID',
+            'order'     => $orderData['order'],
+            'orderby'   => $orderData['orderby'],
             'post_status' => self::$postStatus,
             'offset' => $isPaged === true ? $numberPosts * ($postsPerPage - 1) : -1,
             'numberposts'=> $isPaged === true ? $numberPosts : -1,
@@ -114,6 +136,17 @@ class gmFrontendGallery
         }
 
         return $images;
+    }
+
+    protected static function setOrderData(WP_REST_Request $request) {
+        $order        = self::setRequestParams($request, 'order');
+        $orderData    = explode(':', $order);
+        $orderData[1] = isset($orderData[1]) ? $orderData[1] : null;
+
+        return [
+            'order'   => in_array($orderData[0], self::$orderByOptions) ? $orderData[0] : 'ID',
+            'orderby' => in_array($orderData[1], self::$orderDirectionOptions) ? strtoupper($orderData[1]) : 'DESC'
+        ];
     }
 
     public static function processGallerySubmission(WP_REST_Request $request)
