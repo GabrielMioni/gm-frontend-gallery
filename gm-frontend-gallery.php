@@ -144,8 +144,8 @@ class gmFrontendGallery
         $orderData[1] = isset($orderData[1]) ? $orderData[1] : null;
 
         return [
-            'order'   => in_array($orderData[0], self::$orderByOptions) ? $orderData[0] : 'ID',
-            'orderby' => in_array($orderData[1], self::$orderDirectionOptions) ? strtoupper($orderData[1]) : 'DESC'
+            'orderby' => in_array($orderData[0], self::$orderByOptions) ? $orderData[0] : 'ID',
+            'order'   => in_array($orderData[1], self::$orderDirectionOptions) ? strtoupper($orderData[1]) : 'ASC'
         ];
     }
 
