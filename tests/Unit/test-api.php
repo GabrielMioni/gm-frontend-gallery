@@ -191,7 +191,7 @@ class ApiTest extends WP_UnitTestCase
     }
 
     /** @test */
-    public function gallery_pagination_by_date()
+    public function gallery_pagination_can_be_ordered_both_asc_and_desc()
     {
         $postArray = [
             'post_content' => 'I am some words for the Content',
@@ -221,26 +221,38 @@ class ApiTest extends WP_UnitTestCase
         $resultsPerPage = 10;
 
         $paginatedResponsesAscending  = [];
-//        $paginatedResponsesDescending = [];
+        $paginatedResponsesDescending = [];
 
         foreach ($pages as $page) {
-            $responseData = $this->sendGetRequest($page, $resultsPerPage, 'date', 'asc');
+            $ascendingResponseData  = $this->sendGetRequest($page, $resultsPerPage, 'date', 'asc');
+            $descendingResponseData = $this->sendGetRequest($page, $resultsPerPage, 'date', 'desc');
 
             $outAscending = [];
+            $outDescending = [];
 
-            foreach ($responseData as $responseDatum) {
+            foreach ($ascendingResponseData as $ascendingResponseDatum) {
                 $outAscending[] = [
-                    'ID' => $responseDatum['ID'],
-                    'post_date' => $responseDatum['post_date']
+                    'ID' => $ascendingResponseDatum['ID'],
+                    'post_date' => $ascendingResponseDatum['post_date']
+                ];
+            }
+
+            foreach ($descendingResponseData as $descendingResponseDatum) {
+                $outDescending[] = [
+                    'ID' => $descendingResponseDatum['ID'],
+                    'post_date' => $descendingResponseDatum['post_date']
                 ];
             }
 
             $paginatedResponsesAscending[] = $outAscending;
+            $paginatedResponsesDescending[] = $outDescending;
         }
 
-        $chunkedResponse = array_chunk($responses, $resultsPerPage);
+        $chunkedResponseAscending  = array_chunk($responses, $resultsPerPage);
+        $chunkedResponseDescending = array_chunk(array_reverse($responses), $resultsPerPage);
 
-        $this->assertEqualSets($chunkedResponse, $paginatedResponsesAscending);
+        $this->assertEqualSets($chunkedResponseAscending, $paginatedResponsesAscending);
+        $this->assertEqualSets($chunkedResponseDescending, $paginatedResponsesDescending);
     }
 
     protected function sendGetRequest($page = null, $resultsPerPage = null, $orderBy = null, $order = null)
