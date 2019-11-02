@@ -204,7 +204,6 @@ class ApiTest extends WP_UnitTestCase
         $responses = [];
 
         for ($t = 0 ; $t < 31 ; ++$t) {
-
             $args = $postArray;
             $postDate = date('Y-m-d H:i:s', $start + ($t * 1000));
             $args['post_date'] = $postDate;
@@ -237,12 +236,9 @@ class ApiTest extends WP_UnitTestCase
             $outAscending = [];
             $outDescending = [];
 
-            foreach ($ascendingResponseData as $ascendingResponseDatum) {
-                $outAscending[] = getIdAndPostDate($ascendingResponseDatum);
-            }
-
-            foreach ($descendingResponseData as $descendingResponseDatum) {
-                $outDescending[] = getIdAndPostDate($descendingResponseDatum);
+            foreach ($ascendingResponseData as $key => $ascendingResponseDatum) {
+                $outAscending[]  = getIdAndPostDate($ascendingResponseDatum);
+                $outDescending[] = getIdAndPostDate($descendingResponseData[$key]);
             }
 
             $paginatedResponsesAscending[] = $outAscending;
