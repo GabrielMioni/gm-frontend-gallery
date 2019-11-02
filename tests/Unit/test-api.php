@@ -190,6 +190,60 @@ class ApiTest extends WP_UnitTestCase
         $this->assertEqualSets($chunkedIDs, $paginatedIDs);
     }
 
+    /** @test */
+    public function gallery_pagination_by_date()
+    {
+        $postArray = [
+            'post_content' => 'I am some words for the Content',
+            'post_title'   => 'I am a default title',
+            'post_type'    => 'gallery',
+            'post_status'  => 'published'
+        ];
+
+        $start = time();
+        $responses = [];
+
+        for ($t = 0 ; $t < 31 ; ++$t) {
+
+            $args = $postArray;
+            $postDate = date('Y-m-d H:i:s', $start + ($t * 1000));
+            $args['post_date'] = $postDate;
+
+            $postId = $this->factory->post->create($args);
+
+            $responses[] = [
+                'ID' => $postId,
+                'post_date' => $postDate,
+            ];
+        }
+
+        $pages = range(1, 4);
+        $resultsPerPage = 10;
+
+        $paginatedResponses = [];
+
+        foreach ($pages as $page) {
+            $getRequest  = $this->createGalleryGetRequest($page, $resultsPerPage, 'date', 'asc');
+            $getResponse = $this->dispatchRequest($getRequest);
+            $responseData = $getResponse->get_data();
+
+            $out = [];
+
+            foreach ($responseData as $responseDatum) {
+                $out[] = [
+                    'ID' => $responseDatum['ID'],
+                    'post_date' => $responseDatum['post_date']
+                ];
+            }
+
+            $paginatedResponses[] = $out;
+        }
+
+        $chunkedResponse = array_chunk($responses, $resultsPerPage);
+
+        $this->assertEqualSets($chunkedResponse, $paginatedResponses);
+    }
+
     protected function requestDataProviderParams(WP_REST_Request $request, array $nonDefaultValues = [])
     {
         $setValues = $this->default_request_values;
