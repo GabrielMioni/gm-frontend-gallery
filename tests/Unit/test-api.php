@@ -223,6 +223,13 @@ class ApiTest extends WP_UnitTestCase
         $paginatedResponsesAscending  = [];
         $paginatedResponsesDescending = [];
 
+        function getIdAndPostDate(array $inputArray) {
+            return [
+                'ID' => $inputArray['ID'],
+                'post_date' => $inputArray['post_date'],
+            ];
+        }
+
         foreach ($pages as $page) {
             $ascendingResponseData  = $this->sendGetRequest($page, $resultsPerPage, 'date', 'asc');
             $descendingResponseData = $this->sendGetRequest($page, $resultsPerPage, 'date', 'desc');
@@ -231,17 +238,11 @@ class ApiTest extends WP_UnitTestCase
             $outDescending = [];
 
             foreach ($ascendingResponseData as $ascendingResponseDatum) {
-                $outAscending[] = [
-                    'ID' => $ascendingResponseDatum['ID'],
-                    'post_date' => $ascendingResponseDatum['post_date']
-                ];
+                $outAscending[] = getIdAndPostDate($ascendingResponseDatum);
             }
 
             foreach ($descendingResponseData as $descendingResponseDatum) {
-                $outDescending[] = [
-                    'ID' => $descendingResponseDatum['ID'],
-                    'post_date' => $descendingResponseDatum['post_date']
-                ];
+                $outDescending[] = getIdAndPostDate($descendingResponseDatum);
             }
 
             $paginatedResponsesAscending[] = $outAscending;
