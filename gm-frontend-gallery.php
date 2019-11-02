@@ -61,31 +61,34 @@ class gmFrontendGallery
 
     public static function registerApiGetRoute()
     {
-        register_rest_route( 'gm-frontend-gallery/v1', '/get/', [
-            'methods' => 'GET',
-            'callback' => [self::class, 'retrieveGalleryPosts'],
-        ]);
+        register_rest_route( 'gm-frontend-gallery/v1', '/get/',
+            self::setGetRouteArray([])
+        );
 
-        register_rest_route( 'gm-frontend-gallery/v1', '/get/(?P<orderBy>[a-zA-Z\s]+)/(?P<order>[a-zA-Z\s]+)', [
-            'methods' => 'GET',
-            'callback' => [self::class, 'retrieveGalleryPosts'],
-            'args' => [
+        register_rest_route( 'gm-frontend-gallery/v1', '/get/(?P<orderBy>[a-zA-Z\s]+)/(?P<order>[a-zA-Z\s]+)',
+            self::setGetRouteArray([
                 'orderBy',
                 'order',
-            ],
-        ]);
+            ])
+        );
 
-//        register_rest_route( 'gm-frontend-gallery/v1', '/get/(?P<page>\d+)/(?P<results>\d+)/(?P<order>[a-zA-Z\s]+)', [
-        register_rest_route( 'gm-frontend-gallery/v1', '/get/(?P<page>\d+)/(?P<results>\d+)(?:/(?P<orderBy>[a-zA-Z\s]+))?(?:/(?P<order>[a-zA-Z\s]+))?', [
-            'methods' => WP_REST_Server::READABLE,
-            'callback' => [self::class, 'retrieveGalleryPosts'],
-            'args' => [
+        register_rest_route( 'gm-frontend-gallery/v1', '/get/(?P<page>\d+)/(?P<results>\d+)(?:/(?P<orderBy>[a-zA-Z\s]+))?(?:/(?P<order>[a-zA-Z\s]+))?',
+            self::setGetRouteArray([
                 'page',
                 'results',
                 'orderBy',
                 'order'
-            ],
-        ]);
+            ])
+        );
+    }
+
+    protected static function setGetRouteArray(array $args)
+    {
+        return [
+            'methods' => WP_REST_Server::READABLE,
+            'callback' => [self::class, 'retrieveGalleryPosts'],
+            'args' => $args
+        ];
     }
 
     public static function retrieveGalleryPosts(WP_REST_Request $request)
