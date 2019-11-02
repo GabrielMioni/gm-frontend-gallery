@@ -66,21 +66,23 @@ class gmFrontendGallery
             'callback' => [self::class, 'retrieveGalleryPosts'],
         ]);
 
-        register_rest_route( 'gm-frontend-gallery/v1', '/get/(?:/(?P<order>[a-zA-Z\s]+))?', [
+        register_rest_route( 'gm-frontend-gallery/v1', '/get/(?P<orderBy>[a-zA-Z\s]+)/(?P<order>[a-zA-Z\s]+)', [
             'methods' => 'GET',
             'callback' => [self::class, 'retrieveGalleryPosts'],
             'args' => [
+                'orderBy',
                 'order',
             ],
         ]);
 
 //        register_rest_route( 'gm-frontend-gallery/v1', '/get/(?P<page>\d+)/(?P<results>\d+)/(?P<order>[a-zA-Z\s]+)', [
-        register_rest_route( 'gm-frontend-gallery/v1', '/get/(?P<page>\d+)/(?P<results>\d+)(?:/(?P<order>[a-zA-Z\s]+))?', [
+        register_rest_route( 'gm-frontend-gallery/v1', '/get/(?P<page>\d+)/(?P<results>\d+)(?:/(?P<orderBy>[a-zA-Z\s]+))?(?:/(?P<order>[a-zA-Z\s]+))?', [
             'methods' => WP_REST_Server::READABLE,
             'callback' => [self::class, 'retrieveGalleryPosts'],
             'args' => [
                 'page',
                 'results',
+                'orderBy',
                 'order'
             ],
         ]);
@@ -139,13 +141,12 @@ class gmFrontendGallery
     }
 
     protected static function setOrderData(WP_REST_Request $request) {
+        $orderBy      = self::setRequestParams($request, 'orderBy');
         $order        = self::setRequestParams($request, 'order');
-        $orderData    = explode(':', $order);
-        $orderData[1] = isset($orderData[1]) ? $orderData[1] : null;
 
         return [
-            'orderby' => in_array($orderData[0], self::$orderByOptions) ? $orderData[0] : 'ID',
-            'order'   => in_array($orderData[1], self::$orderDirectionOptions) ? strtoupper($orderData[1]) : 'ASC'
+            'orderby' => in_array($orderBy, self::$orderByOptions) ? $orderBy : 'ID',
+            'order'   => in_array($order, self::$orderDirectionOptions) ? strtoupper($order) : 'ASC'
         ];
     }
 
