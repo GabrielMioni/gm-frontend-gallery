@@ -182,7 +182,7 @@ class ApiTest extends WP_UnitTestCase
         $paginatedIDs = [];
 
         foreach ($pages as $page) {
-            $getRequest = $this->createGalleryGetRequest($page, $resultsPerPage);
+            $getRequest  = $this->createGalleryGetRequest($page, $resultsPerPage, 'id', 'asc');
             $getResponse = $this->dispatchRequest($getRequest);
             $paginatedIDs[] = wp_list_pluck($getResponse->get_data(), 'ID');
         }
@@ -228,16 +228,22 @@ class ApiTest extends WP_UnitTestCase
         return $request;
     }
 
-    protected function createGalleryGetRequest($page = null, $results = null)
+    protected function createGalleryGetRequest($page = null, $results = null, $orderBy = null, $order = null)
     {
         $route = $this->namespaced_route . '/get';
 
         if (!is_null($page) && !is_null($results)) {
             $route .= "/$page/$results";
         }
+        if (!is_null($orderBy)) {
+            $route .= "/$orderBy";
+        }
+        if (!is_null($orderBy) && !is_null($order)) {
+            $route .= "/$order";
+        }
 
 //        $request =  new WP_REST_Request('GET', $this->namespaced_route . '/get');
-        $request =  new WP_REST_Request('GET', $route);
+        $request = new WP_REST_Request('GET', $route);
         $request->set_header('Content-Type', 'application/json');
 
         return $request;
