@@ -220,28 +220,34 @@ class ApiTest extends WP_UnitTestCase
         $pages = range(1, 4);
         $resultsPerPage = 10;
 
-        $paginatedResponses = [];
+        $paginatedResponsesAscending  = [];
+//        $paginatedResponsesDescending = [];
 
         foreach ($pages as $page) {
-            $getRequest  = $this->createGalleryGetRequest($page, $resultsPerPage, 'date', 'asc');
-            $getResponse = $this->dispatchRequest($getRequest);
-            $responseData = $getResponse->get_data();
+            $responseData = $this->sendGetRequest($page, $resultsPerPage, 'date', 'asc');
 
-            $out = [];
+            $outAscending = [];
 
             foreach ($responseData as $responseDatum) {
-                $out[] = [
+                $outAscending[] = [
                     'ID' => $responseDatum['ID'],
                     'post_date' => $responseDatum['post_date']
                 ];
             }
 
-            $paginatedResponses[] = $out;
+            $paginatedResponsesAscending[] = $outAscending;
         }
 
         $chunkedResponse = array_chunk($responses, $resultsPerPage);
 
-        $this->assertEqualSets($chunkedResponse, $paginatedResponses);
+        $this->assertEqualSets($chunkedResponse, $paginatedResponsesAscending);
+    }
+
+    protected function sendGetRequest($page = null, $resultsPerPage = null, $orderBy = null, $order = null)
+    {
+        $getRequest  = $this->createGalleryGetRequest($page, $resultsPerPage, $orderBy, $order);
+        $getResponse = $this->dispatchRequest($getRequest);
+        return $getResponse->get_data();
     }
 
     protected function requestDataProviderParams(WP_REST_Request $request, array $nonDefaultValues = [])
