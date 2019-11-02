@@ -61,8 +61,11 @@ class gmFrontendGallery
 
     public static function registerApiGetRoute()
     {
-        register_rest_route( 'gm-frontend-gallery/v1', '/get/',
-            self::setGetRouteArray([])
+        register_rest_route( 'gm-frontend-gallery/v1', '/get(?:/(?P<orderBy>[a-zA-Z\s]+))?(?:/(?P<order>[a-zA-Z\s]+))?',
+            self::setGetRouteArray([
+                'orderBy',
+                'order'
+            ])
         );
 
         register_rest_route( 'gm-frontend-gallery/v1', '/get/(?P<orderBy>[a-zA-Z\s]+)/(?P<order>[a-zA-Z\s]+)',
