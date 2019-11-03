@@ -20,6 +20,7 @@ class gmFrontendGallery
     protected static $postType = 'gallery';
     protected static $postStatus = 'published';
     protected static $galleryIncompleteCode = 'gallery_incomplete';
+    protected static $galleryAttachmentMetaKey = 'gm_gallery_attachment';
 
     protected static $orderByOptions = [
         'author',
@@ -138,9 +139,21 @@ class gmFrontendGallery
         $images = [];
         $sizes = ['thumbnail', 'medium', 'full'];
 
-        foreach ($sizes as $size) {
-            $postImage = wp_get_attachment_image_url(get_post_thumbnail_id($post->ID), $size);
-            $images[$size] = $postImage !== false ? $postImage : null;
+        $galleryAttachmentMeta = get_post_meta($post->ID, self::$galleryAttachmentMetaKey, false);
+        
+        foreach ($galleryAttachmentMeta as $metaItem) {
+            $attachId = $metaItem['attach_id'];
+            $sizedImages = [];
+
+            foreach ($sizes as $size) {
+                $postImage = wp_get_attachment_image_url($attachId, $size);
+                $sizedImages[$size] = $postImage !== false ? $postImage : null;
+            }
+
+            $images[] = [
+                'attach_id' => $attachId,
+                'sized_images' => $sizedImages,
+            ];
         }
 
         return $images;
@@ -250,19 +263,25 @@ class gmFrontendGallery
         $attachment_title = sanitize_file_name(pathinfo($file_name, PATHINFO_FILENAME));
         $wp_upload_dir = wp_upload_dir();
 
-        $post_info = array(
+        $post_info = [
             'guid'           => $wp_upload_dir['url'] . '/' . $file_name,
             'post_mime_type' => $file_type['type'],
             'post_title'     => $attachment_title,
             'post_content'   => '',
             'post_status'    => 'inherit',
-        );
+        ];
 
         $attach_id = wp_insert_attachment( $post_info, $file_path, $postId );
         $attach_data = wp_generate_attachment_metadata( $attach_id, $file_path );
 
         wp_update_attachment_metadata($attach_id, $attach_data);
-        set_post_thumbnail($postId, $attach_id);
+
+        $attachmentMetaData = [
+            'attach_id' => $attach_id,
+        ];
+
+        add_post_meta($postId, self::$galleryAttachmentMetaKey, $attachmentMetaData, false);
+
         return $attach_id;
     }
 
