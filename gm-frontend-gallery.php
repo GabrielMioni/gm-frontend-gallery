@@ -185,7 +185,9 @@ class gmFrontendGallery
             return self::createWPError(self::$galleryIncompleteCode, 'Gallery submissions must include a title and content', 404);
         }
 
-        $imageData = self::setRequestImage($request);
+        //$imageData = self::setRequestImage($request);
+
+        $imageData = $request->get_file_params();
 
         if (is_null($imageData)) {
             return self::createWPError(self::$galleryIncompleteCode, 'Gallery submissions must include an image', 404);
@@ -205,7 +207,7 @@ class gmFrontendGallery
             $data['postID'] = $newPostId;
         }
 
-        $imageAttachment = self::createImageAttachment($imageData, $newPostId);
+        $attachmentIds = self::processImageAttachments($imageData, $newPostId);
 
         $response = new WP_REST_Response($data);
         $response->set_status(200);
@@ -240,6 +242,7 @@ class gmFrontendGallery
     protected static function setRequestImage(WP_REST_Request $request)
     {
         $fileParams = $request->get_file_params();
+        file_put_contents(dirname(__FILE__) . '/log', print_r($fileParams, true), FILE_APPEND);
         return isset($fileParams['image']) ? $fileParams['image'] : null;
     }
 
@@ -251,6 +254,18 @@ class gmFrontendGallery
     protected static function checkUserAbility()
     {
         return current_user_can('activate_plugins');
+    }
+
+    protected static function processImageAttachments(array $imageData, $postId)
+    {
+        $attachmentIds = [];
+
+        foreach ($imageData as $imageDatum) {
+            $attachmentIds[] = self::createImageAttachment($imageDatum, $postId);
+        }
+
+        return $attachmentIds;
+
     }
     
     protected static function createImageAttachment(array $imageData, $postId)
