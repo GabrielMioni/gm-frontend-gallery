@@ -62,6 +62,51 @@ class ApiTest extends WP_UnitTestCase
     }
 
     /** @test */
+    public function gallery_posts_can_be_submitted_with_multiple_images()
+    {
+        // /app/wp-content/plugins/gm-frontend-gallery
+        $path = $this->getPluginFilePath();
+        $path .= '/tests/images';
+        $files = preg_grep('/^([^.])/', scandir($path));
+
+        $request =$this->createGalleryPostRequest();
+        $this->requestDataProviderParams($request);
+
+        $fileUploads = [];
+
+        foreach ($files as $file) {
+            $setFile = $path . '/' . $file;
+
+            $fileUploads[] = [
+                'file' => file_get_contents($setFile),
+                'name' => basename($setFile),
+                'size' => filesize($setFile),
+                'tmp_name' => 'abc',
+                'path' => $setFile,
+            ];
+        }
+
+        $request->set_file_params($fileUploads);
+        $response = $this->dispatchRequest($request);
+        $postResponse = $response->get_data();
+
+        $postID = $postResponse['postID'];
+        $postAttachmentData = get_post_meta($postID, 'gm_gallery_attachment', false);
+
+        $postImages = [];
+
+        foreach ($postAttachmentData as $postAttachmentDatum) {
+            $attachId = $postAttachmentDatum['attach_id'];
+            $postImages[] = basename(wp_get_attachment_image_url($attachId, 'full'));
+        }
+
+        sort($postImages);
+        sort($files);
+
+        $this->assertEqualSets($postImages, $files);
+    }
+
+    /** @test */
     public function plug_can_create_gallery_post_item()
     {
         $request = $this->createGalleryPostRequest();
