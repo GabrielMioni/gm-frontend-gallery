@@ -127,9 +127,10 @@ class ApiTest extends WP_UnitTestCase
         $postResponse = $response->get_data();
         $postID = $postResponse['postID'];
 
-        $postThumbnailID = get_post_thumbnail_id($postID);
+        $postAttachmentData = get_post_meta($postID, 'gm_gallery_attachment', false);
+        $postAttachmentId = $postAttachmentData[0]['attach_id'];
 
-        $this->assertNotEquals('', $postThumbnailID);
+        $this->assertNotEquals('', $postAttachmentId);
     }
 
     /** @test */
