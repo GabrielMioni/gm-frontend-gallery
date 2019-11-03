@@ -185,11 +185,9 @@ class gmFrontendGallery
             return self::createWPError(self::$galleryIncompleteCode, 'Gallery submissions must include a title and content', 404);
         }
 
-        //$imageData = self::setRequestImage($request);
-
         $imageData = $request->get_file_params();
 
-        if (is_null($imageData)) {
+        if (empty($imageData)) {
             return self::createWPError(self::$galleryIncompleteCode, 'Gallery submissions must include an image', 404);
         }
 
