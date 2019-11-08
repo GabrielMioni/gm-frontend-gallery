@@ -5,14 +5,21 @@ class ApiTest extends WP_UnitTestCase
 {
     protected $server;
     protected $namespaced_route = '/gm-frontend-gallery/v1';
-    protected $default_request_values = [];
+    protected $default_post_values = [];
+    protected $default_user_values = [];
 
     public function setUp()
     {
-        $this->default_request_values = [
+        $this->default_post_values = [
             'post_title' => 'So much default title',
             'post_content' => 'So much default content',
             'post_nonce' => wp_create_nonce('gm_gallery_submit')
+        ];
+
+        $this->default_user_values = [
+            'user_login' => 'Jangles',
+            'user_pass'  => 'password',
+            'user_email' => 'jangles@jangler.net',
         ];
 
         parent::setUp();
@@ -298,6 +305,33 @@ class ApiTest extends WP_UnitTestCase
         $this->assertEqualSets($chunkedResponseDescending, $paginatedResponsesDescending);
     }
 
+    /** @test */
+    public function gallery_posts_and_images_can_be_deleted()
+    {
+        $userId = $this->factory()->user->create($this->default_user_values);
+
+        $user = get_user_by( 'id', $userId);
+        $user->set_role('administrator');
+
+        $userIsLoggedIn = wp_set_current_user($user->ID, $user->user_login);
+
+        $postId = $this->factory()->post->create($this->default_post_values);
+
+        $postBeforeDelete = get_post($postId);
+
+        $this->assertNotNull($postBeforeDelete);
+
+        $request =  new WP_REST_Request('DELETE', $this->namespaced_route . '/' . $postBeforeDelete->ID);
+        $request->set_header('Content-Type', 'application/json');
+        $response = $this->dispatchRequest($request);
+
+        $postAfterDelete = get_post($postId);
+
+        $this->assertNull($postAfterDelete);
+        $this->assertEquals(200, $response->get_status());
+
+    }
+
     protected function sendGetRequest($page = null, $resultsPerPage = null, $orderBy = null, $order = null)
     {
         $getRequest  = $this->createGalleryGetRequest($page, $resultsPerPage, $orderBy, $order);
@@ -307,7 +341,7 @@ class ApiTest extends WP_UnitTestCase
 
     protected function requestDataProviderParams(WP_REST_Request $request, array $nonDefaultValues = [])
     {
-        $setValues = $this->default_request_values;
+        $setValues = $this->default_post_values;
 
         if (!empty($nonDefaultValues)) {
             $setValues = array_replace($setValues, $nonDefaultValues);
