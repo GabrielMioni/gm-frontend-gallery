@@ -321,15 +321,14 @@ class ApiTest extends WP_UnitTestCase
 
         $this->assertNotNull($postBeforeDelete);
 
-        $request =  new WP_REST_Request('DELETE', $this->namespaced_route . '/' . $postBeforeDelete->ID);
+        $request =  new WP_REST_Request('DELETE', $this->namespaced_route . '/' . $postId);
         $request->set_header('Content-Type', 'application/json');
         $response = $this->dispatchRequest($request);
 
-        $postAfterDelete = get_post($postId);
+        $postStatus = get_post_status($postId);
 
-        $this->assertNull($postAfterDelete);
+        $this->assertEquals('trash', $postStatus);
         $this->assertEquals(200, $response->get_status());
-
     }
 
     protected function sendGetRequest($page = null, $resultsPerPage = null, $orderBy = null, $order = null)

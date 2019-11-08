@@ -67,9 +67,12 @@ class gmFrontendGallery
 
     public static function deleteGalleryPostById(WP_REST_Request $request)
     {
-        $postId      = self::setRequestParams($request, 'postId');
+        $postId = self::setRequestParams($request, 'postId');
 
-        //file_put_contents(dirname(__FILE__) . '/log', print_r('PostId: ' . $postId . "\n", true), FILE_APPEND);
+        $deletePost = wp_delete_post($postId);
+
+//        file_put_contents(dirname(__FILE__) . '/log', print_r($deletePost, true), FILE_APPEND);
+        file_put_contents(dirname(__FILE__) . '/log', print_r($deletePost->post_status, true), FILE_APPEND);
     }
 
     public static function registerApiGetRoute()
