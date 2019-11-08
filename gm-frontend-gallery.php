@@ -58,6 +58,18 @@ class gmFrontendGallery
             'methods' => 'POST',
             'callback' => [self::class, 'processGallerySubmission'],
         ]);
+
+        register_rest_route( 'gm-frontend-gallery/v1', '/(?P<postId>\d+)/', [
+            'methods' => 'DELETE',
+            'callback' => [self::class, 'deleteGalleryPostById'],
+        ]);
+    }
+
+    public static function deleteGalleryPostById(WP_REST_Request $request)
+    {
+        $postId      = self::setRequestParams($request, 'postId');
+
+        //file_put_contents(dirname(__FILE__) . '/log', print_r('PostId: ' . $postId . "\n", true), FILE_APPEND);
     }
 
     public static function registerApiGetRoute()
