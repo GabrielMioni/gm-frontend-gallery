@@ -268,7 +268,7 @@ class ApiTest extends WP_UnitTestCase
         $paginatedResponsesAscending  = [];
         $paginatedResponsesDescending = [];
 
-        function getIdAndPostDate(array $inputArray) {
+        function pluckIdAndPostDate(array $inputArray) {
             return [
                 'ID' => $inputArray['ID'],
                 'post_date' => $inputArray['post_date'],
@@ -283,8 +283,8 @@ class ApiTest extends WP_UnitTestCase
             $outDescending = [];
 
             foreach ($ascendingResponseData as $key => $ascendingResponseDatum) {
-                $outAscending[]  = getIdAndPostDate($ascendingResponseDatum);
-                $outDescending[] = getIdAndPostDate($descendingResponseData[$key]);
+                $outAscending[]  = pluckIdAndPostDate($ascendingResponseDatum);
+                $outDescending[] = pluckIdAndPostDate($descendingResponseData[$key]);
             }
 
             $paginatedResponsesAscending[] = $outAscending;
