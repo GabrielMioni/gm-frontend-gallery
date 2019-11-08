@@ -71,33 +71,11 @@ class ApiTest extends WP_UnitTestCase
     /** @test */
     public function gallery_posts_can_be_submitted_with_multiple_images()
     {
-        // /app/wp-content/plugins/gm-frontend-gallery
-        $path = $this->getPluginFilePath();
-        $path .= '/tests/images';
-        $files = preg_grep('/^([^.])/', scandir($path));
+        $postResponse  = $this->createGalleryPostWithMultipleImages();
+        $responseFiles = $postResponse['files'];
+        $responseData  = $postResponse['response']->get_data();
 
-        $request =$this->createGalleryPostRequest();
-        $this->requestDataProviderParams($request);
-
-        $fileUploads = [];
-
-        foreach ($files as $file) {
-            $setFile = $path . '/' . $file;
-
-            $fileUploads[] = [
-                'file' => file_get_contents($setFile),
-                'name' => basename($setFile),
-                'size' => filesize($setFile),
-                'tmp_name' => 'abc',
-                'path' => $setFile,
-            ];
-        }
-
-        $request->set_file_params($fileUploads);
-        $response = $this->dispatchRequest($request);
-        $postResponse = $response->get_data();
-
-        $postID = $postResponse['postID'];
+        $postID = $responseData['postID'];
         $postAttachmentData = get_post_meta($postID, 'gm_gallery_attachment', false);
 
         $postImages = [];
@@ -108,9 +86,9 @@ class ApiTest extends WP_UnitTestCase
         }
 
         sort($postImages);
-        sort($files);
+        sort($responseFiles);
 
-        $this->assertEqualSets($postImages, $files);
+        $this->assertEqualSets($postImages, $responseFiles);
     }
 
     /** @test */
@@ -329,6 +307,38 @@ class ApiTest extends WP_UnitTestCase
 
         $this->assertEquals('trash', $postStatus);
         $this->assertEquals(200, $response->get_status());
+    }
+
+    protected function createGalleryPostWithMultipleImages()
+    {
+        $path = $this->getPluginFilePath();
+        $path .= '/tests/images';
+        $files = preg_grep('/^([^.])/', scandir($path));
+
+        $request =$this->createGalleryPostRequest();
+        $this->requestDataProviderParams($request);
+
+        $fileUploads = [];
+
+        foreach ($files as $file) {
+            $setFile = $path . '/' . $file;
+
+            $fileUploads[] = [
+                'file' => file_get_contents($setFile),
+                'name' => basename($setFile),
+                'size' => filesize($setFile),
+                'tmp_name' => 'abc',
+                'path' => $setFile,
+            ];
+        }
+
+        $request->set_file_params($fileUploads);
+        $response = $this->dispatchRequest($request);
+
+        return [
+            'files' => $files,
+            'response' => $response,
+        ];
     }
 
     protected function sendGetRequest($page = null, $resultsPerPage = null, $orderBy = null, $order = null)
