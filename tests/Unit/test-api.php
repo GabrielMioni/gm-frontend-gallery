@@ -49,16 +49,6 @@ class ApiTest extends WP_UnitTestCase
     }
 
     /** @test */
-    public function plugin_can_register_submit_route()
-    {
-        $request = new WP_REST_Request('POST', $this->namespaced_route . '/submit');
-        $this->requestDataProviderParams($request);
-        $this->requestDataProviderImage($request);
-        $response = $this->server->dispatch($request);
-        $this->assertEquals(200, $response->get_status());
-    }
-
-    /** @test */
     public function file_data_can_be_submitted_to_api()
     {
         $request = $this->createGalleryPostRequest();
