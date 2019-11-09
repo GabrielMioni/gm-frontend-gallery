@@ -68,11 +68,28 @@ class gmFrontendGallery
     public static function deleteGalleryPostById(WP_REST_Request $request)
     {
         $postId = self::setRequestParams($request, 'postId');
+        $userCanDeletePost = current_user_can('delete_posts', $postId);
 
-        $deletePost = wp_delete_post($postId);
+        if (!$userCanDeletePost) {
+            return self::createWPError('invalid_request', 'Invalid user capabilities', 403);
+        }
 
-//        file_put_contents(dirname(__FILE__) . '/log', print_r($deletePost, true), FILE_APPEND);
-        file_put_contents(dirname(__FILE__) . '/log', print_r($deletePost->post_status, true), FILE_APPEND);
+        $trashedPost = wp_trash_post($postId);
+
+        if (!is_a($trashedPost, 'WP_POST')) {
+            return self::createWPError('invalid_request', 'Post was not moved to trash', 500);
+        }
+
+        $postStatus = get_post_status($postId);
+
+        $data = [];
+        $data['postID'] = $postId;
+        $data['postStatus'] = $postStatus;
+
+        $response = new WP_REST_Response($data);
+        $response->set_status(200);
+
+        return $response;
     }
 
     public static function registerApiGetRoute()
@@ -255,7 +272,7 @@ class gmFrontendGallery
     protected static function setRequestImage(WP_REST_Request $request)
     {
         $fileParams = $request->get_file_params();
-        file_put_contents(dirname(__FILE__) . '/log', print_r($fileParams, true), FILE_APPEND);
+//        file_put_contents(dirname(__FILE__) . '/log', print_r($fileParams, true), FILE_APPEND);
         return isset($fileParams['image']) ? $fileParams['image'] : null;
     }
 
