@@ -4,6 +4,7 @@ class GalleryUnitTestCase extends WP_UnitTestCase
 {
     protected $server;
     protected $namespaced_route = '/gm-frontend-gallery/v1';
+    protected $image_sizes = ['thumbnail', 'medium', 'full'];
     protected $default_post_values = [];
     protected $default_user_values = [];
 
