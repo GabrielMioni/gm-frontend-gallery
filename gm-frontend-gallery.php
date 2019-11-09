@@ -71,7 +71,7 @@ class gmFrontendGallery
     public static function deleteGalleryPostById(WP_REST_Request $request)
     {
         $postId = self::setRequestParams($request, 'postId');
-        $permanent = self::setRequestParams($request, 'permanent');
+        $permanent = (int) self::setRequestParams($request, 'permanent') === 1;
 
         $userCanDeletePost = current_user_can('delete_posts', $postId);
 
