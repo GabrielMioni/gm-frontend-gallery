@@ -9,7 +9,7 @@ class GalleryUnitTestCase extends WP_UnitTestCase
 
     public function setUp()
     {
-        $this->setGalleryTestTraitDefaults();
+        $this->setGalleryTestDefaults();
         parent::setUp();
         /** @var WP_REST_Server $wp_rest_server */
         global $wp_rest_server;
@@ -36,7 +36,7 @@ class GalleryUnitTestCase extends WP_UnitTestCase
         }
     }
 
-    public function setGalleryTestTraitDefaults()
+    public function setGalleryTestDefaults()
     {
         $this->default_post_values = [
             'post_title' => 'So much default title',
