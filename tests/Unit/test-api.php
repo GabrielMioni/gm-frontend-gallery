@@ -284,29 +284,28 @@ class ApiTest extends WP_UnitTestCase
     }
 
     /** @test */
-    public function gallery_posts_and_images_can_be_deleted()
+    public function gallery_posts_and_images_can_be_trashed()
     {
-        $userId = $this->factory()->user->create($this->default_user_values);
+        $postResponse  = $this->createGalleryPostWithMultipleImages();
+        $responseFiles = $postResponse['files'];
+        $responseData  = $postResponse['response']->get_data();
 
+        $postId = $responseData['postID'];
+        $statusBeforeDelete = get_post_status($postId);
+
+        $this->assertNotFalse($statusBeforeDelete);
+
+        $userId = $this->factory()->user->create($this->default_user_values);
         $user = get_user_by( 'id', $userId);
         $user->set_role('administrator');
+        wp_set_current_user($user->ID, $user->user_login);
 
-        $userIsLoggedIn = wp_set_current_user($user->ID, $user->user_login);
-
-        $postId = $this->factory()->post->create($this->default_post_values);
-
-        $postBeforeDelete = get_post($postId);
-
-        $this->assertNotNull($postBeforeDelete);
-
-        $request =  new WP_REST_Request('DELETE', $this->namespaced_route . '/' . $postId);
+        $request = new WP_REST_Request('DELETE', $this->namespaced_route . '/' . $postId);
         $request->set_header('Content-Type', 'application/json');
         $response = $this->dispatchRequest($request);
 
-        $postStatus = get_post_status($postId);
-
-        $this->assertEquals('trash', $postStatus);
         $this->assertEquals(200, $response->get_status());
+        $this->assertEquals('trash', get_post_status($postId));
     }
 
     protected function createGalleryPostWithMultipleImages()
@@ -315,8 +314,10 @@ class ApiTest extends WP_UnitTestCase
         $path .= '/tests/images';
         $files = preg_grep('/^([^.])/', scandir($path));
 
-        $request =$this->createGalleryPostRequest();
-        $this->requestDataProviderParams($request);
+        $request = $this->createGalleryPostRequest();
+        $this->requestDataProviderParams($request, [
+            'post_nonce' => wp_create_nonce('gm_gallery_submit'),
+        ]);
 
         $fileUploads = [];
 
