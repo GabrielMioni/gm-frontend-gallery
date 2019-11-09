@@ -1,11 +1,40 @@
 <?php
 
-trait galleryTestTrait
+class GalleryUnitTestCase extends WP_UnitTestCase
 {
     protected $server;
     protected $namespaced_route = '/gm-frontend-gallery/v1';
     protected $default_post_values = [];
     protected $default_user_values = [];
+
+    public function setUp()
+    {
+        $this->setGalleryTestTraitDefaults();
+        parent::setUp();
+        /** @var WP_REST_Server $wp_rest_server */
+        global $wp_rest_server;
+        $this->server = $wp_rest_server = new \WP_REST_Server;
+        do_action('rest_api_init');
+
+        $gmFrontendGallery = new gmFrontendGallery();
+        $gmFrontendGallery::createPostType();
+        $gmFrontendGallery::registerApiGetRoute();
+        $gmFrontendGallery::registerApiSubmitRoute();
+    }
+
+    public function tearDown()
+    {
+        parent::tearDown();
+
+        $uploadDirectory = wp_get_upload_dir();
+        $uploadDirectory = $uploadDirectory['basedir'];
+
+        $dirs = glob($uploadDirectory . '/*');
+
+        foreach ($dirs as $dir) {
+            system('rm -rf ' . escapeshellarg($dir), $retval);
+        }
+    }
 
     public function setGalleryTestTraitDefaults()
     {
