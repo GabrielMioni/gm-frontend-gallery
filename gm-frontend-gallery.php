@@ -58,16 +58,21 @@ class gmFrontendGallery
             'methods' => 'POST',
             'callback' => [self::class, 'processGallerySubmission'],
         ]);
-
-        register_rest_route( 'gm-frontend-gallery/v1', '/(?P<postId>\d+)/', [
+        register_rest_route( 'gm-frontend-gallery/v1', '(?P<postId>\d+)?(?:/(?P<permanent>\d+))?', [
             'methods' => 'DELETE',
             'callback' => [self::class, 'deleteGalleryPostById'],
+            'args' => [
+                'postId',
+                'permanent'
+            ]
         ]);
     }
 
     public static function deleteGalleryPostById(WP_REST_Request $request)
     {
         $postId = self::setRequestParams($request, 'postId');
+        $permanent = self::setRequestParams($request, 'permanent');
+
         $userCanDeletePost = current_user_can('delete_posts', $postId);
 
         if (!$userCanDeletePost) {
