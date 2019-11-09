@@ -5,7 +5,7 @@
  * @package Gm_Frontend_Gallery
  */
 
-class PluginTest extends WP_UnitTestCase
+class RegisterPluginTest extends WP_UnitTestCase
 {
     /** @test */
     public function plugin_can_create_gallery_post_type()
