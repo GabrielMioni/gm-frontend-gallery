@@ -1,7 +1,19 @@
 <?php
 
-class getGalleryDataTest extends WP_UnitTestCase
+require_once dirname(dirname(__FILE__)) . '/GalleryUnitTestCase.php';
+
+class GetGalleryDataTest extends GalleryUnitTestCase
 {
+    public function setUp()
+    {
+        parent::setUp();
+    }
+
+    public function tearDown()
+    {
+        parent::tearDown();
+    }
+
     /** @test */
     public function gallery_posts_can_be_retrieved()
     {
