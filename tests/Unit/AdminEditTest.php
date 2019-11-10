@@ -56,24 +56,14 @@ class AdminEditTest extends GalleryUnitTestCase
     {
         $setupData = $this->setup_for_trash_and_delete_tests();
         $postId = $setupData['postId'];
-        $files  = $setupData['files'];
 
-        $attachmentMetaDataBeforeDelete = get_post_meta($postId, 'gm_gallery_attachment', false);
-
-        $imageAttachmentPaths = [];
-
-        foreach ($attachmentMetaDataBeforeDelete as $attachmentBeforeDeleteDatum) {
-            $attachId = $attachmentBeforeDeleteDatum['attach_id'];
-            $imagePath = get_attached_file($attachId);
-            $imageAttachmentPaths[] = $imagePath;
-
-            $this->assertTrue(file_exists($imagePath));
-        }
+        $imageAttachmentPaths = gmFrontendGallery::getAttachmentImagePaths($postId);
 
         $statusBeforeDelete = get_post_status($postId);
 
         $this->assertNotFalse($statusBeforeDelete);
 
+        // Permanently delete the post and all associated attachments.
         $request = new WP_REST_Request('DELETE', $this->namespaced_route . '/' . $postId . '/1');
         $request->set_header('Content-Type', 'application/json');
         $response = $this->dispatchRequest($request);
@@ -81,6 +71,7 @@ class AdminEditTest extends GalleryUnitTestCase
         $this->assertEquals(200, $response->get_status());
         $this->assertFalse(get_post_status($postId));
 
+        // Check attachments have been removed
         foreach ($imageAttachmentPaths as $imagePath) {
             $this->assertFalse(file_exists($imagePath));
         }

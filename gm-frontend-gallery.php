@@ -107,7 +107,7 @@ class gmFrontendGallery
         return $response;
     }
 
-    protected static function getAttachmentImagePaths($postId)
+    public static function getAttachmentImagePaths($postId)
     {
         $galleryAttachmentMeta = get_post_meta($postId, 'gm_gallery_attachment', false);
         $uploadDir = wp_upload_dir();
