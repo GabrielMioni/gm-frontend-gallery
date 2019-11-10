@@ -79,10 +79,20 @@ class gmFrontendGallery
             return self::createWPError('invalid_request', 'Invalid user capabilities', 403);
         }
 
-        $trashedPost = wp_trash_post($postId);
+        $attachmentPaths = $permanent === true ? self::getAttachmentImagePaths($postId) : [];
 
-        if (!is_a($trashedPost, 'WP_POST')) {
-            return self::createWPError('invalid_request', 'Post was not moved to trash', 500);
+        $deletedPost = $permanent !== true ? wp_trash_post($postId) : wp_delete_post($postId, true);
+
+        if (!$permanent && !is_a($deletedPost, 'WP_POST')) {
+            $action = $permanent === true ? 'deleted' : 'trashed';
+            return self::createWPError('invalid_request', 'Post was not ' . $action, 500);
+        }
+
+        foreach ($attachmentPaths as $path) {
+            if (!file_exists($path) || !$permanent) {
+                continue;
+            }
+            unlink($path);
         }
 
         $postStatus = get_post_status($postId);
@@ -95,6 +105,33 @@ class gmFrontendGallery
         $response->set_status(200);
 
         return $response;
+    }
+
+    protected static function getAttachmentImagePaths($postId)
+    {
+        $galleryAttachmentMeta = get_post_meta($postId, 'gm_gallery_attachment', false);
+        $uploadDir = wp_upload_dir();
+        $uploadBaseDir = $uploadDir['basedir'];
+
+        $imageAttachmentPaths = [];
+
+        foreach ($galleryAttachmentMeta as $meta) {
+            $attachId = $meta['attach_id'];
+            $attachmentMetaData = wp_get_attachment_metadata($attachId);
+
+            $origFilePath = $uploadBaseDir . '/' . $attachmentMetaData['file'];
+            $fileBasename = basename($origFilePath);
+
+            $imageRootPath = str_replace($fileBasename, '', $origFilePath);
+
+            $imageAttachmentPaths[] = $origFilePath;
+
+            foreach ($attachmentMetaData['sizes'] as $size) {
+                $imageAttachmentPaths[] = $imageRootPath . $size['file'];
+            }
+        }
+
+        return $imageAttachmentPaths;
     }
 
     public static function registerApiGetRoute()
