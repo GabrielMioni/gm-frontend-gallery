@@ -58,7 +58,7 @@ class GalleryUnitTestCase extends WP_UnitTestCase
         $path .= '/tests/images';
         $files = preg_grep('/^([^.])/', scandir($path));
 
-        $request = $this->createGalleryRequestSubmitGallery();
+        $request = $this->createRequestSubmitGallery();
         $this->requestDataProviderParams($request, [
             'post_nonce' => wp_create_nonce('gm_gallery_submit'),
         ]);
@@ -123,7 +123,7 @@ class GalleryUnitTestCase extends WP_UnitTestCase
         $request->set_file_params($fileParams);
     }
 
-    protected function createGalleryRequestSubmitGallery()
+    protected function createRequestSubmitGallery()
     {
         $request =  new WP_REST_Request('POST', $this->namespaced_route . '/submit');
         $request->set_header('Content-Type', 'multipart/form-data');
