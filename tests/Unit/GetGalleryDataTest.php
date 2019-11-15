@@ -138,28 +138,27 @@ class GetGalleryDataTest extends GalleryUnitTestCase
     public function individual_gallery_post_data_can_be_retrieved()
     {
         $data = $this->createGalleryPostWithMultipleImages();
-        $response = $data['response'];
-        $responseData = $response->get_data();
+        $createGalleryPostResponse = $data['response'];
+        $newGalleryPostData = $createGalleryPostResponse->get_data();
 
-        $postID = $responseData['postID'];
+        $postID = $newGalleryPostData['postID'];
+        $newPost = get_post($postID);
 
         $request = new WP_REST_Request('GET', $this->namespaced_route . '/' . $postID);
         $request->set_header('Content-Type', 'application/json');
-        $response = $this->dispatchRequest($request);
+        $getGalleryPostResponse = $this->dispatchRequest($request);
+        $getGalleryPostResponseData = $getGalleryPostResponse->get_data();
 
-        $responseData = $response->get_data();
-        $newPost = get_post($postID);
-
-        $this->assertEquals(200, $response->get_status());
-        $this->assertEquals($newPost->ID, $responseData['ID']);
-        $this->assertEquals($newPost->post_title, $responseData['post_title']);
-        $this->assertEquals($newPost->post_content, $responseData['post_content']);
+        $this->assertEquals(200, $getGalleryPostResponse->get_status());
+        $this->assertEquals($newPost->ID, $getGalleryPostResponseData['ID']);
+        $this->assertEquals($newPost->post_title, $getGalleryPostResponseData['post_title']);
+        $this->assertEquals($newPost->post_content, $getGalleryPostResponseData['post_content']);
 
         $meta = get_post_meta($postID, 'gm_gallery_attachment', false);
 
         foreach ($meta as $key => $metaData) {
             $metaAttachId = $metaData['attach_id'];
-            $responseAttachId = $responseData['images'][$key]['attach_id'];
+            $responseAttachId = $getGalleryPostResponseData['images'][$key]['attach_id'];
 
             $this->assertEquals($responseAttachId, $metaAttachId);
         }
