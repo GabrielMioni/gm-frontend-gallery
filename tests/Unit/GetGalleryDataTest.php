@@ -133,4 +133,34 @@ class GetGalleryDataTest extends GalleryUnitTestCase
         $this->assertEqualSets($chunkedResponseAscending, $paginatedResponsesAscending);
         $this->assertEqualSets($chunkedResponseDescending, $paginatedResponsesDescending);
     }
+
+    /** @test */
+    public function individual_gallery_post_data_can_be_retrieved()
+    {
+        $testPostValues = [
+            'post_title' => 'Individual Post Title',
+            'post_content' => 'Individual Post Content',
+        ];
+
+        $request = $this->createGalleryPostRequest();
+        $this->requestDataProviderParams($request, $testPostValues);
+        $this->requestDataProviderImage($request);
+
+        $response = $this->dispatchRequest($request);
+        $responsePost = $response->get_data();
+
+        $postID = $responsePost['postID'];
+
+        $request = new WP_REST_Request('GET', $this->namespaced_route . '/' . $postID);
+        $request->set_header('Content-Type', 'application/json');
+        $response = $this->dispatchRequest($request);
+
+        $responsePost = $response->get_data();
+        $newPost = get_post($postID);
+
+        $this->assertEquals(200, $response->get_status());
+        $this->assertEquals($newPost->ID, $responsePost['ID']);
+        $this->assertEquals($newPost->post_title, $responsePost['post_title']);
+        $this->assertEquals($newPost->post_content, $responsePost['post_content']);
+    }
 }
