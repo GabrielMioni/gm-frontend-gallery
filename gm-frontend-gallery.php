@@ -158,6 +158,15 @@ class gmFrontendGallery
                 'order'
             ])
         );
+
+//      register_rest_route( 'gm-frontend-gallery/v1', '(?P<postId>\d+)?(?:/(?P<permanent>\d+))?', [
+        register_rest_route('gm-frontend-gallery/v1', '(?P<postId>\d+)?', [
+            'methods' => WP_REST_Server::READABLE,
+            'callback' => [self::class, 'retrieveGalleryPostSingle'],
+            'args' => [
+                'postId'
+            ]
+        ]);
     }
 
     protected static function setGetRouteArray(array $args)
@@ -205,6 +214,25 @@ class gmFrontendGallery
             $data[] = $postVariables;
         }
 
+        return $data;
+    }
+
+    public static function retrieveGalleryPostSingle(WP_REST_Request $request)
+    {
+        $postId = self::setRequestParams($request, 'postId');
+        $post = get_post($postId);
+
+        $data = self::multiPluck($post, [
+            'ID',
+            'post_author',
+            'post_content',
+            'post_title',
+            'post_excerpt',
+            'post_name',
+            'post_type',
+        ]);
+
+        $data['images'] = self::retrieveGalleryImages($post);
         return $data;
     }
 
