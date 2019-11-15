@@ -80,4 +80,13 @@ class AdminEditTest extends GalleryUnitTestCase
 
         $this->assertTrue(empty($attachmentMetaDataAfterDelete));
     }
+
+    /** @test */
+    public function individual_attachments_can_be_deleted()
+    {
+        $setupData = $this->setup_for_trash_and_delete_tests();
+        $postId = $setupData['postId'];
+
+        // Need some work on the API
+    }
 }

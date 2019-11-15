@@ -33,7 +33,7 @@ class GetGalleryDataTest extends GalleryUnitTestCase
         }
 
         // Retrieve Post data from route
-        $getRequest = $this->createGalleryGetRequest();
+        $getRequest = $this->createRequestGetPaginatedGalleryItems();
         $getResponse = $this->dispatchRequest($getRequest);
         $responseData = $getResponse->get_data();
 
@@ -64,7 +64,7 @@ class GetGalleryDataTest extends GalleryUnitTestCase
         $paginatedIDs = [];
 
         foreach ($pages as $page) {
-            $getRequest  = $this->createGalleryGetRequest($page, $resultsPerPage, 'id', 'asc');
+            $getRequest  = $this->createRequestGetPaginatedGalleryItems($page, $resultsPerPage, 'id', 'asc');
             $getResponse = $this->dispatchRequest($getRequest);
             $paginatedIDs[] = wp_list_pluck($getResponse->get_data(), 'ID');
         }

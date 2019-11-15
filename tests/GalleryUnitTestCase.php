@@ -88,7 +88,7 @@ class GalleryUnitTestCase extends WP_UnitTestCase
 
     protected function sendGetRequest($page = null, $resultsPerPage = null, $orderBy = null, $order = null)
     {
-        $getRequest  = $this->createGalleryGetRequest($page, $resultsPerPage, $orderBy, $order);
+        $getRequest  = $this->createRequestGetPaginatedGalleryItems($page, $resultsPerPage, $orderBy, $order);
         $getResponse = $this->dispatchRequest($getRequest);
         return $getResponse->get_data();
     }
@@ -131,7 +131,7 @@ class GalleryUnitTestCase extends WP_UnitTestCase
         return $request;
     }
 
-    protected function createGalleryGetRequest($page = null, $results = null, $orderBy = null, $order = null)
+    protected function createRequestGetPaginatedGalleryItems($page = null, $results = null, $orderBy = null, $order = null)
     {
         $route = $this->namespaced_route . '/get';
 
