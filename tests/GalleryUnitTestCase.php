@@ -152,6 +152,13 @@ class GalleryUnitTestCase extends WP_UnitTestCase
         return $request;
     }
 
+    protected function createRequestGetSingleGalleryItem($postId)
+    {
+        $request = new WP_REST_Request('GET', $this->namespaced_route . '/' . $postId);
+        $request->set_header('Content-Type', 'application/json');
+        return $this->dispatchRequest($request);
+    }
+
     protected function registerPluginSubmitRoute()
     {
         $gmFrontendGallery = new gmFrontendGallery();

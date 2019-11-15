@@ -144,9 +144,7 @@ class GetGalleryDataTest extends GalleryUnitTestCase
         $postID = $newGalleryPostData['postID'];
         $newPost = get_post($postID);
 
-        $request = new WP_REST_Request('GET', $this->namespaced_route . '/' . $postID);
-        $request->set_header('Content-Type', 'application/json');
-        $getGalleryPostResponse = $this->dispatchRequest($request);
+        $getGalleryPostResponse = $this->createRequestGetSingleGalleryItem($postID);
         $getGalleryPostResponseData = $getGalleryPostResponse->get_data();
 
         $this->assertEquals(200, $getGalleryPostResponse->get_status());
