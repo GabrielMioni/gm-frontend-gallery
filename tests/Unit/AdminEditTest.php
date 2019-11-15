@@ -87,6 +87,36 @@ class AdminEditTest extends GalleryUnitTestCase
         $setupData = $this->setup_for_trash_and_delete_tests();
         $postId = $setupData['postId'];
 
-        // Need some work on the API
+        $attachmentIdsBeforeDelete = $this->getAttachmentIds($postId);
+        $randomAttachmentId = $attachmentIdsBeforeDelete[rand(0, count($attachmentIdsBeforeDelete)-1)];
+
+        $expectedIdsAfterDelete = $attachmentIdsBeforeDelete;
+        if (($key = array_search($randomAttachmentId, $expectedIdsAfterDelete)) !== false) {
+            unset($expectedIdsAfterDelete[$key]);
+            $expectedIdsAfterDelete = array_values($expectedIdsAfterDelete);
+        }
+
+//        file_put_contents(dirname(__FILE__) . '/log', print_r($attachmentIdsBeforeDelete, true), FILE_APPEND);
+//        file_put_contents(dirname(__FILE__) . '/log', print_r($expectedIdsAfterDelete, true), FILE_APPEND);
+//        die();
+
+        // Delete the random attachment
+        $request = new WP_REST_Request('DELETE', $this->namespaced_route . '/' . $postId . '/' . $randomAttachmentId);
+        $request->set_header('Content-Type', 'application/json');
+        $response = $this->dispatchRequest($request);
+
+        $this->assertEquals(200, $response->get_status());
+        $attachmentIdsAfterDelete = $this->getAttachmentIds($postId);
+//        $this->assertEqualSets()
+    }
+
+    protected function getAttachmentIds($postId) {
+        $response = $this->createRequestGetSingleGalleryItem($postId);
+        $newGalleryItem = $response->get_data();
+        $attachedImages = $newGalleryItem['images'];
+
+        return array_map(function ($item) {
+            return $item['attach_id'];
+        }, $attachedImages);
     }
 }
