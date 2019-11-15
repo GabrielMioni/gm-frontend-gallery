@@ -137,30 +137,31 @@ class GetGalleryDataTest extends GalleryUnitTestCase
     /** @test */
     public function individual_gallery_post_data_can_be_retrieved()
     {
-        $testPostValues = [
-            'post_title' => 'Individual Post Title',
-            'post_content' => 'Individual Post Content',
-        ];
+        $data = $this->createGalleryPostWithMultipleImages();
+        $response = $data['response'];
+        $responseData = $response->get_data();
 
-        $request = $this->createGalleryPostRequest();
-        $this->requestDataProviderParams($request, $testPostValues);
-        $this->requestDataProviderImage($request);
-
-        $response = $this->dispatchRequest($request);
-        $responsePost = $response->get_data();
-
-        $postID = $responsePost['postID'];
+        $postID = $responseData['postID'];
 
         $request = new WP_REST_Request('GET', $this->namespaced_route . '/' . $postID);
         $request->set_header('Content-Type', 'application/json');
         $response = $this->dispatchRequest($request);
 
-        $responsePost = $response->get_data();
+        $responseData = $response->get_data();
         $newPost = get_post($postID);
 
         $this->assertEquals(200, $response->get_status());
-        $this->assertEquals($newPost->ID, $responsePost['ID']);
-        $this->assertEquals($newPost->post_title, $responsePost['post_title']);
-        $this->assertEquals($newPost->post_content, $responsePost['post_content']);
+        $this->assertEquals($newPost->ID, $responseData['ID']);
+        $this->assertEquals($newPost->post_title, $responseData['post_title']);
+        $this->assertEquals($newPost->post_content, $responseData['post_content']);
+
+        $meta = get_post_meta($postID, 'gm_gallery_attachment', false);
+
+        foreach ($meta as $key => $metaData) {
+            $metaAttachId = $metaData['attach_id'];
+            $responseAttachId = $responseData['images'][$key]['attach_id'];
+
+            $this->assertEquals($responseAttachId, $metaAttachId);
+        }
     }
 }
