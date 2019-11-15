@@ -22,7 +22,7 @@ class GetGalleryDataTest extends GalleryUnitTestCase
 
         // Create some gallery Posts
         while (count($postIDs) < $responseCount) {
-            $request = $this->createGalleryPostRequest();
+            $request = $this->createGalleryRequestSubmitGallery();
             $this->requestDataProviderParams($request);
             $this->requestDataProviderImage($request);
 

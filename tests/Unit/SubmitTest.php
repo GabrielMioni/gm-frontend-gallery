@@ -17,7 +17,7 @@ class SubmitTest extends GalleryUnitTestCase
     /** @test */
     public function file_data_can_be_submitted_to_api()
     {
-        $request = $this->createGalleryPostRequest();
+        $request = $this->createGalleryRequestSubmitGallery();
         $this->requestDataProviderParams($request);
         $this->requestDataProviderImage($request);
         $response = $this->dispatchRequest($request);
@@ -50,7 +50,7 @@ class SubmitTest extends GalleryUnitTestCase
     /** @test */
     public function plug_can_create_gallery_post_item()
     {
-        $request = $this->createGalleryPostRequest();
+        $request = $this->createGalleryRequestSubmitGallery();
         $this->requestDataProviderParams($request);
         $this->requestDataProviderImage($request);
 
@@ -65,7 +65,7 @@ class SubmitTest extends GalleryUnitTestCase
     /** @test */
     public function gallery_submissions_require_title_and_content()
     {
-        $request = $this->createGalleryPostRequest();
+        $request = $this->createGalleryRequestSubmitGallery();
         $this->requestDataProviderParams($request, [
             'post_title' => '',
             'post_content' => ''
@@ -81,7 +81,7 @@ class SubmitTest extends GalleryUnitTestCase
     /** @test */
     public function gallery_submissions_require_image()
     {
-        $request = $this->createGalleryPostRequest();
+        $request = $this->createGalleryRequestSubmitGallery();
         $this->requestDataProviderParams($request);
 
         $response = $this->dispatchRequest($request);
@@ -91,7 +91,7 @@ class SubmitTest extends GalleryUnitTestCase
     /** @test */
     public function gallery_submissions_require_nonce()
     {
-        $request = $this->createGalleryPostRequest();
+        $request = $this->createGalleryRequestSubmitGallery();
         $this->requestDataProviderParams($request, [
             'post_nonce' => 'I am an invalid nonce, nice to meet you!'
         ]);
@@ -104,7 +104,7 @@ class SubmitTest extends GalleryUnitTestCase
     /** @test */
     public function gallery_submissions_include_image_attachments()
     {
-        $request = $this->createGalleryPostRequest();
+        $request = $this->createGalleryRequestSubmitGallery();
         $this->requestDataProviderParams($request);
         $this->requestDataProviderImage($request);
 
