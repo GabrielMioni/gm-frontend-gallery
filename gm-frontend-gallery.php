@@ -66,6 +66,14 @@ class gmFrontendGallery
                 'permanent'
             ]
         ]);
+        register_rest_route( 'gm-frontend-gallery/v1', '/image/(?P<postId>\d+)?(?:/(?P<attachmentId>\d+))?', [
+            'methods' => 'DELETE',
+            'callback' => [self::class, 'deleteAttachmentById'],
+            'args' => [
+                'postId',
+                'attachmentId'
+            ]
+        ]);
     }
 
     public static function deleteGalleryPostById(WP_REST_Request $request)
@@ -105,6 +113,52 @@ class gmFrontendGallery
         $response->set_status(200);
 
         return $response;
+    }
+
+    public static function deleteAttachmentById(WP_REST_Request $request)
+    {
+        $postId = self::setRequestParams($request, 'postId');
+        $attachmentId = self::setRequestParams($request, 'attachmentId');
+
+        $metaData = self::getCompleteMetaData($postId, 'gm_gallery_attachment', $attachmentId);
+
+        if (!$metaData) {
+            return self::createWPError('invalid_request', 'attach_id not found', 400);
+        }
+
+        $metaId = $metaData->meta_id;
+
+        $blah = delete_metadata_by_mid('post', $metaId);
+        var_dump($blah);
+    }
+
+    protected static function getCompleteMetaData($postId, $metaKey, $attachmentId = null) {
+
+        if ($attachmentId !== null)
+            $attachmentId = (int) $attachmentId;
+
+        global $wpdb;
+        $meta = $wpdb->get_results( $wpdb->prepare("SELECT * FROM $wpdb->postmeta WHERE post_id = %d AND meta_key = %s", $postId, $metaKey) );
+
+        if (empty($meta)) {
+            return false;
+        }
+
+        foreach ($meta as $m) {
+            $m->meta_value = isset($m->meta_value) ? maybe_unserialize($m->meta_value) : null;
+            $checkAttachId = isset($m->meta_value['attach_id']) ? $m->meta_value['attach_id'] : false;
+
+            if ($checkAttachId === $attachmentId) {
+                return $m;
+            }
+        }
+
+        if ($attachmentId !== null) {
+            // Couldn't find the meta data with the attachment id.
+            return false;
+        }
+
+        return $meta;
     }
 
     public static function getAttachmentImagePaths($postId)
