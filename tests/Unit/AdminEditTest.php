@@ -96,18 +96,15 @@ class AdminEditTest extends GalleryUnitTestCase
             $expectedIdsAfterDelete = array_values($expectedIdsAfterDelete);
         }
 
-//        file_put_contents(dirname(__FILE__) . '/log', print_r($attachmentIdsBeforeDelete, true), FILE_APPEND);
-//        file_put_contents(dirname(__FILE__) . '/log', print_r($expectedIdsAfterDelete, true), FILE_APPEND);
-//        die();
-
         // Delete the random attachment
         $request = new WP_REST_Request('DELETE', $this->namespaced_route . '/' . $postId . '/' . $randomAttachmentId);
         $request->set_header('Content-Type', 'application/json');
         $response = $this->dispatchRequest($request);
 
-        $this->assertEquals(200, $response->get_status());
         $attachmentIdsAfterDelete = $this->getAttachmentIds($postId);
-//        $this->assertEqualSets()
+
+        $this->assertEquals(200, $response->get_status());
+        $this->assertEqualSets($attachmentIdsAfterDelete, $expectedIdsAfterDelete);
     }
 
     protected function getAttachmentIds($postId) {
