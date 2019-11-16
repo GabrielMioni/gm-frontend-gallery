@@ -104,7 +104,7 @@ class AdminEditTest extends GalleryUnitTestCase
         $attachmentIdsAfterDelete = $this->getAttachmentIds($postId);
 
         $this->assertEquals(200, $response->get_status());
-//        $this->assertEqualSets($attachmentIdsAfterDelete, $expectedIdsAfterDelete);
+        $this->assertEqualSets($attachmentIdsAfterDelete, $expectedIdsAfterDelete);
     }
 
     protected function getAttachmentIds($postId) {

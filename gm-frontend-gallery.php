@@ -127,9 +127,20 @@ class gmFrontendGallery
         }
 
         $metaId = $metaData->meta_id;
+        $attachmentId = $metaData->meta_value['attach_id'];
 
-        $blah = delete_metadata_by_mid('post', $metaId);
-        var_dump($blah);
+        $paths = self::getAttachmentPathsById($attachmentId);
+
+        foreach ($paths as $path) {
+            unlink($path);
+        }
+
+        delete_metadata_by_mid('post', $metaId);
+
+        $response = new WP_REST_Response();
+        $response->set_status(200);
+
+        return $response;
     }
 
     protected static function getCompleteMetaData($postId, $metaKey, $attachmentId = null) {
@@ -183,6 +194,28 @@ class gmFrontendGallery
             foreach ($attachmentMetaData['sizes'] as $size) {
                 $imageAttachmentPaths[] = $imageRootPath . $size['file'];
             }
+        }
+
+        return $imageAttachmentPaths;
+    }
+
+    protected static function getAttachmentPathsById($attachId) {
+        $uploadDir = wp_upload_dir();
+        $uploadBaseDir = $uploadDir['basedir'];
+
+        $imageAttachmentPaths = [];
+
+        $attachmentMetaData = wp_get_attachment_metadata($attachId);
+
+        $origFilePath = $uploadBaseDir . '/' . $attachmentMetaData['file'];
+        $fileBasename = basename($origFilePath);
+
+        $imageRootPath = str_replace($fileBasename, '', $origFilePath);
+
+        $imageAttachmentPaths[] = $origFilePath;
+
+        foreach ($attachmentMetaData['sizes'] as $size) {
+            $imageAttachmentPaths[] = $imageRootPath . $size['file'];
         }
 
         return $imageAttachmentPaths;
