@@ -52,25 +52,36 @@ abstract class BaseController
     public static function getAttachmentImagePaths($postId)
     {
         $galleryAttachmentMeta = get_post_meta($postId, 'gm_gallery_attachment', false);
-        $uploadDir = wp_upload_dir();
-        $uploadBaseDir = $uploadDir['basedir'];
 
         $imageAttachmentPaths = [];
 
         foreach ($galleryAttachmentMeta as $meta) {
             $attachId = $meta['attach_id'];
-            $attachmentMetaData = wp_get_attachment_metadata($attachId);
+            $attachmentPaths = self::getPathsByAttachId($attachId);
+            $imageAttachmentPaths = array_merge($imageAttachmentPaths, $attachmentPaths);
+        }
 
-            $origFilePath = $uploadBaseDir . '/' . $attachmentMetaData['file'];
-            $fileBasename = basename($origFilePath);
+        return $imageAttachmentPaths;
+    }
 
-            $imageRootPath = str_replace($fileBasename, '', $origFilePath);
+    protected static function getPathsByAttachId($attachId)
+    {
+        $uploadDir = wp_upload_dir();
+        $uploadBaseDir = $uploadDir['basedir'];
 
-            $imageAttachmentPaths[] = $origFilePath;
+        $imageAttachmentPaths = [];
 
-            foreach ($attachmentMetaData['sizes'] as $size) {
-                $imageAttachmentPaths[] = $imageRootPath . $size['file'];
-            }
+        $attachmentMetaData = wp_get_attachment_metadata($attachId);
+
+        $origFilePath = $uploadBaseDir . '/' . $attachmentMetaData['file'];
+        $fileBasename = basename($origFilePath);
+
+        $imageRootPath = str_replace($fileBasename, '', $origFilePath);
+
+        $imageAttachmentPaths[] = $origFilePath;
+
+        foreach ($attachmentMetaData['sizes'] as $size) {
+            $imageAttachmentPaths[] = $imageRootPath . $size['file'];
         }
 
         return $imageAttachmentPaths;
@@ -103,28 +114,6 @@ abstract class BaseController
         }
 
         return $meta;
-    }
-
-    protected static function getAttachmentPathsById($attachId) {
-        $uploadDir = wp_upload_dir();
-        $uploadBaseDir = $uploadDir['basedir'];
-
-        $imageAttachmentPaths = [];
-
-        $attachmentMetaData = wp_get_attachment_metadata($attachId);
-
-        $origFilePath = $uploadBaseDir . '/' . $attachmentMetaData['file'];
-        $fileBasename = basename($origFilePath);
-
-        $imageRootPath = str_replace($fileBasename, '', $origFilePath);
-
-        $imageAttachmentPaths[] = $origFilePath;
-
-        foreach ($attachmentMetaData['sizes'] as $size) {
-            $imageAttachmentPaths[] = $imageRootPath . $size['file'];
-        }
-
-        return $imageAttachmentPaths;
     }
 
     protected static function multiPluck($input, array $indexKeys)
