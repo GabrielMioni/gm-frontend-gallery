@@ -1,5 +1,7 @@
 <?php
 
+require_once(__DIR__ . '/../gm-frontend-gallery.php');
+
 class GalleryUnitTestCase extends WP_UnitTestCase
 {
     protected $server;
@@ -19,8 +21,7 @@ class GalleryUnitTestCase extends WP_UnitTestCase
 
         $gmFrontendGallery = new gmFrontendGallery();
         $gmFrontendGallery::createPostType();
-        $gmFrontendGallery::registerApiGetRoute();
-        $gmFrontendGallery::registerApiSubmitRoute();
+        $gmFrontendGallery::registerApiRoutes();
     }
 
     public function tearDown()
