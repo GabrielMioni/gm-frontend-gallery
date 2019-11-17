@@ -7,33 +7,33 @@ use WP_REST_Response;
 
 class SubmitController extends BaseController
 {
-    public static function processGallerySubmission(WP_REST_Request $request)
+    public function processGallerySubmission(WP_REST_Request $request)
     {
-        $nonceParam   = self::setRequestParams($request, 'post_nonce');
+        $nonceParam   = $this->setRequestParams($request, 'post_nonce');
         $nonceIsValid = wp_verify_nonce($nonceParam, 'gm_gallery_submit');
 
         if ($nonceIsValid === false) {
-            return self::createWPError('invalid_request', 'Invalid nonce', 401);
+            return $this->createWPError('invalid_request', 'Invalid nonce', 401);
         }
 
-        $post_title   = self::setRequestParams($request, 'post_title');
-        $post_content = self::setRequestParams($request, 'post_content');
+        $post_title   = $this->setRequestParams($request, 'post_title');
+        $post_content = $this->setRequestParams($request, 'post_content');
 
         if (is_null($post_title) || is_null($post_content)) {
-            return self::createWPError(self::$galleryIncompleteCode, 'Gallery submissions must include a title and content', 404);
+            return $this->createWPError($this->galleryIncompleteCode, 'Gallery submissions must include a title and content', 404);
         }
 
         $imageData = $request->get_file_params();
 
         if (empty($imageData)) {
-            return self::createWPError(self::$galleryIncompleteCode, 'Gallery submissions must include an image', 404);
+            return $this->createWPError($this->galleryIncompleteCode, 'Gallery submissions must include an image', 404);
         }
 
         $postArray = [];
         $postArray['post_content'] = $post_content;
         $postArray['post_title']   = $post_title;
-        $postArray['post_type']    = self::$postType;
-        $postArray['post_status']  = self::$postStatus;
+        $postArray['post_type']    = $this->postType;
+        $postArray['post_status']  = $this->postStatus;
 
         $newPostId = wp_insert_post($postArray, true);
 
@@ -43,7 +43,7 @@ class SubmitController extends BaseController
             $data['postID'] = $newPostId;
         }
 
-        $attachmentIds = self::processImageAttachments($imageData, $newPostId);
+        $attachmentIds = $this->processImageAttachments($imageData, $newPostId);
 
         $response = new WP_REST_Response($data);
         $response->set_status(200);
@@ -51,19 +51,19 @@ class SubmitController extends BaseController
         return $response;
     }
 
-    protected static function processImageAttachments(array $imageData, $postId)
+    protected function processImageAttachments(array $imageData, $postId)
     {
         $attachmentIds = [];
 
         foreach ($imageData as $imageDatum) {
-            $attachmentIds[] = self::createImageAttachment($imageDatum, $postId);
+            $attachmentIds[] = $this->createImageAttachment($imageDatum, $postId);
         }
 
         return $attachmentIds;
 
     }
 
-    protected static function createImageAttachment(array $imageData, $postId)
+    protected function createImageAttachment(array $imageData, $postId)
     {
         $uploadData = wp_upload_bits($imageData['name'], null, $imageData['file']);
 
@@ -90,7 +90,7 @@ class SubmitController extends BaseController
             'attach_id' => $attach_id,
         ];
 
-        add_post_meta($postId, self::$galleryAttachmentMetaKey, $attachmentMetaData, false);
+        add_post_meta($postId, $this->galleryAttachmentMetaKey, $attachmentMetaData, false);
 
         return $attach_id;
     }

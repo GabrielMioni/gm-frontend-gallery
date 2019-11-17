@@ -8,23 +8,23 @@ use WP_Post;
 
 abstract class BaseController
 {
-    protected static $postType = 'gallery';
-    protected static $postStatus = 'published';
-    protected static $galleryIncompleteCode = 'gallery_incomplete';
-    protected static $galleryAttachmentMetaKey = 'gm_gallery_attachment';
+    protected $postType = 'gallery';
+    protected $postStatus = 'published';
+    protected $galleryIncompleteCode = 'gallery_incomplete';
+    protected $galleryAttachmentMetaKey = 'gm_gallery_attachment';
 
-    protected static function setRequestParams(WP_REST_Request $request, $key)
+    protected function setRequestParams(WP_REST_Request $request, $key)
     {
         $parameter = trim($request->get_param($key));
         return $parameter !== '' ? $parameter : null;
     }
 
-    protected static function createWPError($code, $message, $status)
+    protected function createWPError($code, $message, $status)
     {
         return new WP_Error($code, $message, ['status' => $status]);
     }
 
-    protected static function retrieveGalleryImages(WP_Post $post)
+    protected function retrieveGalleryImages(WP_Post $post)
     {
         $images = [];
         $sizes = ['thumbnail', 'medium', 'full'];
@@ -49,7 +49,7 @@ abstract class BaseController
         return $images;
     }
 
-    public static function getAttachmentImagePaths($postId)
+    public function getAttachmentImagePaths($postId)
     {
         $galleryAttachmentMeta = get_post_meta($postId, 'gm_gallery_attachment', false);
 
@@ -57,14 +57,14 @@ abstract class BaseController
 
         foreach ($galleryAttachmentMeta as $meta) {
             $attachId = $meta['attach_id'];
-            $attachmentPaths = self::getPathsByAttachId($attachId);
+            $attachmentPaths = $this->getPathsByAttachId($attachId);
             $imageAttachmentPaths = array_merge($imageAttachmentPaths, $attachmentPaths);
         }
 
         return $imageAttachmentPaths;
     }
 
-    protected static function getPathsByAttachId($attachId)
+    protected function getPathsByAttachId($attachId)
     {
         $uploadDir = wp_upload_dir();
         $uploadBaseDir = $uploadDir['basedir'];
@@ -87,7 +87,7 @@ abstract class BaseController
         return $imageAttachmentPaths;
     }
 
-    protected static function getCompleteMetaData($postId, $metaKey, $attachmentId = null) {
+    protected function getCompleteMetaData($postId, $metaKey, $attachmentId = null) {
 
         if ($attachmentId !== null)
             $attachmentId = (int) $attachmentId;
@@ -116,7 +116,7 @@ abstract class BaseController
         return $meta;
     }
 
-    protected static function multiPluck($input, array $indexKeys)
+    protected function multiPluck($input, array $indexKeys)
     {
         $out = [];
 
