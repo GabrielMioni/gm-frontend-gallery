@@ -49,18 +49,18 @@ class AdminController extends BaseController
     public static function deleteAttachmentById(WP_REST_Request $request)
     {
         $postId = self::setRequestParams($request, 'postId');
-        $attachmentId = self::setRequestParams($request, 'attachmentId');
+        $attachId = self::setRequestParams($request, 'attachmentId');
 
-        $metaData = self::getCompleteMetaData($postId, 'gm_gallery_attachment', $attachmentId);
+        $metaData = self::getCompleteMetaData($postId, 'gm_gallery_attachment', $attachId);
 
         if (!$metaData) {
             return self::createWPError('invalid_request', 'attach_id not found', 400);
         }
 
         $metaId = $metaData->meta_id;
-        $attachmentId = $metaData->meta_value['attach_id'];
+        $attachId = $metaData->meta_value['attach_id'];
 
-        $paths = self::getAttachmentPathsById($attachmentId);
+        $paths = self::getPathsByAttachId($attachId);
 
         foreach ($paths as $path) {
             unlink($path);
