@@ -2,6 +2,8 @@
 
 namespace GmFrontendGallery\Controller;
 
+require_once('BaseController.php');
+
 use WP_REST_Request;
 use WP_REST_Response;
 
