@@ -7,10 +7,7 @@ Version: 0.1
 Author URI: gabrielmioni.com
 */
 
-require_once(__DIR__ . '/Controllers/BaseController.php');
-require_once(__DIR__ . '/Controllers/SubmitController.php');
-require_once(__DIR__ . '/Controllers/AdminController.php');
-require_once(__DIR__ . '/Controllers/GalleryController.php');
+require_once('autoload.php');
 
 use GmFrontendGallery\Controller\SubmitController;
 use GmFrontendGallery\Controller\AdminController;
