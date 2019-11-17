@@ -1,13 +1,13 @@
 <?php
-/*
-Plugin Name: GM Frontend Gallery
-Description: This thing
-Author: Gabriel Mioni
-Version: 0.1
-Author URI: gabrielmioni.com
-*/
+///*
+//Plugin Name: GM Frontend Gallery
+//Description: This thing
+//Author: Gabriel Mioni
+//Version: 0.1
+//Author URI: gabrielmioni.com
+//*/
 
-require_once(ABSPATH . 'wp-admin/includes/image.php');
+/*require_once(ABSPATH . 'wp-admin/includes/image.php');
 
 if (!defined('WP_TEST_RUNNING')) {
     add_action( 'init', ['gmFrontendGallery', 'createPostType']);
@@ -500,4 +500,4 @@ class gmFrontendGallery
 
         return $out;
     }
-}
+}*/
