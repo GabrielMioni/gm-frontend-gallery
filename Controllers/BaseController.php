@@ -76,6 +76,57 @@ abstract class BaseController
         return $imageAttachmentPaths;
     }
 
+    protected static function getCompleteMetaData($postId, $metaKey, $attachmentId = null) {
+
+        if ($attachmentId !== null)
+            $attachmentId = (int) $attachmentId;
+
+        global $wpdb;
+        $meta = $wpdb->get_results( $wpdb->prepare("SELECT * FROM $wpdb->postmeta WHERE post_id = %d AND meta_key = %s", $postId, $metaKey) );
+
+        if (empty($meta)) {
+            return false;
+        }
+
+        foreach ($meta as $m) {
+            $m->meta_value = isset($m->meta_value) ? maybe_unserialize($m->meta_value) : null;
+            $checkAttachId = isset($m->meta_value['attach_id']) ? $m->meta_value['attach_id'] : false;
+
+            if ($checkAttachId === $attachmentId) {
+                return $m;
+            }
+        }
+
+        if ($attachmentId !== null) {
+            // Couldn't find the meta data with the attachment id.
+            return false;
+        }
+
+        return $meta;
+    }
+
+    protected static function getAttachmentPathsById($attachId) {
+        $uploadDir = wp_upload_dir();
+        $uploadBaseDir = $uploadDir['basedir'];
+
+        $imageAttachmentPaths = [];
+
+        $attachmentMetaData = wp_get_attachment_metadata($attachId);
+
+        $origFilePath = $uploadBaseDir . '/' . $attachmentMetaData['file'];
+        $fileBasename = basename($origFilePath);
+
+        $imageRootPath = str_replace($fileBasename, '', $origFilePath);
+
+        $imageAttachmentPaths[] = $origFilePath;
+
+        foreach ($attachmentMetaData['sizes'] as $size) {
+            $imageAttachmentPaths[] = $imageRootPath . $size['file'];
+        }
+
+        return $imageAttachmentPaths;
+    }
+
     protected static function multiPluck($input, array $indexKeys)
     {
         $out = [];
