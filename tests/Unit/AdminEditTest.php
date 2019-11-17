@@ -1,5 +1,7 @@
 <?php
 
+use GmFrontendGallery\Controller\AdminController;
+
 require_once dirname(dirname(__FILE__)) . '/GalleryUnitTestCase.php';
 
 class AdminEditTest extends GalleryUnitTestCase
@@ -57,7 +59,7 @@ class AdminEditTest extends GalleryUnitTestCase
         $setupData = $this->setup_for_trash_and_delete_tests();
         $postId = $setupData['postId'];
 
-        $imageAttachmentPaths = gmFrontendGallery::getAttachmentImagePaths($postId);
+        $imageAttachmentPaths = AdminController::getAttachmentImagePaths($postId);
 
         $statusBeforeDelete = get_post_status($postId);
 
