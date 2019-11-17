@@ -59,7 +59,9 @@ class AdminEditTest extends GalleryUnitTestCase
         $setupData = $this->setup_for_trash_and_delete_tests();
         $postId = $setupData['postId'];
 
-        $imageAttachmentPaths = AdminController::getAttachmentImagePaths($postId);
+        $adminController = new AdminController();
+
+        $imageAttachmentPaths = $adminController->getAttachmentImagePaths($postId);
 
         $statusBeforeDelete = get_post_status($postId);
 

@@ -6,11 +6,6 @@ class RegisterPluginTest extends WP_UnitTestCase
     /** @test */
     public function plugin_can_create_gallery_post_type()
     {
-        $this->assertFalse($this->galleryPostTypeExists());
-
-        $gmFactory = new gmFrontendGallery();
-        $gmFactory::createPostType();
-
         $this->assertTrue($this->galleryPostTypeExists());
     }
 

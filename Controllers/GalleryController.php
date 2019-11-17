@@ -17,19 +17,19 @@ class GalleryController extends BaseController
         'desc'
     ];
 
-    public static function retrieveGalleryPosts(WP_REST_Request $request)
+    public function retrieveGalleryPosts(WP_REST_Request $request)
     {
-        $postsPerPage = self::setRequestParams($request, 'page');
-        $numberPosts  = self::setRequestParams($request, 'results');
-        $orderData    = self::setOrderData($request);
+        $postsPerPage = $this->setRequestParams($request, 'page');
+        $numberPosts  = $this->setRequestParams($request, 'results');
+        $orderData    = $this->setOrderData($request);
 
         $isPaged = !is_null($postsPerPage) && !(is_null($numberPosts));
 
         $args = [
-            'post_type' => self::$postType,
+            'post_type' => $this->postType,
             'order'     => $orderData['order'],
             'orderby'   => $orderData['orderby'],
-            'post_status' => self::$postStatus,
+            'post_status' => $this->postStatus,
             'offset' => $isPaged === true ? $numberPosts * ($postsPerPage - 1) : -1,
             'numberposts'=> $isPaged === true ? $numberPosts : -1,
         ];
@@ -40,7 +40,7 @@ class GalleryController extends BaseController
 
         foreach ($posts as $post) {
 
-            $postVariables = self::multiPluck($post, [
+            $postVariables = $this->multiPluck($post, [
                 'ID',
                 'post_author',
                 'post_date',
@@ -48,7 +48,7 @@ class GalleryController extends BaseController
                 'post_title'
             ]);
 
-            $postVariables['images'] = self::retrieveGalleryImages($post);
+            $postVariables['images'] = $this->retrieveGalleryImages($post);
 
             $data[] = $postVariables;
         }
@@ -56,12 +56,12 @@ class GalleryController extends BaseController
         return $data;
     }
 
-    public static function retrieveGalleryPostSingle(WP_REST_Request $request)
+    public function retrieveGalleryPostSingle(WP_REST_Request $request)
     {
-        $postId = self::setRequestParams($request, 'postId');
+        $postId = $this->setRequestParams($request, 'postId');
         $post = get_post($postId);
 
-        $data = self::multiPluck($post, [
+        $data = $this->multiPluck($post, [
             'ID',
             'post_author',
             'post_content',
@@ -71,13 +71,13 @@ class GalleryController extends BaseController
             'post_type',
         ]);
 
-        $data['images'] = self::retrieveGalleryImages($post);
+        $data['images'] = $this->retrieveGalleryImages($post);
         return $data;
     }
 
-    protected static function setOrderData(WP_REST_Request $request) {
-        $orderBy      = self::setRequestParams($request, 'orderBy');
-        $order        = self::setRequestParams($request, 'order');
+    protected function setOrderData(WP_REST_Request $request) {
+        $orderBy      = $this->setRequestParams($request, 'orderBy');
+        $order        = $this->setRequestParams($request, 'order');
 
         return [
             'orderby' => in_array($orderBy, self::$orderByOptions) ? $orderBy : 'ID',

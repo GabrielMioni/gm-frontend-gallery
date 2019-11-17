@@ -29,7 +29,7 @@ abstract class BaseController
         $images = [];
         $sizes = ['thumbnail', 'medium', 'full'];
 
-        $galleryAttachmentMeta = get_post_meta($post->ID, self::$galleryAttachmentMetaKey, false);
+        $galleryAttachmentMeta = get_post_meta($post->ID, $this->galleryAttachmentMetaKey, false);
 
         foreach ($galleryAttachmentMeta as $metaItem) {
             $attachId = $metaItem['attach_id'];
