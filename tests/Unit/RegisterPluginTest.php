@@ -1,9 +1,5 @@
 <?php
-/**
- * Class PluginTest
- *
- * @package Gm_Frontend_Gallery
- */
+require_once(__DIR__ . '/../../gm-frontend-gallery.php');
 
 class RegisterPluginTest extends WP_UnitTestCase
 {
