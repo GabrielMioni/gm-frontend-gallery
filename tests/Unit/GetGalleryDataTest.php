@@ -47,14 +47,7 @@ class GetGalleryDataTest extends GalleryUnitTestCase
     /** @test */
     public function gallery_posts_can_be_paginated()
     {
-        $postArray = [
-            'post_content' => 'I am some words for the Content',
-            'post_title'   => 'I am a default title',
-            'post_type'    => 'gallery',
-            'post_status'  => 'published'
-        ];
-
-        $postIds = $this->factory->post->create_many(31, $postArray);
+        $postIds = $this->createPostWithFactory(31);
 
         $pages = range(1, 4);
         $resultsPerPage = 10;
@@ -75,28 +68,7 @@ class GetGalleryDataTest extends GalleryUnitTestCase
     /** @test */
     public function gallery_pagination_can_be_ordered_both_asc_and_desc()
     {
-        $postArray = [
-            'post_content' => 'I am some words for the Content',
-            'post_title'   => 'I am a default title',
-            'post_type'    => 'gallery',
-            'post_status'  => 'published'
-        ];
-
-        $start = time();
-        $responses = [];
-
-        for ($t = 0 ; $t < 31 ; ++$t) {
-            $args = $postArray;
-            $postDate = date('Y-m-d H:i:s', $start + ($t * 1000));
-            $args['post_date'] = $postDate;
-
-            $postId = $this->factory->post->create($args);
-
-            $responses[] = [
-                'ID' => $postId,
-                'post_date' => $postDate,
-            ];
-        }
+        $responses = $this->createPostWithFactory(31, 1000);
 
         $pages = range(1, 4);
         $resultsPerPage = 10;
@@ -160,5 +132,44 @@ class GetGalleryDataTest extends GalleryUnitTestCase
 
             $this->assertEquals($responseAttachId, $metaAttachId);
         }
+    }
+
+    protected function createPostWithFactory($count = false, $seconds = false)
+    {
+        $args = [
+            'post_content' => 'I am some words for the Content',
+            'post_title'   => 'I am a default title',
+            'post_type'    => 'gallery',
+            'post_status'  => 'published'
+        ];
+
+        $postFactory = $this->factory->post;
+
+        if (!$count) {
+            return $postFactory->create($args);
+        }
+
+        $count = (int) $count;
+
+        if ($count && !$seconds) {
+            return $postFactory->create_many($count, $args);
+        }
+
+        $seconds = (int) $seconds;
+        $start = time();
+        $responses = [];
+
+        while (count($responses) < $count) {
+            $postDate = date('Y-m-d H:i:s', $start + (count($responses) * $seconds));
+            $args['post_date'] = $postDate;
+
+            $postId = $postFactory->create($args);
+            $responses[] = [
+                'ID' => $postId,
+                'post_date' => $postDate,
+            ];
+        }
+
+        return $responses;
     }
 }
