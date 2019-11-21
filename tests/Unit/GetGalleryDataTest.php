@@ -17,20 +17,7 @@ class GetGalleryDataTest extends GalleryUnitTestCase
     /** @test */
     public function gallery_posts_can_be_retrieved()
     {
-        $postIDs = [];
-        $responseCount = 5;
-
-        // Create some gallery Posts
-        while (count($postIDs) < $responseCount) {
-            $request = $this->createRequestSubmitGallery();
-            $this->requestDataProviderParams($request);
-            $this->requestDataProviderImage($request);
-
-            $response = $this->dispatchRequest($request);
-            $postResponse = $response->get_data();
-            $postID = $postResponse['postID'];
-            $postIDs[] = $postID;
-        }
+        $postIDs = $this->createPostsWithRequest(5);
 
         // Retrieve Post data from route
         $getRequest = $this->createRequestGetPaginatedGalleryItems();
@@ -132,6 +119,34 @@ class GetGalleryDataTest extends GalleryUnitTestCase
 
             $this->assertEquals($responseAttachId, $metaAttachId);
         }
+    }
+
+    /** @test */
+    public function gallery_posts_have_order_meta_data()
+    {
+        $count = 31;
+        $postIDs = $this->createPostsWithRequest($count);
+
+        $this->assertEquals($count, count($postIDs));
+    }
+
+    protected function createPostsWithRequest($count = false)
+    {
+        $postIDs = [];
+        $count = $count === false ? 1 : (int) $count;
+
+        while (count($postIDs) < $count) {
+            $request = $this->createRequestSubmitGallery();
+            $this->requestDataProviderParams($request);
+            $this->requestDataProviderImage($request);
+
+            $response = $this->dispatchRequest($request);
+            $postResponse = $response->get_data();
+            $postID = $postResponse['postID'];
+            $postIDs[] = $postID;
+        }
+
+        return $postIDs;
     }
 
     protected function createPostWithFactory($count = false, $seconds = false)
