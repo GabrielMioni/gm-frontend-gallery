@@ -102,9 +102,9 @@ class SubmitController extends BaseController
     {
         global $wpdb;
 
-        $querySelect = 'SELECT max(cast(meta_value as unsigned))';
-        $metaQueryResult = $wpdb->get_results($wpdb->prepare("$querySelect FROM $wpdb->postmeta WHERE meta_key = %s", 'gm_gallery_order'), 'ARRAY_A');
-        $metaQueryValue = $metaQueryResult[0]['max(cast(meta_value as unsigned))'];
+        $querySelect = 'max(cast(meta_value as unsigned))';
+        $metaQueryResult = $wpdb->get_results($wpdb->prepare("SELECT $querySelect FROM $wpdb->postmeta WHERE meta_key = %s", 'gm_gallery_order'), 'ARRAY_A');
+        $metaQueryValue = $metaQueryResult[0][$querySelect];
 
         $maxOrder = (int) $metaQueryValue;
         $setOrder = $maxOrder +1;
