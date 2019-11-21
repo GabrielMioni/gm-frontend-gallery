@@ -124,10 +124,16 @@ class GetGalleryDataTest extends GalleryUnitTestCase
     /** @test */
     public function gallery_posts_have_order_meta_data()
     {
-        $count = 31;
+        $count = 5;
         $postIDs = $this->createPostsWithRequest($count);
 
         $this->assertEquals($count, count($postIDs));
+
+        foreach ($postIDs as $postID) {
+            $meta = get_post_meta($postID, 'gm_gallery_order');
+            $this->assertFalse(empty($meta));
+        }
+
     }
 
     protected function createPostsWithRequest($count = false)
