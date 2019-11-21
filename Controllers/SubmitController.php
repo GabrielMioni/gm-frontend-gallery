@@ -106,8 +106,7 @@ class SubmitController extends BaseController
         $metaQueryResult = $wpdb->get_results($wpdb->prepare("SELECT $querySelect FROM $wpdb->postmeta WHERE meta_key = %s", 'gm_gallery_order'), 'ARRAY_A');
         $metaQueryValue = $metaQueryResult[0][$querySelect];
 
-        $maxOrder = (int) $metaQueryValue;
-        $setOrder = $maxOrder +1;
+        $setOrder = is_null($metaQueryValue) ? 0 : (int) $metaQueryValue + 1;
 
         add_post_meta($postId, 'gm_gallery_order', $setOrder, false);
     }
