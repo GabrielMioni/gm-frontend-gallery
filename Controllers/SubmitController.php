@@ -43,6 +43,8 @@ class SubmitController extends BaseController
             $data['postID'] = $newPostId;
         }
 
+        add_post_meta($newPostId, 'gm_gallery_order', 0, false);
+
         $attachmentIds = $this->processImageAttachments($imageData, $newPostId);
 
         $response = new WP_REST_Response($data);
@@ -93,5 +95,10 @@ class SubmitController extends BaseController
         add_post_meta($postId, $this->galleryAttachmentMetaKey, $attachmentMetaData, false);
 
         return $attach_id;
+    }
+
+    protected function setGalleryPostOrderMetaData($postId)
+    {
+
     }
 }
