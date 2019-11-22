@@ -44,7 +44,7 @@ class SubmitController extends BaseController
         if (!is_wp_error($newPostId)) {
             $data['postID'] = $newPostId;
         }
-        
+
         $this->setGalleryPostOrderMetaData($newPostId);
 
         $attachmentIds = $this->processImageAttachments($imageData, $newPostId);
@@ -104,10 +104,12 @@ class SubmitController extends BaseController
         global $wpdb;
 
         $querySelect = 'max(cast(meta_value as unsigned))';
-        $results = $wpdb->get_results( "SELECT $querySelect FROM $wpdb->postmeta WHERE meta_key = $this->gm_gallery_order_key", 'ARRAY_A');
-        $metaQueryValue = $results[0][$querySelect];
+        $metaQueryResult = $wpdb->get_results($wpdb->prepare("SELECT $querySelect FROM $wpdb->postmeta WHERE meta_key = %s", $this->gm_gallery_order_key), 'ARRAY_A');
+        $metaQueryValue = $metaQueryResult[0][$querySelect];
 
-        $setOrder = is_null($metaQueryValue) ? 0 : (int) $metaQueryValue + 1;
-        add_post_meta($postId, 'gm_gallery_order', $setOrder, false);
+        $maxOrder = (int) $metaQueryValue;
+        $setOrder = $maxOrder +1;
+
+        add_post_meta($postId, $this->gm_gallery_order_key, $setOrder, false);
     }
 }
