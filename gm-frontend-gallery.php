@@ -96,6 +96,15 @@ class gmFrontendGallery
                 'postId'
             ]
         ]);
+
+        register_rest_route('gm-frontend-gallery/v1', '/order/post/(?P<postId>\d+)?/(?P<order>\d+)?', [
+            'methods' => 'POST',
+            'callback' => [$adminController, 'setGalleryPostOrder'],
+            'args' => [
+                'postId',
+                'order',
+            ]
+        ]);
     }
 
     protected static function setGetRouteArray(GalleryController $galleryController, array $args)
