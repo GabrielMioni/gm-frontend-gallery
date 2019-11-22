@@ -133,7 +133,7 @@ class AdminEditTest extends GalleryUnitTestCase
         $lastPostId = $postIds[count($postIds)-1];
         $lastPostOrder = get_post_meta($lastPostId, 'gm_gallery_order', true);
 
-        $this->assertEquals($order, $lastPostOrder);
+        $this->assertEquals($order-1, $lastPostOrder);
 
         $request = new WP_REST_Request('POST', $this->namespaced_route . '/order/post/' . $lastPostId . '/' . '5');
         $request->set_header('Content-Type', 'application/json');
