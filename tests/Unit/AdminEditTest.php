@@ -111,6 +111,42 @@ class AdminEditTest extends GalleryUnitTestCase
         $this->assertEqualSets($attachmentIdsAfterDelete, $expectedIdsAfterDelete);
     }
 
+    /** @test */
+    public function gallery_posts_order_meta_data_can_be_changed()
+    {
+        $order = 0;
+        $postIds = [];
+
+        while($order < 10) {
+            $postIds[] = $this->factory()->post->create([
+                'post_content' => 'I am some words for the Content',
+                'post_title'   => 'I am a default title',
+                'post_type'    => 'gallery',
+                'post_status'  => 'published',
+                'meta_input' => [
+                    'gm_gallery_order' => $order,
+                ]
+            ]);
+            ++$order;
+        }
+
+        $lastPostId = $postIds[count($postIds)-1];
+        $lastPostOrder = get_post_meta($lastPostId, 'gm_gallery_order', true);
+
+        $this->assertEquals($order, $lastPostOrder);
+
+        $request = new WP_REST_Request('POST', $this->namespaced_route . '/order/post/' . $lastPostId . '/' . '5');
+        $request->set_header('Content-Type', 'application/json');
+        $response = $this->dispatchRequest($request);
+
+        $this->assertEquals(200, $response->get_status());
+
+        $lastPostOrderNew = get_post_meta($lastPostId, 'gm_gallery_order', true);
+
+        $this->assertEquals(5, $lastPostOrderNew);
+
+    }
+
     protected function getAttachmentIds($postId) {
         $response = $this->createRequestGetSingleGalleryItem($postId);
         $newGalleryItem = $response->get_data();
