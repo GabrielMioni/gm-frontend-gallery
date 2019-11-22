@@ -116,6 +116,7 @@ class AdminEditTest extends GalleryUnitTestCase
     {
         $order = 0;
         $postIds = [];
+        $originalOrder = [];
 
         while($order < 10) {
             $postIds[] = $this->factory()->post->create([
@@ -127,6 +128,7 @@ class AdminEditTest extends GalleryUnitTestCase
                     'gm_gallery_order' => $order,
                 ]
             ]);
+            $originalOrder[] = $order;
             ++$order;
         }
 
@@ -143,11 +145,25 @@ class AdminEditTest extends GalleryUnitTestCase
 
         $lastPostOrderNew = get_post_meta($lastPostId, 'gm_gallery_order', true);
 
+        $newOrder = [];
+
+        foreach ($postIds as $postId) {
+            $orderMeta = get_post_meta($postId, 'gm_gallery_order', true);
+            $newOrder[] = (int) $orderMeta[0];
+        }
+
+        $expectedOrder = $originalOrder;
+        unset($expectedOrder[5]);
+        $expectedOrder[] = 5;
+        $expectedOrder = array_values($expectedOrder);
+
+        $this->assertEqualSets($expectedOrder, $newOrder);
         $this->assertEquals(5, $lastPostOrderNew);
 
     }
 
-    protected function getAttachmentIds($postId) {
+    protected function getAttachmentIds($postId)
+    {
         $response = $this->createRequestGetSingleGalleryItem($postId);
         $newGalleryItem = $response->get_data();
         $attachedImages = $newGalleryItem['images'];
