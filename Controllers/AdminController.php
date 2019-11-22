@@ -79,6 +79,24 @@ class AdminController extends BaseController
         $postId = $this->setRequestParams($request, 'postId');
         $order = $this->setRequestParams($request, 'order');
 
+        $postIdsGreaterThanOrder = $this->getOrderGreaterThan($order, $postId);
+
         update_post_meta($postId, 'gm_gallery_order', $order);
+
+        foreach ($postIdsGreaterThanOrder as $currentPostId) {
+            update_post_meta($currentPostId, 'gm_gallery_order', ++$order);
+        }
+    }
+
+    protected function getOrderGreaterThan($order, $doNotIncludePostId = null)
+    {
+        global $wpdb;
+
+        $query = "SELECT post_id FROM $wpdb->postmeta WHERE meta_key = %s AND cast(meta_value as unsigned) >= %d AND post_id != %d ORDER BY meta_value ASC";
+
+        $metaQueryResult = $wpdb->get_results($wpdb->prepare($query, 'gm_gallery_order', $order, $doNotIncludePostId), 'ARRAY_N');
+        $postIdsGreaterThanOrder = $this->flattenArray($metaQueryResult);
+
+        return $postIdsGreaterThanOrder;
     }
 }
