@@ -44,8 +44,7 @@ class SubmitController extends BaseController
         if (!is_wp_error($newPostId)) {
             $data['postID'] = $newPostId;
         }
-
-//        add_post_meta($newPostId, 'gm_gallery_order', 0, false);
+        
         $this->setGalleryPostOrderMetaData($newPostId);
 
         $attachmentIds = $this->processImageAttachments($imageData, $newPostId);
