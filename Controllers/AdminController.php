@@ -73,4 +73,12 @@ class AdminController extends BaseController
 
         return $response;
     }
+
+    public function setGalleryPostOrder(WP_REST_Request $request)
+    {
+        $postId = $this->setRequestParams($request, 'postId');
+        $order = $this->setRequestParams($request, 'order');
+
+        update_post_meta($postId, 'gm_gallery_order', $order);
+    }
 }
