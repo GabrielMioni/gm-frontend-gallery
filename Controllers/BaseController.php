@@ -129,4 +129,15 @@ abstract class BaseController
 
         return $out;
     }
+
+    protected function flattenArray(array $array)
+    {
+        $out = [];
+
+        array_walk_recursive($array, function($a) use (&$out) {
+            $out[] = $a;
+        });
+
+        return $out;
+    }
 }
