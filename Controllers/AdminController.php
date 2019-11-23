@@ -53,12 +53,14 @@ class AdminController extends BaseController
 
         $metaData = $this->getCompleteMetaData($postId, 'gm_gallery_attachment', $attachId);
 
-        if (!$metaData) {
+        if (empty($metaData)) {
             return $this->createWPError('invalid_request', 'attach_id not found', 400);
         }
 
-        $metaId = $metaData->meta_id;
-        $attachId = $metaData->meta_value['attach_id'];
+        $galleryAttachmentMeta = $metaData[0];
+
+        $metaId = $galleryAttachmentMeta->meta_id;
+        $attachId = $galleryAttachmentMeta->meta_value;
 
         $paths = $this->getPathsByAttachId($attachId);
 
