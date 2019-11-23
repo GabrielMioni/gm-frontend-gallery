@@ -43,6 +43,7 @@ abstract class BaseController
             $images[] = [
                 'attach_id' => $attachId,
                 'sized_images' => $sizedImages,
+                'order' => get_post_meta($attachId, $this->galleryAttachmentOrderKey, true),
             ];
         }
 
