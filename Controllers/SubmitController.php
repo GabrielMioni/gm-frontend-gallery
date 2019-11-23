@@ -58,16 +58,18 @@ class SubmitController extends BaseController
     protected function processImageAttachments(array $imageData, $postId)
     {
         $attachmentIds = [];
+        $order = 0;
 
         foreach ($imageData as $imageDatum) {
-            $attachmentIds[] = $this->createImageAttachment($imageDatum, $postId);
+            $attachmentIds[] = $this->createImageAttachment($imageDatum, $postId, $order);
+            ++$order;
         }
 
         return $attachmentIds;
 
     }
 
-    protected function createImageAttachment(array $imageData, $postId)
+    protected function createImageAttachment(array $imageData, $postId, $order)
     {
         $uploadData = wp_upload_bits($imageData['name'], null, $imageData['file']);
 
@@ -92,7 +94,7 @@ class SubmitController extends BaseController
 
         $attachmentMetaData = [
             'attach_id' => $attach_id,
-            'order' => 0
+            'order' => $order
         ];
 
         add_post_meta($postId, $this->galleryAttachmentMetaKey, $attachmentMetaData, false);
