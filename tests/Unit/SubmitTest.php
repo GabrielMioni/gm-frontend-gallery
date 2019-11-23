@@ -32,13 +32,12 @@ class SubmitTest extends GalleryUnitTestCase
         $responseData  = $postResponse['response']->get_data();
 
         $postID = $responseData['postID'];
-        $postAttachmentData = get_post_meta($postID, 'gm_gallery_attachment', false);
+        $attachmentIds = get_post_meta($postID, 'gm_gallery_attachment', false);
 
         $postImages = [];
 
-        foreach ($postAttachmentData as $postAttachmentDatum) {
-            $attachId = $postAttachmentDatum['attach_id'];
-            $postImages[] = basename(wp_get_attachment_image_url($attachId, 'full'));
+        foreach ($attachmentIds as $attachmentId) {
+            $postImages[] = basename(wp_get_attachment_image_url($attachmentId, 'full'));
         }
 
         sort($postImages);
@@ -113,9 +112,12 @@ class SubmitTest extends GalleryUnitTestCase
         $postResponse = $response->get_data();
         $postID = $postResponse['postID'];
 
-        $postAttachmentData = get_post_meta($postID, 'gm_gallery_attachment', false);
-        $postAttachmentId = $postAttachmentData[0]['attach_id'];
+        $attachmentIds = get_post_meta($postID, 'gm_gallery_attachment', false);
 
-        $this->assertNotEquals('', $postAttachmentId);
+        $attachmentId = (int) $attachmentIds[0];
+
+        $attachmentPost = get_post($attachmentId);
+
+        $this->assertFalse(is_null($attachmentPost));
     }
 }
