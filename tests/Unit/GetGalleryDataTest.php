@@ -111,13 +111,12 @@ class GetGalleryDataTest extends GalleryUnitTestCase
         $this->assertEquals($newPost->post_title, $getGalleryPostResponseData['post_title']);
         $this->assertEquals($newPost->post_content, $getGalleryPostResponseData['post_content']);
 
-        $meta = get_post_meta($postID, 'gm_gallery_attachment', false);
+        $attachmentIds = get_post_meta($postID, 'gm_gallery_attachment', false);
 
-        foreach ($meta as $key => $metaData) {
-            $metaAttachId = $metaData['attach_id'];
+        foreach ($attachmentIds as $key => $attachmentId) {
             $responseAttachId = $getGalleryPostResponseData['images'][$key]['attach_id'];
 
-            $this->assertEquals($responseAttachId, $metaAttachId);
+            $this->assertEquals($responseAttachId, $attachmentId);
         }
     }
 
@@ -143,14 +142,14 @@ class GetGalleryDataTest extends GalleryUnitTestCase
         $newGalleryPostData = $createGalleryPostResponse->get_data();
 
         $postID = $newGalleryPostData['postID'];
-        $attachmentMeta = get_post_meta($postID, 'gm_gallery_attachment');
+        $attachmentIds = get_post_meta($postID, 'gm_gallery_attachment');
 
         $expectedOrder = 0;
 
-        foreach ($attachmentMeta as $meta) {
-            $metaOrder = isset($meta['order']) ? (int) $meta['order'] : null;
-            $this->assertFalse(is_null($metaOrder));
-            $this->assertEquals($expectedOrder, $metaOrder);
+        foreach ($attachmentIds as $attachmentId) {
+            $attachmentOrder = get_post_meta($attachmentId, 'gm_gallery_attachment_order', true);
+            $attachmentOrder = $attachmentOrder !== '' ? (int) $attachmentOrder : false;
+            $this->assertEquals($expectedOrder, $attachmentOrder);
             ++$expectedOrder;
         }
     }
