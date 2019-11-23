@@ -12,6 +12,7 @@ abstract class BaseController
     protected $postStatus = 'published';
     protected $galleryIncompleteCode = 'gallery_incomplete';
     protected $galleryAttachmentMetaKey = 'gm_gallery_attachment';
+    protected $galleryAttachmentOrderKey = 'gm_gallery_attachment_order';
 
     protected function setRequestParams(WP_REST_Request $request, $key)
     {

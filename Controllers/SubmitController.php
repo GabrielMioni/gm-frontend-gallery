@@ -69,7 +69,7 @@ class SubmitController extends BaseController
 
     }
 
-    protected function createImageAttachment(array $imageData, $postId, $order)
+    protected function createImageAttachment(array $imageData, $postId, $attachmentOrder)
     {
         $uploadData = wp_upload_bits($imageData['name'], null, $imageData['file']);
 
@@ -92,12 +92,8 @@ class SubmitController extends BaseController
 
         wp_update_attachment_metadata($attach_id, $attach_data);
 
-        $attachmentMetaData = [
-            'attach_id' => $attach_id,
-            'order' => $order
-        ];
-
-        add_post_meta($postId, $this->galleryAttachmentMetaKey, $attachmentMetaData, false);
+        add_post_meta($postId, $this->galleryAttachmentMetaKey, $attach_id, false);
+        add_post_meta($attach_id, $this->galleryAttachmentOrderKey, $attachmentOrder, true);
 
         return $attach_id;
     }
