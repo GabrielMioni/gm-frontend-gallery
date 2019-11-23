@@ -145,8 +145,13 @@ class GetGalleryDataTest extends GalleryUnitTestCase
         $postID = $newGalleryPostData['postID'];
         $attachmentMeta = get_post_meta($postID, 'gm_gallery_attachment');
 
+        $expectedOrder = 0;
+
         foreach ($attachmentMeta as $meta) {
-            $this->assertTrue(isset($meta['order']));
+            $metaOrder = isset($meta['order']) ? (int) $meta['order'] : null;
+            $this->assertFalse(is_null($metaOrder));
+            $this->assertEquals($expectedOrder, $metaOrder);
+            ++$expectedOrder;
         }
     }
 
