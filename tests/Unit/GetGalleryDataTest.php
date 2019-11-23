@@ -133,7 +133,21 @@ class GetGalleryDataTest extends GalleryUnitTestCase
             $meta = get_post_meta($postID, 'gm_gallery_order');
             $this->assertFalse(empty($meta));
         }
+    }
 
+    /** @test */
+    public function gallery_attachment_meta_data_has_order()
+    {
+        $data = $this->createGalleryPostWithMultipleImages();
+        $createGalleryPostResponse = $data['response'];
+        $newGalleryPostData = $createGalleryPostResponse->get_data();
+
+        $postID = $newGalleryPostData['postID'];
+        $attachmentMeta = get_post_meta($postID, 'gm_gallery_attachment');
+
+        foreach ($attachmentMeta as $meta) {
+            $this->assertTrue(isset($meta['order']));
+        }
     }
 
     protected function createPostsWithRequest($count = false)
