@@ -51,12 +51,11 @@ abstract class BaseController
 
     public function getAttachmentImagePaths($postId)
     {
-        $galleryAttachmentMeta = get_post_meta($postId, 'gm_gallery_attachment', false);
+        $attachmentIds = get_post_meta($postId, 'gm_gallery_attachment', false);
 
         $imageAttachmentPaths = [];
 
-        foreach ($galleryAttachmentMeta as $meta) {
-            $attachId = $meta['attach_id'];
+        foreach ($attachmentIds as $attachId) {
             $attachmentPaths = $this->getPathsByAttachId($attachId);
             $imageAttachmentPaths = array_merge($imageAttachmentPaths, $attachmentPaths);
         }
@@ -87,33 +86,17 @@ abstract class BaseController
         return $imageAttachmentPaths;
     }
 
-    protected function getCompleteMetaData($postId, $metaKey, $attachmentId = null) {
-
-        if ($attachmentId !== null)
-            $attachmentId = (int) $attachmentId;
+    protected function getCompleteMetaData($postId, $metaKey, $attachmentId) {
 
         global $wpdb;
-        $meta = $wpdb->get_results( $wpdb->prepare("SELECT * FROM $wpdb->postmeta WHERE post_id = %d AND meta_key = %s", $postId, $metaKey) );
+        $query = "SELECT * FROM $wpdb->postmeta WHERE post_id = %d AND meta_key = %s AND meta_value = %d";
+        $metaData = $wpdb->get_results( $wpdb->prepare($query, $postId, $metaKey, $attachmentId) );
 
-        if (empty($meta)) {
+        if (empty($metaData)) {
             return false;
         }
 
-        foreach ($meta as $m) {
-            $m->meta_value = isset($m->meta_value) ? maybe_unserialize($m->meta_value) : null;
-            $checkAttachId = isset($m->meta_value['attach_id']) ? $m->meta_value['attach_id'] : false;
-
-            if ($checkAttachId === $attachmentId) {
-                return $m;
-            }
-        }
-
-        if ($attachmentId !== null) {
-            // Couldn't find the meta data with the attachment id.
-            return false;
-        }
-
-        return $meta;
+        return $metaData;
     }
 
     protected function multiPluck($input, array $indexKeys)
