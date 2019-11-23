@@ -92,6 +92,7 @@ class SubmitController extends BaseController
 
         $attachmentMetaData = [
             'attach_id' => $attach_id,
+            'order' => 0
         ];
 
         add_post_meta($postId, $this->galleryAttachmentMetaKey, $attachmentMetaData, false);
