@@ -159,6 +159,49 @@ class AdminEditTest extends GalleryUnitTestCase
 
         $this->assertEqualSets($expectedOrder, $newOrder);
         $this->assertEquals(5, $lastPostOrderNew);
+    }
+
+    /** @test */
+    public function gallery_attachments_order_meta_data_can_be_changed()
+    {
+        $data = $this->createGalleryPostWithMultipleImages();
+        $createGalleryPostResponse = $data['response'];
+        $newGalleryPostData = $createGalleryPostResponse->get_data();
+
+        $postID = $newGalleryPostData['postID'];
+        $attachmentIds = get_post_meta($postID, 'gm_gallery_attachment');
+
+        $originalOrder = [];
+
+        foreach ($attachmentIds as $attachmentId) {
+            $order = get_post_meta($attachmentId, 'gm_gallery_attachment_order', true);
+            $originalOrder[] = $order;
+        }
+
+        $lastAttachmentId = $attachmentIds[count($attachmentIds)-1];
+
+        $request = new WP_REST_Request('POST', $this->namespaced_route . '/order/attachment/' . $lastAttachmentId . '/' . '5');
+        $request->set_header('Content-Type', 'application/json');
+        $response = $this->dispatchRequest($request);
+
+        $this->assertEquals(200, $response->get_status());
+
+        $newOrder = [];
+
+        foreach ($attachmentIds as $attachmentId) {
+            $order = get_post_meta($attachmentId, 'gm_gallery_attachment_order', true);
+            $newOrder[] = $order;
+        }
+
+        $expectedOrder = $originalOrder;
+        unset($expectedOrder[5]);
+        $expectedOrder[] = 5;
+        $expectedOrder = array_values($expectedOrder);
+
+        $lastAttachmentOrderNew = get_post_meta($lastAttachmentId, 'gm_gallery_attachment_order', true);
+
+        $this->assertEqualSets($expectedOrder, $newOrder);
+        $this->assertEquals(5, $lastAttachmentOrderNew);
 
     }
 
