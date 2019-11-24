@@ -83,10 +83,10 @@ class AdminController extends BaseController
 
         $postIdsGreaterThanOrder = $this->getOrderGreaterThan($order, $postId);
 
-        update_post_meta($postId, 'gm_gallery_order', $order);
+        update_post_meta($postId, $this->galleryPostOrderKey, $order);
 
         foreach ($postIdsGreaterThanOrder as $currentPostId) {
-            update_post_meta($currentPostId, 'gm_gallery_order', ++$order);
+            update_post_meta($currentPostId, $this->galleryPostOrderKey, ++$order);
         }
     }
 
@@ -119,7 +119,7 @@ class AdminController extends BaseController
 
         $query = "SELECT post_id FROM $wpdb->postmeta WHERE meta_key = %s AND cast(meta_value as unsigned) >= %d AND post_id != %d ORDER BY meta_value ASC";
 
-        $metaQueryResult = $wpdb->get_results($wpdb->prepare($query, 'gm_gallery_order', $order, $doNotIncludePostId), 'ARRAY_N');
+        $metaQueryResult = $wpdb->get_results($wpdb->prepare($query, $this->galleryPostOrderKey, $order, $doNotIncludePostId), 'ARRAY_N');
         $postIdsGreaterThanOrder = $this->flattenArray($metaQueryResult);
 
         return $postIdsGreaterThanOrder;

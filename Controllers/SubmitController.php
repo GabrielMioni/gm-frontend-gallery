@@ -7,8 +7,6 @@ use WP_REST_Response;
 
 class SubmitController extends BaseController
 {
-    protected $gm_gallery_order_key = 'gm_gallery_order';
-
     public function processGallerySubmission(WP_REST_Request $request)
     {
         $nonceParam   = $this->setRequestParams($request, 'post_nonce');
@@ -103,12 +101,12 @@ class SubmitController extends BaseController
         global $wpdb;
 
         $querySelect = 'max(cast(meta_value as unsigned))';
-        $metaQueryResult = $wpdb->get_results($wpdb->prepare("SELECT $querySelect FROM $wpdb->postmeta WHERE meta_key = %s", $this->gm_gallery_order_key), 'ARRAY_A');
+        $metaQueryResult = $wpdb->get_results($wpdb->prepare("SELECT $querySelect FROM $wpdb->postmeta WHERE meta_key = %s", $this->galleryPostOrderKey), 'ARRAY_A');
         $metaQueryValue = $metaQueryResult[0][$querySelect];
 
         $maxOrder = (int) $metaQueryValue;
         $setOrder = $maxOrder +1;
 
-        add_post_meta($postId, $this->gm_gallery_order_key, $setOrder, false);
+        add_post_meta($postId, $this->galleryPostOrderKey, $setOrder, false);
     }
 }
