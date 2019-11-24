@@ -179,8 +179,9 @@ class AdminEditTest extends GalleryUnitTestCase
         }
 
         $lastAttachmentId = $attachmentIds[count($attachmentIds)-1];
+        $setAttachmentIdOrder = 2;
 
-        $request = new WP_REST_Request('POST', $this->namespaced_route . '/order/attachment/' . $postId . '/' . $lastAttachmentId . '/' . '5');
+        $request = new WP_REST_Request('POST', $this->namespaced_route . '/order/attachment/' . $postId . '/' . $lastAttachmentId . '/' . $setAttachmentIdOrder);
         $request->set_header('Content-Type', 'application/json');
         $response = $this->dispatchRequest($request);
 
@@ -194,15 +195,14 @@ class AdminEditTest extends GalleryUnitTestCase
         }
 
         $expectedOrder = $originalOrder;
-        unset($expectedOrder[5]);
-        $expectedOrder[] = 5;
+        unset($expectedOrder[$setAttachmentIdOrder]);
+        $expectedOrder[] = $setAttachmentIdOrder;
         $expectedOrder = array_values($expectedOrder);
 
         $lastAttachmentOrderNew = get_post_meta($lastAttachmentId, 'gm_gallery_attachment_order', true);
 
         $this->assertEqualSets($expectedOrder, $newOrder);
-        $this->assertEquals(5, $lastAttachmentOrderNew);
-
+        $this->assertEquals($setAttachmentIdOrder, $lastAttachmentOrderNew);
     }
 
     protected function getAttachmentIds($postId)
