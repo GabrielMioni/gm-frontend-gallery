@@ -21,10 +21,10 @@ if (!defined('WP_TEST_RUNNING')) {
 
 class gmFrontendGallery
 {
-    public static function createPostType()
-    {
-        $postType = 'gallery';
+    use definitionsTrait;
 
+    public function createPostType()
+    {
         $labels = [
             'name' => 'Gallery Images',
             'singular_name' => 'Gallery'
@@ -34,13 +34,13 @@ class gmFrontendGallery
             'labels' => $labels,
             'public' => true,
             'has_archive' => true,
-            'rewrite' => ['slug' => $postType],
+            'rewrite' => ['slug' => $this->postType],
         ];
 
-        register_post_type($postType, $args);
+        register_post_type($this->postType, $args);
     }
 
-    public static function registerApiRoutes()
+    public function registerApiRoutes()
     {
         $submitController = new SubmitController();
         $adminController = new AdminController();
@@ -67,21 +67,21 @@ class gmFrontendGallery
             ]
         ]);
         register_rest_route( 'gm-frontend-gallery/v1', '/get(?:/(?P<orderBy>[a-zA-Z\s]+))?(?:/(?P<order>[a-zA-Z\s]+))?',
-            self::setGetRouteArray($galleryController, [
+            $this->setGetRouteArray($galleryController, [
                 'orderBy',
                 'order'
             ])
         );
 
         register_rest_route( 'gm-frontend-gallery/v1', '/get/(?P<orderBy>[a-zA-Z\s]+)/(?P<order>[a-zA-Z\s]+)',
-            self::setGetRouteArray($galleryController, [
+            $this->setGetRouteArray($galleryController, [
                 'orderBy',
                 'order',
             ])
         );
 
         register_rest_route( 'gm-frontend-gallery/v1', '/get/(?P<page>\d+)/(?P<results>\d+)(?:/(?P<orderBy>[a-zA-Z\s]+))?(?:/(?P<order>[a-zA-Z\s]+))?',
-            self::setGetRouteArray($galleryController, [
+            $this->setGetRouteArray($galleryController, [
                 'page',
                 'results',
                 'orderBy',
@@ -117,7 +117,7 @@ class gmFrontendGallery
         ]);
     }
 
-    protected static function setGetRouteArray(GalleryController $galleryController, array $args)
+    protected function setGetRouteArray(GalleryController $galleryController, array $args)
     {
         return [
             'methods' => WP_REST_Server::READABLE,

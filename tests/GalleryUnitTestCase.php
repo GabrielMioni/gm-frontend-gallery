@@ -20,8 +20,8 @@ class GalleryUnitTestCase extends WP_UnitTestCase
         do_action('rest_api_init');
 
         $gmFrontendGallery = new gmFrontendGallery();
-        $gmFrontendGallery::createPostType();
-        $gmFrontendGallery::registerApiRoutes();
+        $gmFrontendGallery->createPostType();
+        $gmFrontendGallery->registerApiRoutes();
     }
 
     public function tearDown()
