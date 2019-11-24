@@ -29,7 +29,7 @@ class GalleryController extends BaseController
             'post_type' => $this->postType,
             'order'     => $orderData['order'],
             'orderby'   => $orderData['orderby'],
-            'post_status' => $this->postStatus,
+            'post_status' => $this->galleryPostStatus,
             'offset' => $isPaged === true ? $numberPosts * ($postsPerPage - 1) : -1,
             'numberposts'=> $isPaged === true ? $numberPosts : -1,
         ];
