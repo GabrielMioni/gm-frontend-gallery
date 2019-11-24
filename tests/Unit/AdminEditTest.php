@@ -174,7 +174,7 @@ class AdminEditTest extends GalleryUnitTestCase
         $originalOrder = [];
 
         foreach ($attachmentIds as $attachmentId) {
-            $order = get_post_meta($attachmentId, 'gm_gallery_attachment_order', true);
+            $order = get_post_meta($attachmentId, $this->galleryAttachmentOrderKey, true);
             $originalOrder[] = $order;
         }
 
@@ -190,7 +190,7 @@ class AdminEditTest extends GalleryUnitTestCase
         $newOrder = [];
 
         foreach ($attachmentIds as $attachmentId) {
-            $order = get_post_meta($attachmentId, 'gm_gallery_attachment_order', true);
+            $order = get_post_meta($attachmentId, $this->galleryAttachmentOrderKey, true);
             $newOrder[] = $order;
         }
 
@@ -199,7 +199,7 @@ class AdminEditTest extends GalleryUnitTestCase
         $expectedOrder[] = $setAttachmentIdOrder;
         $expectedOrder = array_values($expectedOrder);
 
-        $lastAttachmentOrderNew = get_post_meta($lastAttachmentId, 'gm_gallery_attachment_order', true);
+        $lastAttachmentOrderNew = get_post_meta($lastAttachmentId, $this->galleryAttachmentOrderKey, true);
 
         $this->assertEqualSets($expectedOrder, $newOrder);
         $this->assertEquals($setAttachmentIdOrder, $lastAttachmentOrderNew);
