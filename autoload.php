@@ -1,5 +1,7 @@
 <?php
 
+require_once('definitionsTrait.php');
+
 try {
     spl_autoload_register(function ($className){
         $namespaceParts = explode('\\', $className);

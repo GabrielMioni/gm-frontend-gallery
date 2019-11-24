@@ -8,12 +8,14 @@ use WP_Post;
 
 abstract class BaseController
 {
-    protected $postType = 'gallery';
-    protected $postStatus = 'published';
-    protected $galleryIncompleteCode = 'gallery_incomplete';
-    protected $galleryAttachmentMetaKey = 'gm_gallery_attachment';
-    protected $galleryPostOrderKey = 'gm_gallery_order';
-    protected $galleryAttachmentOrderKey = 'gm_gallery_attachment_order';
+//    protected $postType = 'gallery';
+//    protected $postStatus = 'published';
+//    protected $galleryIncompleteCode = 'gallery_incomplete';
+//    protected $galleryAttachmentMetaKey = 'gm_gallery_attachment';
+//    protected $galleryPostOrderKey = 'gm_gallery_order';
+//    protected $galleryAttachmentOrderKey = 'gm_gallery_attachment_order';
+
+    use \definitionsTrait;
 
     protected function setRequestParams(WP_REST_Request $request, $key)
     {
