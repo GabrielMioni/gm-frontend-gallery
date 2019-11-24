@@ -179,7 +179,7 @@ class GetGalleryDataTest extends GalleryUnitTestCase
             'post_content' => 'I am some words for the Content',
             'post_title'   => 'I am a default title',
             'post_type'    => 'gallery',
-            'post_status'  => 'published'
+            'post_status'  => $this->galleryPostStatus
         ];
 
         $postFactory = $this->factory->post;
