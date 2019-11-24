@@ -80,7 +80,7 @@ class AdminEditTest extends GalleryUnitTestCase
             $this->assertFalse(file_exists($imagePath));
         }
 
-        $attachmentMetaDataAfterDelete = get_post_meta($postId, 'gm_gallery_attachment', false);
+        $attachmentMetaDataAfterDelete = get_post_meta($postId, $this->galleryAttachmentMetaKey, false);
 
         $this->assertTrue(empty($attachmentMetaDataAfterDelete));
     }
@@ -169,7 +169,7 @@ class AdminEditTest extends GalleryUnitTestCase
         $newGalleryPostData = $createGalleryPostResponse->get_data();
 
         $postId = $newGalleryPostData['postID'];
-        $attachmentIds = get_post_meta($postId, 'gm_gallery_attachment');
+        $attachmentIds = get_post_meta($postId, $this->galleryAttachmentMetaKey, false);
 
         $originalOrder = [];
 

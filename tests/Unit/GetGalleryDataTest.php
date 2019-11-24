@@ -111,7 +111,7 @@ class GetGalleryDataTest extends GalleryUnitTestCase
         $this->assertEquals($newPost->post_title, $getGalleryPostResponseData['post_title']);
         $this->assertEquals($newPost->post_content, $getGalleryPostResponseData['post_content']);
 
-        $attachmentIds = get_post_meta($postID, 'gm_gallery_attachment', false);
+        $attachmentIds = get_post_meta($postID, $this->galleryAttachmentMetaKey, false);
 
         foreach ($attachmentIds as $key => $attachmentId) {
             $responseAttachId = $getGalleryPostResponseData['images'][$key]['attach_id'];
@@ -142,7 +142,7 @@ class GetGalleryDataTest extends GalleryUnitTestCase
         $newGalleryPostData = $createGalleryPostResponse->get_data();
 
         $postID = $newGalleryPostData['postID'];
-        $attachmentIds = get_post_meta($postID, 'gm_gallery_attachment');
+        $attachmentIds = get_post_meta($postID, $this->galleryAttachmentMetaKey);
 
         $expectedOrder = 0;
 
