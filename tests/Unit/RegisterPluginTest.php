@@ -1,12 +1,28 @@
 <?php
 require_once(__DIR__ . '/../../gm-frontend-gallery.php');
+require_once(__DIR__ . '/../../definitionsTrait.php');
 
 class RegisterPluginTest extends WP_UnitTestCase
 {
+    use definitionsTrait;
+
+    public function setUp()
+    {
+        parent::setUp();
+        $gmFrontendGallery = new gmFrontendGallery();
+        $gmFrontendGallery->createPostType();
+    }
+
+    public function tearDown()
+    {
+        parent::tearDown();
+    }
+
     /** @test */
     public function plugin_can_create_gallery_post_type()
     {
-        $this->assertTrue($this->galleryPostTypeExists());
+        $postTypeExists = post_type_exists($this->postType);
+        $this->assertTrue($postTypeExists);
     }
 
     /** @test */
@@ -17,11 +33,6 @@ class RegisterPluginTest extends WP_UnitTestCase
 
         $activePlugins = get_option('active_plugins');
         $this->assertContains('gm-frontend-gallery/gm-frontend-gallery.php', $activePlugins);
-    }
-
-    protected function galleryPostTypeExists()
-    {
-        return post_type_exists('gallery');
     }
     
     protected function activatePlugins($plugin )
