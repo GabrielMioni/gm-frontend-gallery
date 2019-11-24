@@ -106,7 +106,7 @@ class AdminController extends BaseController
 
         $attachIdsToBeUpdated = $this->flattenArray($metaQueryResult);
 
-        update_post_meta($attachId, 'gm_gallery_attachment_order', $order);
+        update_post_meta($attachId, $this->galleryAttachmentOrderKey, $order);
 
         foreach ($attachIdsToBeUpdated as $currentAttachId) {
             update_post_meta($currentAttachId, $this->galleryAttachmentOrderKey, ++$order);
