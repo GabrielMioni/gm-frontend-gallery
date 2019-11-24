@@ -163,13 +163,13 @@ class GalleryUnitTestCase extends WP_UnitTestCase
     protected function registerPluginSubmitRoute()
     {
         $gmFrontendGallery = new gmFrontendGallery();
-        $gmFrontendGallery::registerApiSubmitRoute();
+        $gmFrontendGallery->registerApiRoutes();
     }
 
     protected function registerPluginGetRoute()
     {
         $gmFrontendGallery = new gmFrontendGallery();
-        $gmFrontendGallery::registerApiGetRoute();
+        $gmFrontendGallery->registerApiGetRoute();
     }
 
     protected function dispatchRequest(WP_REST_Request $request)
