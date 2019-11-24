@@ -96,9 +96,21 @@ class AdminController extends BaseController
         $attachId = $this->setRequestParams($request, 'attachId');
         $order = $this->setRequestParams($request, 'order');
 
-        var_dump($postId);
-        var_dump($attachId);
-        var_dump($order);
+        $attachIds = get_post_meta($postId, $this->galleryAttachmentMetaKey, false);
+        $postIdQuery = implode(',', $attachIds);
+
+        global $wpdb;
+
+        $query = "SELECT post_id FROM $wpdb->postmeta WHERE meta_key = %s AND cast(meta_value as unsigned) >= %d AND post_id IN ($postIdQuery) AND post_id != %d ORDER BY meta_value ASC";
+        $metaQueryResult = $wpdb->get_results($wpdb->prepare($query, $this->galleryAttachmentOrderKey, $order, $attachId), 'ARRAY_N');
+
+        $attachIdsToBeUpdated = $this->flattenArray($metaQueryResult);
+
+        update_post_meta($attachId, 'gm_gallery_attachment_order', $order);
+
+        foreach ($attachIdsToBeUpdated as $currentAttachId) {
+            update_post_meta($currentAttachId, $this->galleryAttachmentOrderKey, ++$order);
+        }
     }
 
     protected function getOrderGreaterThan($order, $doNotIncludePostId = null)
