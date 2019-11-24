@@ -90,6 +90,15 @@ class AdminController extends BaseController
         }
     }
 
+    public function setGalleryAttachmentOrder(WP_REST_Request $request)
+    {
+        $postId = $this->setRequestParams($request, 'postId');
+        $order = $this->setRequestParams($request, 'order');
+
+        var_dump($postId);
+        var_dump($order);
+    }
+
     protected function getOrderGreaterThan($order, $doNotIncludePostId = null)
     {
         global $wpdb;
