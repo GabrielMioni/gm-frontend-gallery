@@ -1,9 +1,12 @@
 <?php
 
 require_once(__DIR__ . '/../gm-frontend-gallery.php');
+require_once(__DIR__ . '/../definitionsTrait.php');
 
 class GalleryUnitTestCase extends WP_UnitTestCase
 {
+    use definitionsTrait;
+
     protected $server;
     protected $namespaced_route = '/gm-frontend-gallery/v1';
     protected $image_sizes = ['thumbnail', 'medium', 'full'];
