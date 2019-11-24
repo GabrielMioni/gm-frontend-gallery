@@ -1,9 +1,12 @@
 <?php
 
 require_once dirname(dirname(__FILE__)) . '/GalleryUnitTestCase.php';
+require_once dirname(__FILE__) . '/../../definitionsTrait.php';
 
 class SubmitTest extends GalleryUnitTestCase
 {
+    use definitionsTrait;
+
     public function setUp()
     {
         parent::setUp();
@@ -32,7 +35,7 @@ class SubmitTest extends GalleryUnitTestCase
         $responseData  = $postResponse['response']->get_data();
 
         $postID = $responseData['postID'];
-        $attachmentIds = get_post_meta($postID, 'gm_gallery_attachment', false);
+        $attachmentIds = get_post_meta($postID, $this->galleryAttachmentMetaKey, false);
 
         $postImages = [];
 
@@ -112,7 +115,7 @@ class SubmitTest extends GalleryUnitTestCase
         $postResponse = $response->get_data();
         $postID = $postResponse['postID'];
 
-        $attachmentIds = get_post_meta($postID, 'gm_gallery_attachment', false);
+        $attachmentIds = get_post_meta($postID, $this->galleryAttachmentMetaKey, false);
 
         $attachmentId = (int) $attachmentIds[0];
 
