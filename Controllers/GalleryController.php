@@ -26,7 +26,7 @@ class GalleryController extends BaseController
         $isPaged = !is_null($postsPerPage) && !(is_null($numberPosts));
 
         $args = [
-            'post_type' => $this->postType,
+            'post_type' => $this->galleryPostType,
             'order'     => $orderData['order'],
             'orderby'   => $orderData['orderby'],
             'post_status' => $this->galleryPostStatus,

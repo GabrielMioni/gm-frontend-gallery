@@ -32,7 +32,7 @@ class SubmitController extends BaseController
         $postArray = [];
         $postArray['post_content'] = $post_content;
         $postArray['post_title']   = $post_title;
-        $postArray['post_type']    = $this->postType;
+        $postArray['post_type']    = $this->galleryPostType;
         $postArray['post_status']  = $this->galleryPostStatus;
 
         $newPostId = wp_insert_post($postArray, true);

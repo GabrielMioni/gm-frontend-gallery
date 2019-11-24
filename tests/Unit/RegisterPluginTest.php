@@ -21,7 +21,7 @@ class RegisterPluginTest extends WP_UnitTestCase
     /** @test */
     public function plugin_can_create_gallery_post_type()
     {
-        $postTypeExists = post_type_exists($this->postType);
+        $postTypeExists = post_type_exists($this->galleryPostType);
         $this->assertTrue($postTypeExists);
     }
 

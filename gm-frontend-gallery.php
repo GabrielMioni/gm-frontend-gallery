@@ -34,10 +34,10 @@ class gmFrontendGallery
             'labels' => $labels,
             'public' => true,
             'has_archive' => true,
-            'rewrite' => ['slug' => $this->postType],
+            'rewrite' => ['slug' => $this->galleryPostType],
         ];
 
-        register_post_type($this->postType, $args);
+        register_post_type($this->galleryPostType, $args);
     }
 
     public function registerApiRoutes()

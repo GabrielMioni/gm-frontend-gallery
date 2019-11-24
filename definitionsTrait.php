@@ -2,7 +2,7 @@
 
 trait definitionsTrait
 {
-    protected $postType = 'gallery';
+    protected $galleryPostType = 'gallery';
     protected $galleryPostStatus = 'published';
     protected $galleryIncompleteCode = 'gallery_incomplete';
     protected $galleryAttachmentMetaKey = 'gm_gallery_attachment';
