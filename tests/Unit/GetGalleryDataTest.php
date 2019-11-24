@@ -129,7 +129,7 @@ class GetGalleryDataTest extends GalleryUnitTestCase
         $this->assertEquals($count, count($postIDs));
 
         foreach ($postIDs as $postID) {
-            $meta = get_post_meta($postID, 'gm_gallery_order');
+            $meta = get_post_meta($postID, $this->galleryPostOrderKey);
             $this->assertFalse(empty($meta));
         }
     }

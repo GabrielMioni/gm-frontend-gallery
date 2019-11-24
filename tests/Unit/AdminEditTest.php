@@ -125,7 +125,7 @@ class AdminEditTest extends GalleryUnitTestCase
                 'post_type'    => 'gallery',
                 'post_status'  => $this->galleryPostStatus,
                 'meta_input' => [
-                    'gm_gallery_order' => $order,
+                    $this->galleryPostOrderKey => $order,
                 ]
             ]);
             $originalOrder[] = $order;
@@ -133,7 +133,7 @@ class AdminEditTest extends GalleryUnitTestCase
         }
 
         $lastPostId = $postIds[count($postIds)-1];
-        $lastPostOrder = get_post_meta($lastPostId, 'gm_gallery_order', true);
+        $lastPostOrder = get_post_meta($lastPostId, $this->galleryPostOrderKey, true);
 
         $this->assertEquals($order-1, $lastPostOrder);
 
@@ -143,12 +143,12 @@ class AdminEditTest extends GalleryUnitTestCase
 
         $this->assertEquals(200, $response->get_status());
 
-        $lastPostOrderNew = get_post_meta($lastPostId, 'gm_gallery_order', true);
+        $lastPostOrderNew = get_post_meta($lastPostId, $this->galleryPostOrderKey, true);
 
         $newOrder = [];
 
         foreach ($postIds as $postId) {
-            $orderMeta = get_post_meta($postId, 'gm_gallery_order', true);
+            $orderMeta = get_post_meta($postId, $this->galleryPostOrderKey, true);
             $newOrder[] = (int) $orderMeta[0];
         }
 
