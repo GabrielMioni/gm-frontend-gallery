@@ -168,8 +168,8 @@ class AdminEditTest extends GalleryUnitTestCase
         $createGalleryPostResponse = $data['response'];
         $newGalleryPostData = $createGalleryPostResponse->get_data();
 
-        $postID = $newGalleryPostData['postID'];
-        $attachmentIds = get_post_meta($postID, 'gm_gallery_attachment');
+        $postId = $newGalleryPostData['postID'];
+        $attachmentIds = get_post_meta($postId, 'gm_gallery_attachment');
 
         $originalOrder = [];
 
@@ -180,7 +180,7 @@ class AdminEditTest extends GalleryUnitTestCase
 
         $lastAttachmentId = $attachmentIds[count($attachmentIds)-1];
 
-        $request = new WP_REST_Request('POST', $this->namespaced_route . '/order/attachment/' . $lastAttachmentId . '/' . '5');
+        $request = new WP_REST_Request('POST', $this->namespaced_route . '/order/attachment/' . $postId . '/' . $lastAttachmentId . '/' . '5');
         $request->set_header('Content-Type', 'application/json');
         $response = $this->dispatchRequest($request);
 

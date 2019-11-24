@@ -106,11 +106,12 @@ class gmFrontendGallery
             ]
         ]);
 
-        register_rest_route('gm-frontend-gallery/v1', '/order/attachment/(?P<postId>\d+)?/(?P<order>\d+)?', [
+        register_rest_route('gm-frontend-gallery/v1', '/order/attachment/(?P<postId>\d+)?/(?P<attachId>\d+)/(?P<order>\d+)?', [
             'methods' => 'POST',
             'callback' => [$adminController, 'setGalleryAttachmentOrder'],
             'args' => [
                 'postId',
+                'attachId',
                 'order',
             ]
         ]);

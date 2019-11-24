@@ -93,9 +93,11 @@ class AdminController extends BaseController
     public function setGalleryAttachmentOrder(WP_REST_Request $request)
     {
         $postId = $this->setRequestParams($request, 'postId');
+        $attachId = $this->setRequestParams($request, 'attachId');
         $order = $this->setRequestParams($request, 'order');
 
         var_dump($postId);
+        var_dump($attachId);
         var_dump($order);
     }
 
