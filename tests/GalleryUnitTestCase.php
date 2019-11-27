@@ -67,19 +67,7 @@ class GalleryUnitTestCase extends WP_UnitTestCase
             'post_nonce' => wp_create_nonce('gm_gallery_submit'),
         ]);
 
-        $fileUploads = [];
-
-        foreach ($files as $file) {
-            $setFile = $path . '/' . $file;
-
-            $fileUploads[] = [
-                'file' => file_get_contents($setFile),
-                'name' => basename($setFile),
-                'size' => filesize($setFile),
-                'tmp_name' => 'abc',
-                'path' => $setFile,
-            ];
-        }
+        $fileUploads = $this->createFileUploadData(5);
 
         $request->set_file_params($fileUploads);
         $response = $this->dispatchRequest($request);
@@ -217,5 +205,36 @@ class GalleryUnitTestCase extends WP_UnitTestCase
         }
 
         return $postIds[0];
+    }
+
+    protected function createFileUploadData($attachmentCount = 1, $random = false)
+    {
+        $path = $this->getPluginFilePath();
+        $path .= '/tests/images';
+        $files = preg_grep('/^([^.])/', scandir($path));
+
+        if (count($files) > $attachmentCount) {
+            $files = array_splice($arr, 0, -$attachmentCount);
+        }
+
+        $fileUploads = [];
+
+        foreach ($files as $file) {
+            $setFile = $path . '/' . $file;
+
+            $fileUploads[] = [
+                'file' => file_get_contents($setFile),
+                'name' => basename($setFile),
+                'size' => filesize($setFile),
+                'tmp_name' => 'abc',
+                'path' => $setFile,
+            ];
+        }
+
+        if ($random === true) {
+            shuffle($fileUploads);
+        }
+
+        return $fileUploads;
     }
 }
