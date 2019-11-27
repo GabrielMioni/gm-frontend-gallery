@@ -34,7 +34,6 @@ class GetGalleryDataTest extends GalleryUnitTestCase
     /** @test */
     public function gallery_posts_can_be_paginated()
     {
-//        $postIds = $this->createPostWithFactory(31);
         $postIds = $this->createGalleryPostWithFactory(31);
 
         $pages = range(1, 4);
