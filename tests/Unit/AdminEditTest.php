@@ -114,30 +114,18 @@ class AdminEditTest extends GalleryUnitTestCase
     /** @test */
     public function gallery_posts_order_meta_data_can_be_changed()
     {
-        $order = 0;
-        $postIds = [];
         $originalOrder = [];
 
-        while($order < 10) {
-            $postIds[] = $this->factory()->post->create([
-                'post_content' => 'I am some words for the Content',
-                'post_title'   => 'I am a default title',
-                'post_type'    => 'gallery',
-                'post_status'  => $this->galleryPostStatus,
-                'meta_input' => [
-                    $this->galleryPostOrderKey => $order,
-                ]
-            ]);
-            $originalOrder[] = $order;
-            ++$order;
+        $postIds = $this->createGalleryPostWithFactory(10);
+
+        foreach ($postIds as $postId) {
+            $originalOrder[] = get_post_meta($postId, $this->galleryPostOrderKey, true);
         }
 
         $lastPostId = $postIds[count($postIds)-1];
-        $lastPostOrder = get_post_meta($lastPostId, $this->galleryPostOrderKey, true);
+        $setGalleryIdOrder = 5;
 
-        $this->assertEquals($order-1, $lastPostOrder);
-
-        $request = new WP_REST_Request('POST', $this->namespaced_route . '/order/post/' . $lastPostId . '/' . '5');
+        $request = new WP_REST_Request('POST', $this->namespaced_route . '/order/post/' . $lastPostId . '/' . $setGalleryIdOrder);
         $request->set_header('Content-Type', 'application/json');
         $response = $this->dispatchRequest($request);
 
@@ -153,12 +141,12 @@ class AdminEditTest extends GalleryUnitTestCase
         }
 
         $expectedOrder = $originalOrder;
-        unset($expectedOrder[5]);
-        $expectedOrder[] = 5;
+        unset($expectedOrder[$setGalleryIdOrder]);
+        $expectedOrder[] = $setGalleryIdOrder;
         $expectedOrder = array_values($expectedOrder);
 
         $this->assertEqualSets($expectedOrder, $newOrder);
-        $this->assertEquals(5, $lastPostOrderNew);
+        $this->assertEquals($setGalleryIdOrder, $lastPostOrderNew);
     }
 
     /** @test */
