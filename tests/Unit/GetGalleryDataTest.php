@@ -34,7 +34,8 @@ class GetGalleryDataTest extends GalleryUnitTestCase
     /** @test */
     public function gallery_posts_can_be_paginated()
     {
-        $postIds = $this->createPostWithFactory(31);
+//        $postIds = $this->createPostWithFactory(31);
+        $postIds = $this->createGalleryPostWithFactory(31);
 
         $pages = range(1, 4);
         $resultsPerPage = 10;
@@ -55,20 +56,13 @@ class GetGalleryDataTest extends GalleryUnitTestCase
     /** @test */
     public function gallery_pagination_can_be_ordered_both_asc_and_desc()
     {
-        $responses = $this->createPostWithFactory(31, 1000);
+        $postIds = $this->createGalleryPostWithFactory(31, 1000);
 
         $pages = range(1, 4);
         $resultsPerPage = 10;
 
         $paginatedResponsesAscending  = [];
         $paginatedResponsesDescending = [];
-
-        function pluckIdAndPostDate(array $inputArray) {
-            return [
-                'ID' => $inputArray['ID'],
-                'post_date' => $inputArray['post_date'],
-            ];
-        }
 
         foreach ($pages as $page) {
             $ascendingResponseData  = $this->sendGetRequest($page, $resultsPerPage, 'date', 'asc');
@@ -78,19 +72,19 @@ class GetGalleryDataTest extends GalleryUnitTestCase
             $outDescending = [];
 
             foreach ($ascendingResponseData as $key => $ascendingResponseDatum) {
-                $outAscending[]  = pluckIdAndPostDate($ascendingResponseDatum);
-                $outDescending[] = pluckIdAndPostDate($descendingResponseData[$key]);
+                $outAscending[]  = $ascendingResponseDatum['ID'];
+                $outDescending[] = $descendingResponseData[$key]['ID'];
             }
 
             $paginatedResponsesAscending[] = $outAscending;
             $paginatedResponsesDescending[] = $outDescending;
         }
 
-        $chunkedResponseAscending  = array_chunk($responses, $resultsPerPage);
-        $chunkedResponseDescending = array_chunk(array_reverse($responses), $resultsPerPage);
+        $chunkedPostIdsAscending  = array_chunk($postIds, $resultsPerPage);
+        $chunkedPostIdsDescending = array_chunk(array_reverse($postIds), $resultsPerPage);
 
-        $this->assertEqualSets($chunkedResponseAscending, $paginatedResponsesAscending);
-        $this->assertEqualSets($chunkedResponseDescending, $paginatedResponsesDescending);
+        $this->assertEqualSets($chunkedPostIdsAscending, $paginatedResponsesAscending);
+        $this->assertEqualSets($chunkedPostIdsDescending, $paginatedResponsesDescending);
     }
 
     /** @test */
@@ -171,44 +165,5 @@ class GetGalleryDataTest extends GalleryUnitTestCase
         }
 
         return $postIDs;
-    }
-
-    protected function createPostWithFactory($count = false, $seconds = false)
-    {
-        $args = [
-            'post_content' => 'I am some words for the Content',
-            'post_title'   => 'I am a default title',
-            'post_type'    => 'gallery',
-            'post_status'  => $this->galleryPostStatus
-        ];
-
-        $postFactory = $this->factory->post;
-
-        if (!$count) {
-            return $postFactory->create($args);
-        }
-
-        $count = (int) $count;
-
-        if ($count && !$seconds) {
-            return $postFactory->create_many($count, $args);
-        }
-
-        $seconds = (int) $seconds;
-        $start = time();
-        $responses = [];
-
-        while (count($responses) < $count) {
-            $postDate = date('Y-m-d H:i:s', $start + (count($responses) * $seconds));
-            $args['post_date'] = $postDate;
-
-            $postId = $postFactory->create($args);
-            $responses[] = [
-                'ID' => $postId,
-                'post_date' => $postDate,
-            ];
-        }
-
-        return $responses;
     }
 }

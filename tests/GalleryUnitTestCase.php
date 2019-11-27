@@ -190,4 +190,32 @@ class GalleryUnitTestCase extends WP_UnitTestCase
         }
         return $match[0];
     }
+
+    protected function createGalleryPostWithFactory($count = false, $milliseconds = false)
+    {
+        $order = 0;
+        $postIds = [];
+        $milliseconds = $milliseconds !== false ? (int) $milliseconds : 1000;
+        $start = time();
+
+        while(count($postIds) < $count) {
+            $postIds[] = $this->factory()->post->create([
+                'post_content' => 'I am some words for the Content',
+                'post_title'   => 'I am a default title',
+                'post_type'    => $this->galleryPostType,
+                'post_status'  => $this->galleryPostStatus,
+                'post_date'    => date('Y-m-d H:i:s', $start + (count($postIds) * $milliseconds)),
+                'meta_input' => [
+                    $this->galleryPostOrderKey => $order,
+                ]
+            ]);
+            ++$order;
+        }
+
+        if (count($postIds) > 1) {
+            return $postIds;
+        }
+
+        return $postIds[0];
+    }
 }
