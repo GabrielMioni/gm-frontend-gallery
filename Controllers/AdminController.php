@@ -102,6 +102,7 @@ class AdminController extends BaseController
         global $wpdb;
 
         $query = "SELECT post_id FROM $wpdb->postmeta WHERE meta_key = %s AND cast(meta_value as unsigned) >= %d AND post_id IN ($postIdQuery) AND post_id != %d ORDER BY meta_value ASC";
+//        $query = "SELECT post_id FROM $wpdb->postmeta WHERE meta_key = %s AND cast(meta_value as unsigned) >= %d AND post_id IN ($postIdQuery) AND post_id != %d ORDER BY ABS(meta_value) ASC";
         $metaQueryResult = $wpdb->get_results($wpdb->prepare($query, $this->galleryAttachmentOrderKey, $order, $attachId), 'ARRAY_N');
 
         $attachIdsToBeUpdated = $this->flattenArray($metaQueryResult);
@@ -117,7 +118,7 @@ class AdminController extends BaseController
     {
         global $wpdb;
 
-        $query = "SELECT post_id FROM $wpdb->postmeta WHERE meta_key = %s AND cast(meta_value as unsigned) >= %d AND post_id != %d ORDER BY meta_value ASC";
+        $query = "SELECT post_id FROM $wpdb->postmeta WHERE meta_key = %s AND cast(meta_value as unsigned) >= %d AND post_id != %d ORDER BY ABS(meta_value) ASC";
 
         $metaQueryResult = $wpdb->get_results($wpdb->prepare($query, $this->galleryPostOrderKey, $order, $doNotIncludePostId), 'ARRAY_N');
         $postIdsGreaterThanOrder = $this->flattenArray($metaQueryResult);
