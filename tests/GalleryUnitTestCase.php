@@ -185,6 +185,7 @@ class GalleryUnitTestCase extends WP_UnitTestCase
         $postIds = [];
         $milliseconds = $milliseconds !== false ? (int) $milliseconds : 1000;
         $start = time();
+        $count = $count === false || $count <= 0 ? 1 : (int) $count;
 
         while(count($postIds) < $count) {
             $postIds[] = $this->factory()->post->create([
