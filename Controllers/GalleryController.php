@@ -36,9 +36,7 @@ class GalleryController extends BaseController
             'offset' => $isPaged === true ? $numberPosts * ($postsPerPage - 1) : -1,
             'numberposts'=> $isPaged === true ? $numberPosts : -1,
         ];
-
-        file_put_contents(dirname(__FILE__) . '/log', print_r($args, true), FILE_APPEND);
-
+        
         $posts = get_posts($args);
 
         $data = [];
