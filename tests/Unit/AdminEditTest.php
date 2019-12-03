@@ -125,9 +125,7 @@ class AdminEditTest extends GalleryUnitTestCase
         $lastPostId = $postIds[count($postIds)-1];
         $setGalleryIdOrder = 5;
 
-        $request = new WP_REST_Request('POST', $this->namespaced_route . '/order/post/' . $lastPostId . '/' . $setGalleryIdOrder);
-        $request->set_header('Content-Type', 'application/json');
-        $response = $this->dispatchRequest($request);
+        $response = $this->sendGalleryUpdateRequest($lastPostId, $setGalleryIdOrder);
 
         $this->assertEquals(200, $response->get_status());
 

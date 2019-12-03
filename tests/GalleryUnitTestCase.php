@@ -85,6 +85,20 @@ class GalleryUnitTestCase extends WP_UnitTestCase
         return $getResponse->get_data();
     }
 
+    /**
+     * @param $postId
+     * @param $setOrder
+     * @return WP_REST_Response
+     */
+    protected function sendGalleryUpdateRequest($postId, $setOrder)
+    {
+        $request = new WP_REST_Request('POST', $this->namespaced_route . '/order/post/' . $postId . '/' . $setOrder);
+        $request->set_header('Content-Type', 'application/json');
+        $response = $this->dispatchRequest($request);
+
+        return $response;
+    }
+
     protected function requestDataProviderParams(WP_REST_Request $request, array $nonDefaultValues = [])
     {
         $setValues = $this->default_post_values;

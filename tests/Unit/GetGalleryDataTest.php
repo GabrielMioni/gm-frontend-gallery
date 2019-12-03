@@ -164,9 +164,8 @@ class GetGalleryDataTest extends GalleryUnitTestCase
         $expectedIds = array_chunk($expectedIds, 10);
 
         // Move the last gallery post to $setGalleryOrder
-        $request = new WP_REST_Request('POST', $this->namespaced_route . '/order/post/' . $lastPostId . '/' . $setGalleryOrder);
-        $request->set_header('Content-Type', 'application/json');
-        $response = $this->dispatchRequest($request);
+        $response = $this->sendGalleryUpdateRequest($lastPostId, $setGalleryOrder);
+
         $this->assertEquals(200, $response->get_status());
 
         $postMeta = get_post_meta($lastPostId, $this->galleryPostOrderKey, true);
