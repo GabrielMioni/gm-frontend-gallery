@@ -156,11 +156,21 @@ class GetGalleryDataTest extends GalleryUnitTestCase
 
         $setGalleryOrder = 3;
 
+        // Build the pagination ordered by gallery post order meta
+        $expectedIds = array_slice($postIds, 0, $setGalleryOrder);
+        $expectedIds[] = $lastPostId;
+        $expectedIds = array_merge($expectedIds, array_slice($postIds, $setGalleryOrder));
+        array_pop($expectedIds);
+        $expectedIds = array_chunk($expectedIds, 10);
+
+        // Move the last gallery post to $setGalleryOrder
         $request = new WP_REST_Request('POST', $this->namespaced_route . '/order/post/' . $lastPostId . '/' . $setGalleryOrder);
         $request->set_header('Content-Type', 'application/json');
         $response = $this->dispatchRequest($request);
+        $this->assertEquals(200, $response->get_status());
 
         $postMeta = get_post_meta($lastPostId, $this->galleryPostOrderKey, true);
+        $this->assertEquals($postMeta, $setGalleryOrder);
 
         $pages = range(1, 4);
         $resultsPerPage = 10;
@@ -168,17 +178,15 @@ class GetGalleryDataTest extends GalleryUnitTestCase
         $paginatedGalleryPosts  = [];
 
         foreach ($pages as $page) {
-            $paginatedGalleryPosts[] = $this->sendGetRequest($page, $resultsPerPage, null, 'asc');
-        }
-
-        foreach ($paginatedGalleryPosts as $paginatedGalleryPost) {
-            foreach ($paginatedGalleryPost as $item) {
-                $id = $item['ID'];
-                $order = get_post_meta($id, $this->galleryPostOrderKey, true);
-                file_put_contents(dirname(__FILE__) . '/log', print_r("Id: $id - Order: $order\n", true), FILE_APPEND);
+            $paginatedIds = [];
+            $pageResult = $this->sendGetRequest($page, $resultsPerPage, null, 'asc');
+            foreach ($pageResult as $p) {
+                $paginatedIds[] = $p['ID'];
             }
+            $paginatedGalleryPosts[] = $paginatedIds;
         }
 
+        $this->assertEquals($expectedIds, $paginatedGalleryPosts);
     }
 
     protected function createPostsWithRequest($count = false)
