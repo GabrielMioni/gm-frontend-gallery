@@ -147,6 +147,40 @@ class GetGalleryDataTest extends GalleryUnitTestCase
         }
     }
 
+    /** @test */
+    public function gallery_posts_can_be_organized_by_order()
+    {
+        $postIds = $this->createGalleryPostWithFactory(31, 1000);
+
+        $lastPostId = $postIds[count($postIds)-1];
+
+        $setGalleryOrder = 3;
+
+        $request = new WP_REST_Request('POST', $this->namespaced_route . '/order/post/' . $lastPostId . '/' . $setGalleryOrder);
+        $request->set_header('Content-Type', 'application/json');
+        $response = $this->dispatchRequest($request);
+
+        $postMeta = get_post_meta($lastPostId, $this->galleryPostOrderKey, true);
+
+        $pages = range(1, 4);
+        $resultsPerPage = 10;
+
+        $paginatedGalleryPosts  = [];
+
+        foreach ($pages as $page) {
+            $paginatedGalleryPosts[] = $this->sendGetRequest($page, $resultsPerPage, null, 'asc');
+        }
+
+        foreach ($paginatedGalleryPosts as $paginatedGalleryPost) {
+            foreach ($paginatedGalleryPost as $item) {
+                $id = $item['ID'];
+                $order = get_post_meta($id, $this->galleryPostOrderKey, true);
+                file_put_contents(dirname(__FILE__) . '/log', print_r("Id: $id - Order: $order\n", true), FILE_APPEND);
+            }
+        }
+
+    }
+
     protected function createPostsWithRequest($count = false)
     {
         $postIDs = [];
