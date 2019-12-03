@@ -81,7 +81,7 @@ class AdminController extends BaseController
         $postId = $this->setRequestParams($request, 'postId');
         $order = $this->setRequestParams($request, 'order');
 
-        $postIdsGreaterThanOrder = $this->getOrderGreaterThan($order, $postId);
+        $postIdsGreaterThanOrder = $this->getGalleryPostsWithOrderGreaterThan($order, $postId);
 
         update_post_meta($postId, $this->galleryPostOrderKey, $order);
 
@@ -114,7 +114,7 @@ class AdminController extends BaseController
         }
     }
 
-    protected function getOrderGreaterThan($order, $doNotIncludePostId = null)
+    protected function getGalleryPostsWithOrderGreaterThan($order, $doNotIncludePostId = null)
     {
         global $wpdb;
 
