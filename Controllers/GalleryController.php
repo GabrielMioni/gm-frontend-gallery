@@ -9,7 +9,9 @@ class GalleryController extends BaseController
     protected static $orderByOptions = [
         'author',
         'title',
-        'date'
+        'date',
+        'meta_value_num',
+        'ID',
     ];
 
     protected static $orderDirectionOptions = [
@@ -29,10 +31,13 @@ class GalleryController extends BaseController
             'post_type' => $this->galleryPostType,
             'order'     => $orderData['order'],
             'orderby'   => $orderData['orderby'],
+            'meta_key'  => $orderData['meta_key'],
             'post_status' => $this->galleryPostStatus,
             'offset' => $isPaged === true ? $numberPosts * ($postsPerPage - 1) : -1,
             'numberposts'=> $isPaged === true ? $numberPosts : -1,
         ];
+
+        file_put_contents(dirname(__FILE__) . '/log', print_r($args, true), FILE_APPEND);
 
         $posts = get_posts($args);
 
@@ -80,7 +85,8 @@ class GalleryController extends BaseController
         $order        = $this->setRequestParams($request, 'order');
 
         return [
-            'orderby' => in_array($orderBy, self::$orderByOptions) ? $orderBy : 'ID',
+            'orderby' => in_array($orderBy, self::$orderByOptions) ? $orderBy : 'meta_value_num',
+            'meta_key' => $this->galleryPostOrderKey,
             'order'   => in_array($order, self::$orderDirectionOptions) ? strtoupper($order) : 'ASC'
         ];
     }
