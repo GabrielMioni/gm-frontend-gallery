@@ -157,11 +157,11 @@ class GetGalleryDataTest extends GalleryUnitTestCase
         $setGalleryOrder = 3;
 
         // Build the pagination ordered by gallery post order meta
-        $expectedIds = array_slice($postIds, 0, $setGalleryOrder);
-        $expectedIds[] = $lastPostId;
-        $expectedIds = array_merge($expectedIds, array_slice($postIds, $setGalleryOrder));
-        array_pop($expectedIds);
-        $expectedIds = array_chunk($expectedIds, 10);
+        $expectedPaginatedGalleryPostIds = array_slice($postIds, 0, $setGalleryOrder);
+        $expectedPaginatedGalleryPostIds[] = $lastPostId;
+        $expectedPaginatedGalleryPostIds = array_merge($expectedPaginatedGalleryPostIds, array_slice($postIds, $setGalleryOrder));
+        array_pop($expectedPaginatedGalleryPostIds);
+        $expectedPaginatedGalleryPostIds = array_chunk($expectedPaginatedGalleryPostIds, 10);
 
         // Move the last gallery post to $setGalleryOrder
         $response = $this->sendGalleryUpdateOrderRequest($lastPostId, $setGalleryOrder);
@@ -174,7 +174,7 @@ class GetGalleryDataTest extends GalleryUnitTestCase
         $pages = range(1, 4);
         $resultsPerPage = 10;
 
-        $paginatedGalleryPosts  = [];
+        $realPaginatedGalleryPostsIds = [];
 
         foreach ($pages as $page) {
             $paginatedIds = [];
@@ -182,10 +182,10 @@ class GetGalleryDataTest extends GalleryUnitTestCase
             foreach ($pageResult as $p) {
                 $paginatedIds[] = $p['ID'];
             }
-            $paginatedGalleryPosts[] = $paginatedIds;
+            $realPaginatedGalleryPostsIds[] = $paginatedIds;
         }
 
-        $this->assertEquals($expectedIds, $paginatedGalleryPosts);
+        $this->assertEquals($expectedPaginatedGalleryPostIds, $realPaginatedGalleryPostsIds);
     }
 
     protected function createPostsWithRequest($count = false)
