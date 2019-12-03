@@ -164,7 +164,7 @@ class GetGalleryDataTest extends GalleryUnitTestCase
         $expectedIds = array_chunk($expectedIds, 10);
 
         // Move the last gallery post to $setGalleryOrder
-        $response = $this->sendGalleryUpdateRequest($lastPostId, $setGalleryOrder);
+        $response = $this->sendGalleryUpdateOrderRequest($lastPostId, $setGalleryOrder);
 
         $this->assertEquals(200, $response->get_status());
 

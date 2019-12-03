@@ -90,7 +90,7 @@ class GalleryUnitTestCase extends WP_UnitTestCase
      * @param $setOrder
      * @return WP_REST_Response
      */
-    protected function sendGalleryUpdateRequest($postId, $setOrder)
+    protected function sendGalleryUpdateOrderRequest($postId, $setOrder)
     {
         $request = new WP_REST_Request('POST', $this->namespaced_route . '/order/post/' . $postId . '/' . $setOrder);
         $request->set_header('Content-Type', 'application/json');

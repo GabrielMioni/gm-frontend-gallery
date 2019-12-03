@@ -125,7 +125,7 @@ class AdminEditTest extends GalleryUnitTestCase
         $lastPostId = $postIds[count($postIds)-1];
         $setGalleryIdOrder = 5;
 
-        $response = $this->sendGalleryUpdateRequest($lastPostId, $setGalleryIdOrder);
+        $response = $this->sendGalleryUpdateOrderRequest($lastPostId, $setGalleryIdOrder);
 
         $this->assertEquals(200, $response->get_status());
 
