@@ -46,11 +46,11 @@ class gmFrontendGallery
         $adminController = new AdminController();
         $galleryController = new GalleryController();
 
-        register_rest_route( 'gm-frontend-gallery/v1', '/submit/', [
+        register_rest_route( $this->routeNameSpace, '/submit/', [
             'methods' => 'POST',
             'callback' => [$submitController, 'processGallerySubmission'],
         ]);
-        register_rest_route( 'gm-frontend-gallery/v1', '(?P<postId>\d+)?(?:/(?P<permanent>\d+))?', [
+        register_rest_route( $this->routeNameSpace, '(?P<postId>\d+)?(?:/(?P<permanent>\d+))?', [
             'methods' => 'DELETE',
             'callback' => [$adminController, 'deleteGalleryPostById'],
             'args' => [
@@ -58,7 +58,7 @@ class gmFrontendGallery
                 'permanent'
             ]
         ]);
-        register_rest_route( 'gm-frontend-gallery/v1', '/image/(?P<postId>\d+)?(?:/(?P<attachmentId>\d+))?', [
+        register_rest_route( $this->routeNameSpace, '/image/(?P<postId>\d+)?(?:/(?P<attachmentId>\d+))?', [
             'methods' => 'DELETE',
             'callback' => [$adminController, 'deleteAttachmentById'],
             'args' => [
@@ -66,21 +66,21 @@ class gmFrontendGallery
                 'attachmentId'
             ]
         ]);
-        register_rest_route( 'gm-frontend-gallery/v1', '/get(?:/(?P<orderBy>[a-zA-Z\s]+))?(?:/(?P<order>[a-zA-Z\s]+))?',
+        register_rest_route( $this->routeNameSpace, '/get(?:/(?P<orderBy>[a-zA-Z\s]+))?(?:/(?P<order>[a-zA-Z\s]+))?',
             $this->setGetRouteArray($galleryController, [
                 'orderBy',
                 'order'
             ])
         );
 
-        register_rest_route( 'gm-frontend-gallery/v1', '/get/(?P<orderBy>[a-zA-Z\s]+)/(?P<order>[a-zA-Z\s]+)',
+        register_rest_route( $this->routeNameSpace, '/get/(?P<orderBy>[a-zA-Z\s]+)/(?P<order>[a-zA-Z\s]+)',
             $this->setGetRouteArray($galleryController, [
                 'orderBy',
                 'order',
             ])
         );
 
-        register_rest_route( 'gm-frontend-gallery/v1', '/get/(?P<page>\d+)/(?P<results>\d+)(?:/(?P<orderBy>[a-zA-Z\s]+))?(?:/(?P<order>[a-zA-Z\s]+))?',
+        register_rest_route( $this->routeNameSpace, '/get/(?P<page>\d+)/(?P<results>\d+)(?:/(?P<orderBy>[a-zA-Z\s]+))?(?:/(?P<order>[a-zA-Z\s]+))?',
             $this->setGetRouteArray($galleryController, [
                 'page',
                 'results',
@@ -89,7 +89,7 @@ class gmFrontendGallery
             ])
         );
 
-        register_rest_route('gm-frontend-gallery/v1', '(?P<postId>\d+)?', [
+        register_rest_route($this->routeNameSpace, '(?P<postId>\d+)?', [
             'methods' => WP_REST_Server::READABLE,
             'callback' => [$galleryController, 'retrieveGalleryPostSingle'],
             'args' => [
@@ -97,7 +97,7 @@ class gmFrontendGallery
             ]
         ]);
 
-        register_rest_route('gm-frontend-gallery/v1', '/order/post/(?P<postId>\d+)?/(?P<order>\d+)?', [
+        register_rest_route($this->routeNameSpace, '/order/post/(?P<postId>\d+)?/(?P<order>\d+)?', [
             'methods' => 'POST',
             'callback' => [$adminController, 'setGalleryPostOrder'],
             'args' => [
@@ -106,7 +106,7 @@ class gmFrontendGallery
             ]
         ]);
 
-        register_rest_route('gm-frontend-gallery/v1', '/order/attachment/(?P<postId>\d+)?/(?P<attachId>\d+)/(?P<order>\d+)?', [
+        register_rest_route($this->routeNameSpace, '/order/attachment/(?P<postId>\d+)?/(?P<attachId>\d+)/(?P<order>\d+)?', [
             'methods' => 'POST',
             'callback' => [$adminController, 'setGalleryAttachmentOrder'],
             'args' => [

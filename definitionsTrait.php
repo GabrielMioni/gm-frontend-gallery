@@ -8,4 +8,5 @@ trait definitionsTrait
     protected $galleryAttachmentMetaKey = 'gm_gallery_attachment';
     protected $galleryPostOrderKey = 'gm_gallery_order';
     protected $galleryAttachmentOrderKey = 'gm_gallery_attachment_order';
+    protected $routeNameSpace = 'gm-frontend-gallery/v1';
 }
