@@ -252,4 +252,17 @@ class GalleryUnitTestCase extends WP_UnitTestCase
 
         return $fileUploads;
     }
+
+    protected function createAdminUser()
+    {
+        $userId = $this->factory()->user->create($this->default_user_values);
+        $user = get_user_by( 'id', $userId);
+        $user->set_role('administrator');
+        $currentUser = wp_set_current_user($user->ID, $user->user_login);
+
+        if (is_a($currentUser, 'WP_User')) {
+            return $userId;
+        }
+        return false;
+    }
 }
