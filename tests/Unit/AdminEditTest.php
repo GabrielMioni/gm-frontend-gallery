@@ -23,10 +23,7 @@ class AdminEditTest extends GalleryUnitTestCase
         $responseData  = $postResponse['response']->get_data();
         $postId        = $responseData['postID'];
 
-        $userId = $this->factory()->user->create($this->default_user_values);
-        $user = get_user_by( 'id', $userId);
-        $user->set_role('administrator');
-        wp_set_current_user($user->ID, $user->user_login);
+        $this->createAdminUser();
 
         return [
             'postId' => $postId,
