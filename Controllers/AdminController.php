@@ -81,6 +81,12 @@ class AdminController extends BaseController
         $postId = $this->setRequestParams($request, 'postId');
         $order = $this->setRequestParams($request, 'order');
 
+        $userCanDeletePost = current_user_can('edit_posts', $postId);
+
+        if (!$userCanDeletePost) {
+            return $this->createWPError('invalid_request', 'Invalid user capabilities', 403);
+        }
+
         $postIdsGreaterThanOrder = $this->getGalleryPostsWithOrderGreaterThan($order, $postId);
 
         update_post_meta($postId, $this->galleryPostOrderKey, $order);

@@ -164,6 +164,7 @@ class GetGalleryDataTest extends GalleryUnitTestCase
         $expectedPaginatedGalleryPostIds = array_chunk($expectedPaginatedGalleryPostIds, 10);
 
         // Move the last gallery post to $setGalleryOrder
+        $this->createAdminUser();
         $response = $this->sendGalleryUpdateOrderRequest($lastPostId, $setGalleryOrder);
 
         $this->assertEquals(200, $response->get_status());
@@ -179,8 +180,8 @@ class GetGalleryDataTest extends GalleryUnitTestCase
         foreach ($pages as $page) {
             $paginatedIds = [];
             $pageResult = $this->sendGetRequest($page, $resultsPerPage, null, 'asc');
-            foreach ($pageResult as $p) {
-                $paginatedIds[] = $p['ID'];
+            foreach ($pageResult as $galleryPost) {
+                $paginatedIds[] = $galleryPost['ID'];
             }
             $realPaginatedGalleryPostsIds[] = $paginatedIds;
         }
