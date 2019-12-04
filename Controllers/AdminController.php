@@ -94,6 +94,11 @@ class AdminController extends BaseController
         foreach ($postIdsGreaterThanOrder as $currentPostId) {
             update_post_meta($currentPostId, $this->galleryPostOrderKey, ++$order);
         }
+
+        $response = new WP_REST_Response();
+        $response->set_status(200);
+
+        return $response;
     }
 
     public function setGalleryAttachmentOrder(WP_REST_Request $request)
