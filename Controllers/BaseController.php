@@ -8,7 +8,6 @@ use WP_Post;
 
 abstract class BaseController
 {
-
     use \definitionsTrait;
 
     protected function setRequestParams(WP_REST_Request $request, $key)
