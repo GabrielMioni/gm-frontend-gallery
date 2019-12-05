@@ -50,6 +50,12 @@ class gmFrontendGallery
             'methods' => 'POST',
             'callback' => [$submitController, 'processGallerySubmission'],
         ]);
+
+        register_rest_route( $this->routeNameSpace, '/update/(?P<postId>\d+)?', [
+            'methods' => 'POST',
+            'callback' => [$adminController, 'updateGalleryPostById'],
+        ]);
+
         register_rest_route( $this->routeNameSpace, '(?P<postId>\d+)?(?:/(?P<permanent>\d+))?', [
             'methods' => 'DELETE',
             'callback' => [$adminController, 'deleteGalleryPostById'],
