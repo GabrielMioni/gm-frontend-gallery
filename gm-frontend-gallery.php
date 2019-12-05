@@ -40,6 +40,19 @@ class gmFrontendGallery
         register_post_type($this->galleryPostType, $args);
     }
 
+    public function createOptions()
+    {
+        add_option($this->pluginOptionName, [
+            'user_required' => false,
+            'admin_must_approve' => false,
+            'allowed_mimes' => [
+                'image/jpeg',
+                'image/gif',
+                'image/png',
+            ],
+        ]);
+    }
+
     public function registerApiRoutes()
     {
         $submitController = new SubmitController();
