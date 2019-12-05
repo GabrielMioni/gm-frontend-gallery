@@ -10,6 +10,13 @@ class AdminController extends BaseController
     public function updateGalleryPostById(WP_REST_Request $request)
     {
         $postId = $this->setRequestParams($request, 'postId');
+
+        $userCanDeletePost = current_user_can('edit_posts', $postId);
+
+        if (!$userCanDeletePost) {
+            return $this->createWPError('invalid_request', 'Invalid user capabilities', 403);
+        }
+
         $postTitleKey = 'post_title';
         $postContentKey = 'post_content';
 
