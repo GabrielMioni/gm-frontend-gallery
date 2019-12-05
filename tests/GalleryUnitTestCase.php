@@ -24,6 +24,7 @@ class GalleryUnitTestCase extends WP_UnitTestCase
 
         $gmFrontendGallery = new gmFrontendGallery();
         $gmFrontendGallery->createPostType();
+        $gmFrontendGallery->createOptions();
         $gmFrontendGallery->registerApiRoutes();
     }
 
