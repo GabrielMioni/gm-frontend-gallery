@@ -192,9 +192,9 @@ class AdminEditTest extends GalleryUnitTestCase
     /** @test */
     public function existing_gallery_post_can_be_edited()
     {
-        $this->createAdminUser();
-
         $postId = $this->createGalleryPostWithFactory(1, 1000);
+
+        $this->createAdminUser();
 
         $newTitle = 'I am a new title!';
         $newContent = 'I am new content!';
