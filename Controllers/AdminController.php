@@ -7,6 +7,52 @@ use WP_REST_Response;
 
 class AdminController extends BaseController
 {
+    public function updateGalleryPostById(WP_REST_Request $request)
+    {
+        $postId = $this->setRequestParams($request, 'postId');
+        $postTitleKey = 'post_title';
+        $postContentKey = 'post_content';
+
+        $postTitle = $this->setRequestParams($request, $postTitleKey);
+        $postContent = $this->setRequestParams($request, $postContentKey);
+
+        $existentPost = get_post($postId, ARRAY_A);
+
+        $updateData = [];
+
+        if (!is_null($postTitle) && $existentPost[$postTitleKey] !== $postTitle) {
+            $updateData[$postTitleKey] = $postTitle;
+        }
+        if (!is_null($postContent) && $existentPost[$postContentKey] !== $postContent) {
+            $updateData['post_content'] = $postContent;
+        }
+
+        if (empty($updateData)) {
+            $response = new WP_REST_Response([
+                'updated' => false,
+                'message' => 'Nothing to update'
+            ]);
+            $response->set_status(200);
+
+            return $response;
+        }
+
+        $updatePost = wp_update_post([
+            'ID' => $postId,
+            $postTitleKey => $postTitle,
+            $postContentKey => $postContent
+        ], true);
+
+        if (is_a($updatePost, 'WP_Error')) {
+            return $updatePost;
+        }
+
+        $response = new WP_REST_Response($updateData);
+        $response->set_status(200);
+
+        return $response;
+    }
+
     public function deleteGalleryPostById(WP_REST_Request $request)
     {
         $postId = $this->setRequestParams($request, 'postId');
