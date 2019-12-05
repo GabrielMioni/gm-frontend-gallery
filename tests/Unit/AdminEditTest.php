@@ -189,6 +189,27 @@ class AdminEditTest extends GalleryUnitTestCase
         $this->assertEquals($setAttachmentIdOrder, $lastAttachmentOrderNew);
     }
 
+    /** @test */
+    public function existing_gallery_post_can_be_edited()
+    {
+        $postId = $this->createGalleryPostWithFactory(1, 1000);
+
+        $newTitle = 'I am a new title!';
+        $newContent = 'I am new content!';
+
+        $request = new WP_REST_Request('POST', $this->namespaced_route . '/update/' . $postId);
+        $request->set_header('Content-Type', 'application/json');
+        $request->set_param('post_title', $newTitle);
+        $request->set_param('post_content', $newContent);
+        $response = $this->dispatchRequest($request);
+
+        $updatedPost = get_post($postId);
+
+        $this->assertEquals(200, $response->get_status());
+        $this->assertEquals($newTitle, $updatedPost->post_title);
+        $this->assertEquals($newContent, $updatedPost->post_content);
+    }
+
     protected function getAttachmentIds($postId)
     {
         $response = $this->createRequestGetSingleGalleryItem($postId);
