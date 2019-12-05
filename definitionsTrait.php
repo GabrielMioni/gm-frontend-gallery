@@ -9,4 +9,5 @@ trait definitionsTrait
     protected $galleryPostOrderKey = 'gm_gallery_order';
     protected $galleryAttachmentOrderKey = 'gm_gallery_attachment_order';
     protected $routeNameSpace = 'gm-frontend-gallery/v1';
+    protected $pluginOptionName = 'gm_frontend_gallery_options';
 }
