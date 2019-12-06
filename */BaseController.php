@@ -120,4 +120,10 @@ abstract class BaseController
 
         return $out;
     }
+
+    protected function currentUserIsAdmin()
+    {
+        $user = wp_get_current_user();
+        return in_array('administrator', (array) $user->roles);
+    }
 }
