@@ -178,6 +178,10 @@ class GalleryUnitTestCase extends WP_UnitTestCase
         $gmFrontendGallery->registerApiGetRoute();
     }
 
+    /**
+     * @param WP_REST_Request $request
+     * @return WP_REST_Response
+     */
     protected function dispatchRequest(WP_REST_Request $request)
     {
         return $this->server->dispatch($request);
