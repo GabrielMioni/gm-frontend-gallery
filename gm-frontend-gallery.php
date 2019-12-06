@@ -9,6 +9,7 @@ Author URI: gabrielmioni.com
 
 require_once('autoload.php');
 
+use GmFrontendGallery\Controller\OptionsController;
 use GmFrontendGallery\Controller\SubmitController;
 use GmFrontendGallery\Controller\AdminController;
 use GmFrontendGallery\Controller\GalleryController;
@@ -58,6 +59,7 @@ class gmFrontendGallery
         $submitController = new SubmitController();
         $adminController = new AdminController();
         $galleryController = new GalleryController();
+        $optionsController = new OptionsController();
 
         register_rest_route( $this->routeNameSpace, '/submit/', [
             'methods' => 'POST',
@@ -67,6 +69,11 @@ class gmFrontendGallery
         register_rest_route( $this->routeNameSpace, '/update/(?P<postId>\d+)?', [
             'methods' => 'POST',
             'callback' => [$adminController, 'updateGalleryPostById'],
+        ]);
+
+        register_rest_route( $this->routeNameSpace, '/options/', [
+            'methods' => 'POST',
+            'callback' => [$optionsController, 'updateGalleryOptions'],
         ]);
 
         register_rest_route( $this->routeNameSpace, '(?P<postId>\d+)?(?:/(?P<permanent>\d+))?', [

@@ -16,6 +16,12 @@ abstract class BaseController
         return $parameter !== '' ? $parameter : null;
     }
 
+    /**
+     * @param $code
+     * @param $message
+     * @param $status
+     * @return WP_Error
+     */
     protected function createWPError($code, $message, $status)
     {
         return new WP_Error($code, $message, ['status' => $status]);
