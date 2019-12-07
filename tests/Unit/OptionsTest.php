@@ -58,6 +58,9 @@ class OptionsTest extends GalleryUnitTestCase
 
         update_option($this->pluginOptionName, $optionValues);
 
+        $newOptionValues = get_option($this->pluginOptionName);
+        $this->assertTrue($newOptionValues['user_required']);
+
         /* Submit a gallery post WITHOUT a user */
         $responseWithoutUser = $this->submitAGalleryPost();
         $this->assertEquals(401, $responseWithoutUser->get_status());
