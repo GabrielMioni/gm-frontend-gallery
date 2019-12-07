@@ -39,4 +39,20 @@ class OptionsTest extends GalleryUnitTestCase
         $this->assertFalse($originalOptions[$user_required_key]);
         $this->assertTrue($newOptions[$user_required_key]);
     }
+
+    /** @test */
+    public function user_is_required_if_user_required_setting_is_true()
+    {
+        $optionValues = get_option($this->pluginOptionName);
+        $optionValues['user_required'] = true;
+
+        update_option($this->pluginOptionName, $optionValues);
+
+        $request = $this->createRequestSubmitGallery();
+        $this->requestDataProviderParams($request);
+        $this->requestDataProviderImage($request);
+
+        $response = $this->dispatchRequest($request);
+        $this->assertEquals(400, $response->get_status());
+    }
 }
