@@ -27,7 +27,8 @@ class OptionsTest extends GalleryUnitTestCase
         $setNewOptions = $originalOptions;
         $setNewOptions[$user_required_key] = true;
 
-        $request = new WP_REST_Request('POST', $this->routeNameSpace . '/options');
+        $request =  new WP_REST_Request('POST', $this->namespaced_route . '/options');
+        $request->set_header('Content-Type', 'multipart/form-data');
         $request->set_param('updatedOptions', $setNewOptions);
         $response = $this->dispatchRequest($request);
 
