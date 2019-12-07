@@ -4,16 +4,25 @@ namespace GmFrontendGallery\Controller;
 
 use WP_REST_Request;
 use WP_REST_Response;
+use WP_Error;
 
 class SubmitController extends BaseController
 {
     public function processGallerySubmission(WP_REST_Request $request)
     {
-        $nonceParam   = $this->setRequestParams($request, 'post_nonce');
-        $nonceIsValid = wp_verify_nonce($nonceParam, 'gm_gallery_submit');
+        $userIsRequired = $this->userIsRequiredForGalleryPosts();
 
-        if ($nonceIsValid === false) {
-            return $this->createWPError('invalid_request', 'Invalid nonce', 401);
+        if ($userIsRequired instanceof WP_Error) {
+            return $userIsRequired;
+        }
+
+        if ($userIsRequired === false) {
+            $nonceParam   = $this->setRequestParams($request, 'post_nonce');
+            $nonceIsValid = wp_verify_nonce($nonceParam, 'gm_gallery_submit');
+
+            if ($nonceIsValid === false) {
+                return $this->createWPError('invalid_request', 'Invalid nonce', 401);
+            }
         }
 
         $post_title   = $this->setRequestParams($request, 'post_title');
@@ -51,6 +60,30 @@ class SubmitController extends BaseController
         $response->set_status(200);
 
         return $response;
+    }
+
+    protected function userIsRequiredForGalleryPosts()
+    {
+        $userIsRequired = $this->getGalleryOption('user_required');
+
+        if ($userIsRequired === false) {
+            return false;
+        }
+
+        if ($userIsRequired instanceof WP_Error) {
+            return $userIsRequired;
+        }
+
+        if ($userIsRequired === true) {
+            $currentUser = wp_get_current_user();
+            if ($currentUser->ID > 0) {
+                return true;
+            }
+
+            return $this->createWPError('invalid_request', 'User is required', 401);
+        }
+
+        return true;
     }
 
     protected function processImageAttachments(array $imageData, $postId)
