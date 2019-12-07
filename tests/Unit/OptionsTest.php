@@ -59,7 +59,10 @@ class OptionsTest extends GalleryUnitTestCase
         update_option($this->pluginOptionName, $optionValues);
 
         $request = $this->createRequestSubmitGallery();
-        $this->requestDataProviderParams($request);
+        $this->requestDataProviderParams($request, [
+            // Creating a the post nonce here insures the nonce is valid for a given user
+            'post_nonce' => wp_create_nonce('gm_gallery_submit')
+        ]);
         $this->requestDataProviderImage($request);
 
         $response = $this->dispatchRequest($request);
