@@ -135,4 +135,19 @@ abstract class BaseController
         $user = wp_get_current_user();
         return in_array('administrator', (array) $user->roles);
     }
+
+    protected function getGalleryOption($optionKey = null)
+    {
+        $options = get_option($this->pluginOptionName);
+
+        if ($optionKey === null) {
+            return $options;
+        }
+
+        if (isset($options[$optionKey])) {
+            return $options[$optionKey];
+        }
+
+        return $this->createWPError('invalid_request', 'No options found', 500);
+    }
 }
