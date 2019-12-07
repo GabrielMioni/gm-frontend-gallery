@@ -258,11 +258,13 @@ class GalleryUnitTestCase extends WP_UnitTestCase
         return $fileUploads;
     }
 
-    protected function createAdminUser()
+    protected function createGalleryUser(array $roles = [])
     {
         $userId = $this->factory()->user->create($this->default_user_values);
         $user = get_user_by( 'id', $userId);
-        $user->set_role('administrator');
+        foreach ($roles as $role) {
+            $user->set_role($role);
+        }
         $currentUser = wp_set_current_user($user->ID, $user->user_login);
 
         if (is_a($currentUser, 'WP_User')) {

@@ -29,7 +29,7 @@ class OptionsTest extends GalleryUnitTestCase
     public function plugin_options_can_be_updated()
     {
         $user_required_key = 'user_required';
-        $this->createAdminUser();
+        $this->createGalleryUser(['administrator']);
 
         $originalOptions = get_option($this->pluginOptionName);
 

@@ -23,7 +23,7 @@ class AdminEditTest extends GalleryUnitTestCase
         $responseData  = $postResponse['response']->get_data();
         $postId        = $responseData['postID'];
 
-        $this->createAdminUser();
+        $this->createGalleryUser(['administrator']);
 
         return [
             'postId' => $postId,
@@ -122,7 +122,7 @@ class AdminEditTest extends GalleryUnitTestCase
         $lastPostId = $postIds[count($postIds)-1];
         $setGalleryIdOrder = 5;
 
-        $this->createAdminUser();
+        $this->createGalleryUser(['administrator']);
         $response = $this->sendGalleryUpdateOrderRequest($lastPostId, $setGalleryIdOrder);
 
         $this->assertEquals(200, $response->get_status());
@@ -194,7 +194,7 @@ class AdminEditTest extends GalleryUnitTestCase
     {
         $postId = $this->createGalleryPostWithFactory(1, 1000);
 
-        $this->createAdminUser();
+        $this->createGalleryUser(['administrator']);
 
         $newTitle = 'I am a new title!';
         $newContent = 'I am new content!';

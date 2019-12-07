@@ -164,7 +164,7 @@ class GetGalleryDataTest extends GalleryUnitTestCase
         $expectedPaginatedGalleryPostIds = array_chunk($expectedPaginatedGalleryPostIds, 10);
 
         // Move the last gallery post to $setGalleryOrder
-        $this->createAdminUser();
+        $this->createGalleryUser(['administrator']);
         $response = $this->sendGalleryUpdateOrderRequest($lastPostId, $setGalleryOrder);
 
         $this->assertEquals(200, $response->get_status());
