@@ -22,7 +22,6 @@ class OptionsTest extends GalleryUnitTestCase
         $this->createAdminUser();
 
         $originalOptions = get_option($this->pluginOptionName);
-        $this->assertFalse($originalOptions[$user_required_key]);
 
         $setNewOptions = $originalOptions;
         $setNewOptions[$user_required_key] = true;
@@ -35,6 +34,9 @@ class OptionsTest extends GalleryUnitTestCase
         $newOptions = get_option($this->pluginOptionName);
 
         $this->assertEquals(200, $response->get_status());
-        $this->assertEquals($originalOptions[$user_required_key], $newOptions[$user_required_key]);
+
+        // Settings have been updated
+        $this->assertFalse($originalOptions[$user_required_key]);
+        $this->assertTrue($newOptions[$user_required_key]);
     }
 }
