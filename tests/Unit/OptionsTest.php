@@ -58,6 +58,18 @@ class OptionsTest extends GalleryUnitTestCase
 
         update_option($this->pluginOptionName, $optionValues);
 
+        /* Submit a gallery post WITHOUT a user */
+        $responseWithoutUser = $this->submitAGalleryPost();
+        $this->assertEquals(401, $responseWithoutUser->get_status());
+
+        /* Submit a gallery post WITH a user */
+        $this->createGalleryUser();
+        $responseWithUser = $this->submitAGalleryPost();
+        $this->assertEquals(200, $responseWithUser->get_status());
+    }
+
+    protected function submitAGalleryPost()
+    {
         $request = $this->createRequestSubmitGallery();
         $this->requestDataProviderParams($request, [
             // Creating a the post nonce here insures the nonce is valid for a given user
@@ -65,7 +77,6 @@ class OptionsTest extends GalleryUnitTestCase
         ]);
         $this->requestDataProviderImage($request);
 
-        $response = $this->dispatchRequest($request);
-        $this->assertEquals(401, $response->get_status());
+        return $this->dispatchRequest($request);
     }
 }
