@@ -4,6 +4,16 @@ require_once dirname(dirname(__FILE__)) . '/GalleryUnitTestCase.php';
 
 class OptionsTest extends GalleryUnitTestCase
 {
+    public function setUp()
+    {
+        parent::setUp();
+    }
+
+    public function tearDown()
+    {
+        parent::tearDown();
+    }
+
     /** @test */
     public function plugin_options_exists()
     {
@@ -53,6 +63,6 @@ class OptionsTest extends GalleryUnitTestCase
         $this->requestDataProviderImage($request);
 
         $response = $this->dispatchRequest($request);
-        $this->assertEquals(400, $response->get_status());
+        $this->assertEquals(401, $response->get_status());
     }
 }
