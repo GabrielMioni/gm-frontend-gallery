@@ -12,7 +12,10 @@ abstract class BaseController
 
     protected function setRequestParams(WP_REST_Request $request, $key)
     {
-        $parameter = trim($request->get_param($key));
+        $parameter = $request->get_param($key);
+        if (is_string($parameter)) {
+            $parameter = trim($parameter);
+        }
         return $parameter !== '' ? $parameter : null;
     }
 
