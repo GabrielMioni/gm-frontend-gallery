@@ -15,8 +15,7 @@ class OptionsController extends BaseController
             return $this->createWPError('invalid_request', 'Invalid user capabilities', 403);
         }
 
-        $updatedOptions = (array) $this->setRequestParams($request, 'updatedOptions');
-        file_put_contents(dirname(__FILE__) . '/log', print_r($updatedOptions, true), FILE_APPEND);
+        $updatedOptions = $this->setRequestParams($request, 'updatedOptions');
         
         $updated = $this->updateOption($updatedOptions);
 
