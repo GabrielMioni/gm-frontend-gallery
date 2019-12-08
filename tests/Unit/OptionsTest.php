@@ -28,26 +28,19 @@ class OptionsTest extends GalleryUnitTestCase
     /** @test */
     public function plugin_options_can_be_updated()
     {
-        $user_required_key = 'user_required';
-        $this->createGalleryUser(['administrator']);
+        $userRequiredKey = 'user_required';
 
         $originalOptions = get_option($this->pluginOptionName);
 
-        $setNewOptions = $originalOptions;
-        $setNewOptions[$user_required_key] = true;
-
-        $request =  new WP_REST_Request('POST', $this->namespaced_route . '/options');
-        $request->set_header('Content-Type', 'multipart/form-data');
-        $request->set_param('updatedOptions', $setNewOptions);
-        $response = $this->dispatchRequest($request);
+        $response = $this->updateSettingsViaAPI($userRequiredKey, true);
 
         $newOptions = get_option($this->pluginOptionName);
 
         $this->assertEquals(200, $response->get_status());
 
         // Settings have been updated
-        $this->assertFalse($originalOptions[$user_required_key]);
-        $this->assertTrue($newOptions[$user_required_key]);
+        $this->assertFalse($originalOptions[$userRequiredKey]);
+        $this->assertTrue($newOptions[$userRequiredKey]);
     }
 
     /** @test */
@@ -93,6 +86,23 @@ class OptionsTest extends GalleryUnitTestCase
 
         /* Show that only 3 attachments have been created */
         $this->assertEquals($setMaxAttachment, count($attachmentIds));
+    }
+
+    protected function updateSettingsViaAPI($settingKey, $newSettingValue, $createAdminUser = true)
+    {
+        if ($createAdminUser === true) {
+            $this->createGalleryUser(['administrator']);
+        }
+
+        $options = get_option($this->pluginOptionName);
+        $options[$settingKey] = $newSettingValue;
+
+        $request =  new WP_REST_Request('POST', $this->namespaced_route . '/options');
+        $request->set_header('Content-Type', 'multipart/form-data');
+        $request->set_param('updatedOptions', $options);
+        $response = $this->dispatchRequest($request);
+
+        return $response;
     }
 
     protected function submitAGalleryPost()
