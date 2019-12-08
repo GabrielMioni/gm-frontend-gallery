@@ -46,6 +46,7 @@ class gmFrontendGallery
         add_option($this->pluginOptionName, [
             'user_required' => false,
             'admin_must_approve' => false,
+            'max_attachments' => 5,
             'allowed_mimes' => [
                 'image/jpeg',
                 'image/gif',
