@@ -71,6 +71,30 @@ class OptionsTest extends GalleryUnitTestCase
         $this->assertEquals(200, $responseWithUser->get_status());
     }
 
+    /** @test */
+    public function gallery_attachments_limited_by_max_attachment_setting()
+    {
+        $setMaxAttachment = 3;
+        $optionValues = get_option($this->pluginOptionName);
+        $optionValues['max_attachments'] = $setMaxAttachment;
+
+        update_option($this->pluginOptionName, $optionValues);
+
+        $newOptionValues = get_option($this->pluginOptionName);
+        $this->assertEquals($setMaxAttachment, $newOptionValues['max_attachments']);
+
+        /* Try to submit 5 attachments */
+        $multiplePostData = $this->createGalleryPostWithMultipleImages();
+        $response = $multiplePostData['response'];
+
+        $postId = $response->data['postID'];
+        
+        $attachmentIds = get_post_meta($postId, $this->galleryAttachmentMetaKey, false);
+
+        /* Show that only 3 attachments have been created */
+        $this->assertEquals($setMaxAttachment, count($attachmentIds));
+    }
+
     protected function submitAGalleryPost()
     {
         $request = $this->createRequestSubmitGallery();
