@@ -40,7 +40,7 @@ class SubmitController extends BaseController
         $postArray['post_content'] = $post_content;
         $postArray['post_title']   = $post_title;
         $postArray['post_type']    = $this->galleryPostType;
-        $postArray['post_status']  = $this->galleryPostStatus;
+        $postArray['post_status']  = $this->setPostStatus();
 
         $newPostId = wp_insert_post($postArray, true);
 
@@ -122,6 +122,23 @@ class SubmitController extends BaseController
         }
 
         return $maxAttachments;
+    }
+
+    protected function setPostStatus()
+    {
+        $userIsAdmin = $this->currentUserIsAdmin();
+
+        if ($userIsAdmin === true) {
+            return $this->galleryPostStatus;
+        }
+
+        $adminMustApprove = (bool) $this->getGalleryOption('admin_must_approve');
+
+        if ($adminMustApprove === false) {
+            return $this->galleryPostStatus;
+        }
+
+        return 'draft';
     }
 
     protected function createImageAttachment(array $imageData, $postId, $attachmentOrder)
