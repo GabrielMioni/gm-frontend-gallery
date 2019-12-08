@@ -107,6 +107,24 @@ class OptionsTest extends GalleryUnitTestCase
         $this->assertEquals(5, $maxAttachmentValueAfterUpdateTwo);
     }
 
+    /** @test */
+    public function gallery_posts_must_be_approved_if_admin_must_approve_is_true()
+    {
+        $responseWithNoApprovalRequired = $this->submitAGalleryPost();
+        $postIdOne = $responseWithNoApprovalRequired->data['postID'];
+        $postOne = get_post($postIdOne);
+        $this->assertEquals('published', $postOne->post_status);
+
+        $optionValues = get_option($this->pluginOptionName);
+        $optionValues['admin_must_approve'] = true;
+        update_option($this->pluginOptionName, $optionValues);
+
+        $responseWithApprovalRequired = $this->submitAGalleryPost();
+        $postIdTwo = $responseWithApprovalRequired->data['postID'];
+        $postTwo = get_post($postIdTwo);
+        $this->assertEquals('draft', $postTwo->post_status);
+    }
+
     protected function updateSettingsViaAPI($settingKey, $newSettingValue, $createAdminUser = true)
     {
         if ($createAdminUser === true) {
