@@ -42,9 +42,11 @@ class OptionsController extends BaseController
                 $optionsAreValid = false;
                 break;
             }
-            $optionsAreValid = true;
-            
+            if ($optionKey === 'max_attachments' && (int) $value > $this->maxAttachmentsAbsolute) {
+                $value = $this->maxAttachmentsAbsolute;
+            }
             $options[$optionKey] = $value;
+            $optionsAreValid = true;
         }
 
         if ($optionsAreValid === false) {
