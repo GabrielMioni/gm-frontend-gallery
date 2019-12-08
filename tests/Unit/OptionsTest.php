@@ -94,15 +94,17 @@ class OptionsTest extends GalleryUnitTestCase
         $maxAttachmentKey = 'max_attachments';
         $optionValuesBeforeUpdate = get_option($this->pluginOptionName);
         $maxAttachmentValueBeforeUpdate = $optionValuesBeforeUpdate[$maxAttachmentKey];
-
         $this->assertEquals(5, $maxAttachmentValueBeforeUpdate);
 
-        $this->updateSettingsViaAPI('max_attachments', 100);
+        $this->updateSettingsViaAPI($maxAttachmentKey, 3);
+        $optionValuesAfterUpdateOne = get_option($this->pluginOptionName);
+        $maxAttachmentValueAfterUpdateOne = $optionValuesAfterUpdateOne[$maxAttachmentKey];
+        $this->assertEquals(3, $maxAttachmentValueAfterUpdateOne);
 
-        $optionValuesAfterUpdate = get_option($this->pluginOptionName);
-        $maxAttachmentValueAfterUpdate = $optionValuesAfterUpdate[$maxAttachmentKey];
-
-        $this->assertEquals(5, $maxAttachmentValueAfterUpdate);
+        $this->updateSettingsViaAPI($maxAttachmentKey, 100, false);
+        $optionValuesAfterUpdateTwo = get_option($this->pluginOptionName);
+        $maxAttachmentValueAfterUpdateTwo = $optionValuesAfterUpdateTwo[$maxAttachmentKey];
+        $this->assertEquals(5, $maxAttachmentValueAfterUpdateTwo);
     }
 
     protected function updateSettingsViaAPI($settingKey, $newSettingValue, $createAdminUser = true)
