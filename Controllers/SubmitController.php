@@ -89,13 +89,39 @@ class SubmitController extends BaseController
         $attachmentIds = [];
         $order = 0;
 
+        $maxAttachments = $this->getSettingMaxAttachments();
+
         foreach ($imageData as $imageDatum) {
             $attachmentIds[] = $this->createImageAttachment($imageDatum, $postId, $order);
             ++$order;
+
+            if (count($attachmentIds) >= $maxAttachments) {
+                break;
+            }
         }
 
         return $attachmentIds;
 
+    }
+
+    protected function getSettingMaxAttachments()
+    {
+        $maxAttachments = $this->getGalleryOption('max_attachments');
+
+        if ($maxAttachments instanceof WP_Error) {
+            return $maxAttachments;
+        }
+
+        $maxAttachments = (int) $maxAttachments;
+
+        if ($maxAttachments > 5)
+            return 5;
+
+        if ($maxAttachments < 1) {
+            return 1;
+        }
+
+        return $maxAttachments;
     }
 
     protected function createImageAttachment(array $imageData, $postId, $attachmentOrder)
