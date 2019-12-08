@@ -88,6 +88,23 @@ class OptionsTest extends GalleryUnitTestCase
         $this->assertEquals($setMaxAttachment, count($attachmentIds));
     }
 
+    /** @test */
+    public function max_attachments_cannot_be_set_higher_than_maxAttachmentsAbsolute_value()
+    {
+        $maxAttachmentKey = 'max_attachments';
+        $optionValuesBeforeUpdate = get_option($this->pluginOptionName);
+        $maxAttachmentValueBeforeUpdate = $optionValuesBeforeUpdate[$maxAttachmentKey];
+
+        $this->assertEquals(5, $maxAttachmentValueBeforeUpdate);
+
+        $this->updateSettingsViaAPI('max_attachments', 100);
+
+        $optionValuesAfterUpdate = get_option($this->pluginOptionName);
+        $maxAttachmentValueAfterUpdate = $optionValuesAfterUpdate[$maxAttachmentKey];
+
+        $this->assertEquals(5, $maxAttachmentValueAfterUpdate);
+    }
+
     protected function updateSettingsViaAPI($settingKey, $newSettingValue, $createAdminUser = true)
     {
         if ($createAdminUser === true) {
