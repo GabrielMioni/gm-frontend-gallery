@@ -39,7 +39,8 @@ class OptionsController extends BaseController
         
         foreach ($newOptions as $optionKey => $value) {
             if (!isset($options[$optionKey])) {
-                continue;
+                $optionsAreValid = false;
+                break;
             }
             $optionsAreValid = true;
             
