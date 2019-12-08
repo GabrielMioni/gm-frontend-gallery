@@ -114,8 +114,8 @@ class SubmitController extends BaseController
 
         $maxAttachments = (int) $maxAttachments;
 
-        if ($maxAttachments > 5)
-            return 5;
+        if ($maxAttachments > $this->maxAttachmentsAbsolute)
+            return $this->maxAttachmentsAbsolute;
 
         if ($maxAttachments < 1) {
             return 1;
