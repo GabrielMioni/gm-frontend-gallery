@@ -54,6 +54,11 @@ class SubmitController extends BaseController
 
         $attachmentIds = $this->processImageAttachments($imageData, $newPostId);
 
+        if ($attachmentIds instanceof WP_Error) {
+            wp_delete_post($newPostId, true);
+            return $attachmentIds;
+        }
+
         $response = new WP_REST_Response($data);
         $response->set_status(200);
 
@@ -89,6 +94,12 @@ class SubmitController extends BaseController
         $attachmentIds = [];
         $order = 0;
 
+        $mimesAreValid = $this->validateUploadMimes($imageData);
+
+        if ($mimesAreValid instanceof WP_Error) {
+            return $mimesAreValid;
+        }
+
         $maxAttachments = $this->getSettingMaxAttachments();
 
         foreach ($imageData as $imageDatum) {
@@ -101,7 +112,21 @@ class SubmitController extends BaseController
         }
 
         return $attachmentIds;
+    }
 
+    protected function validateUploadMimes(array $imageData)
+    {
+        $allowedMimes = (array) $this->getGalleryOption('allowed_mimes');
+
+        foreach ($imageData as $imageDatum) {
+            $path = $imageDatum['path'];
+            $mimeContent = mime_content_type($path);
+            if (!in_array($mimeContent, $allowedMimes)) {
+                return $this->createWPError('invalid_mime', 'Invalid mime type', 400);
+            }
+        }
+
+        return true;
     }
 
     protected function getSettingMaxAttachments()
