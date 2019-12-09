@@ -124,6 +124,30 @@ class OptionsTest extends GalleryUnitTestCase
         $postTwo = get_post($postIdTwo);
         $this->assertEquals('draft', $postTwo->post_status);
     }
+    
+    /** @test */
+    public function gallery_post_attachments_restricted_by_allowed_mimes()
+    {
+        $allowedMimesSettingKey = 'allowed_mimes';
+        $optionValues = get_option($this->pluginOptionName);
+        $allowedMimesSettings = $optionValues[$allowedMimesSettingKey];
+
+        $this->assertTrue(array_search('image/jpeg', $allowedMimesSettings) !== false);
+
+        if (($key = array_search('image/jpeg', $allowedMimesSettings)) !== false) {
+            unset($allowedMimesSettings[$key]);
+        }
+
+        $optionValues[$allowedMimesSettingKey] = $allowedMimesSettings;
+        update_option($this->pluginOptionName, $optionValues);
+
+        /* Show that the allowed mime setting DOES NOT include 'image/jpeg' */
+        $newOptionValues = get_option($this->pluginOptionName);
+        $this->assertFalse(array_search('image/jpeg', $newOptionValues[$allowedMimesSettingKey]));
+        $response = $this->submitAGalleryPost();
+
+        $this->assertEquals(400, $response->get_status());
+    }
 
     protected function updateSettingsViaAPI($settingKey, $newSettingValue, $createAdminUser = true)
     {
