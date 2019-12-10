@@ -43,16 +43,7 @@ class gmFrontendGallery
 
     public function createOptions()
     {
-        add_option($this->pluginOptionName, [
-            'user_required' => false,
-            'admin_must_approve' => false,
-            'max_attachments' => 5,
-            'allowed_mimes' => [
-                'image/jpeg',
-                'image/gif',
-                'image/png',
-            ],
-        ]);
+        add_option($this->pluginOptionName, $this->defaultOptions);
     }
 
     public function registerApiRoutes()
