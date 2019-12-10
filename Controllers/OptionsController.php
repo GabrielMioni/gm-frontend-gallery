@@ -15,6 +15,19 @@ class OptionsController extends BaseController
             return $this->createWPError('invalid_request', 'Invalid user capabilities', 403);
         }
 
+        $resetToDefault = $this->setRequestParams($request, 'resetOptions');
+
+        if ($resetToDefault === true) {
+            $updated = update_option($this->pluginOptionName, $this->defaultOptions);
+
+            if ($updated === true) {
+                $response = new WP_REST_Response();
+                $response->set_status(200);
+
+                return $response;
+            }
+        }
+
         $updatedOptions = $this->setRequestParams($request, 'updatedOptions');
         
         $updated = $this->updateOption($updatedOptions);
