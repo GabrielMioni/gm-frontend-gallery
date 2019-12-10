@@ -228,6 +228,40 @@ class OptionsTest extends GalleryUnitTestCase
         $this->assertTrue($optionValue);
     }
 
+    /** @test */
+    public function options_can_be_reset_to_default()
+    {
+        $updateOptionsValues = [
+            'user_required' => true,
+            'admin_must_approve' => true,
+            'max_attachments' => 3,
+            'allowed_mimes' => [
+                'image/jpeg',
+            ]
+        ];
+
+        $this->createGalleryUser(['administrator']);
+
+        $request =  new WP_REST_Request('POST', $this->namespaced_route . '/options');
+        $request->set_header('Content-Type', 'multipart/form-data');
+        $request->set_param('updatedOptions', $updateOptionsValues);
+        $response = $this->dispatchRequest($request);
+        $this->assertEquals(200, $response->get_status());
+
+        /* Show that options have been updated */
+        $updatedOptions = get_option($this->pluginOptionName);
+        $this->assertEqualSets($updatedOptions, $updateOptionsValues);
+
+        $request =  new WP_REST_Request('POST', $this->namespaced_route . '/options');
+        $request->set_header('Content-Type', 'multipart/form-data');
+        $request->set_param('resetOptions', true);
+        $response = $this->dispatchRequest($request);
+        $this->assertEquals(200, $response->get_status());
+
+        $resetOptions = get_option($this->pluginOptionName);
+        $this->assertEqualSets($this->defaultOptions, $resetOptions);
+    }
+
     protected function updateSettingsViaAPI($settingKey, $newSettingValue, $createAdminUser = true)
     {
         if ($createAdminUser === true) {
