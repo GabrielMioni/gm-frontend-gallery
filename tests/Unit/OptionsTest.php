@@ -159,13 +159,22 @@ class OptionsTest extends GalleryUnitTestCase
         $responseOne = $this->updateSettingsViaAPI('allowed_mimes', $goodMimeTypeValue);
         $this->assertEquals(200, $responseOne->get_status());
 
+        $newOptionsOne = get_option($this->pluginOptionName);
+        $this->assertEqualSets($newOptionsOne['allowed_mimes'], $goodMimeTypeValue);
+
         $goodMimeTypeValue[] = 'image/gif';
         $responseTwo = $this->updateSettingsViaAPI('allowed_mimes', $goodMimeTypeValue, false);
         $this->assertEquals(200, $responseTwo->get_status());
 
+        $newOptionsTwo = get_option($this->pluginOptionName);
+        $this->assertEqualSets($newOptionsTwo['allowed_mimes'], $goodMimeTypeValue);
+
         $goodMimeTypeValue[] = 'image/png';
         $responseThree = $this->updateSettingsViaAPI('allowed_mimes', $goodMimeTypeValue, false);
         $this->assertEquals(200, $responseThree->get_status());
+
+        $newOptionsThree = get_option($this->pluginOptionName);
+        $this->assertEqualSets($newOptionsThree['allowed_mimes'], $goodMimeTypeValue);
     }
 
     /** @test */
