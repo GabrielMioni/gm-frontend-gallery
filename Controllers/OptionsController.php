@@ -63,8 +63,8 @@ class OptionsController extends BaseController
                 $error_code = 'invalid_value';
                 break;
             }
-            if ($optionKey === 'max_attachments' && (int) $value > $this->maxAttachmentsAbsolute) {
-                $value = $this->maxAttachmentsAbsolute;
+            if ($optionKey === 'max_attachments' && (int) $value > $this->defaultOptions['max_attachments']) {
+                $value = $this->defaultOptions['max_attachments'];
             }
             $options[$optionKey] = $value;
         }

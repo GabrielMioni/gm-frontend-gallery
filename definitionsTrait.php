@@ -11,8 +11,6 @@ trait definitionsTrait
     protected $routeNameSpace = 'gm-frontend-gallery/v1';
     protected $pluginOptionName = 'gm_frontend_gallery_options';
 
-    protected $maxAttachmentsAbsolute = 5;
-
     protected $defaultOptions = [
         'user_required' => false,
         'admin_must_approve' => false,
