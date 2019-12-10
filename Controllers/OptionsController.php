@@ -35,28 +35,49 @@ class OptionsController extends BaseController
         
         $options = get_option($optionName);
 
-        $optionsAreValid = false;
+        $error_code = null;
         
         foreach ($newOptions as $optionKey => $value) {
             if (!isset($options[$optionKey])) {
-                $optionsAreValid = false;
+                $error_code = 'invalid_options';
+                break;
+            }
+            if ($optionKey === 'allowed_mimes' && $this->newMimeTypeValueIsValid($value) === false) {
+                $error_code = 'invalid_mime_type';
+                break;
+            }
+            if (is_bool($this->defaultOptions[$optionKey]) && (!is_bool($value))) {
+                $error_code = 'invalid_value';
                 break;
             }
             if ($optionKey === 'max_attachments' && (int) $value > $this->maxAttachmentsAbsolute) {
                 $value = $this->maxAttachmentsAbsolute;
             }
             $options[$optionKey] = $value;
-            $optionsAreValid = true;
         }
 
-        if ($optionsAreValid === false) {
-            return $this->createWPError('invalid_options', 'No options updated', 403);
+        if (!is_null($error_code)) {
+            return $this->createWPError($error_code, 'No options updated', 403);
         }
 
         $updated = update_option($optionName, $options);
 
         if ($updated === false) {
             return $this->createWPError('update_unsuccessful', 'Update failed', 403);
+        }
+
+        return true;
+    }
+
+    protected function newMimeTypeValueIsValid($newMimeTypes) {
+        if (!is_array($newMimeTypes)) {
+            return false;
+        }
+
+        foreach ($newMimeTypes as $allowedMimeType) {
+            if (!in_array($allowedMimeType, $this->defaultOptions['allowed_mimes'])) {
+                return false;
+            }
         }
 
         return true;

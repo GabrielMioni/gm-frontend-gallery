@@ -149,6 +149,76 @@ class OptionsTest extends GalleryUnitTestCase
         $this->assertEquals(400, $response->get_status());
     }
 
+    /** @test */
+    public function updating_allowed_mime_types_works_when_new_mimes_are_valid()
+    {
+        $goodMimeTypeValue = [
+            'image/jpeg',
+        ];
+
+        $responseOne = $this->updateSettingsViaAPI('allowed_mimes', $goodMimeTypeValue);
+        $this->assertEquals(200, $responseOne->get_status());
+
+        $goodMimeTypeValue[] = 'image/gif';
+        $responseTwo = $this->updateSettingsViaAPI('allowed_mimes', $goodMimeTypeValue, false);
+        $this->assertEquals(200, $responseTwo->get_status());
+
+        $goodMimeTypeValue[] = 'image/png';
+        $responseThree = $this->updateSettingsViaAPI('allowed_mimes', $goodMimeTypeValue, false);
+        $this->assertEquals(200, $responseThree->get_status());
+    }
+
+    /** @test */
+    public function updating_allowed_mime_type_must_be_array()
+    {
+        $badMimeTypeValue = "This string isn't even array, wut?";
+
+        $response = $this->updateSettingsViaAPI('allowed_mimes', $badMimeTypeValue);
+
+        $this->assertEquals(403, $response->get_status());
+    }
+
+    /** @test */
+    public function updating_allowed_mime_type_must_be_a_valid_mime_type()
+    {
+        $badMimeTypeValue = [
+            'text/plain',
+            'image/svg+xml',
+            'audio/mpeg'
+        ];
+
+        $response = $this->updateSettingsViaAPI('allowed_mimes', $badMimeTypeValue);
+
+        $this->assertEquals(403, $response->get_status());
+    }
+
+    /** @test */
+    public function admin_must_approve_setting_must_be_boolean()
+    {
+        $this->runOptionBooleanAsserts('admin_must_approve');
+    }
+
+    /** @test */
+    public function user_required_setting_must_be_boolean()
+    {
+        $this->runOptionBooleanAsserts('user_required');
+    }
+
+    protected function runOptionBooleanAsserts($optionKey)
+    {
+        $preAssertOptionValue = $this->getOptionByKey($optionKey);
+        $this->assertFalse($preAssertOptionValue);
+
+        $responseOne = $this->updateSettingsViaAPI($optionKey, 'I am a string, not a boolean value', true);
+        $this->assertEquals(403, $responseOne->get_status());
+
+        $responseTwo = $this->updateSettingsViaAPI($optionKey, true, false);
+        $this->assertEquals(200, $responseTwo->get_status());
+
+        $optionValue = $this->getOptionByKey($optionKey);
+        $this->assertTrue($optionValue);
+    }
+
     protected function updateSettingsViaAPI($settingKey, $newSettingValue, $createAdminUser = true)
     {
         if ($createAdminUser === true) {
@@ -164,6 +234,15 @@ class OptionsTest extends GalleryUnitTestCase
         $response = $this->dispatchRequest($request);
 
         return $response;
+    }
+
+    protected function getOptionByKey($optionKey) {
+        $options = get_option($this->pluginOptionName);
+        if (isset($options[$optionKey])) {
+            return $options[$optionKey];
+        }
+
+        return false;
     }
 
     protected function submitAGalleryPost()

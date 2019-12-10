@@ -12,4 +12,15 @@ trait definitionsTrait
     protected $pluginOptionName = 'gm_frontend_gallery_options';
 
     protected $maxAttachmentsAbsolute = 5;
+
+    protected $defaultOptions = [
+        'user_required' => false,
+        'admin_must_approve' => false,
+        'max_attachments' => 5,
+        'allowed_mimes' => [
+            'image/jpeg',
+            'image/gif',
+            'image/png',
+        ]
+    ];
 }
