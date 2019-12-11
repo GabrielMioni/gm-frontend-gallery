@@ -1,7 +1,6 @@
 <?php
 
-require_once dirname(dirname(__FILE__)) . '/GalleryUnitTestCase.php';
-require_once(__DIR__ . '/../../definitionsTrait.php');
+use GmFrontendGallery\definitionsTrait;
 
 class SubmitTest extends GalleryUnitTestCase
 {

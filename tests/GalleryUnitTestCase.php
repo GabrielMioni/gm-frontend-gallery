@@ -1,7 +1,7 @@
 <?php
 
-require_once(__DIR__ . '/../gm-frontend-gallery.php');
-require_once(__DIR__ . '/../definitionsTrait.php');
+use GmFrontendGallery\definitionsTrait;
+use GmFrontendGallery\gmFrontendGallery;
 
 class GalleryUnitTestCase extends WP_UnitTestCase
 {
