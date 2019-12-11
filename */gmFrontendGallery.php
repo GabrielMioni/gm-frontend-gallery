@@ -1,7 +1,5 @@
 <?php
 
-//require_once('../autoload.php');
-
 use GmFrontendGallery\Controller\AdminController;
 use GmFrontendGallery\Controller\GalleryController;
 use GmFrontendGallery\Controller\OptionsController;
@@ -135,5 +133,10 @@ class gmFrontendGallery
             'callback' => [$galleryController, 'retrieveGalleryPosts'],
             'args' => $args
         ];
+    }
+
+    public function mountVueApp()
+    {
+        return "<div id='gm-frontend-gallery'></div>";
     }
 }
