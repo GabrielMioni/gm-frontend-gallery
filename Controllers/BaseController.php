@@ -2,13 +2,14 @@
 
 namespace GmFrontendGallery\Controller;
 
+use GmFrontendGallery\definitionsTrait;
 use WP_REST_Request;
 use WP_Error;
 use WP_Post;
 
 abstract class BaseController
 {
-    use \definitionsTrait;
+    use definitionsTrait;
 
     protected function setRequestParams(WP_REST_Request $request, $key)
     {
