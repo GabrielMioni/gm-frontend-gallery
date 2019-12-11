@@ -8,7 +8,8 @@ Author URI: gabrielmioni.com
 */
 
 require_once('autoload.php');
-require_once('*/gmFrontendGallery.php');
+
+use GmFrontendGallery\gmFrontendGallery;
 
 $gmFrontendGallery = new gmFrontendGallery();
 

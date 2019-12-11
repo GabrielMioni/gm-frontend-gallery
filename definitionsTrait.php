@@ -1,5 +1,7 @@
 <?php
 
+namespace GmFrontendGallery;
+
 trait definitionsTrait
 {
     protected $galleryPostType = 'gallery';

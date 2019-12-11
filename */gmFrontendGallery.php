@@ -1,9 +1,12 @@
 <?php
 
+namespace GmFrontendGallery;
+
 use GmFrontendGallery\Controller\AdminController;
 use GmFrontendGallery\Controller\GalleryController;
 use GmFrontendGallery\Controller\OptionsController;
 use GmFrontendGallery\Controller\SubmitController;
+use GmFrontendGallery\definitionsTrait;
 
 class gmFrontendGallery
 {
