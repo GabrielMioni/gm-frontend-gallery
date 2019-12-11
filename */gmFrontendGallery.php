@@ -137,6 +137,6 @@ class gmFrontendGallery
 
     public function mountVueApp()
     {
-        return "<div id='gm-frontend-gallery'></div>";
+        return '<div id="gm-frontend-gallery"></div>';
     }
 }
