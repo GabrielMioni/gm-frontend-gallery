@@ -12,9 +12,9 @@ require_once('*/gmFrontendGallery.php');
 
 $gmFrontendGallery = new gmFrontendGallery();
 
-add_action('rest_api_init', function () use ($gmFrontendGallery) {
-    $gmFrontendGallery->registerApiRoutes();
-});
 register_activation_hook(__FILE__, function() use ($gmFrontendGallery) {
     $gmFrontendGallery->activate();
+});
+add_action('rest_api_init', function () use ($gmFrontendGallery) {
+    $gmFrontendGallery->registerApiRoutes();
 });
