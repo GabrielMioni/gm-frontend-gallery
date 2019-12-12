@@ -139,8 +139,15 @@ class gmFrontendGallery
         ];
     }
 
+    public function registerVue()
+    {
+        $appUrl = plugins_url() . '/gm-frontend-gallery/dist/app.js';
+        wp_register_script('gm-frontend-gallery', $appUrl, [], '1.0.0');
+    }
+
     public function mountVueApp()
     {
+        wp_enqueue_script('gm-frontend-gallery');
         return '<div id="gm-frontend-gallery"></div>';
     }
 }
