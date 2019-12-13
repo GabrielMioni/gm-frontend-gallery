@@ -7,6 +7,7 @@ use GmFrontendGallery\Controller\GalleryController;
 use GmFrontendGallery\Controller\OptionsController;
 use GmFrontendGallery\Controller\SubmitController;
 
+use GmFrontendGallery\Controller\TestController;
 use WP_REST_Server;
 
 class gmFrontendGallery
@@ -47,6 +48,7 @@ class gmFrontendGallery
         $adminController = new AdminController();
         $galleryController = new GalleryController();
         $optionsController = new OptionsController();
+        $testController = new TestController();
 
         register_rest_route( $this->routeNameSpace, '/submit/', [
             'methods' => 'POST',
@@ -127,6 +129,11 @@ class gmFrontendGallery
                 'attachId',
                 'order',
             ]
+        ]);
+
+        register_rest_route($this->routeNameSpace, '/testData', [
+            'methods' => 'GET',
+            'callback' => [$testController, 'index'],
         ]);
     }
 
