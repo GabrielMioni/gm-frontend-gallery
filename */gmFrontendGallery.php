@@ -16,11 +16,11 @@ class gmFrontendGallery
 
     public function activate()
     {
-        $this->createPostType();
+        $this->registerPostType();
         $this->createOptions();
     }
 
-    public function createPostType()
+    public function registerPostType()
     {
         $labels = [
             'name' => 'Gallery Images',

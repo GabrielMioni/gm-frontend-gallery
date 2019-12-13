@@ -14,7 +14,10 @@ use GmFrontendGallery\gmFrontendGallery;
 $gmFrontendGallery = new gmFrontendGallery();
 
 register_activation_hook(__FILE__, function() use ($gmFrontendGallery) {
-    $gmFrontendGallery->activate();
+    $gmFrontendGallery->createOptions();
+});
+add_action('init', function () use ($gmFrontendGallery) {
+    $gmFrontendGallery->registerPostType();
 });
 add_action('rest_api_init', function() use ($gmFrontendGallery) {
     $gmFrontendGallery->registerApiRoutes();
