@@ -621,7 +621,7 @@ var render = function() {
         "div",
         _vm._l(galleryItem.images, function(image) {
           return _c("img", {
-            attrs: { src: image.sized_images.medium, alt: "" }
+            attrs: { src: image["sized_images"].medium, alt: "" }
           })
         }),
         0
