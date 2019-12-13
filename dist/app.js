@@ -95,8 +95,10 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
+//
+//
+//
+//
 //
 //
 //
@@ -109,21 +111,13 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     };
   },
   methods: {
-    getGalleryItems: function getGalleryItems() {
+    setGalleryItems: function setGalleryItems() {
       var self = this;
-      var xhr = new XMLHttpRequest(); // xhr.open('GET', 'https://wordpress-local.lndo.site/wp-json/gm-frontend-gallery/v1/get');
-
+      var xhr = new XMLHttpRequest();
       xhr.open('GET', '/wp-json/gm-frontend-gallery/v1/get/');
 
       xhr.onload = function () {
-        console.log(xhr.status);
-        console.log(xhr.response);
-        console.log(xhr.responseText);
-        console.log(_typeof(xhr.responseText)); // self.galleryItems = JSON.parse(xhr.responseText);
-
-        var data = JSON.parse(xhr.responseText);
-        console.log(_typeof(data));
-        self.galleryItems = data; // self.galleryItems = data;
+        self.galleryItems = JSON.parse(xhr.responseText);
       };
 
       xhr.send();
@@ -131,7 +125,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
   },
   mounted: function mounted() {
     console.log('mounted');
-    this.getGalleryItems();
+    this.setGalleryItems();
   }
 });
 
@@ -620,9 +614,21 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { attrs: { id: "HELLO" } }, [
-    _vm._v("Hello. I am Vue! So nice to meet you.")
-  ])
+  return _c(
+    "div",
+    _vm._l(_vm.galleryItems, function(galleryItem) {
+      return _c(
+        "div",
+        _vm._l(galleryItem.images, function(image) {
+          return _c("img", {
+            attrs: { src: image.sized_images.medium, alt: "" }
+          })
+        }),
+        0
+      )
+    }),
+    0
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

@@ -1,5 +1,9 @@
 <template>
-    <div id="HELLO">Hello. I am Vue! So nice to meet you.</div>
+    <div>
+        <div v-for="galleryItem in galleryItems">
+            <img v-for="image in galleryItem.images" :src="image.sized_images.medium" alt="">
+        </div>
+    </div>
 </template>
 
 <script>
