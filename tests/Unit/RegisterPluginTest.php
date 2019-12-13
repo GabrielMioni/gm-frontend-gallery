@@ -11,7 +11,7 @@ class RegisterPluginTest extends WP_UnitTestCase
     {
         parent::setUp();
         $gmFrontendGallery = new gmFrontendGallery();
-        $gmFrontendGallery->createPostType();
+        $gmFrontendGallery->registerPostType();
     }
 
     public function tearDown()
