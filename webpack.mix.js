@@ -15,8 +15,8 @@ let mix = require('laravel-mix');
     .sass('src/app.scss', 'dist')
     .setPublicPath('dist');*/
 
-mix.js('src/gallery/gallery.js', 'dist')
-  .sass('src/gallery/gallery.scss', 'dist')
+mix.js('src/gallery/js/app.js', 'dist/gallery')
+  .sass('src/gallery/scss/app.scss', 'dist/gallery')
   .setPublicPath('dist');
 
 // Full API

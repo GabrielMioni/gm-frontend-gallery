@@ -18,5 +18,16 @@
   display: -webkit-inline-box;
   display: inline-flex;
   margin: 0.25rem;
+  position: relative;
+}
+
+#gm-frontend-gallery .gallery-post .gm-gallery-post-content {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: #000000;
+  opacity: 0.8;
+  color: white;
+  padding: 0.5rem;
 }
 

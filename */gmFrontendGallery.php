@@ -151,8 +151,8 @@ class gmFrontendGallery
 
     public function registerVue()
     {
-        $galleryUrlJS  = plugins_url() . '/gm-frontend-gallery/dist/gallery.js';
-        $galleryUrlCSS = plugins_url() . '/gm-frontend-gallery/dist/gallery.css';
+        $galleryUrlJS  = plugins_url() . '/gm-frontend-gallery/dist/gallery/app.js';
+        $galleryUrlCSS = plugins_url() . '/gm-frontend-gallery/dist/gallery/app.css';
 
         wp_register_script($this->galleryScriptHandle, $galleryUrlJS, [], $this->galleryVersion);
         wp_register_style($this->galleryScriptHandle, $galleryUrlCSS, [], $this->galleryVersion);
