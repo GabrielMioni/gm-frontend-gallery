@@ -1,14 +1,17 @@
 <template>
     <div id="gm-frontend-gallery">
         <div v-for="galleryItem in galleryItems">
-            <img v-for="image in galleryItem.images" :src="image['sized_images'].medium" alt="">
+            <GalleryPost :post="galleryItem"></GalleryPost>
+<!--            <img v-for="image in galleryItem.images" :src="image['sized_images'].medium" alt="">-->
         </div>
     </div>
 </template>
 
 <script>
+  import GalleryPost from "./components/GalleryPost";
   export default {
     name: 'gmGallery',
+    components: {GalleryPost},
     data() {
       return {
         galleryItems: '',
