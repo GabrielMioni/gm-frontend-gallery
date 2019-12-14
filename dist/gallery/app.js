@@ -112,6 +112,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -140,6 +142,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     openPostHandler: function openPostHandler(postIndex) {
       this.openedPost = this.galleryPosts[postIndex];
+    },
+    closePostHandler: function closePostHandler() {
+      this.openedPost = null;
     }
   },
   mounted: function mounted() {
@@ -182,10 +187,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'GalleryLightBox',
   props: {
     post: Object
+  },
+  methods: {
+    closePost: function closePost() {
+      this.$emit('close-post');
+    }
   }
 });
 
@@ -734,7 +746,10 @@ var render = function() {
         { attrs: { name: "fade" } },
         [
           _vm.openedPost !== null
-            ? _c("GalleryLightBox", { attrs: { post: _vm.openedPost } })
+            ? _c("GalleryLightBox", {
+                attrs: { post: _vm.openedPost },
+                on: { "close-post": _vm.closePostHandler }
+              })
             : _vm._e()
         ],
         1
@@ -769,7 +784,8 @@ var render = function() {
     "div",
     {
       staticClass: "gm-gallery-light-box",
-      class: { active: _vm.post !== null }
+      class: { active: _vm.post !== null },
+      on: { click: _vm.closePost }
     },
     [
       _c("div", { staticClass: "gm-gallery-light-box-content" }, [

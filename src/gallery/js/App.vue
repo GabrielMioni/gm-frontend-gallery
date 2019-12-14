@@ -8,7 +8,9 @@
             </GalleryPost>
         </template>
         <transition name="fade">
-            <GalleryLightBox v-if="openedPost !== null" :post="openedPost"></GalleryLightBox>
+            <GalleryLightBox
+                @close-post="closePostHandler"
+                v-if="openedPost !== null" :post="openedPost"></GalleryLightBox>
         </transition>
     </div>
 </template>
@@ -37,6 +39,9 @@
       },
       openPostHandler(postIndex) {
         this.openedPost = this.galleryPosts[postIndex];
+      },
+      closePostHandler() {
+        this.openedPost = null;
       }
     },
     mounted() {
