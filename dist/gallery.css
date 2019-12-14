@@ -1,3 +1,7 @@
-.gm-frontend-gallery {
+#gm-frontend-gallery {
   margin: 0;
+  padding: 0;
+  width: 100%;
+  border: 1px solid red;
+  max-width: 100%;
 }
