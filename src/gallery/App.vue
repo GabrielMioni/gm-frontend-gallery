@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="gm-frontend-gallery">
         <div v-for="galleryItem in galleryItems">
             <img v-for="image in galleryItem.images" :src="image['sized_images'].medium" alt="">
         </div>

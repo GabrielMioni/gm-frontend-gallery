@@ -148,8 +148,10 @@ class gmFrontendGallery
 
     public function registerVue()
     {
-        $appUrl = plugins_url() . '/gm-frontend-gallery/dist/app.js';
-        wp_register_script('gm-frontend-gallery', $appUrl, [], '1.0.0');
+        $galleryUrlJS  = plugins_url() . '/gm-frontend-gallery/dist/gallery.js';
+        $galleryUrlCSS = plugins_url() . '/gm-frontend-gallery/dist/gallery.css';
+
+        wp_register_script('gm-frontend-gallery', $galleryUrlJS, [], '1.0.0');
     }
 
     public function mountVueApp()

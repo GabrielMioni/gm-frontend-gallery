@@ -11,9 +11,13 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.js('src/app.js', 'dist')
+/*mix.js('src/app.js', 'dist')
     .sass('src/app.scss', 'dist')
-    .setPublicPath('dist');
+    .setPublicPath('dist');*/
+
+mix.js('src/gallery/gallery.js', 'dist')
+  .sass('src/gallery/gallery.scss', 'dist')
+  .setPublicPath('dist');
 
 // Full API
 // mix.js(src, output);
