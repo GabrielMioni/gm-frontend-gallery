@@ -12,5 +12,16 @@
   .gallery-post {
     display: inline-flex;
     margin: .25rem;
+    position: relative;
+
+    .gm-gallery-post-content {
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      background-color: #000000;
+      opacity: .8;
+      color: white;
+      padding: .5rem;
+    }
   }
 }
