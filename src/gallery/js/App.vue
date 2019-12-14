@@ -1,7 +1,10 @@
 <template>
     <div id="gm-frontend-gallery">
         <template v-for="galleryItem in galleryItems">
-            <GalleryPost :post="galleryItem"></GalleryPost>
+            <GalleryPost
+                :post="galleryItem"
+                @open-post="openPostHandler">
+            </GalleryPost>
         </template>
     </div>
 </template>
@@ -25,6 +28,9 @@
           self.galleryItems = JSON.parse(xhr.responseText);
         };
         xhr.send();
+      },
+      openPostHandler(data) {
+        console.log(data);
       }
     },
     mounted() {

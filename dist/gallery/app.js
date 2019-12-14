@@ -104,6 +104,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'gmGallery',
@@ -126,6 +129,10 @@ __webpack_require__.r(__webpack_exports__);
       };
 
       xhr.send();
+    },
+    openPostHandler: function openPostHandler(data) {
+      console.log('clicko1');
+      console.log(data);
     }
   },
   mounted: function mounted() {
@@ -161,10 +168,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'GalleryPost',
   props: {
     post: Object
+  },
+  methods: {
+    openGalleryPost: function openGalleryPost() {
+      this.$emit('open-post', this.post);
+    }
   }
 });
 
@@ -658,7 +672,12 @@ var render = function() {
     { attrs: { id: "gm-frontend-gallery" } },
     [
       _vm._l(_vm.galleryItems, function(galleryItem) {
-        return [_c("GalleryPost", { attrs: { post: galleryItem } })]
+        return [
+          _c("GalleryPost", {
+            attrs: { post: galleryItem },
+            on: { "open-post": _vm.openPostHandler }
+          })
+        ]
       })
     ],
     2
@@ -686,31 +705,35 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "gm-gallery-post" }, [
-    _c("img", {
-      attrs: { src: _vm.post.images[0]["sized_images"].medium, alt: "" }
-    }),
-    _vm._v(" "),
-    _c("div", { staticClass: "gm-gallery-post-content" }, [
-      _c("div", { staticClass: "gm-gallery-post-content-grid" }, [
-        _c("div", { staticClass: "gm-post-title" }, [
-          _vm._v(
-            "\n                " +
-              _vm._s(_vm.post.post_title) +
-              "\n            "
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "gm-post-content" }, [
-          _vm._v(
-            "\n                " +
-              _vm._s(_vm.post.post_content) +
-              "\n            "
-          )
+  return _c(
+    "div",
+    { staticClass: "gm-gallery-post", on: { click: _vm.openGalleryPost } },
+    [
+      _c("img", {
+        attrs: { src: _vm.post.images[0]["sized_images"].medium, alt: "" }
+      }),
+      _vm._v(" "),
+      _c("div", { staticClass: "gm-gallery-post-content" }, [
+        _c("div", { staticClass: "gm-gallery-post-content-grid" }, [
+          _c("div", { staticClass: "gm-post-title" }, [
+            _vm._v(
+              "\n                " +
+                _vm._s(_vm.post.post_title) +
+                "\n            "
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "gm-post-content" }, [
+            _vm._v(
+              "\n                " +
+                _vm._s(_vm.post.post_content) +
+                "\n            "
+            )
+          ])
         ])
       ])
-    ])
-  ])
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

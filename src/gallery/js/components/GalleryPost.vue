@@ -1,5 +1,7 @@
 <template>
-    <div class="gm-gallery-post">
+    <div
+        class="gm-gallery-post"
+        @click="openGalleryPost">
         <img :src="post.images[0]['sized_images'].medium" alt="">
         <div class="gm-gallery-post-content">
             <div class="gm-gallery-post-content-grid">
@@ -19,6 +21,11 @@
     name: 'GalleryPost',
     props: {
       post: Object
+    },
+    methods: {
+      openGalleryPost() {
+        this.$emit('open-post', this.post);
+      }
     }
   }
 </script>
