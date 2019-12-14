@@ -115,7 +115,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      galleryItems: ''
+      galleryPosts: ''
     };
   },
   methods: {
@@ -131,7 +131,6 @@ __webpack_require__.r(__webpack_exports__);
       xhr.send();
     },
     openPostHandler: function openPostHandler(data) {
-      console.log('clicko1');
       console.log(data);
     }
   },
@@ -671,10 +670,10 @@ var render = function() {
     "div",
     { attrs: { id: "gm-frontend-gallery" } },
     [
-      _vm._l(_vm.galleryItems, function(galleryItem) {
+      _vm._l(_vm.galleryPosts, function(galleryPost) {
         return [
           _c("GalleryPost", {
-            attrs: { post: galleryItem },
+            attrs: { post: galleryPost },
             on: { "open-post": _vm.openPostHandler }
           })
         ]

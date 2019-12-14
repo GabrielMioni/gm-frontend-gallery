@@ -1,8 +1,8 @@
 <template>
     <div id="gm-frontend-gallery">
-        <template v-for="galleryItem in galleryItems">
+        <template v-for="galleryPost in galleryPosts">
             <GalleryPost
-                :post="galleryItem"
+                :post="galleryPost"
                 @open-post="openPostHandler">
             </GalleryPost>
         </template>
@@ -16,7 +16,7 @@
     components: {GalleryPost},
     data() {
       return {
-        galleryItems: '',
+        galleryPosts: '',
       }
     },
     methods: {
