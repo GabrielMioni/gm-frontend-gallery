@@ -104,7 +104,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'gmGallery',
@@ -647,10 +646,12 @@ var render = function() {
   return _c(
     "div",
     { attrs: { id: "gm-frontend-gallery" } },
-    _vm._l(_vm.galleryItems, function(galleryItem) {
-      return _c("div", [_c("GalleryPost", { attrs: { post: galleryItem } })], 1)
-    }),
-    0
+    [
+      _vm._l(_vm.galleryItems, function(galleryItem) {
+        return [_c("GalleryPost", { attrs: { post: galleryItem } })]
+      })
+    ],
+    2
   )
 }
 var staticRenderFns = []

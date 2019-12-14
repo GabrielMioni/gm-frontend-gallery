@@ -4,5 +4,19 @@
   width: 100%;
   border: 1px solid red;
   max-width: 100%;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+          flex-direction: row;
+  flex-wrap: wrap;
+  -webkit-box-pack: center;
+          justify-content: center;
+}
+
+#gm-frontend-gallery .gallery-post {
+  display: -webkit-inline-box;
+  display: inline-flex;
+  margin: 0.25rem;
 }
 
