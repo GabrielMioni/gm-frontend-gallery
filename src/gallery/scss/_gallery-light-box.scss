@@ -20,6 +20,11 @@
       grid-template-columns: 1fr 1fr;
       grid-template-rows: 1fr;
 
+      &-col-1,
+      &-col-2 {
+        padding: .5rem;
+      }
+
       &-col-1 {
         img {
           object-fit: contain;
@@ -30,7 +35,18 @@
         }
       }
       &-col-2 {
+        &-title {
 
+        }
+        &-content {
+
+        }
+        &-images {
+          display: grid;
+          grid-template-rows: 1fr;
+          grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+          grid-gap: .2rem;
+        }
       }
     }
   }
