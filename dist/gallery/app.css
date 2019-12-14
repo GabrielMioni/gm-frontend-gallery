@@ -19,6 +19,7 @@
   display: inline-flex;
   margin: 0.25rem;
   position: relative;
+  cursor: pointer;
 }
 
 #gm-frontend-gallery .gm-gallery-post-content {
