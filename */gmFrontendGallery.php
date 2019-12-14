@@ -14,6 +14,9 @@ class gmFrontendGallery
 {
     use definitionsTrait;
 
+    protected $galleryScriptHandle = 'gm-frontend-gallery';
+    protected $galleryVersion = '1.0.0';
+
     public function activate()
     {
         $this->registerPostType();
@@ -151,12 +154,14 @@ class gmFrontendGallery
         $galleryUrlJS  = plugins_url() . '/gm-frontend-gallery/dist/gallery.js';
         $galleryUrlCSS = plugins_url() . '/gm-frontend-gallery/dist/gallery.css';
 
-        wp_register_script('gm-frontend-gallery', $galleryUrlJS, [], '1.0.0');
+        wp_register_script($this->galleryScriptHandle, $galleryUrlJS, [], $this->galleryVersion);
+        wp_register_style($this->galleryScriptHandle, $galleryUrlCSS, [], $this->galleryVersion);
     }
 
     public function mountVueApp()
     {
-        wp_enqueue_script('gm-frontend-gallery');
+        wp_enqueue_script($this->galleryScriptHandle);
+        wp_enqueue_style($this->galleryScriptHandle);
         return '<div id="gm-frontend-gallery"></div>';
     }
 }
