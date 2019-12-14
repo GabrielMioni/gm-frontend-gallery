@@ -763,13 +763,13 @@ var render = function() {
     },
     [
       _c("div", { staticClass: "gm-gallery-light-box-content" }, [
-        _c("div", { staticClass: "left" }, [
+        _c("div", { staticClass: "gm-gallery-light-box-content-col-1" }, [
           _c("img", {
             attrs: { src: _vm.post.images[0]["sized_images"].full, alt: "" }
           })
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "right" })
+        _c("div", { staticClass: "gm-gallery-light-box-content-col-2" })
       ])
     ]
   )

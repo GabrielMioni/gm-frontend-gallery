@@ -68,7 +68,7 @@
   grid-template-rows: 1fr;
 }
 
-#gm-frontend-gallery .gm-gallery-light-box-content .left img {
+#gm-frontend-gallery .gm-gallery-light-box-content-col-1 img {
   -o-object-fit: contain;
      object-fit: contain;
   width: 100%;
