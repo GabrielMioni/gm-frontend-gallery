@@ -152,6 +152,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'GalleryPost',
   props: {
@@ -677,13 +686,29 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "gallery-post" }, [
+  return _c("div", { staticClass: "gm-gallery-post" }, [
     _c("img", {
       attrs: { src: _vm.post.images[0]["sized_images"].medium, alt: "" }
     }),
     _vm._v(" "),
     _c("div", { staticClass: "gm-gallery-post-content" }, [
-      _vm._v(_vm._s(_vm.post.post_title))
+      _c("div", { staticClass: "gm-gallery-post-content-grid" }, [
+        _c("div", { staticClass: "gm-post-title" }, [
+          _vm._v(
+            "\n                " +
+              _vm._s(_vm.post.post_title) +
+              "\n            "
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "gm-post-content" }, [
+          _vm._v(
+            "\n                " +
+              _vm._s(_vm.post.post_content) +
+              "\n            "
+          )
+        ])
+      ])
     ])
   ])
 }
