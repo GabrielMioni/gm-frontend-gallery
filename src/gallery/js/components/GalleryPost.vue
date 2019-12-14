@@ -20,11 +20,12 @@
   export default {
     name: 'GalleryPost',
     props: {
-      post: Object
+      post: Object,
+      index: Number
     },
     methods: {
       openGalleryPost() {
-        this.$emit('open-post', this.post);
+        this.$emit('open-post', this.index);
       }
     }
   }

@@ -1,7 +1,13 @@
 <template>
-    <div class="gm-gallery-light-box">
-        <div class="left"></div>
-        <div class="right"></div>
+    <div class="gm-gallery-light-box" v-bind:class="{ active: post !== null }">
+        <div class="gm-gallery-light-box-content">
+            <div class="left">
+                <img :src="post.images[0]['sized_images'].full" alt="">
+            </div>
+            <div class="right">
+
+            </div>
+        </div>
     </div>
 </template>
 

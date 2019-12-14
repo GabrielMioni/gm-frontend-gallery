@@ -1,0 +1,12 @@
+@import "variables";
+
+#gm-frontend-gallery {
+  .gm-gallery-light-box {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background-color: rgba($themeColor1,.8);
+    top: 0;
+    left: 0;
+  }
+}

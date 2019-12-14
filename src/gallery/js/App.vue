@@ -1,36 +1,42 @@
 <template>
     <div id="gm-frontend-gallery">
-        <template v-for="galleryPost in galleryPosts">
+        <template v-for="(galleryPost, index) in galleryPosts">
             <GalleryPost
                 :post="galleryPost"
+                :index="index"
                 @open-post="openPostHandler">
             </GalleryPost>
         </template>
+        <transition name="fade">
+            <GalleryLightBox v-if="openedPost !== null" :post="openedPost"></GalleryLightBox>
+        </transition>
     </div>
 </template>
 
 <script>
   import GalleryPost from "./components/GalleryPost";
+  import GalleryLightBox from "./components/GalleryLightBox";
   export default {
     name: 'gmGallery',
-    components: {GalleryPost},
+    components: {GalleryLightBox, GalleryPost},
     data() {
       return {
         galleryPosts: '',
+        openedPost: null,
       }
     },
     methods: {
       setGalleryItems() {
         const self = this;
         let xhr = new XMLHttpRequest();
-        xhr.open('GET', '/wp-json/gm-frontend-gallery/v1/get/');
+        xhr.open('GET', '/wp-json/gm-frontend-gallery/v1/get/1/10');
         xhr.onload = () => {
-          self.galleryItems = JSON.parse(xhr.responseText);
+          self.galleryPosts = JSON.parse(xhr.responseText);
         };
         xhr.send();
       },
-      openPostHandler(data) {
-        console.log(data);
+      openPostHandler(postIndex) {
+        this.openedPost = this.galleryPosts[postIndex];
       }
     },
     mounted() {
