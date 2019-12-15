@@ -2,10 +2,9 @@
     <div class="gm-gallery-light-box"
          v-bind:class="{ active: post !== null }"
          @click="closePost">
-        <div class="gm-gallery-light-box-content"
-            @click.stop="doThing">
+        <div class="gm-gallery-light-box-content" @click.stop>
             <div class="gm-gallery-light-box-content-col-1">
-                <img :src="post.images[0]['sized_images'].full" alt="">
+                <img :src="currentImage" alt="">
             </div>
             <div class="gm-gallery-light-box-content-col-2">
                 <div class="gm-gallery-light-box-content-col-2-title">
@@ -15,8 +14,10 @@
                     {{ post.post_content }}
                 </div>
                 <div class="gm-gallery-light-box-content-col-2-images">
-                    <template v-for="image in post.images">
-                        <img :src="image['sized_images'].thumbnail" alt="">
+                    <template v-for="(image, index) in post.images">
+                        <img
+                            @click.stop="selectImage(index)"
+                            :src="image['sized_images'].thumbnail" alt="">
                     </template>
                 </div>
             </div>
@@ -30,12 +31,20 @@
     props: {
       post: Object
     },
+    data() {
+      return {
+        currentImage: this.retrieveImage(0, 'full'),
+      }
+    },
     methods: {
       closePost() {
         this.$emit('close-post');
       },
-      doThing(e) {
-        console.log('clicko!');
+      retrieveImage(index, size) {
+        return this.post.images[index]['sized_images'][size];
+      },
+      selectImage(index) {
+        this.currentImage = this.retrieveImage(index, 'full');
       }
     }
   }

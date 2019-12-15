@@ -190,17 +190,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'GalleryLightBox',
   props: {
     post: Object
   },
+  data: function data() {
+    return {
+      currentImage: this.retrieveImage(0, 'full')
+    };
+  },
   methods: {
     closePost: function closePost() {
       this.$emit('close-post');
     },
-    doThing: function doThing(e) {
+    doThing: function doThing() {
       console.log('clicko!');
+    },
+    retrieveImage: function retrieveImage(index, size) {
+      return this.post.images[index]['sized_images'][size];
+    },
+    selectImage: function selectImage(index) {
+      this.currentImage = this.retrieveImage(index, 'full');
     }
   }
 });
@@ -798,15 +810,12 @@ var render = function() {
           on: {
             click: function($event) {
               $event.stopPropagation()
-              return _vm.doThing($event)
             }
           }
         },
         [
           _c("div", { staticClass: "gm-gallery-light-box-content-col-1" }, [
-            _c("img", {
-              attrs: { src: _vm.post.images[0]["sized_images"].full, alt: "" }
-            })
+            _c("img", { attrs: { src: _vm.currentImage, alt: "" } })
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "gm-gallery-light-box-content-col-2" }, [
@@ -838,10 +847,16 @@ var render = function() {
               "div",
               { staticClass: "gm-gallery-light-box-content-col-2-images" },
               [
-                _vm._l(_vm.post.images, function(image) {
+                _vm._l(_vm.post.images, function(image, index) {
                   return [
                     _c("img", {
-                      attrs: { src: image["sized_images"].thumbnail, alt: "" }
+                      attrs: { src: image["sized_images"].thumbnail, alt: "" },
+                      on: {
+                        click: function($event) {
+                          $event.stopPropagation()
+                          return _vm.selectImage(index)
+                        }
+                      }
                     })
                   ]
                 })
