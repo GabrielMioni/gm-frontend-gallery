@@ -16,6 +16,7 @@
                 <div class="gm-gallery-light-box-content-col-2-images">
                     <template v-for="(image, index) in post.images">
                         <img
+                            v-bind:class="{ active: index === activeImage }"
                             @click.stop="selectImage(index)"
                             :src="image['sized_images'].thumbnail" alt="">
                     </template>
@@ -34,6 +35,7 @@
     data() {
       return {
         currentImage: this.retrieveImage(0, 'full'),
+        activeImage: 0,
       }
     },
     methods: {
@@ -44,6 +46,7 @@
         return this.post.images[index]['sized_images'][size];
       },
       selectImage(index) {
+        this.activeImage = index;
         this.currentImage = this.retrieveImage(index, 'full');
       }
     }

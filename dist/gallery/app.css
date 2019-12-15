@@ -93,6 +93,11 @@
   grid-template-rows: 1fr;
   grid-template-columns: repeat(5, 1fr);
   grid-gap: 0.2rem;
+  cursor: pointer;
+}
+
+#gm-frontend-gallery .gm-gallery-light-box-content-col-2-images img.active {
+  outline: 2px solid #5bc0de;
 }
 
 .fade-enter-active,

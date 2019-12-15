@@ -191,6 +191,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'GalleryLightBox',
   props: {
@@ -198,20 +199,19 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      currentImage: this.retrieveImage(0, 'full')
+      currentImage: this.retrieveImage(0, 'full'),
+      activeImage: 0
     };
   },
   methods: {
     closePost: function closePost() {
       this.$emit('close-post');
     },
-    doThing: function doThing() {
-      console.log('clicko!');
-    },
     retrieveImage: function retrieveImage(index, size) {
       return this.post.images[index]['sized_images'][size];
     },
     selectImage: function selectImage(index) {
+      this.activeImage = index;
       this.currentImage = this.retrieveImage(index, 'full');
     }
   }
@@ -850,6 +850,7 @@ var render = function() {
                 _vm._l(_vm.post.images, function(image, index) {
                   return [
                     _c("img", {
+                      class: { active: index === _vm.activeImage },
                       attrs: { src: image["sized_images"].thumbnail, alt: "" },
                       on: {
                         click: function($event) {

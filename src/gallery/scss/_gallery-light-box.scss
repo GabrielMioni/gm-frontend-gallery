@@ -48,6 +48,13 @@
           grid-template-rows: 1fr;
           grid-template-columns: repeat(5, 1fr);
           grid-gap: .2rem;
+          cursor: pointer;
+
+          img {
+            &.active {
+              outline: 2px solid $themeColor3;
+            }
+          }
         }
       }
     }
