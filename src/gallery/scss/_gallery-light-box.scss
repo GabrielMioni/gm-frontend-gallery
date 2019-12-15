@@ -43,12 +43,15 @@
       }
       &-col-2 {
         display: grid;
-        grid-template-rows: min-content 1fr min-content;
-        &-title {
+        grid-template-rows: 1fr min-content;
+        &-text {
+          display: grid;
+          grid-template-rows: min-content 1fr;
+          &-title {
 
-        }
-        &-content {
-
+          }
+          &-content {
+          }
         }
         &-images {
           display: grid;

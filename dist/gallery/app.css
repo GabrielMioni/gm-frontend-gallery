@@ -94,8 +94,14 @@
 
 #gm-frontend-gallery .gm-gallery-light-box-content-col-2 {
   display: grid;
-  grid-template-rows: -webkit-min-content 1fr -webkit-min-content;
-  grid-template-rows: min-content 1fr min-content;
+  grid-template-rows: 1fr -webkit-min-content;
+  grid-template-rows: 1fr min-content;
+}
+
+#gm-frontend-gallery .gm-gallery-light-box-content-col-2-text {
+  display: grid;
+  grid-template-rows: -webkit-min-content 1fr;
+  grid-template-rows: min-content 1fr;
 }
 
 #gm-frontend-gallery .gm-gallery-light-box-content-col-2-images {
