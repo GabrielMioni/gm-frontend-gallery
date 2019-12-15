@@ -2,7 +2,8 @@
     <div class="gm-gallery-light-box"
          v-bind:class="{ active: post !== null }"
          @click="closePost">
-        <div class="gm-gallery-light-box-content">
+        <div class="gm-gallery-light-box-content"
+            @click.stop="doThing">
             <div class="gm-gallery-light-box-content-col-1">
                 <img :src="post.images[0]['sized_images'].full" alt="">
             </div>
@@ -32,6 +33,9 @@
     methods: {
       closePost() {
         this.$emit('close-post');
+      },
+      doThing(e) {
+        console.log('clicko!');
       }
     }
   }

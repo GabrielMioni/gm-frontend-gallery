@@ -189,6 +189,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'GalleryLightBox',
   props: {
@@ -197,6 +198,9 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     closePost: function closePost() {
       this.$emit('close-post');
+    },
+    doThing: function doThing(e) {
+      console.log('clicko!');
     }
   }
 });
@@ -787,54 +791,66 @@ var render = function() {
       on: { click: _vm.closePost }
     },
     [
-      _c("div", { staticClass: "gm-gallery-light-box-content" }, [
-        _c("div", { staticClass: "gm-gallery-light-box-content-col-1" }, [
-          _c("img", {
-            attrs: { src: _vm.post.images[0]["sized_images"].full, alt: "" }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "gm-gallery-light-box-content-col-2" }, [
-          _c(
-            "div",
-            { staticClass: "gm-gallery-light-box-content-col-2-title" },
-            [
-              _vm._v(
-                "\n                " +
-                  _vm._s(_vm.post.post_title) +
-                  "\n            "
-              )
-            ]
-          ),
+      _c(
+        "div",
+        {
+          staticClass: "gm-gallery-light-box-content",
+          on: {
+            click: function($event) {
+              $event.stopPropagation()
+              return _vm.doThing($event)
+            }
+          }
+        },
+        [
+          _c("div", { staticClass: "gm-gallery-light-box-content-col-1" }, [
+            _c("img", {
+              attrs: { src: _vm.post.images[0]["sized_images"].full, alt: "" }
+            })
+          ]),
           _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "gm-gallery-light-box-content-col-2-content" },
-            [
-              _vm._v(
-                "\n                " +
-                  _vm._s(_vm.post.post_content) +
-                  "\n            "
-              )
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "gm-gallery-light-box-content-col-2-images" },
-            [
-              _vm._l(_vm.post.images, function(image) {
-                return [
-                  _c("img", {
-                    attrs: { src: image["sized_images"].thumbnail, alt: "" }
-                  })
-                ]
-              })
-            ],
-            2
-          )
-        ])
-      ])
+          _c("div", { staticClass: "gm-gallery-light-box-content-col-2" }, [
+            _c(
+              "div",
+              { staticClass: "gm-gallery-light-box-content-col-2-title" },
+              [
+                _vm._v(
+                  "\n                " +
+                    _vm._s(_vm.post.post_title) +
+                    "\n            "
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "gm-gallery-light-box-content-col-2-content" },
+              [
+                _vm._v(
+                  "\n                " +
+                    _vm._s(_vm.post.post_content) +
+                    "\n            "
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "gm-gallery-light-box-content-col-2-images" },
+              [
+                _vm._l(_vm.post.images, function(image) {
+                  return [
+                    _c("img", {
+                      attrs: { src: image["sized_images"].thumbnail, alt: "" }
+                    })
+                  ]
+                })
+              ],
+              2
+            )
+          ])
+        ]
+      )
     ]
   )
 }
