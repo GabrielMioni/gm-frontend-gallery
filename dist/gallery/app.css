@@ -60,12 +60,22 @@
 }
 
 #gm-frontend-gallery .gm-gallery-light-box-content {
-  width: 80%;
-  height: 80%;
+  width: 100%;
+  height: 100%;
   background-color: #FFFFFF;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr -webkit-min-content;
+  grid-template-rows: 1fr min-content;
+}
+
+@media (min-width: 768px) {
+  #gm-frontend-gallery .gm-gallery-light-box-content {
+    width: 80%;
+    height: 80%;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+  }
 }
 
 #gm-frontend-gallery .gm-gallery-light-box-content-col-1,
