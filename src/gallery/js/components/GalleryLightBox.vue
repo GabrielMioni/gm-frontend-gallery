@@ -26,8 +26,8 @@
             </div>
         </div>
         <div class="gm-gallery-light-box-navigation">
-            <div class="gm-gallery-light-box-content-navigation-left"> < </div>
-            <div class="gm-gallery-light-box-content-navigation-right"> > </div>
+            <div class="gm-gallery-light-box-content-navigation-left" @click.stop="galleryNavigate('left')"> < </div>
+            <div class="gm-gallery-light-box-content-navigation-right" @click.stop="galleryNavigate('right')"> > </div>
         </div>
     </div>
 </template>
@@ -54,6 +54,9 @@
       selectImage(index) {
         this.activeImage = index;
         this.currentImage = this.retrieveImage(index, 'full');
+      },
+      galleryNavigate(direction) {
+        this.$emit('galleryNavigate', direction);
       }
     }
   }

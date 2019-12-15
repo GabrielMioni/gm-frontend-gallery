@@ -10,6 +10,7 @@
         <transition name="fade">
             <GalleryLightBox
                 @close-post="closePostHandler"
+                @galleryNavigate="galleryNavigateHandler"
                 v-if="openedPost !== null" :post="openedPost"></GalleryLightBox>
         </transition>
     </div>
@@ -42,6 +43,9 @@
       },
       closePostHandler() {
         this.openedPost = null;
+      },
+      galleryNavigateHandler(data) {
+        console.log('galleryNavigateHandler', data);
       }
     },
     mounted() {

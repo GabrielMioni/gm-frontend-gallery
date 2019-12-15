@@ -114,6 +114,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -145,6 +146,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     closePostHandler: function closePostHandler() {
       this.openedPost = null;
+    },
+    galleryNavigateHandler: function galleryNavigateHandler(data) {
+      console.log('galleryNavigateHandler', data);
     }
   },
   mounted: function mounted() {
@@ -219,6 +223,9 @@ __webpack_require__.r(__webpack_exports__);
     selectImage: function selectImage(index) {
       this.activeImage = index;
       this.currentImage = this.retrieveImage(index, 'full');
+    },
+    galleryNavigate: function galleryNavigate(direction) {
+      this.$emit('galleryNavigate', direction);
     }
   }
 });
@@ -769,7 +776,10 @@ var render = function() {
           _vm.openedPost !== null
             ? _c("GalleryLightBox", {
                 attrs: { post: _vm.openedPost },
-                on: { "close-post": _vm.closePostHandler }
+                on: {
+                  "close-post": _vm.closePostHandler,
+                  galleryNavigate: _vm.galleryNavigateHandler
+                }
               })
             : _vm._e()
         ],
@@ -880,30 +890,39 @@ var render = function() {
         ]
       ),
       _vm._v(" "),
-      _vm._m(0)
+      _c("div", { staticClass: "gm-gallery-light-box-navigation" }, [
+        _c(
+          "div",
+          {
+            staticClass: "gm-gallery-light-box-content-navigation-left",
+            on: {
+              click: function($event) {
+                $event.stopPropagation()
+                return _vm.galleryNavigate("left")
+              }
+            }
+          },
+          [_vm._v(" < ")]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "gm-gallery-light-box-content-navigation-right",
+            on: {
+              click: function($event) {
+                $event.stopPropagation()
+                return _vm.galleryNavigate("right")
+              }
+            }
+          },
+          [_vm._v(" > ")]
+        )
+      ])
     ]
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "gm-gallery-light-box-navigation" }, [
-      _c(
-        "div",
-        { staticClass: "gm-gallery-light-box-content-navigation-left" },
-        [_vm._v(" < ")]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "gm-gallery-light-box-content-navigation-right" },
-        [_vm._v(" > ")]
-      )
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
