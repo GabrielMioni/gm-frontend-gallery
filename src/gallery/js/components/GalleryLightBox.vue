@@ -7,11 +7,13 @@
                 <img :src="currentImage" alt="">
             </div>
             <div class="gm-gallery-light-box-content-col-2">
-                <div class="gm-gallery-light-box-content-col-2-title">
-                    {{ post.post_title }}
-                </div>
-                <div class="gm-gallery-light-box-content-col-2-content">
-                    {{ post.post_content }}
+                <div class="gm-gallery-light-box-content-col-2-text">
+                    <div class="gm-gallery-light-box-content-col-2-title">
+                        {{ post.post_title }}
+                    </div>
+                    <div class="gm-gallery-light-box-content-col-2-content">
+                        {{ post.post_content }}
+                    </div>
                 </div>
                 <div class="gm-gallery-light-box-content-col-2-images">
                     <template v-for="(image, index) in post.images">
@@ -22,6 +24,10 @@
                     </template>
                 </div>
             </div>
+        </div>
+        <div class="gm-gallery-light-box-navigation">
+            <div class="gm-gallery-light-box-content-navigation-left"> < </div>
+            <div class="gm-gallery-light-box-content-navigation-right"> > </div>
         </div>
     </div>
 </template>

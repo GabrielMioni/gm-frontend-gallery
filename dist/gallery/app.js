@@ -192,6 +192,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'GalleryLightBox',
   props: {
@@ -821,24 +827,30 @@ var render = function() {
           _c("div", { staticClass: "gm-gallery-light-box-content-col-2" }, [
             _c(
               "div",
-              { staticClass: "gm-gallery-light-box-content-col-2-title" },
+              { staticClass: "gm-gallery-light-box-content-col-2-text" },
               [
-                _vm._v(
-                  "\n                " +
-                    _vm._s(_vm.post.post_title) +
-                    "\n            "
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "gm-gallery-light-box-content-col-2-content" },
-              [
-                _vm._v(
-                  "\n                " +
-                    _vm._s(_vm.post.post_content) +
-                    "\n            "
+                _c(
+                  "div",
+                  { staticClass: "gm-gallery-light-box-content-col-2-title" },
+                  [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(_vm.post.post_title) +
+                        "\n                "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "gm-gallery-light-box-content-col-2-content" },
+                  [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(_vm.post.post_content) +
+                        "\n                "
+                    )
+                  ]
                 )
               ]
             ),
@@ -866,11 +878,32 @@ var render = function() {
             )
           ])
         ]
-      )
+      ),
+      _vm._v(" "),
+      _vm._m(0)
     ]
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "gm-gallery-light-box-navigation" }, [
+      _c(
+        "div",
+        { staticClass: "gm-gallery-light-box-content-navigation-left" },
+        [_vm._v(" < ")]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "gm-gallery-light-box-content-navigation-right" },
+        [_vm._v(" > ")]
+      )
+    ])
+  }
+]
 render._withStripped = true
 
 
