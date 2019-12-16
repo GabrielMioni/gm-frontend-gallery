@@ -63,7 +63,6 @@
         this.$emit('galleryNavigate', direction);
       },
       toggleDetails() {
-        console.log('click this dumb thing');
         this.mobileShowDetails = !this.mobileShowDetails;
       }
     }

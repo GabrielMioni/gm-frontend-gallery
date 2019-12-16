@@ -232,7 +232,6 @@ __webpack_require__.r(__webpack_exports__);
       this.$emit('galleryNavigate', direction);
     },
     toggleDetails: function toggleDetails() {
-      console.log('click this dumb thing');
       this.mobileShowDetails = !this.mobileShowDetails;
     }
   }
