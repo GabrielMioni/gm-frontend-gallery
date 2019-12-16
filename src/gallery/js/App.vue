@@ -11,7 +11,7 @@
             <GalleryLightBox
                 @close-post="closePostHandler"
                 @galleryNavigate="galleryNavigateHandler"
-                v-if="openedPost !== null" :post="openedPost"></GalleryLightBox>
+                v-if="openedPostIndex !== null" :post="galleryPosts[openedPostIndex]"></GalleryLightBox>
         </transition>
     </div>
 </template>
@@ -25,7 +25,7 @@
     data() {
       return {
         galleryPosts: '',
-        openedPost: null,
+        openedPostIndex: null,
       }
     },
     methods: {
@@ -39,7 +39,7 @@
         xhr.send();
       },
       openPostHandler(postIndex) {
-        this.openedPost = this.galleryPosts[postIndex];
+        this.openedPostIndex = postIndex;
       },
       closePostHandler() {
         this.openedPost = null;

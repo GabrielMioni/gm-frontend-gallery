@@ -126,7 +126,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       galleryPosts: '',
-      openedPost: null
+      openedPostIndex: null
     };
   },
   methods: {
@@ -143,6 +143,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     openPostHandler: function openPostHandler(postIndex) {
       this.openedPost = this.galleryPosts[postIndex];
+      this.openedPostIndex = postIndex;
     },
     closePostHandler: function closePostHandler() {
       this.openedPost = null;
@@ -780,9 +781,9 @@ var render = function() {
         "transition",
         { attrs: { name: "fade" } },
         [
-          _vm.openedPost !== null
+          _vm.openedPostIndex !== null
             ? _c("GalleryLightBox", {
-                attrs: { post: _vm.openedPost },
+                attrs: { post: _vm.galleryPosts[_vm.openedPostIndex] },
                 on: {
                   "close-post": _vm.closePostHandler,
                   galleryNavigate: _vm.galleryNavigateHandler
