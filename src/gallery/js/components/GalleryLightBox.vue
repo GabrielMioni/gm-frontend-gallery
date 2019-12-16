@@ -6,22 +6,19 @@
             <div class="gm-gallery-light-box-main-image">
                 <img :src="currentImage" alt="">
             </div>
-            <div class="gm-gallery-light-box-content-col-2">
-                <div class="gm-gallery-light-box-content-col-2-text">
-                    <div class="gm-gallery-light-box-content-col-2-title">
-                        {{ post.post_title }}
-                    </div>
-                    <div class="gm-gallery-light-box-content-col-2-content">
-                        {{ post.post_content }}
-                    </div>
+            <div class="gm-gallery-light-box-text">
+                <div class="gm-gallery-light-box-content-text-title">
+                    {{ post.post_title }}
+                </div>
+                <div class="gm-gallery-light-box-content-text-content">
+                    {{ post.post_content }}
                 </div>
             </div>
             <div class="gm-gallery-light-box-images">
                 <template v-for="(image, index) in post.images">
-                    <img
-                            v-bind:class="{ active: index === activeImage }"
-                            @click.stop="selectImage(index)"
-                            :src="image['sized_images'].thumbnail" alt="">
+                    <img v-bind:class="{ active: index === activeImage }"
+                         @click.stop="selectImage(index)"
+                         :src="image['sized_images'].thumbnail" alt="">
                 </template>
             </div>
         </div>

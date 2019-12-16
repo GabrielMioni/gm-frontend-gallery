@@ -35,28 +35,19 @@
           height: 100%;
         }
       }
-      &-col-2 {
+      &-text {
         grid-column: 2;
         grid-row: 1;
         display: grid;
-        grid-template-rows: 1fr min-content;
-        &-text {
-          display: grid;
-          grid-template-rows: min-content 1fr;
-          &-title {
-
-          }
-          &-content {
-          }
-        }
+        grid-template-rows: min-content 1fr;
       }
       &-images {
+        grid-column: 2;
+        grid-row: 2;
         display: grid;
         grid-template-rows: 1fr;
         grid-template-columns: repeat(5, 1fr);
         grid-gap: .2rem;
-        grid-column: 2;
-        grid-row: 2;
 
         img {
           max-height: 100px;
