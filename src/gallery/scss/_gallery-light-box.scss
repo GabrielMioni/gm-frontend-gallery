@@ -90,6 +90,9 @@
       &-details {
         grid-column: 1;
         grid-row: 2;
+        display: flex;
+        align-items: flex-end;
+        flex-direction: column;
       }
       &-images {
         grid-column: 1;
