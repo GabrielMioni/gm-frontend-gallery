@@ -42,7 +42,7 @@
         this.openedPostIndex = postIndex;
       },
       closePostHandler() {
-        this.openedPost = null;
+        this.openedPostIndex = null;
       },
       galleryNavigateHandler(data) {
         console.log('galleryNavigateHandler', data);

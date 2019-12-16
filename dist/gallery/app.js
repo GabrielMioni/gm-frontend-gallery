@@ -142,11 +142,10 @@ __webpack_require__.r(__webpack_exports__);
       xhr.send();
     },
     openPostHandler: function openPostHandler(postIndex) {
-      this.openedPost = this.galleryPosts[postIndex];
       this.openedPostIndex = postIndex;
     },
     closePostHandler: function closePostHandler() {
-      this.openedPost = null;
+      this.openedPostIndex = null;
     },
     galleryNavigateHandler: function galleryNavigateHandler(data) {
       console.log('galleryNavigateHandler', data);
