@@ -148,7 +148,6 @@ __webpack_require__.r(__webpack_exports__);
       this.openedPostIndex = null;
     },
     galleryNavigateHandler: function galleryNavigateHandler(data) {
-      console.log('nav', data);
       var newIndex = data === 'left' ? this.openedPostIndex - 1 : this.openedPostIndex + 1;
 
       if (newIndex < 0) {

@@ -130,6 +130,7 @@
   padding-bottom: 5px;
   -webkit-box-pack: center;
           justify-content: center;
+  cursor: pointer;
 }
 
 #gm-frontend-gallery .gm-gallery-light-box-container .gm-gallery-light-box-navigation-right {
