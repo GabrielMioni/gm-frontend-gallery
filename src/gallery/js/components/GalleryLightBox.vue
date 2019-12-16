@@ -18,6 +18,9 @@
                     {{ post.post_content }}
                 </div>
             </div>
+            <div class="gm-gallery-light-box-display-details">
+                Details
+            </div>
             <div class="gm-gallery-light-box-images">
                 <template v-for="(image, index) in post.images">
                     <img v-bind:class="{ active: index === activeImage }"

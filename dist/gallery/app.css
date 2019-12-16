@@ -131,9 +131,14 @@
   grid-template-rows: min-content 1fr;
 }
 
-#gm-frontend-gallery .gm-gallery-light-box-container .gm-gallery-light-box-images {
+#gm-frontend-gallery .gm-gallery-light-box-container .gm-gallery-light-box-details {
   grid-column: 1;
   grid-row: 2;
+}
+
+#gm-frontend-gallery .gm-gallery-light-box-container .gm-gallery-light-box-images {
+  grid-column: 1;
+  grid-row: 3;
   display: grid;
   grid-template-rows: 1fr;
   grid-template-columns: repeat(5, 1fr);

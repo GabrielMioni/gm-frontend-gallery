@@ -68,9 +68,13 @@
         display: grid;
         grid-template-rows: min-content 1fr;
       }
-      &-images {
+      &-details {
         grid-column: 1;
         grid-row: 2;
+      }
+      &-images {
+        grid-column: 1;
+        grid-row: 3;
         display: grid;
         grid-template-rows: 1fr;
         grid-template-columns: repeat(5, 1fr);
