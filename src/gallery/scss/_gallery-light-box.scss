@@ -52,6 +52,7 @@
         align-items: flex-start;
         width: 100%;
         padding: .25rem;
+        z-index: 1;
 
         &-left,
         &-right {
@@ -82,7 +83,8 @@
         transition: opacity .2s;
         background-color: rgba($themeColor1, .8);
         color: $themeColor2;
-        padding: 1rem .25rem
+        padding: 1rem .25rem;
+        z-index: 0;
       }
       &-details {
         grid-column: 1;

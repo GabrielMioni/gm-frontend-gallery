@@ -45,7 +45,15 @@
         this.openedPostIndex = null;
       },
       galleryNavigateHandler(data) {
-        console.log('galleryNavigateHandler', data);
+        let newIndex = data === 'left' ? this.openedPostIndex -1 : this.openedPostIndex +1;
+
+        if (newIndex < 0) {
+          newIndex = this.galleryPosts.length -1;
+        }
+        if (newIndex > this.galleryPosts.length -1) {
+          newIndex = 0;
+        }
+        this.openedPostIndex = newIndex;
       }
     },
     mounted() {
