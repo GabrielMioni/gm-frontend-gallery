@@ -199,6 +199,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'GalleryLightBox',
   props: {
@@ -818,7 +822,37 @@ var render = function() {
     [
       _c("div", { staticClass: "gm-gallery-light-box" }, [
         _c("div", { staticClass: "gm-gallery-light-box-main-image" }, [
-          _c("img", { attrs: { src: _vm.currentImage, alt: "" } })
+          _c("img", { attrs: { src: _vm.currentImage, alt: "" } }),
+          _vm._v(" "),
+          _c("div", { staticClass: "gm-gallery-light-box-navigation" }, [
+            _c(
+              "div",
+              {
+                staticClass: "gm-gallery-light-box-navigation-left",
+                on: {
+                  click: function($event) {
+                    $event.stopPropagation()
+                    return _vm.galleryNavigate("left")
+                  }
+                }
+              },
+              [_vm._v(" < ")]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "gm-gallery-light-box-navigation-right",
+                on: {
+                  click: function($event) {
+                    $event.stopPropagation()
+                    return _vm.galleryNavigate("right")
+                  }
+                }
+              },
+              [_vm._v(" > ")]
+            )
+          ])
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "gm-gallery-light-box-text" }, [
@@ -827,9 +861,9 @@ var render = function() {
             { staticClass: "gm-gallery-light-box-content-text-title" },
             [
               _vm._v(
-                "\n                " +
+                "\n                    " +
                   _vm._s(_vm.post.post_title) +
-                  "\n            "
+                  "\n                "
               )
             ]
           ),
@@ -839,9 +873,9 @@ var render = function() {
             { staticClass: "gm-gallery-light-box-content-text-content" },
             [
               _vm._v(
-                "\n                " +
+                "\n                    " +
                   _vm._s(_vm.post.post_content) +
-                  "\n            "
+                  "\n                "
               )
             ]
           )
@@ -867,36 +901,6 @@ var render = function() {
             })
           ],
           2
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "gm-gallery-light-box-navigation" }, [
-        _c(
-          "div",
-          {
-            staticClass: "gm-gallery-light-box-content-navigation-left",
-            on: {
-              click: function($event) {
-                $event.stopPropagation()
-                return _vm.galleryNavigate("left")
-              }
-            }
-          },
-          [_vm._v(" < ")]
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass: "gm-gallery-light-box-content-navigation-right",
-            on: {
-              click: function($event) {
-                $event.stopPropagation()
-                return _vm.galleryNavigate("right")
-              }
-            }
-          },
-          [_vm._v(" > ")]
         )
       ])
     ]

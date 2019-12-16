@@ -80,6 +80,7 @@
           align-items: center;
   grid-column: 1;
   grid-row: 1;
+  position: relative;
 }
 
 #gm-frontend-gallery .gm-gallery-light-box-container .gm-gallery-light-box-main-image img {
@@ -88,6 +89,19 @@
   max-height: 100%;
   max-width: 100%;
   height: 100%;
+}
+
+#gm-frontend-gallery .gm-gallery-light-box-container .gm-gallery-light-box-navigation {
+  position: absolute;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-align: start;
+          align-items: flex-start;
+  width: 100%;
+}
+
+#gm-frontend-gallery .gm-gallery-light-box-container .gm-gallery-light-box-navigation-right {
+  margin-left: auto;
 }
 
 #gm-frontend-gallery .gm-gallery-light-box-container .gm-gallery-light-box-text {

@@ -5,6 +5,10 @@
         <div class="gm-gallery-light-box">
             <div class="gm-gallery-light-box-main-image">
                 <img :src="currentImage" alt="">
+                <div class="gm-gallery-light-box-navigation">
+                    <div class="gm-gallery-light-box-navigation-left" @click.stop="galleryNavigate('left')"> < </div>
+                    <div class="gm-gallery-light-box-navigation-right" @click.stop="galleryNavigate('right')"> > </div>
+                </div>
             </div>
             <div class="gm-gallery-light-box-text">
                 <div class="gm-gallery-light-box-content-text-title">
@@ -22,10 +26,10 @@
                 </template>
             </div>
         </div>
-        <div class="gm-gallery-light-box-navigation">
-            <div class="gm-gallery-light-box-content-navigation-left" @click.stop="galleryNavigate('left')"> < </div>
-            <div class="gm-gallery-light-box-content-navigation-right" @click.stop="galleryNavigate('right')"> > </div>
-        </div>
+<!--        <div class="gm-gallery-light-box-navigation">-->
+<!--            <div class="gm-gallery-light-box-content-navigation-left" @click.stop="galleryNavigate('left')"> < </div>-->
+<!--            <div class="gm-gallery-light-box-content-navigation-right" @click.stop="galleryNavigate('right')"> > </div>-->
+<!--        </div>-->
     </div>
 </template>
 
