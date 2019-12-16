@@ -40,8 +40,10 @@
   grid-template-rows: 1fr 1fr;
 }
 
-#gm-frontend-gallery .gm-gallery-post-content:hover {
-  opacity: 0.8;
+@media (min-width: 768px) {
+  #gm-frontend-gallery .gm-gallery-post-content:hover {
+    opacity: 0.8;
+  }
 }
 
 #gm-frontend-gallery .gm-gallery-light-box-container {

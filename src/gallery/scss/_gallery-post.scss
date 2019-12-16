@@ -23,8 +23,10 @@
         grid-template-rows: 1fr 1fr;
       }
 
-      &:hover {
-        opacity: .8;
+      @media (min-width: $medium) {
+        &:hover {
+          opacity: .8;
+        }
       }
     }
   }
