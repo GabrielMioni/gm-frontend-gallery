@@ -2,7 +2,9 @@
     <div class="gm-gallery-light-box-container"
          v-bind:class="{ active: post !== null }"
          @click="closePost">
-        <div class="gm-gallery-light-box">
+        <div class="gm-gallery-light-box"
+             v-bind:class="{ 'show-details': mobileShowDetails === true }"
+             @click.stop>
             <div class="gm-gallery-light-box-main-image">
                 <img :src="currentImage" alt="">
                 <div class="gm-gallery-light-box-navigation">
@@ -18,7 +20,8 @@
                     {{ post.post_content }}
                 </div>
             </div>
-            <div class="gm-gallery-light-box-display-details">
+            <div class="gm-gallery-light-box-display-details"
+                @click="toggleDetails">
                 Details
             </div>
             <div class="gm-gallery-light-box-images">
@@ -29,10 +32,6 @@
                 </template>
             </div>
         </div>
-<!--        <div class="gm-gallery-light-box-navigation">-->
-<!--            <div class="gm-gallery-light-box-content-navigation-left" @click.stop="galleryNavigate('left')"> < </div>-->
-<!--            <div class="gm-gallery-light-box-content-navigation-right" @click.stop="galleryNavigate('right')"> > </div>-->
-<!--        </div>-->
     </div>
 </template>
 
@@ -46,6 +45,7 @@
       return {
         currentImage: this.retrieveImage(0, 'full'),
         activeImage: 0,
+        mobileShowDetails: false,
       }
     },
     methods: {
@@ -61,6 +61,10 @@
       },
       galleryNavigate(direction) {
         this.$emit('galleryNavigate', direction);
+      },
+      toggleDetails() {
+        console.log('click this dumb thing');
+        this.mobileShowDetails = !this.mobileShowDetails;
       }
     }
   }

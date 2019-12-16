@@ -205,7 +205,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'GalleryLightBox',
   props: {
@@ -214,7 +213,8 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       currentImage: this.retrieveImage(0, 'full'),
-      activeImage: 0
+      activeImage: 0,
+      mobileShowDetails: false
     };
   },
   methods: {
@@ -230,6 +230,10 @@ __webpack_require__.r(__webpack_exports__);
     },
     galleryNavigate: function galleryNavigate(direction) {
       this.$emit('galleryNavigate', direction);
+    },
+    toggleDetails: function toggleDetails() {
+      console.log('click this dumb thing');
+      this.mobileShowDetails = !this.mobileShowDetails;
     }
   }
 });
@@ -823,93 +827,110 @@ var render = function() {
       on: { click: _vm.closePost }
     },
     [
-      _c("div", { staticClass: "gm-gallery-light-box" }, [
-        _c("div", { staticClass: "gm-gallery-light-box-main-image" }, [
-          _c("img", { attrs: { src: _vm.currentImage, alt: "" } }),
+      _c(
+        "div",
+        {
+          staticClass: "gm-gallery-light-box",
+          class: { "show-details": _vm.mobileShowDetails === true },
+          on: {
+            click: function($event) {
+              $event.stopPropagation()
+            }
+          }
+        },
+        [
+          _c("div", { staticClass: "gm-gallery-light-box-main-image" }, [
+            _c("img", { attrs: { src: _vm.currentImage, alt: "" } }),
+            _vm._v(" "),
+            _c("div", { staticClass: "gm-gallery-light-box-navigation" }, [
+              _c(
+                "div",
+                {
+                  staticClass: "gm-gallery-light-box-navigation-left",
+                  on: {
+                    click: function($event) {
+                      $event.stopPropagation()
+                      return _vm.galleryNavigate("left")
+                    }
+                  }
+                },
+                [_vm._v(" < ")]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "gm-gallery-light-box-navigation-right",
+                  on: {
+                    click: function($event) {
+                      $event.stopPropagation()
+                      return _vm.galleryNavigate("right")
+                    }
+                  }
+                },
+                [_vm._v(" > ")]
+              )
+            ])
+          ]),
           _vm._v(" "),
-          _c("div", { staticClass: "gm-gallery-light-box-navigation" }, [
+          _c("div", { staticClass: "gm-gallery-light-box-text" }, [
             _c(
               "div",
-              {
-                staticClass: "gm-gallery-light-box-navigation-left",
-                on: {
-                  click: function($event) {
-                    $event.stopPropagation()
-                    return _vm.galleryNavigate("left")
-                  }
-                }
-              },
-              [_vm._v(" < ")]
+              { staticClass: "gm-gallery-light-box-content-text-title" },
+              [
+                _vm._v(
+                  "\n                " +
+                    _vm._s(_vm.post.post_title) +
+                    "\n            "
+                )
+              ]
             ),
             _vm._v(" "),
             _c(
               "div",
-              {
-                staticClass: "gm-gallery-light-box-navigation-right",
-                on: {
-                  click: function($event) {
-                    $event.stopPropagation()
-                    return _vm.galleryNavigate("right")
-                  }
-                }
-              },
-              [_vm._v(" > ")]
+              { staticClass: "gm-gallery-light-box-content-text-content" },
+              [
+                _vm._v(
+                  "\n                " +
+                    _vm._s(_vm.post.post_content) +
+                    "\n            "
+                )
+              ]
             )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "gm-gallery-light-box-text" }, [
+          ]),
+          _vm._v(" "),
           _c(
             "div",
-            { staticClass: "gm-gallery-light-box-content-text-title" },
-            [
-              _vm._v(
-                "\n                    " +
-                  _vm._s(_vm.post.post_title) +
-                  "\n                "
-              )
-            ]
+            {
+              staticClass: "gm-gallery-light-box-display-details",
+              on: { click: _vm.toggleDetails }
+            },
+            [_vm._v("\n            Details\n        ")]
           ),
           _vm._v(" "),
           _c(
             "div",
-            { staticClass: "gm-gallery-light-box-content-text-content" },
+            { staticClass: "gm-gallery-light-box-images" },
             [
-              _vm._v(
-                "\n                    " +
-                  _vm._s(_vm.post.post_content) +
-                  "\n                "
-              )
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "gm-gallery-light-box-display-details" }, [
-          _vm._v("\n                Details\n            ")
-        ]),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "gm-gallery-light-box-images" },
-          [
-            _vm._l(_vm.post.images, function(image, index) {
-              return [
-                _c("img", {
-                  class: { active: index === _vm.activeImage },
-                  attrs: { src: image["sized_images"].thumbnail, alt: "" },
-                  on: {
-                    click: function($event) {
-                      $event.stopPropagation()
-                      return _vm.selectImage(index)
+              _vm._l(_vm.post.images, function(image, index) {
+                return [
+                  _c("img", {
+                    class: { active: index === _vm.activeImage },
+                    attrs: { src: image["sized_images"].thumbnail, alt: "" },
+                    on: {
+                      click: function($event) {
+                        $event.stopPropagation()
+                        return _vm.selectImage(index)
+                      }
                     }
-                  }
-                })
-              ]
-            })
-          ],
-          2
-        )
-      ])
+                  })
+                ]
+              })
+            ],
+            2
+          )
+        ]
+      )
     ]
   )
 }

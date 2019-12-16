@@ -22,6 +22,13 @@
       background-color: $themeColor2;
       padding: 1rem;
 
+      &.show-details {
+        .gm-gallery-light-box-text {
+          opacity: 1;
+          z-index: 1;
+        }
+      }
+
       &-main-image {
         display: flex;
         justify-content: center;
@@ -67,6 +74,10 @@
         grid-row: 1;
         display: grid;
         grid-template-rows: min-content 1fr;
+        opacity: 0;
+        transition: opacity .2s;
+        background-color: rgba($themeColor1, .8);
+        color: $themeColor2;
       }
       &-details {
         grid-column: 1;

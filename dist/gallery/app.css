@@ -71,6 +71,11 @@
   padding: 1rem;
 }
 
+#gm-frontend-gallery .gm-gallery-light-box-container .gm-gallery-light-box.show-details .gm-gallery-light-box-text {
+  opacity: 1;
+  z-index: 1;
+}
+
 #gm-frontend-gallery .gm-gallery-light-box-container .gm-gallery-light-box-main-image {
   display: -webkit-box;
   display: flex;
@@ -129,6 +134,11 @@
   display: grid;
   grid-template-rows: -webkit-min-content 1fr;
   grid-template-rows: min-content 1fr;
+  opacity: 0;
+  -webkit-transition: opacity 0.2s;
+  transition: opacity 0.2s;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #FFFFFF;
 }
 
 #gm-frontend-gallery .gm-gallery-light-box-container .gm-gallery-light-box-details {
