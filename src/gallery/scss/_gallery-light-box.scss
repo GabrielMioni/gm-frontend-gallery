@@ -1,7 +1,7 @@
 @import "variables";
 
 #gm-frontend-gallery {
-  .gm-gallery-light-box {
+  .gm-gallery-light-box-container {
     position: fixed;
     height: 100%;
     width: 100%;
@@ -12,37 +12,32 @@
     justify-content: center;
     align-items: center;
 
-    &-content {
-      width: 100%;
-      height: 100%;
-      background-color: $themeColor2;
-      display: grid;
-      grid-template-columns: 1fr;
+    .gm-gallery-light-box {
+      width: 80%;
+      height: 80%;
+      grid-template-columns: 1fr 1fr;
       grid-template-rows: 1fr min-content;
-      z-index: 1;
+      grid-column-gap: 1rem;
+      display: grid;
+      background-color: $themeColor2;
+      padding: 1rem;
 
-      @media (min-width: $medium) {
-        width: 80%;
-        height: 80%;
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: 1fr;
-      }
-
-      &-col-1,
-      &-col-2 {
-        padding: .5rem;
-      }
-
-      &-col-1 {
+      &-main-image {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        grid-column: 1;
+        grid-row: 1 / span 2;
         img {
           object-fit: contain;
-          width: 100%;
-          height: 100%;
           max-height: 100%;
           max-width: 100%;
+          height: 100%;
         }
       }
       &-col-2 {
+        grid-column: 2;
+        grid-row: 1;
         display: grid;
         grid-template-rows: 1fr min-content;
         &-text {
@@ -54,17 +49,20 @@
           &-content {
           }
         }
-        &-images {
-          display: grid;
-          grid-template-rows: 1fr;
-          grid-template-columns: repeat(5, 1fr);
-          grid-gap: .2rem;
-          cursor: pointer;
+      }
+      &-images {
+        display: grid;
+        grid-template-rows: 1fr;
+        grid-template-columns: repeat(5, 1fr);
+        grid-gap: .2rem;
+        grid-column: 2;
+        grid-row: 2;
 
-          img {
-            &.active {
-              outline: 2px solid $themeColor3;
-            }
+        img {
+          max-height: 100px;
+          cursor: pointer;
+          &.active {
+            outline: 2px solid $themeColor3;
           }
         }
       }

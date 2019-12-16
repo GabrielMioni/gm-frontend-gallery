@@ -814,81 +814,70 @@ var render = function() {
   return _c(
     "div",
     {
-      staticClass: "gm-gallery-light-box",
+      staticClass: "gm-gallery-light-box-container",
       class: { active: _vm.post !== null },
       on: { click: _vm.closePost }
     },
     [
-      _c(
-        "div",
-        {
-          staticClass: "gm-gallery-light-box-content",
-          on: {
-            click: function($event) {
-              $event.stopPropagation()
-            }
-          }
-        },
-        [
-          _c("div", { staticClass: "gm-gallery-light-box-content-col-1" }, [
-            _c("img", { attrs: { src: _vm.currentImage, alt: "" } })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "gm-gallery-light-box-content-col-2" }, [
-            _c(
-              "div",
-              { staticClass: "gm-gallery-light-box-content-col-2-text" },
-              [
-                _c(
-                  "div",
-                  { staticClass: "gm-gallery-light-box-content-col-2-title" },
-                  [
-                    _vm._v(
-                      "\n                    " +
-                        _vm._s(_vm.post.post_title) +
-                        "\n                "
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "gm-gallery-light-box-content-col-2-content" },
-                  [
-                    _vm._v(
-                      "\n                    " +
-                        _vm._s(_vm.post.post_content) +
-                        "\n                "
-                    )
-                  ]
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "gm-gallery-light-box-content-col-2-images" },
-              [
-                _vm._l(_vm.post.images, function(image, index) {
-                  return [
-                    _c("img", {
-                      class: { active: index === _vm.activeImage },
-                      attrs: { src: image["sized_images"].thumbnail, alt: "" },
-                      on: {
-                        click: function($event) {
-                          $event.stopPropagation()
-                          return _vm.selectImage(index)
-                        }
-                      }
-                    })
-                  ]
+      _c("div", { staticClass: "gm-gallery-light-box" }, [
+        _c("div", { staticClass: "gm-gallery-light-box-main-image" }, [
+          _c("img", { attrs: { src: _vm.currentImage, alt: "" } })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "gm-gallery-light-box-content-col-2" }, [
+          _c(
+            "div",
+            { staticClass: "gm-gallery-light-box-content-col-2-text" },
+            [
+              _c(
+                "div",
+                { staticClass: "gm-gallery-light-box-content-col-2-title" },
+                [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(_vm.post.post_title) +
+                      "\n                "
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "gm-gallery-light-box-content-col-2-content" },
+                [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(_vm.post.post_content) +
+                      "\n                "
+                  )
+                ]
+              )
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "gm-gallery-light-box-images" },
+          [
+            _vm._l(_vm.post.images, function(image, index) {
+              return [
+                _c("img", {
+                  class: { active: index === _vm.activeImage },
+                  attrs: { src: image["sized_images"].thumbnail, alt: "" },
+                  on: {
+                    click: function($event) {
+                      $event.stopPropagation()
+                      return _vm.selectImage(index)
+                    }
+                  }
                 })
-              ],
-              2
-            )
-          ])
-        ]
-      ),
+              ]
+            })
+          ],
+          2
+        )
+      ]),
       _vm._v(" "),
       _c("div", { staticClass: "gm-gallery-light-box-navigation" }, [
         _c(
