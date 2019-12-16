@@ -146,6 +146,7 @@
   transition: opacity 0.2s;
   background-color: rgba(0, 0, 0, 0.8);
   color: #FFFFFF;
+  padding: 1rem 0.25rem;
 }
 
 #gm-frontend-gallery .gm-gallery-light-box-container .gm-gallery-light-box-details {

@@ -82,6 +82,7 @@
         transition: opacity .2s;
         background-color: rgba($themeColor1, .8);
         color: $themeColor2;
+        padding: 1rem .25rem
       }
       &-details {
         grid-column: 1;
