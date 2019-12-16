@@ -42,6 +42,22 @@
         align-items: flex-start;
         width: 100%;
 
+        &-left,
+        &-right {
+          background-color: $themeColor1;
+          color: $themeColor2;
+          opacity: .5;
+          font-weight: bold;
+          border-radius: .3rem;
+          line-height: 0;
+          height: 1.5rem;
+          width: 1.5rem;
+          display: flex;
+          align-items: center;
+          padding-bottom: 5px;
+          justify-content: center;
+        }
+
         &-right {
           margin-left: auto;
         }
