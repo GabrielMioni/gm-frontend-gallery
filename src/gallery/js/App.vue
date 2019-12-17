@@ -3,9 +3,9 @@
         <div class="gm-frontend-gallery-posts">
             <template v-for="(galleryPost, index) in galleryPosts">
                 <GalleryPost
+                    @open-post="openPostHandler"
                     :post="galleryPost"
-                    :index="index"
-                    @open-post="openPostHandler">
+                    :index="index">
                 </GalleryPost>
             </template>
         </div>
@@ -15,10 +15,10 @@
         </div>
         <transition name="fade">
             <GalleryLightBox v-if="openedPostIndex !== null"
+                @closePost="closePostHandler"
+                @galleryNavigate="galleryNavigateHandler"
                 :post="galleryPosts[openedPostIndex]"
                 :loading="lightBoxLoading">
-                @close-post="closePostHandler"
-                @galleryNavigate="galleryNavigateHandler"
             </GalleryLightBox>
         </transition>
     </div>

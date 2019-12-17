@@ -185,6 +185,7 @@ __webpack_require__.r(__webpack_exports__);
       this.openedPostIndex = postIndex;
     },
     closePostHandler: function closePostHandler() {
+      console.log('clicko2');
       this.openedPostIndex = null;
     },
     galleryNavigateHandler: function galleryNavigateHandler(data) {
@@ -292,7 +293,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     closePost: function closePost() {
-      this.$emit('close-post');
+      console.log('clicko1');
+      this.$emit('closePost');
     },
     retrieveImage: function retrieveImage(index, size) {
       return this.post.images[index]['sized_images'][size];
@@ -884,20 +886,16 @@ var render = function() {
         { attrs: { name: "fade" } },
         [
           _vm.openedPostIndex !== null
-            ? _c(
-                "GalleryLightBox",
-                {
-                  attrs: {
-                    post: _vm.galleryPosts[_vm.openedPostIndex],
-                    loading: _vm.lightBoxLoading
-                  }
+            ? _c("GalleryLightBox", {
+                attrs: {
+                  post: _vm.galleryPosts[_vm.openedPostIndex],
+                  loading: _vm.lightBoxLoading
                 },
-                [
-                  _vm._v(
-                    '\n            @close-post="closePostHandler"\n            @galleryNavigate="galleryNavigateHandler"\n        '
-                  )
-                ]
-              )
+                on: {
+                  closePost: _vm.closePostHandler,
+                  galleryNavigate: _vm.galleryNavigateHandler
+                }
+              })
             : _vm._e()
         ],
         1

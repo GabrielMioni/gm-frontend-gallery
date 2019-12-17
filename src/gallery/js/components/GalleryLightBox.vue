@@ -51,7 +51,7 @@
     },
     methods: {
       closePost() {
-        this.$emit('close-post');
+        this.$emit('closePost');
       },
       retrieveImage(index, size) {
         return this.post.images[index]['sized_images'][size];
