@@ -185,7 +185,8 @@ class GetGalleryDataTest extends GalleryUnitTestCase
         foreach ($pages as $page) {
             $paginatedIds = [];
             $pageResult = $this->sendGetRequest($page, $resultsPerPage, null, 'asc');
-            foreach ($pageResult as $galleryPost) {
+            $postData = $pageResult['posts'];
+            foreach ($postData as $galleryPost) {
                 $paginatedIds[] = $galleryPost['ID'];
             }
             $realPaginatedGalleryPostsIds[] = $paginatedIds;
