@@ -314,6 +314,7 @@ __webpack_require__.r(__webpack_exports__);
       this.currentImage = this.retrieveImage(index, 'full');
     },
     galleryNavigate: function galleryNavigate(direction) {
+      this.activeImage = 0;
       this.$emit('galleryNavigate', direction);
     },
     toggleDetails: function toggleDetails() {

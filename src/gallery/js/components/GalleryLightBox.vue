@@ -63,6 +63,7 @@
         this.currentImage = this.retrieveImage(index, 'full');
       },
       galleryNavigate(direction) {
+        this.activeImage = 0;
         this.$emit('galleryNavigate', direction);
       },
       toggleDetails() {
