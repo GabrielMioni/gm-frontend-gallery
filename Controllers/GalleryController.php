@@ -39,7 +39,10 @@ class GalleryController extends BaseController
         
         $posts = get_posts($args);
 
-        $data = [];
+        $data = [
+            'posts' => [],
+            'gallery_count' => 0,
+        ];
 
         foreach ($posts as $post) {
 
@@ -53,10 +56,23 @@ class GalleryController extends BaseController
 
             $postVariables['images'] = $this->retrieveGalleryImages($post);
 
-            $data[] = $postVariables;
+            $data['posts'][] = $postVariables;
         }
 
+        $data['gallery_count'] = $this->getGalleryCount();
+
         return $data;
+    }
+
+    protected function getGalleryCount()
+    {
+        $countPosts = wp_count_posts($this->galleryPostType);
+
+        if ($countPosts) {
+            return $countPosts->publish;
+        }
+
+        return 0;
     }
 
     public function retrieveGalleryPostSingle(WP_REST_Request $request)

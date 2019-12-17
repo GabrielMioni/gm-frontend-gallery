@@ -23,9 +23,10 @@ class GetGalleryDataTest extends GalleryUnitTestCase
         $getRequest = $this->createRequestGetPaginatedGalleryItems();
         $getResponse = $this->dispatchRequest($getRequest);
         $responseData = $getResponse->get_data();
+        $postData = $responseData['posts'];
 
         // Show that post data retrieved matches that which was created
-        $newIds = wp_list_pluck($responseData, 'ID');
+        $newIds = wp_list_pluck($postData, 'ID');
         sort($newIds);
         sort($postIDs);
         $this->assertEqualSets($newIds, $postIDs);
@@ -46,7 +47,9 @@ class GetGalleryDataTest extends GalleryUnitTestCase
         foreach ($pages as $page) {
             $getRequest  = $this->createRequestGetPaginatedGalleryItems($page, $resultsPerPage, 'id', 'asc');
             $getResponse = $this->dispatchRequest($getRequest);
-            $paginatedIDs[] = wp_list_pluck($getResponse->get_data(), 'ID');
+            $responseData = $getResponse->get_data();
+            $postData = $responseData['posts'];
+            $paginatedIDs[] = wp_list_pluck($postData, 'ID');
         }
 
         $this->assertEqualSets($chunkedIDs, $paginatedIDs);
@@ -65,14 +68,16 @@ class GetGalleryDataTest extends GalleryUnitTestCase
 
         foreach ($pages as $page) {
             $ascendingResponseData  = $this->sendGetRequest($page, $resultsPerPage, 'date', 'asc');
+            $ascendingPostData = $ascendingResponseData['posts'];
             $descendingResponseData = $this->sendGetRequest($page, $resultsPerPage, 'date', 'desc');
+            $descendingPostData = $descendingResponseData['posts'];
 
             $outAscending = [];
             $outDescending = [];
 
-            foreach ($ascendingResponseData as $key => $ascendingResponseDatum) {
+            foreach ($ascendingPostData as $key => $ascendingResponseDatum) {
                 $outAscending[]  = $ascendingResponseDatum['ID'];
-                $outDescending[] = $descendingResponseData[$key]['ID'];
+                $outDescending[] = $descendingPostData[$key]['ID'];
             }
 
             $paginatedResponsesAscending[] = $outAscending;
