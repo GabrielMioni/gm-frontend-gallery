@@ -18,13 +18,36 @@
 
 #gm-frontend-main .gm-frontend-gallery-posts {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: 1fr;
   grid-template-rows: auto;
   grid-gap: 0.25rem;
 }
 
+@media (min-width: 576px) {
+  #gm-frontend-main .gm-frontend-gallery-posts {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 768px) {
+  #gm-frontend-main .gm-frontend-gallery-posts {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 992px) {
+  #gm-frontend-main .gm-frontend-gallery-posts {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
 #gm-frontend-main .gm-frontend-gallery-loading {
   margin: 1rem;
+  display: -webkit-box;
+  display: flex;
+  width: 100%;
+  -webkit-box-pack: center;
+          justify-content: center;
 }
 
 .gm-frontend-gallery .gm-gallery-post {
