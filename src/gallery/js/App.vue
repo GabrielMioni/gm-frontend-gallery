@@ -38,6 +38,7 @@
         lightBoxLoading: false,
         pageLoaded: 1,
         postsPerPage: 10,
+        galleryCount: 0,
       }
     },
     methods: {
@@ -46,7 +47,10 @@
         let xhr = new XMLHttpRequest();
         xhr.open('GET', `/wp-json/gm-frontend-gallery/v1/get/${self.pageLoaded}/${self.postsPerPage}`);
         xhr.onload = () => {
-          const galleryPosts = JSON.parse(xhr.responseText);
+          const responseData = JSON.parse(xhr.responseText);
+          const galleryPosts = responseData.posts;
+          self.galleryCount = parseInt(responseData['gallery_count']);
+
           self.preloadImages(galleryPosts, () => {
             self.galleryPosts = self.galleryPosts.concat(galleryPosts);
             self.galleryLoading = false;

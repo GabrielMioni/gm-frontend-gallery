@@ -123,8 +123,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -140,7 +138,8 @@ __webpack_require__.r(__webpack_exports__);
       galleryLoading: true,
       lightBoxLoading: false,
       pageLoaded: 1,
-      postsPerPage: 10
+      postsPerPage: 10,
+      galleryCount: 0
     };
   },
   methods: {
@@ -150,7 +149,9 @@ __webpack_require__.r(__webpack_exports__);
       xhr.open('GET', "/wp-json/gm-frontend-gallery/v1/get/".concat(self.pageLoaded, "/").concat(self.postsPerPage));
 
       xhr.onload = function () {
-        var galleryPosts = JSON.parse(xhr.responseText);
+        var responseData = JSON.parse(xhr.responseText);
+        var galleryPosts = responseData.posts;
+        self.galleryCount = parseInt(responseData['gallery_count']);
         self.preloadImages(galleryPosts, function () {
           self.galleryPosts = self.galleryPosts.concat(galleryPosts);
           self.galleryLoading = false;
@@ -839,23 +840,21 @@ var render = function() {
     "div",
     { attrs: { id: "gm-frontend-gallery" } },
     [
-      _c("transition", { attrs: { name: "fade" } }, [
-        _c(
-          "div",
-          { staticClass: "gm-frontend-gallery-posts" },
-          [
-            _vm._l(_vm.galleryPosts, function(galleryPost, index) {
-              return [
-                _c("GalleryPost", {
-                  attrs: { post: galleryPost, index: index },
-                  on: { "open-post": _vm.openPostHandler }
-                })
-              ]
-            })
-          ],
-          2
-        )
-      ]),
+      _c(
+        "div",
+        { staticClass: "gm-frontend-gallery-posts" },
+        [
+          _vm._l(_vm.galleryPosts, function(galleryPost, index) {
+            return [
+              _c("GalleryPost", {
+                attrs: { post: galleryPost, index: index },
+                on: { "open-post": _vm.openPostHandler }
+              })
+            ]
+          })
+        ],
+        2
+      ),
       _vm._v(" "),
       _vm.galleryLoading
         ? _c("div", { staticClass: "gm-frontend-gallery-loading" }, [
