@@ -39,7 +39,7 @@
       }
 
       &-close {
-        grid-column: 2;
+        grid-column: 1;
         grid-row: 1;
         display: flex;
         flex-direction: column;
@@ -110,7 +110,9 @@
       &-details-toggle {
         grid-column: 1;
         grid-row: 3;
-        margin-left: auto;
+        display: flex;
+        align-items: flex-end;
+        flex-direction: column;
         &:after {
           content: '+';
         }
@@ -138,7 +140,7 @@
         grid-template-columns: 1fr 1fr;
         grid-template-rows: min-content 1fr min-content;
 
-        &-close-button {
+        &-close {
           grid-column: 2;
           grid-row: 1;
           line-height: .5rem;
