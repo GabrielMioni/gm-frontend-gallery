@@ -69,7 +69,7 @@ class GalleryController extends BaseController
         $countPosts = wp_count_posts($this->galleryPostType);
 
         if ($countPosts) {
-            return $countPosts->publish;
+            return $countPosts->published;
         }
 
         return 0;
