@@ -168,16 +168,15 @@ __webpack_require__.r(__webpack_exports__);
     },
     loadPost: function loadPost(postIndex) {
       var self = this;
-      self.lightBoxLoading = true;
       var postImages = self.galleryPosts[postIndex].images;
       var loadedImageCount = 0;
+      self.lightBoxLoading = true;
       postImages.forEach(function (image) {
         var sizedImages = image['sized_images'];
-        console.log(sizedImages);
-        var loadingImage = new Image();
-        loadingImage.src = sizedImages['full'];
+        var currentImage = new Image();
+        currentImage.src = sizedImages['full'];
 
-        loadingImage.onload = function () {
+        currentImage.onload = function () {
           ++loadedImageCount;
 
           if (loadedImageCount === postImages.length) {
@@ -973,10 +972,7 @@ var render = function() {
                     return [
                       _c("img", {
                         class: { active: index === _vm.activeImage },
-                        attrs: {
-                          src: image["sized_images"].thumbnail,
-                          alt: ""
-                        },
+                        attrs: { src: image["sized_images"].full, alt: "" },
                         on: {
                           click: function($event) {
                             $event.stopPropagation()

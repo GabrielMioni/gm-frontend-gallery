@@ -71,9 +71,9 @@
         postImages.forEach((image) => {
           const sizedImages = image['sized_images'];
 
-          let loadingImage = new Image();
-          loadingImage.src = sizedImages['full'];
-          loadingImage.onload = () => {
+          let currentImage = new Image();
+          currentImage.src = sizedImages.full;
+          currentImage.onload = () => {
             ++loadedImageCount;
 
             if (loadedImageCount === postImages.length) {

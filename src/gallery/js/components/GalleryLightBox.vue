@@ -28,7 +28,7 @@
                 <template v-for="(image, index) in post.images">
                     <img v-bind:class="{ active: index === activeImage }"
                          @click.stop="selectImage(index)"
-                         :src="image['sized_images'].thumbnail" alt="">
+                         :src="image['sized_images'].full" alt="">
                 </template>
             </div>
         </div>
