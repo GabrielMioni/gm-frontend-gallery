@@ -289,6 +289,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'GalleryLightBox',
   props: {
@@ -1039,10 +1041,12 @@ var render = function() {
               on: { click: _vm.toggleDetails }
             },
             [
-              _vm.mobileShowDetails
-                ? _c("span", [_vm._v("hide")])
-                : _c("span", [_vm._v("show")]),
-              _vm._v(" details\n        ")
+              _c("div", [
+                _vm.mobileShowDetails
+                  ? _c("span", [_vm._v("hide")])
+                  : _c("span", [_vm._v("show")]),
+                _vm._v(" details\n            ")
+              ])
             ]
           ),
           _vm._v(" "),

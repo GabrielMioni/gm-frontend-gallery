@@ -23,8 +23,10 @@
                 </div>
             </div>
             <div class="gm-gallery-light-box-details-toggle" @click="toggleDetails">
-                <span v-if="mobileShowDetails">hide</span>
-                <span v-else>show</span> details
+                <div>
+                    <span v-if="mobileShowDetails">hide</span>
+                    <span v-else>show</span> details
+                </div>
             </div>
             <div v-if="loading === false" class="gm-gallery-light-box-images">
                 <template v-for="(image, index) in post.images">

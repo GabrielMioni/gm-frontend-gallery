@@ -32,8 +32,10 @@
           opacity: 0;
         }
         .gm-gallery-light-box-details-toggle {
-          &:after {
-            content: '-';
+          div {
+            &:after {
+              content: '-';
+            }
           }
         }
       }
@@ -113,9 +115,13 @@
         display: flex;
         align-items: flex-end;
         flex-direction: column;
-        &:after {
-          content: '+';
+
+        div {
+          &:after {
+            content: '+';
+          }
         }
+
       }
       &-images {
         grid-column: 1;

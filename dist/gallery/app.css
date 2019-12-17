@@ -95,7 +95,7 @@
   opacity: 0;
 }
 
-.gm-frontend-gallery .gm-gallery-light-box-container .gm-gallery-light-box.show-details .gm-gallery-light-box-details-toggle:after {
+.gm-frontend-gallery .gm-gallery-light-box-container .gm-gallery-light-box.show-details .gm-gallery-light-box-details-toggle div:after {
   content: "-";
 }
 
@@ -199,7 +199,7 @@
           flex-direction: column;
 }
 
-.gm-frontend-gallery .gm-gallery-light-box-container .gm-gallery-light-box-details-toggle:after {
+.gm-frontend-gallery .gm-gallery-light-box-container .gm-gallery-light-box-details-toggle div:after {
   content: "+";
 }
 
