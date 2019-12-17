@@ -218,7 +218,7 @@
   }
 
   #gm-frontend-gallery .gm-gallery-light-box-container .gm-gallery-light-box-navigation {
-    height: 100%;
+    height: 80%;
     z-index: 0;
     -webkit-box-align: center;
             align-items: center;
