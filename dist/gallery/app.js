@@ -130,17 +130,21 @@ __webpack_require__.r(__webpack_exports__);
     return {
       galleryPosts: '',
       openedPostIndex: null,
-      lightBoxLoading: false
+      lightBoxLoading: false,
+      pageLoaded: 1,
+      postsPerPage: 10
     };
   },
   methods: {
     setGalleryItems: function setGalleryItems() {
       var self = this;
-      var xhr = new XMLHttpRequest();
-      xhr.open('GET', '/wp-json/gm-frontend-gallery/v1/get/1/10');
+      var xhr = new XMLHttpRequest(); // xhr.open('GET', '/wp-json/gm-frontend-gallery/v1/get/1/10');
+
+      xhr.open('GET', "/wp-json/gm-frontend-gallery/v1/get/".concat(self.pageLoaded, "/").concat(self.postsPerPage));
 
       xhr.onload = function () {
         self.galleryPosts = JSON.parse(xhr.responseText);
+        console.log('postcount', self.galleryPosts.length);
       };
 
       xhr.send();
@@ -174,7 +178,7 @@ __webpack_require__.r(__webpack_exports__);
       postImages.forEach(function (image) {
         var sizedImages = image['sized_images'];
         var currentImage = new Image();
-        currentImage.src = sizedImages['full'];
+        currentImage.src = sizedImages.full;
 
         currentImage.onload = function () {
           ++loadedImageCount;

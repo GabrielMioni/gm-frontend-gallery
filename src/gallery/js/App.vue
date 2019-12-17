@@ -30,15 +30,18 @@
         galleryPosts: '',
         openedPostIndex: null,
         lightBoxLoading: false,
+        pageLoaded: 1,
+        postsPerPage: 10,
       }
     },
     methods: {
       setGalleryItems() {
         const self = this;
         let xhr = new XMLHttpRequest();
-        xhr.open('GET', '/wp-json/gm-frontend-gallery/v1/get/1/10');
+        xhr.open('GET', `/wp-json/gm-frontend-gallery/v1/get/${self.pageLoaded}/${self.postsPerPage}`);
         xhr.onload = () => {
           self.galleryPosts = JSON.parse(xhr.responseText);
+          console.log('postcount', self.galleryPosts.length);
         };
         xhr.send();
       },
