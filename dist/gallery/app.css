@@ -139,6 +139,7 @@
   width: 100%;
   padding: 0.25rem;
   z-index: 1;
+  left: 0;
 }
 
 #gm-frontend-gallery .gm-gallery-light-box-container .gm-gallery-light-box-navigation-left,
@@ -207,11 +208,35 @@
     grid-row: 1;
     line-height: 0.5rem;
     font-size: 1.5em;
+    z-index: 1;
   }
 
   #gm-frontend-gallery .gm-gallery-light-box-container .gm-gallery-light-box-main-image {
     grid-column: 1;
     grid-row: 1/span 3;
+    position: unset;
+  }
+
+  #gm-frontend-gallery .gm-gallery-light-box-container .gm-gallery-light-box-navigation {
+    height: 100%;
+    z-index: 0;
+    -webkit-box-align: center;
+            align-items: center;
+  }
+
+  #gm-frontend-gallery .gm-gallery-light-box-container .gm-gallery-light-box-navigation-left,
+  #gm-frontend-gallery .gm-gallery-light-box-container .gm-gallery-light-box-navigation-right {
+    height: 30%;
+    width: 10%;
+    background-color: transparent;
+    font-size: 2em;
+    -webkit-transition: opacity 0.2s;
+    transition: opacity 0.2s;
+  }
+
+  #gm-frontend-gallery .gm-gallery-light-box-container .gm-gallery-light-box-navigation-left:hover,
+  #gm-frontend-gallery .gm-gallery-light-box-container .gm-gallery-light-box-navigation-right:hover {
+    opacity: 1;
   }
 
   #gm-frontend-gallery .gm-gallery-light-box-container .gm-gallery-light-box-text {

@@ -79,6 +79,7 @@
         width: 100%;
         padding: .25rem;
         z-index: 1;
+        left: 0;
 
         &-left,
         &-right {
@@ -137,11 +138,30 @@
           grid-row: 1;
           line-height: .5rem;
           font-size: 1.5em;
+          z-index: 1;
         }
-
         &-main-image {
           grid-column: 1;
           grid-row: 1 / span 3;
+          position: unset;
+        }
+        &-navigation {
+          height: 100%;
+          z-index: 0;
+          align-items: center;
+
+          &-left,
+          &-right {
+            height: 30%;
+            width: 10%;
+            background-color: $themeColor0;
+            font-size: 2em;
+            transition: opacity .2s;
+
+            &:hover {
+              opacity: 1;
+            }
+          }
         }
         &-text {
           grid-column: 2;
