@@ -3,7 +3,9 @@
         <div class="gm-gallery-light-box"
              v-bind:class="{ 'show-details': mobileShowDetails === true }"
              @click.stop>
-            <div class="gm-gallery-light-box-close-button" @click="closePost">x</div>
+            <div class="gm-gallery-light-box-close">
+                <div class="gm-gallery-light-box-close-button" @click.stop="closePost">x</div>
+            </div>
             <div class="gm-gallery-light-box-main-image">
                 <img v-if="loading === false" :src="currentImage" alt="">
                 <div v-else>Loading!</div>

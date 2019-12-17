@@ -287,6 +287,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'GalleryLightBox',
   props: {
@@ -951,14 +953,21 @@ var render = function() {
           }
         },
         [
-          _c(
-            "div",
-            {
-              staticClass: "gm-gallery-light-box-close-button",
-              on: { click: _vm.closePost }
-            },
-            [_vm._v("x")]
-          ),
+          _c("div", { staticClass: "gm-gallery-light-box-close" }, [
+            _c(
+              "div",
+              {
+                staticClass: "gm-gallery-light-box-close-button",
+                on: {
+                  click: function($event) {
+                    $event.stopPropagation()
+                    return _vm.closePost($event)
+                  }
+                }
+              },
+              [_vm._v("x")]
+            )
+          ]),
           _vm._v(" "),
           _c("div", { staticClass: "gm-gallery-light-box-main-image" }, [
             _vm.loading === false
