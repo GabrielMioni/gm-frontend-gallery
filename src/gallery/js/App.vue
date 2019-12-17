@@ -10,7 +10,7 @@
             </template>
         </div>
         <div v-if="galleryLoading" class="gm-frontend-gallery-loading">Loading!</div>
-        <div v-if="!galleryLoading">
+        <div v-if="!galleryLoading && galleryPosts.length < galleryCount">
             <button @click.stop="setGalleryItems">Load More</button>
         </div>
         <transition name="fade">

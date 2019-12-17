@@ -862,7 +862,7 @@ var render = function() {
           ])
         : _vm._e(),
       _vm._v(" "),
-      !_vm.galleryLoading
+      !_vm.galleryLoading && _vm.galleryPosts.length < _vm.galleryCount
         ? _c("div", [
             _c(
               "button",
