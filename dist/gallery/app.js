@@ -161,9 +161,9 @@ __webpack_require__.r(__webpack_exports__);
         var galleryPosts = responseData.posts;
         self.galleryCount = parseInt(responseData['gallery_count']);
         self.preloadImages(galleryPosts, function () {
-          self.galleryPosts = self.galleryPosts.concat(galleryPosts);
           setTimeout(function () {
             self.galleryLoading = false;
+            self.galleryPosts = self.galleryPosts.concat(galleryPosts);
           }, 1000);
           ++self.pageLoaded;
         });

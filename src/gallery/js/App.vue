@@ -12,7 +12,7 @@
             </div>
             <div class="gm-frontend-gallery-loading">
                 <div v-if="galleryLoading">Loading!</div>
-                <button v-if="!galleryLoading && galleryPosts.length < galleryCount"@click.stop="setGalleryItems">Load More</button>
+                <button v-if="!galleryLoading && galleryPosts.length < galleryCount" @click.stop="setGalleryItems">Load More</button>
             </div>
             <transition name="fade">
                 <GalleryLightBox v-if="openedPostIndex !== null"
@@ -58,9 +58,9 @@
           self.galleryCount = parseInt(responseData['gallery_count']);
 
           self.preloadImages(galleryPosts, () => {
-            self.galleryPosts = self.galleryPosts.concat(galleryPosts);
             setTimeout(() => {
               self.galleryLoading = false;
+              self.galleryPosts = self.galleryPosts.concat(galleryPosts);
             }, 1000);
 
             ++self.pageLoaded;
