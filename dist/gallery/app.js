@@ -119,6 +119,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -146,7 +152,7 @@ __webpack_require__.r(__webpack_exports__);
       xhr.onload = function () {
         var galleryPosts = JSON.parse(xhr.responseText);
         self.preloadImages(galleryPosts, function () {
-          self.galleryPosts = galleryPosts;
+          self.galleryPosts = self.galleryPosts.concat(galleryPosts);
           self.galleryLoading = false;
           ++self.pageLoaded;
         });
@@ -833,42 +839,72 @@ var render = function() {
     "div",
     { attrs: { id: "gm-frontend-gallery" } },
     [
-      _vm._l(_vm.galleryPosts, function(galleryPost, index) {
-        return [
-          _c("GalleryPost", {
-            attrs: { post: galleryPost, index: index },
-            on: { "open-post": _vm.openPostHandler }
-          })
-        ]
-      }),
+      _c("transition", { attrs: { name: "fade" } }, [
+        _c(
+          "div",
+          { staticClass: "gm-frontend-gallery-posts" },
+          [
+            _vm._l(_vm.galleryPosts, function(galleryPost, index) {
+              return [
+                _c("GalleryPost", {
+                  attrs: { post: galleryPost, index: index },
+                  on: { "open-post": _vm.openPostHandler }
+                })
+              ]
+            })
+          ],
+          2
+        )
+      ]),
+      _vm._v(" "),
+      _vm.galleryLoading
+        ? _c("div", { staticClass: "gm-frontend-gallery-loading" }, [
+            _vm._v("Loading!")
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      !_vm.galleryLoading
+        ? _c("div", [
+            _c(
+              "button",
+              {
+                on: {
+                  click: function($event) {
+                    $event.stopPropagation()
+                    return _vm.setGalleryItems($event)
+                  }
+                }
+              },
+              [_vm._v("Load More")]
+            )
+          ])
+        : _vm._e(),
       _vm._v(" "),
       _c(
         "transition",
         { attrs: { name: "fade" } },
         [
           _vm.openedPostIndex !== null
-            ? _c("GalleryLightBox", {
-                attrs: {
-                  post: _vm.galleryPosts[_vm.openedPostIndex],
-                  loading: _vm.lightBoxLoading
+            ? _c(
+                "GalleryLightBox",
+                {
+                  attrs: {
+                    post: _vm.galleryPosts[_vm.openedPostIndex],
+                    loading: _vm.lightBoxLoading
+                  }
                 },
-                on: {
-                  "close-post": _vm.closePostHandler,
-                  galleryNavigate: _vm.galleryNavigateHandler
-                }
-              })
+                [
+                  _vm._v(
+                    '\n            @close-post="closePostHandler"\n            @galleryNavigate="galleryNavigateHandler"\n        '
+                  )
+                ]
+              )
             : _vm._e()
         ],
         1
-      ),
-      _vm._v(" "),
-      _vm.galleryLoading
-        ? _c("div", { staticClass: "gm-frontend-gallery-loading" }, [
-            _vm._v("Loading!")
-          ])
-        : _vm._e()
+      )
     ],
-    2
+    1
   )
 }
 var staticRenderFns = []

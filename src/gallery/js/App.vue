@@ -1,22 +1,26 @@
 <template>
     <div id="gm-frontend-gallery">
-        <template v-for="(galleryPost, index) in galleryPosts">
-            <GalleryPost
-                :post="galleryPost"
-                :index="index"
-                @open-post="openPostHandler">
-            </GalleryPost>
-        </template>
+        <div class="gm-frontend-gallery-posts">
+            <template v-for="(galleryPost, index) in galleryPosts">
+                <GalleryPost
+                    :post="galleryPost"
+                    :index="index"
+                    @open-post="openPostHandler">
+                </GalleryPost>
+            </template>
+        </div>
+        <div v-if="galleryLoading" class="gm-frontend-gallery-loading">Loading!</div>
+        <div v-if="!galleryLoading">
+            <button @click.stop="setGalleryItems">Load More</button>
+        </div>
         <transition name="fade">
-            <GalleryLightBox
-                @close-post="closePostHandler"
-                @galleryNavigate="galleryNavigateHandler"
-                v-if="openedPostIndex !== null"
+            <GalleryLightBox v-if="openedPostIndex !== null"
                 :post="galleryPosts[openedPostIndex]"
                 :loading="lightBoxLoading">
+                @close-post="closePostHandler"
+                @galleryNavigate="galleryNavigateHandler"
             </GalleryLightBox>
         </transition>
-        <div v-if="galleryLoading" class="gm-frontend-gallery-loading">Loading!</div>
     </div>
 </template>
 
@@ -44,7 +48,7 @@
         xhr.onload = () => {
           const galleryPosts = JSON.parse(xhr.responseText);
           self.preloadImages(galleryPosts, () => {
-            self.galleryPosts = galleryPosts;
+            self.galleryPosts = self.galleryPosts.concat(galleryPosts);
             self.galleryLoading = false;
             ++self.pageLoaded;
           });
