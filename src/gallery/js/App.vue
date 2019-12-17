@@ -10,9 +10,9 @@
                     </GalleryPost>
                 </template>
             </div>
-            <div v-if="galleryLoading" id="gm-frontend-gallery-loading">Loading!</div>
-            <div v-if="!galleryLoading && galleryPosts.length < galleryCount" class="">
-                <button @click.stop="setGalleryItems">Load More</button>
+            <div class="gm-frontend-gallery-loading">
+                <div v-if="galleryLoading">Loading!</div>
+                <button v-if="!galleryLoading && galleryPosts.length < galleryCount"@click.stop="setGalleryItems">Load More</button>
             </div>
             <transition name="fade">
                 <GalleryLightBox v-if="openedPostIndex !== null"
@@ -44,8 +44,12 @@
       }
     },
     methods: {
-      setGalleryItems() {
+      setGalleryItems(event) {
         const self = this;
+        if (event.type === 'click' && this.galleryLoading === true) {
+          return;
+        }
+        self.galleryLoading = true;
         let xhr = new XMLHttpRequest();
         xhr.open('GET', `/wp-json/gm-frontend-gallery/v1/get/${self.pageLoaded}/${self.postsPerPage}`);
         xhr.onload = () => {
@@ -55,7 +59,10 @@
 
           self.preloadImages(galleryPosts, () => {
             self.galleryPosts = self.galleryPosts.concat(galleryPosts);
-            self.galleryLoading = false;
+            setTimeout(() => {
+              self.galleryLoading = false;
+            }, 1000);
+
             ++self.pageLoaded;
           });
         };
@@ -127,7 +134,7 @@
     },
     mounted() {
       console.log('mounted');
-      this.setGalleryItems();
+      this.setGalleryItems(false);
     }
   }
 </script>

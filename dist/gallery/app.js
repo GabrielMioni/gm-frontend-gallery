@@ -145,8 +145,14 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    setGalleryItems: function setGalleryItems() {
+    setGalleryItems: function setGalleryItems(event) {
       var self = this;
+
+      if (event.type === 'click' && this.galleryLoading === true) {
+        return;
+      }
+
+      self.galleryLoading = true;
       var xhr = new XMLHttpRequest();
       xhr.open('GET', "/wp-json/gm-frontend-gallery/v1/get/".concat(self.pageLoaded, "/").concat(self.postsPerPage));
 
@@ -156,7 +162,9 @@ __webpack_require__.r(__webpack_exports__);
         self.galleryCount = parseInt(responseData['gallery_count']);
         self.preloadImages(galleryPosts, function () {
           self.galleryPosts = self.galleryPosts.concat(galleryPosts);
-          self.galleryLoading = false;
+          setTimeout(function () {
+            self.galleryLoading = false;
+          }, 1000);
           ++self.pageLoaded;
         });
       };
@@ -227,7 +235,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     console.log('mounted');
-    this.setGalleryItems();
+    this.setGalleryItems(false);
   }
 });
 
@@ -859,15 +867,11 @@ var render = function() {
           2
         ),
         _vm._v(" "),
-        _vm.galleryLoading
-          ? _c("div", { attrs: { id: "gm-frontend-gallery-loading" } }, [
-              _vm._v("Loading!")
-            ])
-          : _vm._e(),
-        _vm._v(" "),
-        !_vm.galleryLoading && _vm.galleryPosts.length < _vm.galleryCount
-          ? _c("div", {}, [
-              _c(
+        _c("div", { staticClass: "gm-frontend-gallery-loading" }, [
+          _vm.galleryLoading ? _c("div", [_vm._v("Loading!")]) : _vm._e(),
+          _vm._v(" "),
+          !_vm.galleryLoading && _vm.galleryPosts.length < _vm.galleryCount
+            ? _c(
                 "button",
                 {
                   on: {
@@ -879,8 +883,8 @@ var render = function() {
                 },
                 [_vm._v("Load More")]
               )
-            ])
-          : _vm._e(),
+            : _vm._e()
+        ]),
         _vm._v(" "),
         _c(
           "transition",
