@@ -2,7 +2,6 @@
   margin: 0;
   padding: 0;
   width: 100%;
-  border: 1px solid red;
   max-width: 100%;
   display: -webkit-box;
   display: flex;
@@ -14,10 +13,16 @@
           justify-content: center;
 }
 
+#gm-frontend-gallery .gm-frontend-gallery-posts {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: auto;
+  grid-gap: 0.25rem;
+}
+
 #gm-frontend-gallery .gm-gallery-post {
   display: -webkit-inline-box;
   display: inline-flex;
-  margin: 0.25rem;
   position: relative;
   cursor: pointer;
 }
