@@ -1,7 +1,5 @@
 <template>
-    <div class="gm-gallery-light-box-container"
-         v-bind:class="{ active: post !== null }"
-         @click="closePost">
+    <div class="gm-gallery-light-box-container" @click="closePost">
         <div class="gm-gallery-light-box"
              v-bind:class="{ 'show-details': mobileShowDetails === true }"
              @click.stop>
