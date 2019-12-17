@@ -194,6 +194,21 @@ class GetGalleryDataTest extends GalleryUnitTestCase
         $this->assertEquals($expectedPaginatedGalleryPostIds, $realPaginatedGalleryPostsIds);
     }
 
+    /** @test */
+    public function gallery_posts_data_includes_gallery_count()
+    {
+        $postIds = $this->createGalleryPostWithFactory(31, 1000);
+
+        // Retrieve Post data from route
+        $getRequest = $this->createRequestGetPaginatedGalleryItems();
+        $getResponse = $this->dispatchRequest($getRequest);
+        $responseData = $getResponse->get_data();
+
+        $galleryCountData = (int) $responseData['gallery_count'];
+
+        $this->assertEquals(count($postIds), $galleryCountData);
+    }
+
     protected function createPostsWithRequest($count = false)
     {
         $postIDs = [];
