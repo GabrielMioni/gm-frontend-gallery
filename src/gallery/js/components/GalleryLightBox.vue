@@ -3,6 +3,7 @@
         <div class="gm-gallery-light-box"
              v-bind:class="{ 'show-details': mobileShowDetails === true }"
              @click.stop>
+            <div class="gm-gallery-light-box-close-button">x</div>
             <div class="gm-gallery-light-box-main-image">
                 <img :src="currentImage" alt="">
                 <div class="gm-gallery-light-box-navigation">
