@@ -1,26 +1,28 @@
 <template>
-    <div id="gm-frontend-gallery">
-        <div class="gm-frontend-gallery-posts">
-            <template v-for="(galleryPost, index) in galleryPosts">
-                <GalleryPost
-                    @open-post="openPostHandler"
-                    :post="galleryPost"
-                    :index="index">
-                </GalleryPost>
-            </template>
+    <div id="gm-frontend-main">
+        <div class="gm-frontend-gallery">
+            <div class="gm-frontend-gallery-posts">
+                <template v-for="(galleryPost, index) in galleryPosts">
+                    <GalleryPost
+                            @open-post="openPostHandler"
+                            :post="galleryPost"
+                            :index="index">
+                    </GalleryPost>
+                </template>
+            </div>
+            <div v-if="galleryLoading" id="gm-frontend-gallery-loading">Loading!</div>
+            <div v-if="!galleryLoading && galleryPosts.length < galleryCount" class="">
+                <button @click.stop="setGalleryItems">Load More</button>
+            </div>
+            <transition name="fade">
+                <GalleryLightBox v-if="openedPostIndex !== null"
+                                 @closePost="closePostHandler"
+                                 @galleryNavigate="galleryNavigateHandler"
+                                 :post="galleryPosts[openedPostIndex]"
+                                 :loading="lightBoxLoading">
+                </GalleryLightBox>
+            </transition>
         </div>
-        <div v-if="galleryLoading" class="gm-frontend-gallery-loading">Loading!</div>
-        <div v-if="!galleryLoading && galleryPosts.length < galleryCount">
-            <button @click.stop="setGalleryItems">Load More</button>
-        </div>
-        <transition name="fade">
-            <GalleryLightBox v-if="openedPostIndex !== null"
-                @closePost="closePostHandler"
-                @galleryNavigate="galleryNavigateHandler"
-                :post="galleryPosts[openedPostIndex]"
-                :loading="lightBoxLoading">
-            </GalleryLightBox>
-        </transition>
     </div>
 </template>
 

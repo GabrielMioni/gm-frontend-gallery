@@ -123,6 +123,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -185,7 +187,6 @@ __webpack_require__.r(__webpack_exports__);
       this.openedPostIndex = postIndex;
     },
     closePostHandler: function closePostHandler() {
-      console.log('clicko2');
       this.openedPostIndex = null;
     },
     galleryNavigateHandler: function galleryNavigateHandler(data) {
@@ -293,7 +294,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     closePost: function closePost() {
-      console.log('clicko1');
       this.$emit('closePost');
     },
     retrieveImage: function retrieveImage(index, size) {
@@ -838,71 +838,73 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { attrs: { id: "gm-frontend-gallery" } },
-    [
-      _c(
-        "div",
-        { staticClass: "gm-frontend-gallery-posts" },
-        [
-          _vm._l(_vm.galleryPosts, function(galleryPost, index) {
-            return [
-              _c("GalleryPost", {
-                attrs: { post: galleryPost, index: index },
-                on: { "open-post": _vm.openPostHandler }
-              })
-            ]
-          })
-        ],
-        2
-      ),
-      _vm._v(" "),
-      _vm.galleryLoading
-        ? _c("div", { staticClass: "gm-frontend-gallery-loading" }, [
-            _vm._v("Loading!")
-          ])
-        : _vm._e(),
-      _vm._v(" "),
-      !_vm.galleryLoading && _vm.galleryPosts.length < _vm.galleryCount
-        ? _c("div", [
-            _c(
-              "button",
-              {
-                on: {
-                  click: function($event) {
-                    $event.stopPropagation()
-                    return _vm.setGalleryItems($event)
+  return _c("div", { attrs: { id: "gm-frontend-main" } }, [
+    _c(
+      "div",
+      { staticClass: "gm-frontend-gallery" },
+      [
+        _c(
+          "div",
+          { staticClass: "gm-frontend-gallery-posts" },
+          [
+            _vm._l(_vm.galleryPosts, function(galleryPost, index) {
+              return [
+                _c("GalleryPost", {
+                  attrs: { post: galleryPost, index: index },
+                  on: { "open-post": _vm.openPostHandler }
+                })
+              ]
+            })
+          ],
+          2
+        ),
+        _vm._v(" "),
+        _vm.galleryLoading
+          ? _c("div", { attrs: { id: "gm-frontend-gallery-loading" } }, [
+              _vm._v("Loading!")
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        !_vm.galleryLoading && _vm.galleryPosts.length < _vm.galleryCount
+          ? _c("div", {}, [
+              _c(
+                "button",
+                {
+                  on: {
+                    click: function($event) {
+                      $event.stopPropagation()
+                      return _vm.setGalleryItems($event)
+                    }
                   }
-                }
-              },
-              [_vm._v("Load More")]
-            )
-          ])
-        : _vm._e(),
-      _vm._v(" "),
-      _c(
-        "transition",
-        { attrs: { name: "fade" } },
-        [
-          _vm.openedPostIndex !== null
-            ? _c("GalleryLightBox", {
-                attrs: {
-                  post: _vm.galleryPosts[_vm.openedPostIndex],
-                  loading: _vm.lightBoxLoading
                 },
-                on: {
-                  closePost: _vm.closePostHandler,
-                  galleryNavigate: _vm.galleryNavigateHandler
-                }
-              })
-            : _vm._e()
-        ],
-        1
-      )
-    ],
-    1
-  )
+                [_vm._v("Load More")]
+              )
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _c(
+          "transition",
+          { attrs: { name: "fade" } },
+          [
+            _vm.openedPostIndex !== null
+              ? _c("GalleryLightBox", {
+                  attrs: {
+                    post: _vm.galleryPosts[_vm.openedPostIndex],
+                    loading: _vm.lightBoxLoading
+                  },
+                  on: {
+                    closePost: _vm.closePostHandler,
+                    galleryNavigate: _vm.galleryNavigateHandler
+                  }
+                })
+              : _vm._e()
+          ],
+          1
+        )
+      ],
+      1
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true

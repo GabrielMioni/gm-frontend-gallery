@@ -1,17 +1,24 @@
-#gm-frontend-gallery {
+#gm-frontend-main {
   margin: 0;
   padding: 0;
   width: 100%;
   max-width: 100%;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
 
-  .gm-frontend-gallery-posts {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: auto;
-    grid-gap: .25rem;
+  .gm-frontend-gallery {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    &-posts {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: auto;
+      grid-gap: .25rem;
+    }
+
+    &-loading {
+      margin: 1rem;
+    }
   }
 }
