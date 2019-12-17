@@ -16,6 +16,7 @@
                 :loading="lightBoxLoading">
             </GalleryLightBox>
         </transition>
+        <div v-if="galleryLoading" class="gm-frontend-gallery-loading">Loading!</div>
     </div>
 </template>
 
@@ -27,8 +28,9 @@
     components: {GalleryLightBox, GalleryPost},
     data() {
       return {
-        galleryPosts: '',
+        galleryPosts: [],
         openedPostIndex: null,
+        galleryLoading: true,
         lightBoxLoading: false,
         pageLoaded: 1,
         postsPerPage: 10,
@@ -40,10 +42,35 @@
         let xhr = new XMLHttpRequest();
         xhr.open('GET', `/wp-json/gm-frontend-gallery/v1/get/${self.pageLoaded}/${self.postsPerPage}`);
         xhr.onload = () => {
-          self.galleryPosts = JSON.parse(xhr.responseText);
-          console.log('postcount', self.galleryPosts.length);
+          const galleryPosts = JSON.parse(xhr.responseText);
+          self.preloadImages(galleryPosts, () => {
+            self.galleryPosts = galleryPosts;
+            self.galleryLoading = false;
+            ++self.pageLoaded;
+          });
         };
         xhr.send();
+      },
+      preloadImages(galleryPosts, callback) {
+        let loadedImageCount = 0;
+
+        galleryPosts.forEach((post) => {
+          const images = post['images'];
+
+          images.forEach((image) => {
+            const medium = image['sized_images'].medium;
+            let currentImage = new Image();
+
+            currentImage.src = medium;
+            currentImage.onload = () => {
+              ++loadedImageCount;
+
+              if (loadedImageCount === galleryPosts.length) {
+                callback();
+              }
+            };
+          })
+        })
       },
       openPostHandler(postIndex) {
         this.loadPost(postIndex);

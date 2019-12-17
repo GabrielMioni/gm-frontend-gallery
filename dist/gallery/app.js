@@ -118,6 +118,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -128,8 +129,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      galleryPosts: '',
+      galleryPosts: [],
       openedPostIndex: null,
+      galleryLoading: true,
       lightBoxLoading: false,
       pageLoaded: 1,
       postsPerPage: 10
@@ -138,16 +140,38 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     setGalleryItems: function setGalleryItems() {
       var self = this;
-      var xhr = new XMLHttpRequest(); // xhr.open('GET', '/wp-json/gm-frontend-gallery/v1/get/1/10');
-
+      var xhr = new XMLHttpRequest();
       xhr.open('GET', "/wp-json/gm-frontend-gallery/v1/get/".concat(self.pageLoaded, "/").concat(self.postsPerPage));
 
       xhr.onload = function () {
-        self.galleryPosts = JSON.parse(xhr.responseText);
-        console.log('postcount', self.galleryPosts.length);
+        var galleryPosts = JSON.parse(xhr.responseText);
+        self.preloadImages(galleryPosts, function () {
+          self.galleryPosts = galleryPosts;
+          self.galleryLoading = false;
+          ++self.pageLoaded;
+        });
       };
 
       xhr.send();
+    },
+    preloadImages: function preloadImages(galleryPosts, callback) {
+      var loadedImageCount = 0;
+      galleryPosts.forEach(function (post) {
+        var images = post['images'];
+        images.forEach(function (image) {
+          var medium = image['sized_images'].medium;
+          var currentImage = new Image();
+          currentImage.src = medium;
+
+          currentImage.onload = function () {
+            ++loadedImageCount;
+
+            if (loadedImageCount === galleryPosts.length) {
+              callback();
+            }
+          };
+        });
+      });
     },
     openPostHandler: function openPostHandler(postIndex) {
       this.loadPost(postIndex);
@@ -836,7 +860,13 @@ var render = function() {
             : _vm._e()
         ],
         1
-      )
+      ),
+      _vm._v(" "),
+      _vm.galleryLoading
+        ? _c("div", { staticClass: "gm-frontend-gallery-loading" }, [
+            _vm._v("Loading!")
+          ])
+        : _vm._e()
     ],
     2
   )
