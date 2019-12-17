@@ -288,10 +288,14 @@
   margin-left: auto;
 }
 
-.fade-enter-active,
+.fade-enter-active {
+  -webkit-transition: opacity 0.2s;
+  transition: opacity 0.2s;
+}
+
 .fade-leave-active {
-  -webkit-transition: opacity 0.5s;
-  transition: opacity 0.5s;
+  -webkit-transition: opacity 0.1s;
+  transition: opacity 0.1s;
 }
 
 .fade-enter,
