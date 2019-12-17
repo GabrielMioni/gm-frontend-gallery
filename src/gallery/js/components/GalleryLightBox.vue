@@ -20,9 +20,9 @@
                     {{ post.post_content }}
                 </div>
             </div>
-            <div class="gm-gallery-light-box-display-details"
-                @click="toggleDetails">
-                Details
+            <div class="gm-gallery-light-box-details-toggle" @click="toggleDetails">
+                <span v-if="mobileShowDetails">hide</span>
+                <span v-else>show</span> details
             </div>
             <div class="gm-gallery-light-box-images">
                 <template v-for="(image, index) in post.images">

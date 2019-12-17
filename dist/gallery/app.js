@@ -911,10 +911,15 @@ var render = function() {
           _c(
             "div",
             {
-              staticClass: "gm-gallery-light-box-display-details",
+              staticClass: "gm-gallery-light-box-details-toggle",
               on: { click: _vm.toggleDetails }
             },
-            [_vm._v("\n            Details\n        ")]
+            [
+              _vm.mobileShowDetails
+                ? _c("span", [_vm._v("hide")])
+                : _c("span", [_vm._v("show")]),
+              _vm._v(" details\n        ")
+            ]
           ),
           _vm._v(" "),
           _c(
