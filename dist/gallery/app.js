@@ -846,9 +846,14 @@ var render = function() {
           }
         },
         [
-          _c("div", { staticClass: "gm-gallery-light-box-close-button" }, [
-            _vm._v("x")
-          ]),
+          _c(
+            "div",
+            {
+              staticClass: "gm-gallery-light-box-close-button",
+              on: { click: _vm.closePost }
+            },
+            [_vm._v("x")]
+          ),
           _vm._v(" "),
           _c("div", { staticClass: "gm-gallery-light-box-main-image" }, [
             _c("img", { attrs: { src: _vm.currentImage, alt: "" } }),
