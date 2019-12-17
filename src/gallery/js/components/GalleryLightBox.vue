@@ -5,7 +5,8 @@
              @click.stop>
             <div class="gm-gallery-light-box-close-button" @click="closePost">x</div>
             <div class="gm-gallery-light-box-main-image">
-                <img :src="currentImage" alt="">
+                <img v-if="loading === false" :src="currentImage" alt="">
+                <div v-else>Loading!</div>
                 <div class="gm-gallery-light-box-navigation">
                     <div class="gm-gallery-light-box-navigation-left" @click.stop="galleryNavigate('left')"> < </div>
                     <div class="gm-gallery-light-box-navigation-right" @click.stop="galleryNavigate('right')"> > </div>
@@ -23,7 +24,7 @@
                 <span v-if="mobileShowDetails">hide</span>
                 <span v-else>show</span> details
             </div>
-            <div class="gm-gallery-light-box-images">
+            <div v-if="loading === false" class="gm-gallery-light-box-images">
                 <template v-for="(image, index) in post.images">
                     <img v-bind:class="{ active: index === activeImage }"
                          @click.stop="selectImage(index)"
@@ -38,7 +39,8 @@
   export default {
     name: 'GalleryLightBox',
     props: {
-      post: Object
+      post: Object,
+      loading: Boolean,
     },
     data() {
       return {

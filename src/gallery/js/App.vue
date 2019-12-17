@@ -11,7 +11,10 @@
             <GalleryLightBox
                 @close-post="closePostHandler"
                 @galleryNavigate="galleryNavigateHandler"
-                v-if="openedPostIndex !== null" :post="galleryPosts[openedPostIndex]"></GalleryLightBox>
+                v-if="openedPostIndex !== null"
+                :post="galleryPosts[openedPostIndex]"
+                :loading="lightBoxLoading">
+            </GalleryLightBox>
         </transition>
     </div>
 </template>
@@ -26,6 +29,7 @@
       return {
         galleryPosts: '',
         openedPostIndex: null,
+        lightBoxLoading: false,
       }
     },
     methods: {
@@ -39,6 +43,7 @@
         xhr.send();
       },
       openPostHandler(postIndex) {
+        this.loadPost(postIndex);
         this.openedPostIndex = postIndex;
       },
       closePostHandler() {
@@ -53,7 +58,31 @@
         if (newIndex > this.galleryPosts.length -1) {
           newIndex = 0;
         }
+        this.loadPost(newIndex);
         this.openedPostIndex = newIndex;
+      },
+      loadPost(postIndex) {
+        const self = this;
+        const postImages = self.galleryPosts[postIndex].images;
+        let loadedImageCount = 0;
+
+        self.lightBoxLoading = true;
+
+        postImages.forEach((image) => {
+          const sizedImages = image['sized_images'];
+
+          let loadingImage = new Image();
+          loadingImage.src = sizedImages['full'];
+          loadingImage.onload = () => {
+            ++loadedImageCount;
+
+            if (loadedImageCount === postImages.length) {
+              setTimeout(() => {
+                self.lightBoxLoading = false;
+              }, 1000);
+            }
+          };
+        });
       }
     },
     mounted() {

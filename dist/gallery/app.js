@@ -115,6 +115,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -126,7 +129,8 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       galleryPosts: '',
-      openedPostIndex: null
+      openedPostIndex: null,
+      lightBoxLoading: false
     };
   },
   methods: {
@@ -142,6 +146,7 @@ __webpack_require__.r(__webpack_exports__);
       xhr.send();
     },
     openPostHandler: function openPostHandler(postIndex) {
+      this.loadPost(postIndex);
       this.openedPostIndex = postIndex;
     },
     closePostHandler: function closePostHandler() {
@@ -158,7 +163,30 @@ __webpack_require__.r(__webpack_exports__);
         newIndex = 0;
       }
 
+      this.loadPost(newIndex);
       this.openedPostIndex = newIndex;
+    },
+    loadPost: function loadPost(postIndex) {
+      var self = this;
+      self.lightBoxLoading = true;
+      var postImages = self.galleryPosts[postIndex].images;
+      var loadedImageCount = 0;
+      postImages.forEach(function (image) {
+        var sizedImages = image['sized_images'];
+        console.log(sizedImages);
+        var loadingImage = new Image();
+        loadingImage.src = sizedImages['full'];
+
+        loadingImage.onload = function () {
+          ++loadedImageCount;
+
+          if (loadedImageCount === postImages.length) {
+            setTimeout(function () {
+              self.lightBoxLoading = false;
+            }, 1000);
+          }
+        };
+      });
     }
   },
   mounted: function mounted() {
@@ -214,10 +242,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'GalleryLightBox',
   props: {
-    post: Object
+    post: Object,
+    loading: Boolean
   },
   data: function data() {
     return {
@@ -791,7 +821,10 @@ var render = function() {
         [
           _vm.openedPostIndex !== null
             ? _c("GalleryLightBox", {
-                attrs: { post: _vm.galleryPosts[_vm.openedPostIndex] },
+                attrs: {
+                  post: _vm.galleryPosts[_vm.openedPostIndex],
+                  loading: _vm.lightBoxLoading
+                },
                 on: {
                   "close-post": _vm.closePostHandler,
                   galleryNavigate: _vm.galleryNavigateHandler
@@ -856,7 +889,9 @@ var render = function() {
           ),
           _vm._v(" "),
           _c("div", { staticClass: "gm-gallery-light-box-main-image" }, [
-            _c("img", { attrs: { src: _vm.currentImage, alt: "" } }),
+            _vm.loading === false
+              ? _c("img", { attrs: { src: _vm.currentImage, alt: "" } })
+              : _c("div", [_vm._v("Loading!")]),
             _vm._v(" "),
             _c("div", { staticClass: "gm-gallery-light-box-navigation" }, [
               _c(
@@ -929,27 +964,32 @@ var render = function() {
             ]
           ),
           _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "gm-gallery-light-box-images" },
-            [
-              _vm._l(_vm.post.images, function(image, index) {
-                return [
-                  _c("img", {
-                    class: { active: index === _vm.activeImage },
-                    attrs: { src: image["sized_images"].thumbnail, alt: "" },
-                    on: {
-                      click: function($event) {
-                        $event.stopPropagation()
-                        return _vm.selectImage(index)
-                      }
-                    }
+          _vm.loading === false
+            ? _c(
+                "div",
+                { staticClass: "gm-gallery-light-box-images" },
+                [
+                  _vm._l(_vm.post.images, function(image, index) {
+                    return [
+                      _c("img", {
+                        class: { active: index === _vm.activeImage },
+                        attrs: {
+                          src: image["sized_images"].thumbnail,
+                          alt: ""
+                        },
+                        on: {
+                          click: function($event) {
+                            $event.stopPropagation()
+                            return _vm.selectImage(index)
+                          }
+                        }
+                      })
+                    ]
                   })
-                ]
-              })
-            ],
-            2
-          )
+                ],
+                2
+              )
+            : _vm._e()
         ]
       )
     ]
