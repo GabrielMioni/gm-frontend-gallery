@@ -14,7 +14,9 @@ class gmFrontendGallery
 {
     use definitionsTrait;
 
-    protected $galleryScriptHandle = 'gm-frontend-gallery';
+    protected $scriptHandleGallery = 'gm-frontend-gallery';
+    protected $scriptHandleSubmit  = 'gm-frontend-submit';
+
     protected $galleryVersion = '1.0.0';
 
     public function activate()
@@ -149,19 +151,35 @@ class gmFrontendGallery
         ];
     }
 
-    public function registerVue()
+    public function registerGalleryVue()
     {
         $galleryUrlJS  = plugins_url() . '/gm-frontend-gallery/dist/gallery/app.js';
         $galleryUrlCSS = plugins_url() . '/gm-frontend-gallery/dist/gallery/app.css';
 
-        wp_register_script($this->galleryScriptHandle, $galleryUrlJS, [], $this->galleryVersion);
-        wp_register_style($this->galleryScriptHandle, $galleryUrlCSS, [], $this->galleryVersion);
+        wp_register_script($this->scriptHandleGallery, $galleryUrlJS, [], $this->galleryVersion);
+        wp_register_style($this->scriptHandleGallery, $galleryUrlCSS, [], $this->galleryVersion);
     }
 
-    public function mountVueApp()
+    public function mountVueGallery()
     {
-        wp_enqueue_script($this->galleryScriptHandle);
-        wp_enqueue_style($this->galleryScriptHandle);
+        wp_enqueue_script($this->scriptHandleGallery);
+        wp_enqueue_style($this->scriptHandleGallery);
         return '<div id="gm-frontend-gallery"></div>';
+    }
+
+    public function registerSubmitVue()
+    {
+        $submitUrlJS  = plugins_url() . '/gm-frontend-gallery/dist/submit/app.js';
+        $submitUrlCSS = plugins_url() . '/gm-frontend-gallery/dist/submit/app.css';
+
+        wp_register_script($this->scriptHandleSubmit, $submitUrlJS, [], $this->galleryVersion);
+        wp_register_style($this->scriptHandleSubmit, $submitUrlCSS, [], $this->galleryVersion);
+    }
+
+    public function mountVueSubmit()
+    {
+        wp_enqueue_script($this->scriptHandleSubmit);
+        wp_enqueue_style($this->scriptHandleSubmit);
+        return '<div id="gm-frontend-submit"></div>';
     }
 }
