@@ -9,11 +9,16 @@
             <form>
                 <div class="gm-frontend-submit-form-group">
                     <label :for="`gm-frontend-submit-title-${index}`">Title</label>
-                    <input type="text" name="title" :id="`gm-frontend-submit-title-${index}`">
+                    <input type="text" name="title"
+                           v-model="post.title"
+                           :id="`gm-frontend-submit-title-${index}`">
                 </div>
                 <div class="gm-frontend-submit-form-group">
-                    <label :for="`gm-frontend-submit-author-${index}`">Author</label>
-                    <input type="text" name="author" :id="`gm-frontend-submit-author-${index}`">
+                    <label :for="`gm-frontend-submit-content-${index}`">Content</label>
+                    <textarea
+                            v-model="post.content"
+                            :id="`gm-frontend-submit-content-${index}`">
+                    </textarea>
                 </div>
             </form>
         </div>
