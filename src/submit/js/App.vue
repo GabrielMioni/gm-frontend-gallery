@@ -34,6 +34,10 @@
       },
       trashPostHandler(index) {
         this.galleryPosts.splice(index, 1);
+
+        if (this.galleryPosts.length <= 0) {
+          this.galleryPosts.push(this.postObjectDefault());
+        }
       }
     }
   }
