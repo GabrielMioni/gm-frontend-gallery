@@ -6,6 +6,7 @@
                     :index="index">
             </submit-post>
         </template>
+        <button @click.stop="addPost">Add A Post!</button>
     </div>
 </template>
 
@@ -16,7 +17,16 @@
     components: {SubmitPost},
     data() {
       return {
-        galleryPosts: [{},{},{}],
+        galleryPosts: [],
+      }
+    },
+    methods: {
+      addPost() {
+        this.galleryPosts.push({
+          title: '',
+          content: '',
+          image: null,
+        });
       }
     }
   }
