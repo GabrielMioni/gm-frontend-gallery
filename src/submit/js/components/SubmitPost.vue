@@ -4,11 +4,13 @@
             <div @click="trashPost">x</div>
         </div>
         <div class="gm-frontend-submit-post-left">
-            <div v-if="post.imageUrl === null" class="gm-frontend-submit-post-upload" :ref="'dropFile'">
-                This is the stone on which I will build my empire.
-            </div>
-            <div v-else>
-                <img :src="post.imageUrl" alt="">
+            <div class="gm-frontend-submit-post-upload"
+                 @click="openFileInput"
+                 :ref="'dropFile'">
+                <div v-if="post.imageUrl === null">This is the stone on which I will build my empire.</div>
+                <div v-else>
+                    <img :src="post.imageUrl" alt="">
+                </div>
             </div>
         </div>
         <div class="gm-frontend-submit-post-right">
@@ -26,7 +28,7 @@
                             :id="setElementId('gm-frontend-submit-content')">
                     </textarea>
                 </div>
-                <input class="gm-frontend-submit-post-file" type="file" name="image">
+                <input class="gm-frontend-submit-post-file" type="file" name="image" :ref="'fileInput'">
             </form>
         </div>
     </div>
@@ -55,6 +57,10 @@
           'imageUrl' : fileUrl,
           'imageObj' : file,
         });
+      },
+      openFileInput() {
+        const fileInput = this.$refs.fileInput;
+        fileInput.click();
       }
     },
     mounted() {

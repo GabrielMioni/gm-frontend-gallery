@@ -194,6 +194,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SubmitPost",
@@ -216,6 +218,10 @@ __webpack_require__.r(__webpack_exports__);
         'imageUrl': fileUrl,
         'imageObj': file
       });
+    },
+    openFileInput: function openFileInput() {
+      var fileInput = this.$refs.fileInput;
+      fileInput.click();
     }
   },
   mounted: function mounted() {
@@ -1048,17 +1054,23 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "gm-frontend-submit-post-left" }, [
-      _vm.post.imageUrl === null
-        ? _c(
-            "div",
-            { ref: "dropFile", staticClass: "gm-frontend-submit-post-upload" },
-            [
-              _vm._v(
-                "\n            This is the stone on which I will build my empire.\n        "
-              )
-            ]
-          )
-        : _c("div", [_c("img", { attrs: { src: _vm.post.imageUrl, alt: "" } })])
+      _c(
+        "div",
+        {
+          ref: "dropFile",
+          staticClass: "gm-frontend-submit-post-upload",
+          on: { click: _vm.openFileInput }
+        },
+        [
+          _vm.post.imageUrl === null
+            ? _c("div", [
+                _vm._v("This is the stone on which I will build my empire.")
+              ])
+            : _c("div", [
+                _c("img", { attrs: { src: _vm.post.imageUrl, alt: "" } })
+              ])
+        ]
+      )
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "gm-frontend-submit-post-right" }, [
@@ -1126,6 +1138,7 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("input", {
+          ref: "fileInput",
           staticClass: "gm-frontend-submit-post-file",
           attrs: { type: "file", name: "image" }
         })
