@@ -1,0 +1,18 @@
+#gm-frontend-submit {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: 100%;
+
+  .gm-frontend-submit {
+    &-form {
+      &-group {
+        display: grid;
+        margin: 0 0 .5rem;
+      }
+    }
+    &-button {
+      width: 100%;
+    }
+  }
+}
