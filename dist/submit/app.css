@@ -1,0 +1,35 @@
+#gm-frontend-submit {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: 100%;
+}
+
+#gm-frontend-submit .gm-frontend-submit-form-group {
+  display: grid;
+  margin: 0 0 0.5rem;
+}
+
+#gm-frontend-submit .gm-frontend-submit-button {
+  width: 100%;
+}
+
+#gm-frontend-submit .gm-frontend-submit-post {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  border: 1px solid grey;
+  border-radius: 0.2rem;
+  margin: 1rem 0;
+}
+
+#gm-frontend-submit .gm-frontend-submit-post-upload {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+          justify-content: center;
+  height: 100%;
+}
+
