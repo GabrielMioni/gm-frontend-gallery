@@ -55,7 +55,7 @@
         if (fileData.type === 'change') {
           fileData[0] = fileData.target.files[0];
         }
-        
+
         const file = fileData[0];
         const fileUrl = URL.createObjectURL(file);
         this.$emit('imageUpdate', {
