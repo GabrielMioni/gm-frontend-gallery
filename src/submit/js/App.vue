@@ -18,16 +18,19 @@
     components: {SubmitPost},
     data() {
       return {
-        galleryPosts: [],
+        galleryPosts: [this.postObjectDefault()],
       }
     },
     methods: {
-      addPost() {
-        this.galleryPosts.push({
+      postObjectDefault() {
+        return {
           title: '',
           content: '',
-          image: null,
-        });
+          image: null
+        }
+      },
+      addPost() {
+        this.galleryPosts.push(this.postObjectDefault());
       },
       trashPostHandler(index) {
         this.galleryPosts.splice(index, 1);

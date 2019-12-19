@@ -117,16 +117,19 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      galleryPosts: []
+      galleryPosts: [this.postObjectDefault()]
     };
   },
   methods: {
-    addPost: function addPost() {
-      this.galleryPosts.push({
+    postObjectDefault: function postObjectDefault() {
+      return {
         title: '',
         content: '',
         image: null
-      });
+      };
+    },
+    addPost: function addPost() {
+      this.galleryPosts.push(this.postObjectDefault());
     },
     trashPostHandler: function trashPostHandler(index) {
       this.galleryPosts.splice(index, 1);
