@@ -4,8 +4,10 @@
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr;
     border: 1px solid grey;
-    border-radius: .2rem;
+    border-radius: 0.2rem;
     margin: 1rem 0;
+    padding: .5rem;
+    grid-column-gap: .5rem;
 
     &-upload {
       display: flex;
