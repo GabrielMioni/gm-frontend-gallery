@@ -1,5 +1,8 @@
 <template>
     <div class="gm-frontend-submit-post">
+        <div class="gm-frontend-submit-post-trash">
+            <div @click="trashPost">x</div>
+        </div>
         <div class="gm-frontend-submit-post-left">
             <div class="gm-frontend-submit-post-upload">
                 This is the stone on which I will build my empire.
@@ -32,5 +35,10 @@
       post: Object,
       index: Number,
     },
+    methods: {
+      trashPost() {
+        this.$emit('trashPost', this.index);
+      }
+    }
   }
 </script>

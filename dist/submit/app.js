@@ -107,6 +107,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "gmGallerySubmit",
@@ -115,8 +117,20 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      galleryPosts: [{}, {}, {}]
+      galleryPosts: []
     };
+  },
+  methods: {
+    addPost: function addPost() {
+      this.galleryPosts.push({
+        title: '',
+        content: '',
+        image: null
+      });
+    },
+    trashPostHandler: function trashPostHandler(index) {
+      this.galleryPosts.splice(index, 1);
+    }
   }
 });
 
@@ -153,11 +167,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SubmitPost",
   props: {
     post: Object,
     index: Number
+  },
+  methods: {
+    trashPost: function trashPost() {
+      this.$emit('trashPost', this.index);
+    }
   }
 });
 
@@ -651,8 +678,26 @@ var render = function() {
     { attrs: { id: "gm-frontend-submit" } },
     [
       _vm._l(_vm.galleryPosts, function(post, index) {
-        return [_c("submit-post", { attrs: { post: post, index: index } })]
-      })
+        return [
+          _c("submit-post", {
+            attrs: { post: post, index: index },
+            on: { trashPost: _vm.trashPostHandler }
+          })
+        ]
+      }),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          on: {
+            click: function($event) {
+              $event.stopPropagation()
+              return _vm.addPost($event)
+            }
+          }
+        },
+        [_vm._v("Add A Post!")]
+      )
     ],
     2
   )
@@ -680,6 +725,10 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "gm-frontend-submit-post" }, [
+    _c("div", { staticClass: "gm-frontend-submit-post-trash" }, [
+      _c("div", { on: { click: _vm.trashPost } }, [_vm._v("x")])
+    ]),
+    _vm._v(" "),
     _vm._m(0),
     _vm._v(" "),
     _c("div", { staticClass: "gm-frontend-submit-post-right" }, [
@@ -692,10 +741,27 @@ var render = function() {
           ),
           _vm._v(" "),
           _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.post.title,
+                expression: "post.title"
+              }
+            ],
             attrs: {
               type: "text",
               name: "title",
               id: "gm-frontend-submit-title-" + _vm.index
+            },
+            domProps: { value: _vm.post.title },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.post, "title", $event.target.value)
+              }
             }
           })
         ]),
@@ -703,15 +769,28 @@ var render = function() {
         _c("div", { staticClass: "gm-frontend-submit-form-group" }, [
           _c(
             "label",
-            { attrs: { for: "gm-frontend-submit-author-" + _vm.index } },
-            [_vm._v("Author")]
+            { attrs: { for: "gm-frontend-submit-content-" + _vm.index } },
+            [_vm._v("Content")]
           ),
           _vm._v(" "),
-          _c("input", {
-            attrs: {
-              type: "text",
-              name: "author",
-              id: "gm-frontend-submit-author-" + _vm.index
+          _c("textarea", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.post.content,
+                expression: "post.content"
+              }
+            ],
+            attrs: { id: "gm-frontend-submit-content-" + _vm.index },
+            domProps: { value: _vm.post.content },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.post, "content", $event.target.value)
+              }
             }
           })
         ])
