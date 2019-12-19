@@ -26,7 +26,7 @@
                             :id="setElementId('gm-frontend-submit-content')">
                     </textarea>
                 </div>
-                <input type="file" name="image" :id="setElementId('gm-frontend-submit-image')">
+                <input class="gm-frontend-submit-post-file" type="file" name="image">
             </form>
         </div>
     </div>

@@ -57,3 +57,7 @@
   height: 100%;
 }
 
+#gm-frontend-submit .gm-frontend-submit-post-file {
+  visibility: hidden;
+}
+

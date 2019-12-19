@@ -142,7 +142,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     imageUpdateHandler: function imageUpdateHandler(data) {
       var currentGalleryPost = this.galleryPosts[data.index];
-      currentGalleryPost.imageUrl = data.imageUrl; // this.galleryPosts[data.index].imageUrl = data.imageUrl;
+      currentGalleryPost.imageUrl = data.imageUrl;
     }
   }
 });
@@ -1126,11 +1126,8 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("input", {
-          attrs: {
-            type: "file",
-            name: "image",
-            id: _vm.setElementId("gm-frontend-submit-image")
-          }
+          staticClass: "gm-frontend-submit-post-file",
+          attrs: { type: "file", name: "image" }
         })
       ])
     ])
