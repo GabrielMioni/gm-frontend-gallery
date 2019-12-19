@@ -4,7 +4,7 @@
             <div @click="trashPost">x</div>
         </div>
         <div class="gm-frontend-submit-post-left">
-            <div class="gm-frontend-submit-post-upload">
+            <div class="gm-frontend-submit-post-upload" :ref="'dropFile'">
                 This is the stone on which I will build my empire.
             </div>
         </div>
@@ -29,6 +29,7 @@
 </template>
 
 <script>
+  import dragDrop from "drag-drop";
   export default {
     name: "SubmitPost",
     props: {
@@ -39,6 +40,13 @@
       trashPost() {
         this.$emit('trashPost', this.index);
       }
+    },
+    mounted() {
+      const dropArea = this.$refs.dropFile;
+      const self = this;
+      dragDrop(dropArea, (files) => {
+        console.log(files);
+      })
     }
   }
 </script>
