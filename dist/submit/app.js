@@ -184,6 +184,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SubmitPost",
@@ -194,6 +195,9 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     trashPost: function trashPost() {
       this.$emit('trashPost', this.index);
+    },
+    setElementId: function setElementId(idName) {
+      return "".concat(idName, "-").concat(this.index);
     }
   },
   mounted: function mounted() {
@@ -1039,7 +1043,7 @@ var render = function() {
         _c("div", { staticClass: "gm-frontend-submit-form-group" }, [
           _c(
             "label",
-            { attrs: { for: "gm-frontend-submit-title-" + _vm.index } },
+            { attrs: { for: _vm.setElementId("gm-frontend-submit-title") } },
             [_vm._v("Title")]
           ),
           _vm._v(" "),
@@ -1055,7 +1059,7 @@ var render = function() {
             attrs: {
               type: "text",
               name: "title",
-              id: "gm-frontend-submit-title-" + _vm.index
+              id: _vm.setElementId("gm-frontend-submit-title")
             },
             domProps: { value: _vm.post.title },
             on: {
@@ -1072,7 +1076,7 @@ var render = function() {
         _c("div", { staticClass: "gm-frontend-submit-form-group" }, [
           _c(
             "label",
-            { attrs: { for: "gm-frontend-submit-content-" + _vm.index } },
+            { attrs: { for: _vm.setElementId("gm-frontend-submit-content") } },
             [_vm._v("Content")]
           ),
           _vm._v(" "),
@@ -1085,7 +1089,7 @@ var render = function() {
                 expression: "post.content"
               }
             ],
-            attrs: { id: "gm-frontend-submit-content-" + _vm.index },
+            attrs: { id: _vm.setElementId("gm-frontend-submit-content") },
             domProps: { value: _vm.post.content },
             on: {
               input: function($event) {
@@ -1096,7 +1100,15 @@ var render = function() {
               }
             }
           })
-        ])
+        ]),
+        _vm._v(" "),
+        _c("input", {
+          attrs: {
+            type: "file",
+            name: "image",
+            id: _vm.setElementId("gm-frontend-submit-image")
+          }
+        })
       ])
     ])
   ])

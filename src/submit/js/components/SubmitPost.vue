@@ -11,16 +11,16 @@
         <div class="gm-frontend-submit-post-right">
             <form>
                 <div class="gm-frontend-submit-form-group">
-                    <label :for="`gm-frontend-submit-title-${index}`">Title</label>
+                    <label :for="setElementId('gm-frontend-submit-title')">Title</label>
                     <input type="text" name="title"
                            v-model="post.title"
-                           :id="`gm-frontend-submit-title-${index}`">
+                           :id="setElementId('gm-frontend-submit-title')">
                 </div>
                 <div class="gm-frontend-submit-form-group">
-                    <label :for="`gm-frontend-submit-content-${index}`">Content</label>
+                    <label :for="setElementId('gm-frontend-submit-content')">Content</label>
                     <textarea
                             v-model="post.content"
-                            :id="`gm-frontend-submit-content-${index}`">
+                            :id="setElementId('gm-frontend-submit-content')">
                     </textarea>
                 </div>
             </form>
@@ -39,6 +39,9 @@
     methods: {
       trashPost() {
         this.$emit('trashPost', this.index);
+      },
+      setElementId(idName) {
+        return `${idName}-${this.index}`;
       }
     },
     mounted() {
