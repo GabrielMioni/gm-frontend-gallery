@@ -196,6 +196,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SubmitPost",
@@ -211,6 +213,11 @@ __webpack_require__.r(__webpack_exports__);
       return "".concat(idName, "-").concat(this.index);
     },
     imageUpdate: function imageUpdate(fileData) {
+      if (fileData.type === 'change') {
+        fileData[0] = fileData.target.files[0];
+        console.log(fileData);
+      }
+
       var file = fileData[0];
       var fileUrl = URL.createObjectURL(file);
       this.$emit('imageUpdate', {
@@ -1140,7 +1147,8 @@ var render = function() {
         _c("input", {
           ref: "fileInput",
           staticClass: "gm-frontend-submit-post-file",
-          attrs: { type: "file", name: "image" }
+          attrs: { type: "file", name: "image" },
+          on: { change: _vm.imageUpdate }
         })
       ])
     ])

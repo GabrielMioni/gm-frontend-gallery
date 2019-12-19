@@ -28,7 +28,9 @@
                             :id="setElementId('gm-frontend-submit-content')">
                     </textarea>
                 </div>
-                <input class="gm-frontend-submit-post-file" type="file" name="image" :ref="'fileInput'">
+                <input class="gm-frontend-submit-post-file" type="file" name="image"
+                       @change="imageUpdate"
+                       :ref="'fileInput'">
             </form>
         </div>
     </div>
@@ -50,6 +52,10 @@
         return `${idName}-${this.index}`;
       },
       imageUpdate(fileData) {
+        if (fileData.type === 'change') {
+          fileData[0] = fileData.target.files[0];
+        }
+        
         const file = fileData[0];
         const fileUrl = URL.createObjectURL(file);
         this.$emit('imageUpdate', {
