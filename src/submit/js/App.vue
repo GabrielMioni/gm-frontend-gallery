@@ -3,6 +3,7 @@
         <template v-for="(post, index) in galleryPosts">
             <submit-post
                     @trashPost="trashPostHandler"
+                    @imageUpdate="imageUpdateHandler"
                     :post="post"
                     :index="index">
             </submit-post>
@@ -26,7 +27,8 @@
         return {
           title: '',
           content: '',
-          image: null
+          imageUrl: null,
+          imageObj: null,
         }
       },
       addPost() {
@@ -38,6 +40,10 @@
         if (this.galleryPosts.length <= 0) {
           this.galleryPosts.push(this.postObjectDefault());
         }
+      },
+      imageUpdateHandler(data) {
+        const currentGalleryPost = this.galleryPosts[data.index];
+        currentGalleryPost.imageUrl = data.imageUrl;
       }
     }
   }

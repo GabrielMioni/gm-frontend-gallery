@@ -109,6 +109,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "gmGallerySubmit",
@@ -125,7 +126,8 @@ __webpack_require__.r(__webpack_exports__);
       return {
         title: '',
         content: '',
-        image: null
+        imageUrl: null,
+        imageObj: null
       };
     },
     addPost: function addPost() {
@@ -137,6 +139,10 @@ __webpack_require__.r(__webpack_exports__);
       if (this.galleryPosts.length <= 0) {
         this.galleryPosts.push(this.postObjectDefault());
       }
+    },
+    imageUpdateHandler: function imageUpdateHandler(data) {
+      var currentGalleryPost = this.galleryPosts[data.index];
+      currentGalleryPost.imageUrl = data.imageUrl; // this.galleryPosts[data.index].imageUrl = data.imageUrl;
     }
   }
 });
@@ -185,6 +191,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SubmitPost",
@@ -198,13 +207,22 @@ __webpack_require__.r(__webpack_exports__);
     },
     setElementId: function setElementId(idName) {
       return "".concat(idName, "-").concat(this.index);
+    },
+    imageUpdate: function imageUpdate(fileData) {
+      var file = fileData[0];
+      var fileUrl = URL.createObjectURL(file);
+      this.$emit('imageUpdate', {
+        'index': this.index,
+        'imageUrl': fileUrl,
+        'imageObj': file
+      });
     }
   },
   mounted: function mounted() {
     var dropArea = this.$refs.dropFile;
     var self = this;
     drag_drop__WEBPACK_IMPORTED_MODULE_0___default()(dropArea, function (files) {
-      console.log(files);
+      self.imageUpdate(files);
     });
   }
 });
@@ -978,7 +996,10 @@ var render = function() {
         return [
           _c("submit-post", {
             attrs: { post: post, index: index },
-            on: { trashPost: _vm.trashPostHandler }
+            on: {
+              trashPost: _vm.trashPostHandler,
+              imageUpdate: _vm.imageUpdateHandler
+            }
           })
         ]
       }),
@@ -1027,15 +1048,17 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "gm-frontend-submit-post-left" }, [
-      _c(
-        "div",
-        { ref: "dropFile", staticClass: "gm-frontend-submit-post-upload" },
-        [
-          _vm._v(
-            "\n            This is the stone on which I will build my empire.\n        "
+      _vm.post.imageUrl === null
+        ? _c(
+            "div",
+            { ref: "dropFile", staticClass: "gm-frontend-submit-post-upload" },
+            [
+              _vm._v(
+                "\n            This is the stone on which I will build my empire.\n        "
+              )
+            ]
           )
-        ]
-      )
+        : _c("div", [_c("img", { attrs: { src: _vm.post.imageUrl, alt: "" } })])
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "gm-frontend-submit-post-right" }, [

@@ -4,8 +4,11 @@
             <div @click="trashPost">x</div>
         </div>
         <div class="gm-frontend-submit-post-left">
-            <div class="gm-frontend-submit-post-upload" :ref="'dropFile'">
+            <div v-if="post.imageUrl === null" class="gm-frontend-submit-post-upload" :ref="'dropFile'">
                 This is the stone on which I will build my empire.
+            </div>
+            <div v-else>
+                <img :src="post.imageUrl" alt="">
             </div>
         </div>
         <div class="gm-frontend-submit-post-right">
@@ -43,13 +46,22 @@
       },
       setElementId(idName) {
         return `${idName}-${this.index}`;
+      },
+      imageUpdate(fileData) {
+        const file = fileData[0];
+        const fileUrl = URL.createObjectURL(file);
+        this.$emit('imageUpdate', {
+          'index' : this.index,
+          'imageUrl' : fileUrl,
+          'imageObj' : file,
+        });
       }
     },
     mounted() {
       const dropArea = this.$refs.dropFile;
       const self = this;
       dragDrop(dropArea, (files) => {
-        console.log(files);
+        self.imageUpdate(files);
       })
     }
   }
