@@ -20,6 +20,7 @@
     data() {
       return {
         galleryPosts: [this.postObjectDefault()],
+        wpNonce: null,
       }
     },
     methods: {
@@ -45,6 +46,10 @@
         const currentGalleryPost = this.galleryPosts[data.index];
         currentGalleryPost.imageUrl = data.imageUrl;
       }
-    }
+    },
+    created() {
+      const mount = document.getElementById('gm-frontend-submit');
+      this.wpNonce = mount.dataset.nonce;
+    },
   }
 </script>

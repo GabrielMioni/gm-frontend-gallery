@@ -118,7 +118,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      galleryPosts: [this.postObjectDefault()]
+      galleryPosts: [this.postObjectDefault()],
+      wpNonce: null
     };
   },
   methods: {
@@ -144,6 +145,10 @@ __webpack_require__.r(__webpack_exports__);
       var currentGalleryPost = this.galleryPosts[data.index];
       currentGalleryPost.imageUrl = data.imageUrl;
     }
+  },
+  created: function created() {
+    var mount = document.getElementById('gm-frontend-submit');
+    this.wpNonce = mount.dataset.nonce;
   }
 });
 
