@@ -17,7 +17,7 @@
 #gm-frontend-submit .gm-frontend-submit-post {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr;
+  grid-template-rows: 1fr 300px;
   border: 1px solid grey;
   border-radius: 0.2rem;
   margin: 1rem 0;
@@ -39,7 +39,7 @@
 
 #gm-frontend-submit .gm-frontend-submit-post-left {
   grid-column: 1;
-  grid-row: 2;
+  grid-row: 1/span 3;
 }
 
 #gm-frontend-submit .gm-frontend-submit-post-right {
@@ -55,6 +55,12 @@
   -webkit-box-pack: center;
           justify-content: center;
   height: 100%;
+}
+
+#gm-frontend-submit .gm-frontend-submit-post-upload img {
+  max-height: 300px;
+  -o-object-fit: contain;
+     object-fit: contain;
 }
 
 #gm-frontend-submit .gm-frontend-submit-post-file {

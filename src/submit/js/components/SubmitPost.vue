@@ -8,9 +8,10 @@
                  @click="openFileInput"
                  :ref="'dropFile'">
                 <div v-if="post.imageUrl === null">This is the stone on which I will build my empire.</div>
-                <div v-else>
+                <img v-else :src="post.imageUrl" alt="">
+                <!--<div v-else>
                     <img :src="post.imageUrl" alt="">
-                </div>
+                </div>-->
             </div>
         </div>
         <div class="gm-frontend-submit-post-right">

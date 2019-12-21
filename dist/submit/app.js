@@ -198,6 +198,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SubmitPost",
@@ -215,7 +216,6 @@ __webpack_require__.r(__webpack_exports__);
     imageUpdate: function imageUpdate(fileData) {
       if (fileData.type === 'change') {
         fileData[0] = fileData.target.files[0];
-        console.log(fileData);
       }
 
       var file = fileData[0];
@@ -1073,9 +1073,7 @@ var render = function() {
             ? _c("div", [
                 _vm._v("This is the stone on which I will build my empire.")
               ])
-            : _c("div", [
-                _c("img", { attrs: { src: _vm.post.imageUrl, alt: "" } })
-              ])
+            : _c("img", { attrs: { src: _vm.post.imageUrl, alt: "" } })
         ]
       )
     ]),

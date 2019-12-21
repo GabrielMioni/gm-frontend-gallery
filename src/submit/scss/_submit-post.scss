@@ -2,7 +2,7 @@
   .gm-frontend-submit-post {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr;
+    grid-template-rows: 1fr 300px;
     border: 1px solid grey;
     border-radius: 0.2rem;
     margin: 1rem 0;
@@ -19,7 +19,7 @@
 
     &-left {
       grid-column: 1;
-      grid-row: 2;
+      grid-row: 1 / span 3;
     }
 
     &-right {
@@ -32,6 +32,11 @@
       align-items: center;
       justify-content: center;
       height: 100%;
+
+      img {
+        max-height: 300px;
+        object-fit: contain;
+      }
     }
 
     &-file {
