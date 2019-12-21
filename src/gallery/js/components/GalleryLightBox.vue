@@ -19,7 +19,7 @@
                     {{ post.post_title }}
                 </div>
                 <div class="gm-gallery-light-box-content-text-content">
-                    {{ post.post_content }}
+                    {{ currentContent }}
                 </div>
             </div>
             <div class="gm-gallery-light-box-details-toggle" @click="toggleDetails">
@@ -48,8 +48,9 @@
     },
     data() {
       return {
-        currentImage: this.retrieveImage(0, 'full'),
         activeImage: 0,
+        currentImage: this.retrieveImage(0, 'full'),
+        currentContent: this.retrieveContent(0),
         mobileShowDetails: false,
       }
     },
@@ -60,9 +61,13 @@
       retrieveImage(index, size) {
         return this.post.images[index]['sized_images'][size];
       },
+      retrieveContent(index) {
+        return this.post.images[index]['content'];
+      },
       selectImage(index) {
         this.activeImage = index;
         this.currentImage = this.retrieveImage(index, 'full');
+        this.currentContent = this.retrieveContent(index);
       },
       galleryNavigate(direction) {
         this.activeImage = 0;

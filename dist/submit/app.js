@@ -1878,6 +1878,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1887,14 +1893,14 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      mainTitle: '',
       galleryPosts: [this.postObjectDefault()],
-      wpNonce: null
+      postNonce: null
     };
   },
   methods: {
     postObjectDefault: function postObjectDefault() {
       return {
-        title: '',
         content: '',
         imageUrl: null,
         file: null
@@ -1922,8 +1928,9 @@ __webpack_require__.r(__webpack_exports__);
         attachmentContents.push(galleryPost.content);
         formData.append('image_files[]', galleryPost.file);
       });
-      formData.append('post_nonce', this.wpNonce);
-      formData.append('contents', JSON.stringify(attachmentContents));
+      formData.append('postNonce', this.postNonce);
+      formData.append('mainTitle', this.mainTitle);
+      formData.append('attachmentContents', JSON.stringify(attachmentContents));
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/wp-json/gm-frontend-gallery/v1/submit/', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
@@ -1933,7 +1940,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     var mount = document.getElementById('gm-frontend-submit');
-    this.wpNonce = mount.dataset.nonce;
+    this.postNonce = mount.dataset.nonce;
   }
 });
 
@@ -1950,15 +1957,6 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var drag_drop__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! drag-drop */ "./node_modules/drag-drop/index.js");
 /* harmony import */ var drag_drop__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(drag_drop__WEBPACK_IMPORTED_MODULE_0__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -2795,6 +2793,33 @@ var render = function() {
     "div",
     { attrs: { id: "gm-frontend-submit" } },
     [
+      _c("form", [
+        _c("div", { staticClass: "gm-frontend-submit-form-group" }, [
+          _c("label", { attrs: { for: "post_title" } }, [_vm._v("Title")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.mainTitle,
+                expression: "mainTitle"
+              }
+            ],
+            attrs: { type: "text", name: "post_title", id: "post_title" },
+            domProps: { value: _vm.mainTitle },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.mainTitle = $event.target.value
+              }
+            }
+          })
+        ])
+      ]),
+      _vm._v(" "),
       _vm._l(_vm.galleryPosts, function(post, index) {
         return [
           _c("submit-post", {
@@ -2883,39 +2908,6 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "gm-frontend-submit-post-right" }, [
       _c("form", [
-        _c("div", { staticClass: "gm-frontend-submit-form-group" }, [
-          _c(
-            "label",
-            { attrs: { for: _vm.setElementId("gm-frontend-submit-title") } },
-            [_vm._v("Title")]
-          ),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.post.title,
-                expression: "post.title"
-              }
-            ],
-            attrs: {
-              type: "text",
-              name: "title",
-              id: _vm.setElementId("gm-frontend-submit-title")
-            },
-            domProps: { value: _vm.post.title },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.post, "title", $event.target.value)
-              }
-            }
-          })
-        ]),
-        _vm._v(" "),
         _c("div", { staticClass: "gm-frontend-submit-form-group" }, [
           _c(
             "label",

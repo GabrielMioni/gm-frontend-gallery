@@ -299,8 +299,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      currentImage: this.retrieveImage(0, 'full'),
       activeImage: 0,
+      currentImage: this.retrieveImage(0, 'full'),
+      currentContent: this.retrieveContent(0),
       mobileShowDetails: false
     };
   },
@@ -311,9 +312,13 @@ __webpack_require__.r(__webpack_exports__);
     retrieveImage: function retrieveImage(index, size) {
       return this.post.images[index]['sized_images'][size];
     },
+    retrieveContent: function retrieveContent(index) {
+      return this.post.images[index]['content'];
+    },
     selectImage: function selectImage(index) {
       this.activeImage = index;
       this.currentImage = this.retrieveImage(index, 'full');
+      this.currentContent = this.retrieveContent(index);
     },
     galleryNavigate: function galleryNavigate(direction) {
       this.activeImage = 0;
@@ -1027,7 +1032,7 @@ var render = function() {
               [
                 _vm._v(
                   "\n                " +
-                    _vm._s(_vm.post.post_content) +
+                    _vm._s(_vm.currentContent) +
                     "\n            "
                 )
               ]

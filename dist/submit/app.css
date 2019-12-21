@@ -7,6 +7,9 @@
 
 #gm-frontend-submit .gm-frontend-submit-form-group {
   display: grid;
+  grid-template-rows: -webkit-min-content 1fr;
+  grid-template-rows: min-content 1fr;
+  height: 100%;
   margin: 0 0 0.5rem;
 }
 
@@ -21,7 +24,7 @@
   border: 1px solid grey;
   border-radius: 0.2rem;
   margin: 1rem 0;
-  padding: 0.5rem;
+  padding: 1rem;
   grid-column-gap: 0.5rem;
 }
 
@@ -44,7 +47,11 @@
 
 #gm-frontend-submit .gm-frontend-submit-post-right {
   grid-column: 2;
-  grid-row: 2;
+  grid-row: 1/span 2;
+}
+
+#gm-frontend-submit .gm-frontend-submit-post-right form {
+  height: 100%;
 }
 
 #gm-frontend-submit .gm-frontend-submit-post-upload {
