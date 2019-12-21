@@ -9,6 +9,7 @@
             </submit-post>
         </template>
         <button @click.stop="addPost">Add A Post!</button>
+        <button @click.stop="submitPost">Submit</button>
     </div>
 </template>
 
@@ -45,6 +46,12 @@
       imageUpdateHandler(data) {
         const currentGalleryPost = this.galleryPosts[data.index];
         currentGalleryPost.imageUrl = data.imageUrl;
+      },
+      submitPost() {
+        let xhr = new XMLHttpRequest();
+        xhr.open('POST', '/wp-json/gm-frontend-gallery/v1/submit/');
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.send(encodeURI('post_nonce=' + this.wpNonce));
       }
     },
     created() {

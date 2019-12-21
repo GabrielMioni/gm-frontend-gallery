@@ -110,6 +110,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "gmGallerySubmit",
@@ -144,6 +145,12 @@ __webpack_require__.r(__webpack_exports__);
     imageUpdateHandler: function imageUpdateHandler(data) {
       var currentGalleryPost = this.galleryPosts[data.index];
       currentGalleryPost.imageUrl = data.imageUrl;
+    },
+    submitPost: function submitPost() {
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', '/wp-json/gm-frontend-gallery/v1/submit/');
+      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+      xhr.send(encodeURI('post_nonce=' + this.wpNonce));
     }
   },
   created: function created() {
@@ -1033,6 +1040,19 @@ var render = function() {
           }
         },
         [_vm._v("Add A Post!")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          on: {
+            click: function($event) {
+              $event.stopPropagation()
+              return _vm.submitPost($event)
+            }
+          }
+        },
+        [_vm._v("Submit")]
       )
     ],
     2
