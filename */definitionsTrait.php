@@ -5,7 +5,7 @@ namespace GmFrontendGallery;
 trait definitionsTrait
 {
     protected $galleryPostType = 'gallery';
-    protected $galleryPostStatus = 'published';
+    protected $galleryPostStatus = 'publish';
     protected $galleryIncompleteCode = 'gallery_incomplete';
     protected $galleryAttachmentMetaKey = 'gm_gallery_attachment';
     protected $galleryPostOrderKey = 'gm_gallery_order';
