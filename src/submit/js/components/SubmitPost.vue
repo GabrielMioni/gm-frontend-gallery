@@ -9,19 +9,10 @@
                  :ref="'dropFile'">
                 <div v-if="post.imageUrl === null">This is the stone on which I will build my empire.</div>
                 <img v-else :src="post.imageUrl" alt="">
-                <!--<div v-else>
-                    <img :src="post.imageUrl" alt="">
-                </div>-->
             </div>
         </div>
         <div class="gm-frontend-submit-post-right">
             <form>
-                <div class="gm-frontend-submit-form-group">
-                    <label :for="setElementId('gm-frontend-submit-title')">Title</label>
-                    <input type="text" name="title"
-                           v-model="post.title"
-                           :id="setElementId('gm-frontend-submit-title')">
-                </div>
                 <div class="gm-frontend-submit-form-group">
                     <label :for="setElementId('gm-frontend-submit-content')">Content</label>
                     <textarea

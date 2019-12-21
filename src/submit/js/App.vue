@@ -1,5 +1,11 @@
 <template>
     <div id="gm-frontend-submit">
+        <form>
+            <div class="gm-frontend-submit-form-group">
+                <label for="post_title">Title</label>
+                <input v-model="mainTitle" type="text" name="post_title" id="post_title">
+            </div>
+        </form>
         <template v-for="(post, index) in galleryPosts">
             <submit-post
                     @trashPost="trashPostHandler"
@@ -21,14 +27,14 @@
     components: {SubmitPost},
     data() {
       return {
+        mainTitle: '',
         galleryPosts: [this.postObjectDefault()],
-        wpNonce: null,
+        postNonce: null,
       }
     },
     methods: {
       postObjectDefault() {
         return {
-          title: '',
           content: '',
           imageUrl: null,
           file: null,
@@ -58,8 +64,9 @@
           formData.append('image_files[]', galleryPost.file);
         });
 
-        formData.append('post_nonce', this.wpNonce);
-        formData.append('contents', JSON.stringify(attachmentContents));
+        formData.append('postNonce', this.postNonce);
+        formData.append('mainTitle', this.mainTitle);
+        formData.append('attachmentContents', JSON.stringify(attachmentContents));
 
         axios.post('/wp-json/gm-frontend-gallery/v1/submit/', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
           .then((response)=>{
@@ -71,7 +78,7 @@
     },
     created() {
       const mount = document.getElementById('gm-frontend-submit');
-      this.wpNonce = mount.dataset.nonce;
+      this.postNonce = mount.dataset.nonce;
     },
   }
 </script>
