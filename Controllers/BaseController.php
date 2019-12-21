@@ -40,6 +40,8 @@ abstract class BaseController
 
         foreach ($attachmentIds as $attachId) {
             $sizedImages = [];
+            
+            $postData = get_post($attachId);
 
             foreach ($sizes as $size) {
                 $postImage = wp_get_attachment_image_url($attachId, $size);
@@ -49,6 +51,7 @@ abstract class BaseController
             $images[] = [
                 'attach_id' => $attachId,
                 'sized_images' => $sizedImages,
+                'content' => $postData->post_content,
                 'order' => get_post_meta($attachId, $this->galleryAttachmentOrderKey, true),
             ];
         }
