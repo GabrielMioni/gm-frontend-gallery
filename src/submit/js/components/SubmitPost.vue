@@ -62,7 +62,7 @@
         this.$emit('imageUpdate', {
           'index' : this.index,
           'imageUrl' : fileUrl,
-          'imageObj' : file,
+          'file' : file,
         });
       },
       openFileInput() {

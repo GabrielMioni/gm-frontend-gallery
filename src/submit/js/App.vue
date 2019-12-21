@@ -15,6 +15,7 @@
 
 <script>
   import SubmitPost from "./components/SubmitPost";
+  import axios from "axios";
   export default {
     name: "gmGallerySubmit",
     components: {SubmitPost},
@@ -30,7 +31,7 @@
           title: '',
           content: '',
           imageUrl: null,
-          imageObj: null,
+          file: null,
         }
       },
       addPost() {
@@ -45,13 +46,27 @@
       },
       imageUpdateHandler(data) {
         const currentGalleryPost = this.galleryPosts[data.index];
+        currentGalleryPost.file = data.file;
         currentGalleryPost.imageUrl = data.imageUrl;
       },
       submitPost() {
-        let xhr = new XMLHttpRequest();
-        xhr.open('POST', '/wp-json/gm-frontend-gallery/v1/submit/');
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.send(encodeURI('post_nonce=' + this.wpNonce));
+        let attachmentContents = [];
+        let formData = new FormData();
+
+        this.galleryPosts.map((galleryPost)=>{
+          attachmentContents.push(galleryPost.content);
+          formData.append('image_files[]', galleryPost.file);
+        });
+
+        formData.append('post_nonce', this.wpNonce);
+        formData.append('contents', JSON.stringify(attachmentContents));
+
+        axios.post('/wp-json/gm-frontend-gallery/v1/submit/', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+          .then((response)=>{
+
+          }).catch((error)=>{
+
+        });
       }
     },
     created() {
