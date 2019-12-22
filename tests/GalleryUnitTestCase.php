@@ -70,12 +70,21 @@ class GalleryUnitTestCase extends WP_UnitTestCase
 
         $fileUploads = $this->createFileUploadData(5);
 
-        $request->set_file_params($fileUploads);
+        $attachmentContents = [];
+
+        for ($c = 0 ; $c < count($fileUploads) ; ++$c) {
+            $attachmentContents[] = 'This is some content ' . $c;
+        }
+
+        $request->set_file_params(['image_files' => $fileUploads]);
+        $request->set_param('mainTitle', 'Default title');
+        $request->set_param('attachmentContents', json_encode($attachmentContents));
         $response = $this->dispatchRequest($request);
 
         return [
             'files' => $files,
             'response' => $response,
+            'postId' => $response->data,
         ];
     }
 
@@ -237,22 +246,36 @@ class GalleryUnitTestCase extends WP_UnitTestCase
             $files = array_splice($arr, 0, -$attachmentCount);
         }
 
-        $fileUploads = [];
+        $files = array_values($files);
 
-        foreach ($files as $file) {
+        /*if ($random === true) {
+            shuffle($files);
+        }*/
+
+        $fileUploads = [
+            'name' => [],
+            'type' => [],
+            'tmp_name' => [],
+            'error' => [],
+            'size' => [],
+        ];
+
+        foreach ($files as $key => $file) {
             $setFile = $path . '/' . $file;
 
-            $fileUploads[] = [
+            $fileUploads['name'][$key] = basename($setFile);
+            $fileUploads['type'][$key] = mime_content_type($setFile);
+            $fileUploads['tmp_name'][$key] = $setFile;
+            $fileUploads['error'][$key] = 0;
+            $fileUploads['size'][$key] = filesize($setFile);
+
+            /*$fileUploads[] = [
                 'file' => file_get_contents($setFile),
                 'name' => basename($setFile),
                 'size' => filesize($setFile),
                 'tmp_name' => 'abc',
                 'path' => $setFile,
-            ];
-        }
-
-        if ($random === true) {
-            shuffle($fileUploads);
+            ];*/
         }
 
         return $fileUploads;
