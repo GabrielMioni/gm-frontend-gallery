@@ -37,10 +37,10 @@ class AdminEditTest extends GalleryUnitTestCase
     public function gallery_posts_and_images_can_be_trashed()
     {
         $setupData = $this->setup_for_trash_and_delete_tests();
-        $postId = $setupData['postId'];
-        $statusBeforeDelete = $setupData['postStatus'];
+        $postId = $setupData['responseData'];
+        $statusBeforeDelete = get_post_status($postId);
 
-        $this->assertNotFalse($statusBeforeDelete);
+        $this->assertEquals($this->galleryPostStatus, $statusBeforeDelete);
 
         $request = new WP_REST_Request('DELETE', $this->namespaced_route . '/' . $postId);
         $request->set_header('Content-Type', 'application/json');
