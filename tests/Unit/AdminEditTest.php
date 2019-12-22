@@ -54,7 +54,7 @@ class AdminEditTest extends GalleryUnitTestCase
     public function gallery_post_and_attachments_can_be_deleted_permanently()
     {
         $setupData = $this->setup_for_trash_and_delete_tests();
-        $postId = $setupData['postId'];
+        $postId = $setupData['responseData'];
 
         $adminController = new AdminController();
 
