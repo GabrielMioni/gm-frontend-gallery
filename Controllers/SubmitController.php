@@ -16,18 +16,34 @@ class SubmitController extends BaseController
             return $userIsRequired;
         }
 
-        /*$postNonce          = $this->setRequestParams($request, 'postNonce');
+        $postNonce  = $this->setRequestParams($request, 'postNonce');
         if (!wp_verify_nonce($postNonce, $this->gallerySubmitNonce)) {
             return $this->createWPError('invalid_request', 'Invalid nonce', 401);
-        }*/
+        }
 
         $mainTitle          = $this->setRequestParams($request, 'mainTitle');
         $attachmentContents = json_decode($this->setRequestParams($request, 'attachmentContents'));
         $files              = $request->get_file_params();
-        $imageData          = $files['image_files'];
+        $imageData          = isset($files['image_files']) ? $files['image_files'] : null;
+
+        if (is_null($imageData)) {
+            return $this->createWPError('invalid_request', 'Gallery submissions require images', 404);
+        }
 
         if (is_null($mainTitle) || trim($mainTitle) === '') {
             return $this->createWPError($this->galleryIncompleteCode, 'Gallery submissions must include a title and content', 404);
+        }
+
+        $galleryOptions = $this->getGalleryOption();
+        $maxAttachments = $galleryOptions['max_attachments'];
+        $allowedMimes   = $galleryOptions['allowed_mimes'];
+        
+        $types = $imageData['type'];
+        
+        foreach ($types as $imageMime) {
+            if (!in_array($imageMime, $allowedMimes)) {
+                return $this->createWPError('invalid_mime', $imageMime . ' mimes are not allowed', 400);
+            }
         }
 
         $newPostId = wp_insert_post([
@@ -43,6 +59,9 @@ class SubmitController extends BaseController
 
         foreach ($attachmentContents as $key => $content) {
             $attachmentIds[] = $this->createImageAttachment($imageData, $key, $newPostId, count($attachmentIds), $content);
+            if (count($attachmentIds) >= $maxAttachments) {
+                break;
+            }
         }
 
         $response = new WP_REST_Response($newPostId);
