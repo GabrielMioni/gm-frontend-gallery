@@ -42,7 +42,7 @@ class SubmitController extends BaseController
         $attachmentIds = [];
 
         foreach ($attachmentContents as $key => $content) {
-            $attachmentIds = $this->createImageAttachment($imageData, $key, $newPostId, count($attachmentIds), $content);
+            $attachmentIds[] = $this->createImageAttachment($imageData, $key, $newPostId, count($attachmentIds), $content);
         }
 
         $response = new WP_REST_Response($newPostId);
@@ -154,6 +154,7 @@ class SubmitController extends BaseController
 
     protected function createImageAttachment(array $imageData, int $key, int $postId, int $attachmentOrder, $content)
     {
+        file_put_contents(dirname(__FILE__) . '/log', print_r($imageData, true), FILE_APPEND);
         $name = $imageData['name'][$key];
         $tmp_name  = $imageData['tmp_name'][$key];
         $imageData = file_get_contents($tmp_name);
