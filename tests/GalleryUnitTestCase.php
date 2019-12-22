@@ -122,21 +122,10 @@ class GalleryUnitTestCase extends WP_UnitTestCase
         $request->set_param('post_nonce', $setValues['post_nonce']);
     }
 
-    protected function requestDataProviderImage(WP_REST_Request $request)
+    protected function requestDataProviderImage(WP_REST_Request $request, $count = 1)
     {
-        $path = $this->getPluginFilePath();
-
-        $testImagePath = $path . '/tests/images/conceited-ape.jpg';
-        //example: '/app/wp-content/plugins/gm-frontend-gallery/tests/images/conceited-ape.jpg';
-        $fileParams['image'] = [
-            'file' => file_get_contents($testImagePath),
-            'name' => 'conceited-ape.jpg',
-            'size' => filesize($testImagePath),
-            'tmp_name' => 'abc',
-            'path' => $testImagePath,
-        ];
-
-        $request->set_file_params($fileParams);
+        $fileData = $this->createFileUploadData($count);
+        $request->set_file_params(['image_files' => $fileData]);
     }
 
     protected function createRequestSubmitGallery()
@@ -243,7 +232,7 @@ class GalleryUnitTestCase extends WP_UnitTestCase
         $files = preg_grep('/^([^.])/', scandir($path));
 
         if (count($files) > $attachmentCount) {
-            $files = array_splice($arr, 0, -$attachmentCount);
+            $files = array_splice($files, 0, -$attachmentCount);
         }
 
         $files = array_values($files);
