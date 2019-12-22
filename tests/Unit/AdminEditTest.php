@@ -21,7 +21,7 @@ class AdminEditTest extends GalleryUnitTestCase
         $postResponse  = $this->createGalleryPostWithMultipleImages();
         $responseFiles = $postResponse['files'];
         $responseData  = $postResponse['response']->get_data();
-        $postId        = $responseData['postID'];
+        $postId        = $responseData;
 
         $this->createGalleryUser(['administrator']);
 
@@ -37,7 +37,7 @@ class AdminEditTest extends GalleryUnitTestCase
     public function gallery_posts_and_images_can_be_trashed()
     {
         $setupData = $this->setup_for_trash_and_delete_tests();
-        $postId = $setupData['responseData'];
+        $postId = $setupData['postId'];
         $statusBeforeDelete = get_post_status($postId);
 
         $this->assertEquals($this->galleryPostStatus, $statusBeforeDelete);
@@ -54,7 +54,7 @@ class AdminEditTest extends GalleryUnitTestCase
     public function gallery_post_and_attachments_can_be_deleted_permanently()
     {
         $setupData = $this->setup_for_trash_and_delete_tests();
-        $postId = $setupData['responseData'];
+        $postId = $setupData['postId'];
 
         $adminController = new AdminController();
 
