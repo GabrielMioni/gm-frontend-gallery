@@ -45,9 +45,9 @@ class GalleryUnitTestCase extends WP_UnitTestCase
     public function setGalleryTestDefaults()
     {
         $this->default_post_values = [
-            'post_title' => 'So much default title',
-            'post_content' => 'So much default content',
-            'post_nonce' => wp_create_nonce('gm_gallery_submit')
+            'mainTitle' => 'So much default title',
+            'attachmentContents' => json_encode(['I am some content']),
+            'postNonce' => wp_create_nonce($this->gallerySubmitNonce)
         ];
 
         $this->default_user_values = [
@@ -117,9 +117,9 @@ class GalleryUnitTestCase extends WP_UnitTestCase
             $setValues = array_replace($setValues, $nonDefaultValues);
         }
 
-        $request->set_param('post_title', $setValues['post_title']);
-        $request->set_param('post_content', $setValues['post_content']);
-        $request->set_param('post_nonce', $setValues['post_nonce']);
+        $request->set_param('mainTitle', $setValues['mainTitle']);
+        $request->set_param('attachmentContents', $setValues['attachmentContents']);
+        $request->set_param('postNonce', $setValues['postNonce']);
     }
 
     protected function requestDataProviderImage(WP_REST_Request $request, $count = 1)
@@ -201,7 +201,7 @@ class GalleryUnitTestCase extends WP_UnitTestCase
         $order = 0;
         $postIds = [];
         $milliseconds = $milliseconds !== false ? (int) $milliseconds : 1000;
-        $start = time();
+        $start = time() - (24 * 60 * 60); // Go back a day so posts can't be set in the future.
         $count = $count === false || $count <= 0 ? 1 : (int) $count;
 
         while(count($postIds) < $count) {
@@ -257,14 +257,6 @@ class GalleryUnitTestCase extends WP_UnitTestCase
             $fileUploads['tmp_name'][$key] = $setFile;
             $fileUploads['error'][$key] = 0;
             $fileUploads['size'][$key] = filesize($setFile);
-
-            /*$fileUploads[] = [
-                'file' => file_get_contents($setFile),
-                'name' => basename($setFile),
-                'size' => filesize($setFile),
-                'tmp_name' => 'abc',
-                'path' => $setFile,
-            ];*/
         }
 
         return $fileUploads;

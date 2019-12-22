@@ -80,7 +80,7 @@ class OptionsTest extends GalleryUnitTestCase
         $multiplePostData = $this->createGalleryPostWithMultipleImages();
         $response = $multiplePostData['response'];
 
-        $postId = $response->data['postID'];
+        $postId = $response->data;
         
         $attachmentIds = get_post_meta($postId, $this->galleryAttachmentMetaKey, false);
 
@@ -111,16 +111,16 @@ class OptionsTest extends GalleryUnitTestCase
     public function gallery_posts_must_be_approved_if_admin_must_approve_is_true()
     {
         $responseWithNoApprovalRequired = $this->submitAGalleryPost();
-        $postIdOne = $responseWithNoApprovalRequired->data['postID'];
+        $postIdOne = $responseWithNoApprovalRequired->data;
         $postOne = get_post($postIdOne);
-        $this->assertEquals('published', $postOne->post_status);
+        $this->assertEquals('publish', $postOne->post_status);
 
         $optionValues = get_option($this->pluginOptionName);
         $optionValues['admin_must_approve'] = true;
         update_option($this->pluginOptionName, $optionValues);
 
         $responseWithApprovalRequired = $this->submitAGalleryPost();
-        $postIdTwo = $responseWithApprovalRequired->data['postID'];
+        $postIdTwo = $responseWithApprovalRequired->data;
         $postTwo = get_post($postIdTwo);
         $this->assertEquals('draft', $postTwo->post_status);
     }
@@ -293,7 +293,7 @@ class OptionsTest extends GalleryUnitTestCase
         $request = $this->createRequestSubmitGallery();
         $this->requestDataProviderParams($request, [
             // Creating a the post nonce here insures the nonce is valid for a given user
-            'post_nonce' => wp_create_nonce('gm_gallery_submit')
+            'postNonce' => wp_create_nonce($this->gallerySubmitNonce)
         ]);
         $this->requestDataProviderImage($request);
 

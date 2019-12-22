@@ -96,9 +96,8 @@ class GetGalleryDataTest extends GalleryUnitTestCase
     {
         $data = $this->createGalleryPostWithMultipleImages();
         $createGalleryPostResponse = $data['response'];
-        $newGalleryPostData = $createGalleryPostResponse->get_data();
+        $postID = $createGalleryPostResponse->get_data();
 
-        $postID = $newGalleryPostData['postID'];
         $newPost = get_post($postID);
 
         $getGalleryPostResponse = $this->createRequestGetSingleGalleryItem($postID);
@@ -137,9 +136,8 @@ class GetGalleryDataTest extends GalleryUnitTestCase
     {
         $data = $this->createGalleryPostWithMultipleImages();
         $createGalleryPostResponse = $data['response'];
-        $newGalleryPostData = $createGalleryPostResponse->get_data();
 
-        $postID = $newGalleryPostData['postID'];
+        $postID = $createGalleryPostResponse->get_data();
         $attachmentIds = get_post_meta($postID, $this->galleryAttachmentMetaKey);
 
         $expectedOrder = 0;
@@ -221,9 +219,7 @@ class GetGalleryDataTest extends GalleryUnitTestCase
             $this->requestDataProviderImage($request);
 
             $response = $this->dispatchRequest($request);
-            $postResponse = $response->get_data();
-            $postID = $postResponse['postID'];
-            $postIDs[] = $postID;
+            $postIDs[] = $response->get_data();
         }
 
         return $postIDs;

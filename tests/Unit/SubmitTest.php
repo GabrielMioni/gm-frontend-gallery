@@ -2,6 +2,8 @@
 
 use GmFrontendGallery\definitionsTrait;
 
+require_once dirname(dirname(__FILE__)) . '/GalleryUnitTestCase.php';
+
 class SubmitTest extends GalleryUnitTestCase
 {
     use definitionsTrait;
@@ -31,9 +33,8 @@ class SubmitTest extends GalleryUnitTestCase
     {
         $postResponse  = $this->createGalleryPostWithMultipleImages();
         $responseFiles = $postResponse['files'];
-        $responseData  = $postResponse['response']->get_data();
+        $postID  = $postResponse['response']->get_data();
 
-        $postID = $responseData['postID'];
         $attachmentIds = get_post_meta($postID, $this->galleryAttachmentMetaKey, false);
 
         $postImages = [];
@@ -57,20 +58,20 @@ class SubmitTest extends GalleryUnitTestCase
 
         $response = $this->dispatchRequest($request);
 
-        $postResponse = $response->get_data();
+        $postId = $response->get_data();
 
-        $newPost = get_post($postResponse['postID']);
+        $newPost = get_post($postId);
         $this->assertNotNull($newPost);
     }
 
     /** @test */
-    public function gallery_submissions_require_title_and_content()
+    public function gallery_submissions_require_title()
     {
         $request = $this->createRequestSubmitGallery();
         $this->requestDataProviderParams($request, [
-            'post_title' => '',
-            'post_content' => ''
+            'mainTitle' => '',
         ]);
+        $this->requestDataProviderImage($request);
 
         $response = $this->dispatchRequest($request);
         $this->assertEquals(404, $response->get_status());
@@ -94,7 +95,7 @@ class SubmitTest extends GalleryUnitTestCase
     {
         $request = $this->createRequestSubmitGallery();
         $this->requestDataProviderParams($request, [
-            'post_nonce' => 'I am an invalid nonce, nice to meet you!'
+            'postNonce' => 'I am an invalid nonce, nice to meet you!'
         ]);
         $this->requestDataProviderImage($request);
 
@@ -111,8 +112,7 @@ class SubmitTest extends GalleryUnitTestCase
 
         $response = $this->dispatchRequest($request);
 
-        $postResponse = $response->get_data();
-        $postID = $postResponse['postID'];
+        $postID = $response->get_data();
 
         $attachmentIds = get_post_meta($postID, $this->galleryAttachmentMetaKey, false);
 
