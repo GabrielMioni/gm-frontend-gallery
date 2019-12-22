@@ -149,10 +149,7 @@ class AdminEditTest extends GalleryUnitTestCase
     public function gallery_attachments_order_meta_data_can_be_changed()
     {
         $data = $this->createGalleryPostWithMultipleImages();
-        $createGalleryPostResponse = $data['response'];
-        $newGalleryPostData = $createGalleryPostResponse->get_data();
-
-        $postId = $newGalleryPostData['postID'];
+        $postId = $data['postId'];
         $attachmentIds = get_post_meta($postId, $this->galleryAttachmentMetaKey, false);
 
         $originalOrder = [];
