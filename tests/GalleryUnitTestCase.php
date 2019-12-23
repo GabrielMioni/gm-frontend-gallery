@@ -118,7 +118,6 @@ class GalleryUnitTestCase extends WP_UnitTestCase
 
         $request->set_param('mainTitle', $setValues['mainTitle']);
         $request->set_param('attachmentContents', $setValues['attachmentContents']);
-        $request->set_param('postNonce', $setValues['postNonce']);
     }
 
     protected function requestDataProviderImage(WP_REST_Request $request, $count = 1)
@@ -129,8 +128,10 @@ class GalleryUnitTestCase extends WP_UnitTestCase
 
     protected function createRequestSubmitGallery()
     {
+        $nonce = wp_create_nonce($this->gallerySubmitNonce);
         $request =  new WP_REST_Request('POST', $this->namespaced_route . '/submit');
         $request->set_header('Content-Type', 'multipart/form-data');
+        $request->set_header('X-WP-Nonce', $nonce);
 
         return $request;
     }
