@@ -6,10 +6,11 @@
                 <input v-model="mainTitle" type="text" name="post_title" id="post_title">
             </div>
         </form>
-        <template v-for="(post, index) in this.$store.getters.galleryPosts">
-            <submit-post :index="index">
-            </submit-post>
-        </template>
+        <submit-post
+                v-for="(post, index) in this.$store.getters.galleryPosts"
+                v-bind:key="index"
+                :index="index">
+        </submit-post>
         <button @click.stop="addPost">Add A Post!</button>
         <button @click.stop="submitPost">Submit</button>
     </div>
@@ -74,13 +75,11 @@
       galleryCount: {
         get() {
           return this.$store.state.galleryPosts.length;
-          console.log(this.$store.state.galleryPosts.length);
         }
       }
     },
     created() {
       const mount = document.getElementById('gm-frontend-submit');
-      //this.postNonce = mount.dataset.nonce;
       this.$store.commit('updatePostNonce', mount.dataset.nonce);
     },
   }

@@ -1880,6 +1880,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1932,13 +1933,11 @@ __webpack_require__.r(__webpack_exports__);
     galleryCount: {
       get: function get() {
         return this.$store.state.galleryPosts.length;
-        console.log(this.$store.state.galleryPosts.length);
       }
     }
   },
   created: function created() {
-    var mount = document.getElementById('gm-frontend-submit'); //this.postNonce = mount.dataset.nonce;
-
+    var mount = document.getElementById('gm-frontend-submit');
     this.$store.commit('updatePostNonce', mount.dataset.nonce);
   }
 });
@@ -2832,7 +2831,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _vm._l(this.$store.getters.galleryPosts, function(post, index) {
-        return [_c("submit-post", { attrs: { index: index } })]
+        return _c("submit-post", { key: index, attrs: { index: index } })
       }),
       _vm._v(" "),
       _c(
