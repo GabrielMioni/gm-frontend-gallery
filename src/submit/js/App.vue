@@ -32,9 +32,6 @@
       addPost() {
         this.$store.commit('addGalleryPost');
       },
-      trashPostHandler(index) {
-        this.$store.commit('removeGalleryPost', index);
-      },
       imageUpdateHandler(data) {
         const currentGalleryPost = this.galleryPosts[data.index];
         currentGalleryPost.file = data.file;

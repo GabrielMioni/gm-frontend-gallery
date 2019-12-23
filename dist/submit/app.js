@@ -1898,9 +1898,6 @@ __webpack_require__.r(__webpack_exports__);
     addPost: function addPost() {
       this.$store.commit('addGalleryPost');
     },
-    trashPostHandler: function trashPostHandler(index) {
-      this.$store.commit('removeGalleryPost', index);
-    },
     imageUpdateHandler: function imageUpdateHandler(data) {
       var currentGalleryPost = this.galleryPosts[data.index];
       currentGalleryPost.file = data.file;
