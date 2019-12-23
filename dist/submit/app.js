@@ -1981,6 +1981,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SubmitPost",
@@ -2007,6 +2009,8 @@ __webpack_require__.r(__webpack_exports__);
         imageUrl: fileUrl,
         file: file
       });
+      var fileInputForm = this.$refs.fileInputForm;
+      fileInputForm.reset();
     },
     openFileInput: function openFileInput() {
       var fileInput = this.$refs.fileInput;
@@ -2947,8 +2951,10 @@ var render = function() {
               }
             }
           })
-        ]),
-        _vm._v(" "),
+        ])
+      ]),
+      _vm._v(" "),
+      _c("form", { ref: "fileInputForm" }, [
         _c("input", {
           ref: "fileInput",
           staticClass: "gm-frontend-submit-post-file",

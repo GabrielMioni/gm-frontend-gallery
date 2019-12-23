@@ -16,6 +16,8 @@
                     <textarea v-model="postContent" :id="setElementId('gm-frontend-submit-content')">
                     </textarea>
                 </div>
+            </form>
+            <form :ref="'fileInputForm'">
                 <input class="gm-frontend-submit-post-file" type="file" name="image" @change="imageUpdate" :ref="'fileInput'">
             </form>
         </div>
@@ -50,6 +52,8 @@
           imageUrl: fileUrl,
           file: file,
         });
+        const fileInputForm = this.$refs.fileInputForm;
+        fileInputForm.reset();
       },
       openFileInput() {
         const fileInput = this.$refs.fileInput;
