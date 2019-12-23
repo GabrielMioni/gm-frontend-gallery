@@ -16,10 +16,10 @@ class SubmitController extends BaseController
             return $userIsRequired;
         }
 
-        $postNonce  = $this->setRequestParams($request, 'postNonce');
+        /*$postNonce  = $this->setRequestParams($request, 'postNonce');
         if (!wp_verify_nonce($postNonce, $this->gallerySubmitNonce)) {
             return $this->createWPError('invalid_request', 'Invalid nonce', 401);
-        }
+        }*/
 
         $mainTitle          = $this->setRequestParams($request, 'mainTitle');
         $attachmentContents = json_decode($this->setRequestParams($request, 'attachmentContents'));
