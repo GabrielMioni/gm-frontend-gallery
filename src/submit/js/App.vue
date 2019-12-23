@@ -6,7 +6,7 @@
                 <input v-model="mainTitle" type="text" name="post_title" id="post_title">
             </div>
         </form>
-        <template v-for="(post, index) in galleryPosts">
+        <template v-for="(post, index) in this.$store.getters.galleryPosts">
             <submit-post
                     @trashPost="trashPostHandler"
                     @imageUpdate="imageUpdateHandler"
@@ -25,13 +25,13 @@
   export default {
     name: "gmGallerySubmit",
     components: {SubmitPost},
-    data() {
+    /*data() {
       return {
         mainTitle: '',
         galleryPosts: [this.postObjectDefault()],
         postNonce: null,
       }
-    },
+    },*/
     methods: {
       postObjectDefault() {
         return {
@@ -41,14 +41,16 @@
         }
       },
       addPost() {
-        this.galleryPosts.push(this.postObjectDefault());
+        // this.galleryPosts.push(this.postObjectDefault());
+        this.$store.commit('addGalleryPost');
       },
       trashPostHandler(index) {
-        this.galleryPosts.splice(index, 1);
+        /*this.galleryPosts.splice(index, 1);
 
         if (this.galleryPosts.length <= 0) {
           this.galleryPosts.push(this.postObjectDefault());
-        }
+        }*/
+        this.$store.commit('removeGalleryPost', index);
       },
       imageUpdateHandler(data) {
         const currentGalleryPost = this.galleryPosts[data.index];
@@ -76,9 +78,20 @@
         });
       }
     },
+    computed: {
+      mainTitle: {
+        get() {
+          return this.$store.state.mainTitle;
+        },
+        set(value) {
+          this.$store.commit('updateTitle', value);
+        }
+      }
+    },
     created() {
       const mount = document.getElementById('gm-frontend-submit');
-      this.postNonce = mount.dataset.nonce;
+      //this.postNonce = mount.dataset.nonce;
+      this.$store.commit('updatePostNonce', mount.dataset.nonce);
     },
   }
 </script>
