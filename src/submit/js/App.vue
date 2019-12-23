@@ -25,13 +25,6 @@
   export default {
     name: "gmGallerySubmit",
     components: {SubmitPost},
-    /*data() {
-      return {
-        mainTitle: '',
-        galleryPosts: [this.postObjectDefault()],
-        postNonce: null,
-      }
-    },*/
     methods: {
       postObjectDefault() {
         return {
@@ -41,15 +34,9 @@
         }
       },
       addPost() {
-        // this.galleryPosts.push(this.postObjectDefault());
         this.$store.commit('addGalleryPost');
       },
       trashPostHandler(index) {
-        /*this.galleryPosts.splice(index, 1);
-
-        if (this.galleryPosts.length <= 0) {
-          this.galleryPosts.push(this.postObjectDefault());
-        }*/
         this.$store.commit('removeGalleryPost', index);
       },
       imageUpdateHandler(data) {
