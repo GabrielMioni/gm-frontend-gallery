@@ -27,6 +27,10 @@ export const store = new Vuex.Store({
     updateGalleryPostContent(state, payload) {
       state.galleryPosts[payload.index].content = payload.data;
     },
+    updateImageUpload(state, payload) {
+      state.galleryPosts[payload.index].imageUrl = payload.imageUrl;
+      state.galleryPosts[payload.index].file = payload.file;
+    },
     addGalleryPost(state) {
       state.galleryPosts.push(defaultGalleryPostObject());
     },

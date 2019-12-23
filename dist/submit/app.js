@@ -1891,14 +1891,6 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     SubmitPost: _components_SubmitPost__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-
-  /*data() {
-    return {
-      mainTitle: '',
-      galleryPosts: [this.postObjectDefault()],
-      postNonce: null,
-    }
-  },*/
   methods: {
     postObjectDefault: function postObjectDefault() {
       return {
@@ -1908,14 +1900,9 @@ __webpack_require__.r(__webpack_exports__);
       };
     },
     addPost: function addPost() {
-      // this.galleryPosts.push(this.postObjectDefault());
       this.$store.commit('addGalleryPost');
     },
     trashPostHandler: function trashPostHandler(index) {
-      /*this.galleryPosts.splice(index, 1);
-       if (this.galleryPosts.length <= 0) {
-        this.galleryPosts.push(this.postObjectDefault());
-      }*/
       this.$store.commit('removeGalleryPost', index);
     },
     imageUpdateHandler: function imageUpdateHandler(data) {
@@ -1998,8 +1985,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SubmitPost",
@@ -2021,15 +2006,38 @@ __webpack_require__.r(__webpack_exports__);
 
       var file = fileData[0];
       var fileUrl = URL.createObjectURL(file);
-      this.$emit('imageUpdate', {
-        'index': this.index,
-        'imageUrl': fileUrl,
-        'file': file
+      this.$store.commit('updateImageUpload', {
+        index: this.index,
+        imageUrl: fileUrl,
+        file: file
       });
+      /*this.$emit('imageUpdate', {
+        'index' : this.index,
+        'imageUrl' : fileUrl,
+        'file' : file,
+      });*/
     },
     openFileInput: function openFileInput() {
       var fileInput = this.$refs.fileInput;
       fileInput.click();
+    }
+  },
+  computed: {
+    postContent: {
+      get: function get() {
+        return this.$store.state.galleryPosts[this.index].content;
+      },
+      set: function set(value) {
+        this.$store.commit('updateGalleryPostContent', {
+          index: this.index,
+          data: value
+        });
+      }
+    },
+    uploadImageUrl: {
+      get: function get() {
+        return this.$store.state.galleryPosts[this.index].imageUrl;
+      }
     }
   },
   mounted: function mounted() {
@@ -2910,11 +2918,11 @@ var render = function() {
           on: { click: _vm.openFileInput }
         },
         [
-          _vm.post.imageUrl === null
+          _vm.uploadImageUrl === null
             ? _c("div", [
                 _vm._v("This is the stone on which I will build my empire.")
               ])
-            : _c("img", { attrs: { src: _vm.post.imageUrl, alt: "" } })
+            : _c("img", { attrs: { src: _vm.uploadImageUrl, alt: "" } })
         ]
       )
     ]),
@@ -2933,18 +2941,18 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.post.content,
-                expression: "post.content"
+                value: _vm.postContent,
+                expression: "postContent"
               }
             ],
             attrs: { id: _vm.setElementId("gm-frontend-submit-content") },
-            domProps: { value: _vm.post.content },
+            domProps: { value: _vm.postContent },
             on: {
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.$set(_vm.post, "content", $event.target.value)
+                _vm.postContent = $event.target.value
               }
             }
           })
@@ -16320,14 +16328,19 @@ __webpack_require__.r(__webpack_exports__);
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
+
+var defaultGalleryPostObject = function defaultGalleryPostObject() {
+  return {
+    content: '',
+    imageUrl: null,
+    file: null
+  };
+};
+
 var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   state: {
     mainTitle: '',
-    galleryPosts: [{
-      content: '',
-      imageUrl: null,
-      file: null
-    }],
+    galleryPosts: [defaultGalleryPostObject()],
     postNonce: null
   },
   mutations: {
@@ -16337,12 +16350,16 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     updatePostNonce: function updatePostNonce(state, nonce) {
       state.postNonce = nonce;
     },
+    updateGalleryPostContent: function updateGalleryPostContent(state, payload) {
+      state.galleryPosts[payload.index].content = payload.data;
+    },
+    updateImageUpload: function updateImageUpload(state, payload) {
+      console.log(payload);
+      state.galleryPosts[payload.index].imageUrl = payload.imageUrl;
+      state.galleryPosts[payload.index].file = payload.file;
+    },
     addGalleryPost: function addGalleryPost(state) {
-      state.galleryPosts.push({
-        content: 'Tee hee',
-        imageUrl: null,
-        file: null
-      });
+      state.galleryPosts.push(defaultGalleryPostObject());
     },
     removeGalleryPost: function removeGalleryPost(state, index) {
       state.galleryPosts.splice(index, 1);

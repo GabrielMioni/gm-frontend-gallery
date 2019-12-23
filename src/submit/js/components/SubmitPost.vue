@@ -7,8 +7,8 @@
             <div class="gm-frontend-submit-post-upload"
                  @click="openFileInput"
                  :ref="'dropFile'">
-                <div v-if="post.imageUrl === null">This is the stone on which I will build my empire.</div>
-                <img v-else :src="post.imageUrl" alt="">
+                <div v-if="uploadImageUrl === null">This is the stone on which I will build my empire.</div>
+                <img v-else :src="uploadImageUrl" alt="">
             </div>
         </div>
         <div class="gm-frontend-submit-post-right">
@@ -48,10 +48,11 @@
 
         const file = fileData[0];
         const fileUrl = URL.createObjectURL(file);
-        this.$emit('imageUpdate', {
-          'index' : this.index,
-          'imageUrl' : fileUrl,
-          'file' : file,
+
+        this.$store.commit('updateImageUpload', {
+          index: this.index,
+          imageUrl: fileUrl,
+          file: file,
         });
       },
       openFileInput() {
@@ -69,6 +70,11 @@
             index: this.index,
             data: value,
           });
+        }
+      },
+      uploadImageUrl: {
+        get() {
+          return this.$store.state.galleryPosts[this.index].imageUrl;
         }
       }
     },
