@@ -1906,16 +1906,23 @@ __webpack_require__.r(__webpack_exports__);
     submitPost: function submitPost() {
       var attachmentContents = [];
       var formData = new FormData();
-      this.galleryPosts.map(function (galleryPost) {
+      /*this.galleryPosts.map((galleryPost)=>{
         attachmentContents.push(galleryPost.content);
         formData.append('image_files[]', galleryPost.file);
-      });
-      formData.append('postNonce', this.postNonce);
-      formData.append('mainTitle', this.mainTitle);
+      });*/
+
+      this.$store.getters.galleryPosts.map(function (galleryPost) {
+        attachmentContents.push(galleryPost.content);
+        formData.append('image_files[]', galleryPost.file);
+      }); // formData.append('postNonce', this.$store.getters.postNonce);
+
+      formData.append('mainTitle', this.$store.getters.mainTitle);
       formData.append('attachmentContents', JSON.stringify(attachmentContents));
+      var _nonce = this.$store.getters.postNonce;
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/wp-json/gm-frontend-gallery/v1/submit/', formData, {
         headers: {
-          'Content-Type': 'multipart/form-data'
+          'Content-Type': 'multipart/form-data',
+          'X-WP-Nonce': _nonce
         }
       }).then(function (response) {})["catch"](function (error) {});
     }
@@ -16346,6 +16353,9 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     },
     galleryPosts: function galleryPosts(state) {
       return state.galleryPosts;
+    },
+    postNonce: function postNonce(state) {
+      return state.postNonce;
     }
   }
 });
