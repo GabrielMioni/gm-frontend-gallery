@@ -41,5 +41,6 @@ export const store = new Vuex.Store({
   getters: {
     mainTitle: state => state.mainTitle,
     galleryPosts: state => state.galleryPosts,
+    postNonce: state => state.postNonce,
   }
 });
