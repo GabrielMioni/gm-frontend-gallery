@@ -41,7 +41,7 @@
         let attachmentContents = [];
         let formData = new FormData();
 
-        this.galleryPosts.map((galleryPost)=>{
+        this.$store.getters.galleryPosts.map((galleryPost) => {
           attachmentContents.push(galleryPost.content);
           formData.append('image_files[]', galleryPost.file);
         });
