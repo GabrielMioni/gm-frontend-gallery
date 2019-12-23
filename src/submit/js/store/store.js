@@ -36,6 +36,9 @@ export const store = new Vuex.Store({
     },
     removeGalleryPost(state, index) {
       state.galleryPosts.splice(index, 1);
+      if (state.galleryPosts.length <= 0) {
+        state.galleryPosts.push(defaultGalleryPostObject());
+      }
     }
   },
   getters: {

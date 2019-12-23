@@ -16353,6 +16353,10 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     },
     removeGalleryPost: function removeGalleryPost(state, index) {
       state.galleryPosts.splice(index, 1);
+
+      if (state.galleryPosts.length <= 0) {
+        state.galleryPosts.push(defaultGalleryPostObject());
+      }
     }
   },
   getters: {
