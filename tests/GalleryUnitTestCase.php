@@ -62,11 +62,10 @@ class GalleryUnitTestCase extends WP_UnitTestCase
         $path = $this->getPluginFilePath();
         $path .= '/tests/images';
         $files = preg_grep('/^([^.])/', scandir($path));
+        $nonce = wp_create_nonce($this->gallerySubmitNonce);
 
         $request = $this->createRequestSubmitGallery();
-        $this->requestDataProviderParams($request, [
-            'post_nonce' => wp_create_nonce('gm_gallery_submit'),
-        ]);
+        $request->set_header('X-WP-Nonce', $nonce);
 
         $fileUploads = $this->createFileUploadData(5);
 
