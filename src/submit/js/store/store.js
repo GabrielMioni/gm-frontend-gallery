@@ -3,14 +3,18 @@ import Vuex from 'vuex';
 
 Vue.use(Vuex);
 
+const defaultGalleryPostObject = () => {
+  return {
+    content: '',
+    imageUrl: null,
+    file: null,
+  }
+};
+
 export const store = new Vuex.Store({
   state: {
     mainTitle: '',
-    galleryPosts: [{
-      content: '',
-      imageUrl: null,
-      file: null,
-    }],
+    galleryPosts: [defaultGalleryPostObject()],
     postNonce: null,
   },
   mutations: {
@@ -20,12 +24,11 @@ export const store = new Vuex.Store({
     updatePostNonce(state, nonce) {
       state.postNonce = nonce;
     },
+    updateGalleryPostContent(state, payload) {
+      state.galleryPosts[payload.index].content = payload.data;
+    },
     addGalleryPost(state) {
-      state.galleryPosts.push({
-        content: 'Tee hee',
-        imageUrl: null,
-        file: null,
-      });
+      state.galleryPosts.push(defaultGalleryPostObject());
     },
     removeGalleryPost(state, index) {
       state.galleryPosts.splice(index, 1);
