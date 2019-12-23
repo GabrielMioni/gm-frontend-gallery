@@ -1882,8 +1882,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1994,7 +1992,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     trashPost: function trashPost() {
-      this.$emit('trashPost', this.index);
+      // this.$emit('trashPost', this.index);
+      this.$store.commit('removeGalleryPost', this.index);
     },
     setElementId: function setElementId(idName) {
       return "".concat(idName, "-").concat(this.index);
@@ -2011,11 +2010,6 @@ __webpack_require__.r(__webpack_exports__);
         imageUrl: fileUrl,
         file: file
       });
-      /*this.$emit('imageUpdate', {
-        'index' : this.index,
-        'imageUrl' : fileUrl,
-        'file' : file,
-      });*/
     },
     openFileInput: function openFileInput() {
       var fileInput = this.$refs.fileInput;
@@ -2842,15 +2836,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _vm._l(this.$store.getters.galleryPosts, function(post, index) {
-        return [
-          _c("submit-post", {
-            attrs: { post: post, index: index },
-            on: {
-              trashPost: _vm.trashPostHandler,
-              imageUpdate: _vm.imageUpdateHandler
-            }
-          })
-        ]
+        return [_c("submit-post", { attrs: { post: post, index: index } })]
       }),
       _vm._v(" "),
       _c(
@@ -16354,7 +16340,6 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
       state.galleryPosts[payload.index].content = payload.data;
     },
     updateImageUpload: function updateImageUpload(state, payload) {
-      console.log(payload);
       state.galleryPosts[payload.index].imageUrl = payload.imageUrl;
       state.galleryPosts[payload.index].file = payload.file;
     },

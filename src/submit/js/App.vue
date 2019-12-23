@@ -7,11 +7,7 @@
             </div>
         </form>
         <template v-for="(post, index) in this.$store.getters.galleryPosts">
-            <submit-post
-                    @trashPost="trashPostHandler"
-                    @imageUpdate="imageUpdateHandler"
-                    :post="post"
-                    :index="index">
+            <submit-post :post="post" :index="index">
             </submit-post>
         </template>
         <button @click.stop="addPost">Add A Post!</button>

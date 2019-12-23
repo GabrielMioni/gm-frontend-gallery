@@ -36,7 +36,8 @@
     },
     methods: {
       trashPost() {
-        this.$emit('trashPost', this.index);
+        // this.$emit('trashPost', this.index);
+        this.$store.commit('removeGalleryPost', this.index);
       },
       setElementId(idName) {
         return `${idName}-${this.index}`;
