@@ -1909,8 +1909,7 @@ __webpack_require__.r(__webpack_exports__);
       this.$store.getters.galleryPosts.map(function (galleryPost) {
         attachmentContents.push(galleryPost.content);
         formData.append('image_files[]', galleryPost.file);
-      }); // formData.append('postNonce', this.postNonce);
-
+      });
       formData.append('mainTitle', this.mainTitle);
       formData.append('attachmentContents', JSON.stringify(attachmentContents));
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/wp-json/gm-frontend-gallery/v1/submit/', formData, {
@@ -1928,6 +1927,12 @@ __webpack_require__.r(__webpack_exports__);
       },
       set: function set(value) {
         this.$store.commit('updateTitle', value);
+      }
+    },
+    galleryCount: {
+      get: function get() {
+        return this.$store.state.galleryPosts.length;
+        console.log(this.$store.state.galleryPosts.length);
       }
     }
   },
@@ -2827,7 +2832,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _vm._l(this.$store.getters.galleryPosts, function(post, index) {
-        return [_c("submit-post", { attrs: { post: post, index: index } })]
+        return [_c("submit-post", { attrs: { index: index } })]
       }),
       _vm._v(" "),
       _c(

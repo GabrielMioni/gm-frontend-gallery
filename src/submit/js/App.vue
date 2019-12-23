@@ -7,7 +7,7 @@
             </div>
         </form>
         <template v-for="(post, index) in this.$store.getters.galleryPosts">
-            <submit-post :post="post" :index="index">
+            <submit-post :index="index">
             </submit-post>
         </template>
         <button @click.stop="addPost">Add A Post!</button>
@@ -69,6 +69,12 @@
         },
         set(value) {
           this.$store.commit('updateTitle', value);
+        }
+      },
+      galleryCount: {
+        get() {
+          return this.$store.state.galleryPosts.length;
+          console.log(this.$store.state.galleryPosts.length);
         }
       }
     },
