@@ -97,6 +97,7 @@ class SubmitTest extends GalleryUnitTestCase
         $this->requestDataProviderParams($request, [
             'postNonce' => 'I am an invalid nonce, nice to meet you!'
         ]);
+        $request->set_header('X-WP-Nonce', 'I am an invalid nonce, nice to meet you!');
         $this->requestDataProviderImage($request);
 
         $response = $this->dispatchRequest($request);
