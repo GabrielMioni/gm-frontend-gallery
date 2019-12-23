@@ -180,7 +180,7 @@ class gmFrontendGallery
     {
         wp_enqueue_script($this->scriptHandleSubmit);
         wp_enqueue_style($this->scriptHandleSubmit);
-        $nonce = wp_create_nonce( 'wp_rest' );
+        $nonce = wp_create_nonce($this->gallerySubmitNonce);
         return '<div id="gm-frontend-submit" data-nonce="'.$nonce.'"></div>';
     }
 }

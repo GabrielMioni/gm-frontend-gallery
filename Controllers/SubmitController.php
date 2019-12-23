@@ -17,7 +17,7 @@ class SubmitController extends BaseController
         }
 
         $nonce = $nonce = $request->get_header('X-WP-Nonce');
-        $valid = wp_verify_nonce($nonce, 'wp_rest');
+        $valid = wp_verify_nonce($nonce, $this->gallerySubmitNonce);
 
         if ($valid === false) {
             return $this->createWPError('invalid_request', 'Invalid nonce', 401);
