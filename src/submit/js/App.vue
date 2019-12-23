@@ -46,11 +46,13 @@
           formData.append('image_files[]', galleryPost.file);
         });
 
-        formData.append('postNonce', this.postNonce);
         formData.append('mainTitle', this.mainTitle);
         formData.append('attachmentContents', JSON.stringify(attachmentContents));
 
-        axios.post('/wp-json/gm-frontend-gallery/v1/submit/', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+        axios.post('/wp-json/gm-frontend-gallery/v1/submit/', formData, { headers: {
+          'Content-Type': 'multipart/form-data',
+          'X-WP-Nonce' : this.$store.getters.postNonce,
+        } })
           .then((response)=>{
 
           }).catch((error)=>{
