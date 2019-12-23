@@ -27,7 +27,6 @@
   export default {
     name: "SubmitPost",
     props: {
-      post: Object,
       index: Number,
     },
     methods: {
