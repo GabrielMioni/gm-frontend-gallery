@@ -1881,6 +1881,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2830,9 +2832,17 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _vm._l(this.$store.getters.galleryPosts, function(post, index) {
-        return _c("submit-post", { key: index, attrs: { index: index } })
-      }),
+      _c(
+        "transition-group",
+        { attrs: { name: "fade" } },
+        _vm._l(this.$store.getters.galleryPosts, function(post, index) {
+          return _c("submit-post", {
+            key: "submitPost-" + index,
+            attrs: { index: index }
+          })
+        }),
+        1
+      ),
       _vm._v(" "),
       _c(
         "button",
@@ -2860,7 +2870,7 @@ var render = function() {
         [_vm._v("Submit")]
       )
     ],
-    2
+    1
   )
 }
 var staticRenderFns = []

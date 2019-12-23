@@ -6,11 +6,13 @@
                 <input v-model="mainTitle" type="text" name="post_title" id="post_title">
             </div>
         </form>
-        <submit-post
-                v-for="(post, index) in this.$store.getters.galleryPosts"
-                v-bind:key="index"
-                :index="index">
-        </submit-post>
+        <transition-group name="fade">
+            <submit-post
+                    v-for="(post, index) in this.$store.getters.galleryPosts"
+                    v-bind:key="`submitPost-${index}`"
+                    :index="index">
+            </submit-post>
+        </transition-group>
         <button @click.stop="addPost">Add A Post!</button>
         <button @click.stop="submitPost">Submit</button>
     </div>
