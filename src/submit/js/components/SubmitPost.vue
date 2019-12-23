@@ -15,9 +15,7 @@
             <form>
                 <div class="gm-frontend-submit-form-group">
                     <label :for="setElementId('gm-frontend-submit-content')">Content</label>
-                    <textarea
-                            v-model="post.content"
-                            :id="setElementId('gm-frontend-submit-content')">
+                    <textarea v-model="postContent" :id="setElementId('gm-frontend-submit-content')">
                     </textarea>
                 </div>
                 <input class="gm-frontend-submit-post-file" type="file" name="image"
@@ -59,6 +57,19 @@
       openFileInput() {
         const fileInput = this.$refs.fileInput;
         fileInput.click();
+      }
+    },
+    computed: {
+      postContent: {
+        get() {
+          return this.$store.state.galleryPosts[this.index].content;
+        },
+        set(value) {
+          this.$store.commit('updateGalleryPostContent', {
+            index: this.index,
+            data: value,
+          });
+        }
       }
     },
     mounted() {
