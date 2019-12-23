@@ -4,9 +4,7 @@
             <div @click="trashPost">x</div>
         </div>
         <div class="gm-frontend-submit-post-left">
-            <div class="gm-frontend-submit-post-upload"
-                 @click="openFileInput"
-                 :ref="'dropFile'">
+            <div class="gm-frontend-submit-post-upload" @click="openFileInput" :ref="'dropFile'">
                 <div v-if="uploadImageUrl === null">This is the stone on which I will build my empire.</div>
                 <img v-else :src="uploadImageUrl" alt="">
             </div>
@@ -18,9 +16,7 @@
                     <textarea v-model="postContent" :id="setElementId('gm-frontend-submit-content')">
                     </textarea>
                 </div>
-                <input class="gm-frontend-submit-post-file" type="file" name="image"
-                       @change="imageUpdate"
-                       :ref="'fileInput'">
+                <input class="gm-frontend-submit-post-file" type="file" name="image" @change="imageUpdate" :ref="'fileInput'">
             </form>
         </div>
     </div>
