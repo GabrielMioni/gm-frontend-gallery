@@ -1861,8 +1861,9 @@ module.exports = function isBuffer (obj) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_SubmitPost__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/SubmitPost */ "./src/submit/js/components/SubmitPost.vue");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
 //
 //
 //
@@ -1883,6 +1884,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1915,7 +1917,7 @@ __webpack_require__.r(__webpack_exports__);
       });
       formData.append('mainTitle', this.mainTitle);
       formData.append('attachmentContents', JSON.stringify(attachmentContents));
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/wp-json/gm-frontend-gallery/v1/submit/', formData, {
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/wp-json/gm-frontend-gallery/v1/submit/', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           'X-WP-Nonce': this.$store.getters.postNonce
@@ -1926,10 +1928,10 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     mainTitle: {
       get: function get() {
-        return this.$store.state.mainTitle;
+        return this.$store.getters.mainTitle;
       },
       set: function set(value) {
-        this.$store.commit('updateTitle', value);
+        this.$store.dispatch('updateTitle', value);
       }
     },
     galleryCount: {
@@ -1940,7 +1942,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     var mount = document.getElementById('gm-frontend-submit');
-    this.$store.commit('updatePostNonce', mount.dataset.nonce);
+    this.$store.dispatch('updatePostNonce', mount.dataset.nonce);
   }
 });
 
@@ -16363,6 +16365,14 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
       if (state.galleryPosts.length <= 0) {
         state.galleryPosts.push(defaultGalleryPostObject());
       }
+    }
+  },
+  actions: {
+    updateTitle: function updateTitle(context, data) {
+      context.commit('updateTitle', data);
+    },
+    updatePostNonce: function updatePostNonce(context, data) {
+      context.commit('updatePostNonce', data);
     }
   },
   getters: {

@@ -41,6 +41,14 @@ export const store = new Vuex.Store({
       }
     }
   },
+  actions: {
+    updateTitle (context, data) {
+      context.commit('updateTitle', data);
+    },
+    updatePostNonce (context, data) {
+      context.commit('updatePostNonce', data);
+    }
+  },
   getters: {
     mainTitle: state => state.mainTitle,
     galleryPosts: state => state.galleryPosts,

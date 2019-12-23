@@ -20,6 +20,7 @@
 
 <script>
   import SubmitPost from "./components/SubmitPost";
+  import { mapActions, mapState } from 'vuex';
   import axios from "axios";
   export default {
     name: "gmGallerySubmit",
@@ -68,10 +69,10 @@
     computed: {
       mainTitle: {
         get() {
-          return this.$store.state.mainTitle;
+          return this.$store.getters.mainTitle;
         },
         set(value) {
-          this.$store.commit('updateTitle', value);
+          this.$store.dispatch('updateTitle', value);
         }
       },
       galleryCount: {
@@ -82,7 +83,7 @@
     },
     created() {
       const mount = document.getElementById('gm-frontend-submit');
-      this.$store.commit('updatePostNonce', mount.dataset.nonce);
+      this.$store.dispatch('updatePostNonce', mount.dataset.nonce);
     },
   }
 </script>
