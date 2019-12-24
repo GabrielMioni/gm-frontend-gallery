@@ -36,21 +36,8 @@
         'getPostNonce',
         'getGalleryPosts'
       ]),
-      postObjectDefault() {
-        return {
-          content: '',
-          imageUrl: null,
-          file: null,
-        }
-      },
       addPost() {
         return this.ADD_POST();
-        // this.$store.commit('addGalleryPost');
-      },
-      imageUpdateHandler(data) {
-        const currentGalleryPost = this.galleryPosts[data.index];
-        currentGalleryPost.file = data.file;
-        currentGalleryPost.imageUrl = data.imageUrl;
       },
       submitPost() {
         let attachmentContents = [];
@@ -97,11 +84,6 @@
       galleryPosts: {
         get() {
           return this.getGalleryPosts();
-        }
-      },
-      galleryCount: {
-        get() {
-          return this.$store.state.galleryPosts.length;
         }
       }
     },

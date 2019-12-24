@@ -1899,20 +1899,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     SubmitPost: _components_SubmitPost__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['SET_MAIN_TITLE', 'SET_POST_NONCE', 'ADD_POST']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(['getMainTitle', 'getPostNonce', 'getGalleryPosts']), {
-    postObjectDefault: function postObjectDefault() {
-      return {
-        content: '',
-        imageUrl: null,
-        file: null
-      };
-    },
     addPost: function addPost() {
-      return this.ADD_POST(); // this.$store.commit('addGalleryPost');
-    },
-    imageUpdateHandler: function imageUpdateHandler(data) {
-      var currentGalleryPost = this.galleryPosts[data.index];
-      currentGalleryPost.file = data.file;
-      currentGalleryPost.imageUrl = data.imageUrl;
+      return this.ADD_POST();
     },
     submitPost: function submitPost() {
       var attachmentContents = [];
@@ -1951,11 +1939,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     galleryPosts: {
       get: function get() {
         return this.getGalleryPosts();
-      }
-    },
-    galleryCount: {
-      get: function get() {
-        return this.$store.state.galleryPosts.length;
       }
     }
   },
@@ -2881,7 +2864,7 @@ var render = function() {
           on: {
             click: function($event) {
               $event.stopPropagation()
-              return _vm.addPost($event)
+              return _vm.ADD_POST($event)
             }
           }
         },
