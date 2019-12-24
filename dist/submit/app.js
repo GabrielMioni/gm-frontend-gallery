@@ -16388,11 +16388,6 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     setPostContent: function setPostContent(state, payload) {
       state.galleryPosts[payload.index].content = payload.data;
     },
-
-    /*updateImageUpload(state, payload) {
-      state.galleryPosts[payload.index].imageUrl = payload.imageUrl;
-      state.galleryPosts[payload.index].file = payload.file;
-    },*/
     setPostImageData: function setPostImageData(state, payload) {
       state.galleryPosts[payload.index].imageUrl = payload.imageUrl;
       state.galleryPosts[payload.index].file = payload.file;
@@ -16415,14 +16410,14 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     SET_POST_NONCE: function SET_POST_NONCE(context, postNonce) {
       context.commit('setPostNonce', postNonce);
     },
-    REMOVE_POST: function REMOVE_POST(context, index) {
-      context.commit('removePost', index);
-    },
     SET_POST_CONTENT: function SET_POST_CONTENT(context, payload) {
       context.commit('setPostContent', payload);
     },
     SET_POST_IMAGE_DATA: function SET_POST_IMAGE_DATA(context, payload) {
       context.commit('setPostImageData', payload);
+    },
+    REMOVE_POST: function REMOVE_POST(context, index) {
+      context.commit('removePost', index);
     }
   }
 });

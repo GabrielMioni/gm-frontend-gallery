@@ -53,14 +53,14 @@ export const store = new Vuex.Store({
     SET_POST_NONCE(context, postNonce) {
       context.commit('setPostNonce', postNonce);
     },
-    REMOVE_POST(context, index) {
-      context.commit('removePost', index);
-    },
     SET_POST_CONTENT(context, payload) {
       context.commit('setPostContent', payload);
     },
     SET_POST_IMAGE_DATA(context, payload) {
       context.commit('setPostImageData', payload)
-    }
+    },
+    REMOVE_POST(context, index) {
+      context.commit('removePost', index);
+    },
   },
 });
