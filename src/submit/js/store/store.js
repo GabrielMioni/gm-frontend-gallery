@@ -36,7 +36,7 @@ export const store = new Vuex.Store({
       state.galleryPosts[payload.index].imageUrl = payload.imageUrl;
       state.galleryPosts[payload.index].file = payload.file;
     },
-    addGalleryPost(state) {
+    addPost(state) {
       state.galleryPosts.push(defaultGalleryPostObject());
     },
     removePost(state, index) {
@@ -58,6 +58,9 @@ export const store = new Vuex.Store({
     },
     SET_POST_IMAGE_DATA(context, payload) {
       context.commit('setPostImageData', payload)
+    },
+    ADD_POST(context) {
+      context.commit('addPost');
     },
     REMOVE_POST(context, index) {
       context.commit('removePost', index);

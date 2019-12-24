@@ -1898,7 +1898,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   components: {
     SubmitPost: _components_SubmitPost__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['SET_MAIN_TITLE', 'SET_POST_NONCE']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(['getMainTitle', 'getPostNonce', 'getGalleryPosts']), {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['SET_MAIN_TITLE', 'SET_POST_NONCE', 'ADD_POST']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(['getMainTitle', 'getPostNonce', 'getGalleryPosts']), {
     postObjectDefault: function postObjectDefault() {
       return {
         content: '',
@@ -1907,7 +1907,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       };
     },
     addPost: function addPost() {
-      this.$store.commit('addGalleryPost');
+      return this.ADD_POST(); // this.$store.commit('addGalleryPost');
     },
     imageUpdateHandler: function imageUpdateHandler(data) {
       var currentGalleryPost = this.galleryPosts[data.index];
@@ -16392,7 +16392,7 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
       state.galleryPosts[payload.index].imageUrl = payload.imageUrl;
       state.galleryPosts[payload.index].file = payload.file;
     },
-    addGalleryPost: function addGalleryPost(state) {
+    addPost: function addPost(state) {
       state.galleryPosts.push(defaultGalleryPostObject());
     },
     removePost: function removePost(state, index) {
@@ -16415,6 +16415,9 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     },
     SET_POST_IMAGE_DATA: function SET_POST_IMAGE_DATA(context, payload) {
       context.commit('setPostImageData', payload);
+    },
+    ADD_POST: function ADD_POST(context) {
+      context.commit('addPost');
     },
     REMOVE_POST: function REMOVE_POST(context, index) {
       context.commit('removePost', index);

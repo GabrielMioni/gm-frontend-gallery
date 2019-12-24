@@ -29,6 +29,7 @@
       ...mapActions([
         'SET_MAIN_TITLE',
         'SET_POST_NONCE',
+        'ADD_POST',
       ]),
       ...mapGetters([
         'getMainTitle',
@@ -43,7 +44,8 @@
         }
       },
       addPost() {
-        this.$store.commit('addGalleryPost');
+        return this.ADD_POST();
+        // this.$store.commit('addGalleryPost');
       },
       imageUpdateHandler(data) {
         const currentGalleryPost = this.galleryPosts[data.index];
