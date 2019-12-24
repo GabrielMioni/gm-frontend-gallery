@@ -34,10 +34,11 @@
     },
     methods: {
       ...mapActions([
-        'REMOVE_POST'
+        'REMOVE_POST',
+        'SET_POST_CONTENT'
       ]),
       ...mapGetters([
-
+        'getPostContent'
       ]),
       setElementId(idName) {
         return `${idName}-${this.index}`;
@@ -66,10 +67,10 @@
     computed: {
       postContent: {
         get() {
-          return this.$store.state.galleryPosts[this.index].content;
+          return this.getPostContent(this.index);
         },
         set(value) {
-          this.$store.commit('updateGalleryPostContent', {
+          return this.SET_POST_CONTENT({
             index: this.index,
             data: value,
           });

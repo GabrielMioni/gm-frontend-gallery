@@ -2018,10 +2018,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   props: {
     index: Number
   },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['REMOVE_POST']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])([]), {
-    /*trashPost() {
-      this.$store.commit('removeGalleryPost', this.index);
-    },*/
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['REMOVE_POST', 'SET_POST_CONTENT']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(['getPostContent']), {
     setElementId: function setElementId(idName) {
       return "".concat(idName, "-").concat(this.index);
     },
@@ -2048,13 +2045,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   computed: {
     postContent: {
       get: function get() {
-        return this.$store.state.galleryPosts[this.index].content;
+        return this.getPostContent(this.index); // return this.$store.state.galleryPosts[this.index].content;
       },
       set: function set(value) {
-        this.$store.commit('updateGalleryPostContent', {
+        return this.SET_POST_CONTENT({
           index: this.index,
           data: value
         });
+        /*this.$store.commit('setGalleryPostContent', {
+          index: this.index,
+          data: value,
+        });*/
       }
     },
     uploadImageUrl: {
@@ -16375,8 +16376,11 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     getGalleryPosts: function getGalleryPosts(state) {
       return state.galleryPosts;
     },
-    postNonce: function postNonce(state) {
+    getPostNonce: function getPostNonce(state) {
       return state.postNonce;
+    },
+    getPostContent: function getPostContent(state, index) {
+      return state.galleryPosts[index];
     }
   },
   mutations: {
@@ -16386,7 +16390,7 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     setPostNonce: function setPostNonce(state, nonce) {
       state.postNonce = nonce;
     },
-    updateGalleryPostContent: function updateGalleryPostContent(state, payload) {
+    setPostContent: function setPostContent(state, payload) {
       state.galleryPosts[payload.index].content = payload.data;
     },
     updateImageUpload: function updateImageUpload(state, payload) {
@@ -16413,6 +16417,9 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     },
     REMOVE_POST: function REMOVE_POST(context, index) {
       context.commit('removePost', index);
+    },
+    SET_POST_CONTENT: function SET_POST_CONTENT(context, payload) {
+      context.commit('setPostContent', payload);
     }
   }
 });

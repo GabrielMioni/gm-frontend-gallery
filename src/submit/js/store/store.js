@@ -20,7 +20,8 @@ export const store = new Vuex.Store({
   getters: {
     getMainTitle: state => state.mainTitle,
     getGalleryPosts: state => state.galleryPosts,
-    postNonce: state => state.postNonce,
+    getPostNonce: state => state.postNonce,
+    getPostContent: (state, index) => state.galleryPosts[index],
   },
   mutations: {
     setMainTitle(state, newTitle) {
@@ -29,7 +30,7 @@ export const store = new Vuex.Store({
     setPostNonce(state, nonce) {
       state.postNonce = nonce;
     },
-    updateGalleryPostContent(state, payload) {
+    setPostContent(state, payload) {
       state.galleryPosts[payload.index].content = payload.data;
     },
     updateImageUpload(state, payload) {
@@ -55,6 +56,9 @@ export const store = new Vuex.Store({
     },
     REMOVE_POST(context, index) {
       context.commit('removePost', index);
+    },
+    SET_POST_CONTENT(context, payload) {
+      context.commit('setPostContent', payload);
     },
   },
 });
