@@ -14,7 +14,7 @@
             </submit-post>
         </transition-group>
         <button @click.stop="addPost">Add A Post!</button>
-        <button @click.stop="submitPost">Submit</button>
+        <button @click.stop="submitPosts">Submit</button>
     </div>
 </template>
 
@@ -39,7 +39,7 @@
       addPost() {
         return this.ADD_POST();
       },
-      submitPost() {
+      submitPosts() {
         let attachmentContents = [];
         let formData = new FormData();
 

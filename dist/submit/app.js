@@ -1902,7 +1902,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     addPost: function addPost() {
       return this.ADD_POST();
     },
-    submitPost: function submitPost() {
+    submitPosts: function submitPosts() {
       var attachmentContents = [];
       var formData = new FormData();
       this.$store.getters.galleryPosts.map(function (galleryPost) {
@@ -2864,7 +2864,7 @@ var render = function() {
           on: {
             click: function($event) {
               $event.stopPropagation()
-              return _vm.ADD_POST($event)
+              return _vm.addPost($event)
             }
           }
         },
@@ -2877,7 +2877,7 @@ var render = function() {
           on: {
             click: function($event) {
               $event.stopPropagation()
-              return _vm.submitPost($event)
+              return _vm.submitPosts($event)
             }
           }
         },
