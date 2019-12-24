@@ -17,11 +17,16 @@ export const store = new Vuex.Store({
     galleryPosts: [defaultGalleryPostObject()],
     postNonce: null,
   },
+  getters: {
+    getMainTitle: state => state.mainTitle,
+    getGalleryPosts: state => state.galleryPosts,
+    postNonce: state => state.postNonce,
+  },
   mutations: {
-    updateTitle(state, newTitle) {
+    setMainTitle(state, newTitle) {
       state.mainTitle = newTitle;
     },
-    updatePostNonce(state, nonce) {
+    setPostNonce(state, nonce) {
       state.postNonce = nonce;
     },
     updateGalleryPostContent(state, payload) {
@@ -42,16 +47,11 @@ export const store = new Vuex.Store({
     }
   },
   actions: {
-    updateTitle (context, data) {
-      context.commit('updateTitle', data);
+    SET_MAIN_TITLE(context, newTitle) {
+      context.commit('setMainTitle', newTitle);
     },
-    updatePostNonce (context, data) {
-      context.commit('updatePostNonce', data);
+    SET_POST_NONCE (context, postNonce) {
+      context.commit('setPostNonce', postNonce);
     }
   },
-  getters: {
-    mainTitle: state => state.mainTitle,
-    galleryPosts: state => state.galleryPosts,
-    postNonce: state => state.postNonce,
-  }
 });

@@ -1864,6 +1864,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -1892,7 +1898,7 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     SubmitPost: _components_SubmitPost__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  methods: {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['SET_MAIN_TITLE', 'SET_POST_NONCE']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(['getMainTitle', 'getPostNonce', 'getGalleryPosts']), {
     postObjectDefault: function postObjectDefault() {
       return {
         content: '',
@@ -1924,14 +1930,27 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (response) {})["catch"](function (error) {});
     }
-  },
+  }),
   computed: {
     mainTitle: {
       get: function get() {
-        return this.$store.getters.mainTitle;
+        return this.getMainTitle();
       },
-      set: function set(value) {
-        this.$store.dispatch('updateTitle', value);
+      set: function set(newTitle) {
+        return this.SET_MAIN_TITLE(newTitle);
+      }
+    },
+    postNonce: {
+      get: function get() {
+        return this.getPostNonce();
+      },
+      set: function set(newPostNonce) {
+        return this.SET_POST_NONCE(newPostNonce);
+      }
+    },
+    galleryPosts: {
+      get: function get() {
+        return this.getGalleryPosts();
       }
     },
     galleryCount: {
@@ -1942,7 +1961,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     var mount = document.getElementById('gm-frontend-submit');
-    this.$store.dispatch('updatePostNonce', mount.dataset.nonce);
+    this.postNonce = mount.dataset.nonce;
   }
 });
 
@@ -2841,7 +2860,7 @@ var render = function() {
       _c(
         "transition-group",
         { attrs: { name: "fade" } },
-        _vm._l(this.$store.getters.galleryPosts, function(post, index) {
+        _vm._l(_vm.galleryPosts, function(post, index) {
           return _c("submit-post", {
             key: "submitPost-" + index,
             attrs: { index: index }
@@ -16342,11 +16361,34 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     galleryPosts: [defaultGalleryPostObject()],
     postNonce: null
   },
+  getters: {
+    getMainTitle: function getMainTitle(state) {
+      return state.mainTitle;
+    },
+    getGalleryPosts: function getGalleryPosts(state) {
+      return state.galleryPosts;
+    },
+    postNonce: function postNonce(state) {
+      return state.postNonce;
+    }
+    /*getMainTitle(state) {
+      return state.mainTitle;
+    },*/
+
+    /*getGalleryPosts(state) {
+      return state.galleryPosts;
+    },*/
+
+    /*getPostNonce(state) {
+      return state.postNonce;
+    }*/
+
+  },
   mutations: {
-    updateTitle: function updateTitle(state, newTitle) {
+    setMainTitle: function setMainTitle(state, newTitle) {
       state.mainTitle = newTitle;
     },
-    updatePostNonce: function updatePostNonce(state, nonce) {
+    setPostNonce: function setPostNonce(state, nonce) {
       state.postNonce = nonce;
     },
     updateGalleryPostContent: function updateGalleryPostContent(state, payload) {
@@ -16368,22 +16410,11 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     }
   },
   actions: {
-    updateTitle: function updateTitle(context, data) {
-      context.commit('updateTitle', data);
+    SET_MAIN_TITLE: function SET_MAIN_TITLE(context, newTitle) {
+      context.commit('setMainTitle', newTitle);
     },
-    updatePostNonce: function updatePostNonce(context, data) {
-      context.commit('updatePostNonce', data);
-    }
-  },
-  getters: {
-    mainTitle: function mainTitle(state) {
-      return state.mainTitle;
-    },
-    galleryPosts: function galleryPosts(state) {
-      return state.galleryPosts;
-    },
-    postNonce: function postNonce(state) {
-      return state.postNonce;
+    SET_POST_NONCE: function SET_POST_NONCE(context, postNonce) {
+      context.commit('setPostNonce', postNonce);
     }
   }
 });

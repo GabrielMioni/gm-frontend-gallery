@@ -8,7 +8,7 @@
         </form>
         <transition-group name="fade">
             <submit-post
-                    v-for="(post, index) in this.$store.getters.galleryPosts"
+                    v-for="(post, index) in galleryPosts"
                     v-bind:key="`submitPost-${index}`"
                     :index="index">
             </submit-post>
@@ -20,12 +20,21 @@
 
 <script>
   import SubmitPost from "./components/SubmitPost";
-  import { mapActions, mapState } from 'vuex';
+  import { mapGetters, mapActions } from 'vuex';
   import axios from "axios";
   export default {
     name: "gmGallerySubmit",
     components: {SubmitPost},
     methods: {
+      ...mapActions([
+        'SET_MAIN_TITLE',
+        'SET_POST_NONCE',
+      ]),
+      ...mapGetters([
+        'getMainTitle',
+        'getPostNonce',
+        'getGalleryPosts'
+      ]),
       postObjectDefault() {
         return {
           content: '',
@@ -69,10 +78,23 @@
     computed: {
       mainTitle: {
         get() {
-          return this.$store.getters.mainTitle;
+          return this.getMainTitle();
         },
-        set(value) {
-          this.$store.dispatch('updateTitle', value);
+        set(newTitle) {
+          return this.SET_MAIN_TITLE(newTitle);
+        }
+      },
+      postNonce: {
+        get() {
+          return this.getPostNonce();
+        },
+        set(newPostNonce) {
+          return this.SET_POST_NONCE(newPostNonce);
+        }
+      },
+      galleryPosts: {
+        get() {
+          return this.getGalleryPosts();
         }
       },
       galleryCount: {
@@ -83,7 +105,7 @@
     },
     created() {
       const mount = document.getElementById('gm-frontend-submit');
-      this.$store.dispatch('updatePostNonce', mount.dataset.nonce);
+      this.postNonce = mount.dataset.nonce;
     },
   }
 </script>
