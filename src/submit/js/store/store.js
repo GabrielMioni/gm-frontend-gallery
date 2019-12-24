@@ -39,7 +39,7 @@ export const store = new Vuex.Store({
     addGalleryPost(state) {
       state.galleryPosts.push(defaultGalleryPostObject());
     },
-    removeGalleryPost(state, index) {
+    removePost(state, index) {
       state.galleryPosts.splice(index, 1);
       if (state.galleryPosts.length <= 0) {
         state.galleryPosts.push(defaultGalleryPostObject());
@@ -50,8 +50,11 @@ export const store = new Vuex.Store({
     SET_MAIN_TITLE(context, newTitle) {
       context.commit('setMainTitle', newTitle);
     },
-    SET_POST_NONCE (context, postNonce) {
+    SET_POST_NONCE(context, postNonce) {
       context.commit('setPostNonce', postNonce);
-    }
+    },
+    REMOVE_POST(context, index) {
+      context.commit('removePost', index);
+    },
   },
 });

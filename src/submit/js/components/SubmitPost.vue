@@ -1,7 +1,7 @@
 <template>
     <div class="gm-frontend-submit-post">
         <div class="gm-frontend-submit-post-trash">
-            <div @click="trashPost">x</div>
+            <div @click="REMOVE_POST">x</div>
         </div>
         <div class="gm-frontend-submit-post-left">
             <div class="gm-frontend-submit-post-upload" @click="openFileInput" :ref="'dropFile'">
@@ -26,16 +26,19 @@
 
 <script>
   import dragDrop from "drag-drop";
+  import { mapGetters, mapActions } from 'vuex';
   export default {
     name: "SubmitPost",
     props: {
       index: Number,
     },
     methods: {
-      trashPost() {
-        // this.$emit('trashPost', this.index);
-        this.$store.commit('removeGalleryPost', this.index);
-      },
+      ...mapActions([
+        'REMOVE_POST'
+      ]),
+      ...mapGetters([
+
+      ]),
       setElementId(idName) {
         return `${idName}-${this.index}`;
       },

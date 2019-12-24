@@ -1978,6 +1978,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var drag_drop__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! drag-drop */ "./node_modules/drag-drop/index.js");
 /* harmony import */ var drag_drop__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(drag_drop__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -2005,16 +2012,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SubmitPost",
   props: {
     index: Number
   },
-  methods: {
-    trashPost: function trashPost() {
-      // this.$emit('trashPost', this.index);
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['REMOVE_POST']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])([]), {
+    /*trashPost() {
       this.$store.commit('removeGalleryPost', this.index);
-    },
+    },*/
     setElementId: function setElementId(idName) {
       return "".concat(idName, "-").concat(this.index);
     },
@@ -2037,7 +2044,7 @@ __webpack_require__.r(__webpack_exports__);
       var fileInput = this.$refs.fileInput;
       fileInput.click();
     }
-  },
+  }),
   computed: {
     postContent: {
       get: function get() {
@@ -2922,7 +2929,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "gm-frontend-submit-post" }, [
     _c("div", { staticClass: "gm-frontend-submit-post-trash" }, [
-      _c("div", { on: { click: _vm.trashPost } }, [_vm._v("x")])
+      _c("div", { on: { click: _vm.REMOVE_POST } }, [_vm._v("x")])
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "gm-frontend-submit-post-left" }, [
@@ -16371,18 +16378,6 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     postNonce: function postNonce(state) {
       return state.postNonce;
     }
-    /*getMainTitle(state) {
-      return state.mainTitle;
-    },*/
-
-    /*getGalleryPosts(state) {
-      return state.galleryPosts;
-    },*/
-
-    /*getPostNonce(state) {
-      return state.postNonce;
-    }*/
-
   },
   mutations: {
     setMainTitle: function setMainTitle(state, newTitle) {
@@ -16401,7 +16396,7 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     addGalleryPost: function addGalleryPost(state) {
       state.galleryPosts.push(defaultGalleryPostObject());
     },
-    removeGalleryPost: function removeGalleryPost(state, index) {
+    removePost: function removePost(state, index) {
       state.galleryPosts.splice(index, 1);
 
       if (state.galleryPosts.length <= 0) {
@@ -16415,6 +16410,9 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     },
     SET_POST_NONCE: function SET_POST_NONCE(context, postNonce) {
       context.commit('setPostNonce', postNonce);
+    },
+    REMOVE_POST: function REMOVE_POST(context, index) {
+      context.commit('removePost', index);
     }
   }
 });
