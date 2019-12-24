@@ -35,10 +35,11 @@
     methods: {
       ...mapActions([
         'REMOVE_POST',
-        'SET_POST_CONTENT'
+        'SET_POST_CONTENT',
+        'SET_POST_IMAGE_DATA'
       ]),
       ...mapGetters([
-        'getPostContent'
+        'getGalleryPosts',
       ]),
       setElementId(idName) {
         return `${idName}-${this.index}`;
@@ -51,7 +52,7 @@
         const file = fileData[0];
         const fileUrl = URL.createObjectURL(file);
 
-        this.$store.commit('updateImageUpload', {
+        this.SET_POST_IMAGE_DATA({
           index: this.index,
           imageUrl: fileUrl,
           file: file,
@@ -67,7 +68,8 @@
     computed: {
       postContent: {
         get() {
-          return this.getPostContent(this.index);
+          const galleryPosts = this.getGalleryPosts();
+          return galleryPosts[this.index].content;
         },
         set(value) {
           return this.SET_POST_CONTENT({
@@ -78,7 +80,8 @@
       },
       uploadImageUrl: {
         get() {
-          return this.$store.state.galleryPosts[this.index].imageUrl;
+          const galleryPost = this.getGalleryPosts();
+          return galleryPost[this.index].imageUrl;
         }
       }
     },

@@ -2018,7 +2018,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   props: {
     index: Number
   },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['REMOVE_POST', 'SET_POST_CONTENT']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(['getPostContent']), {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['REMOVE_POST', 'SET_POST_CONTENT', 'SET_POST_IMAGE_DATA']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(['getGalleryPosts']), {
     setElementId: function setElementId(idName) {
       return "".concat(idName, "-").concat(this.index);
     },
@@ -2029,7 +2029,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       var file = fileData[0];
       var fileUrl = URL.createObjectURL(file);
-      this.$store.commit('updateImageUpload', {
+      this.SET_POST_IMAGE_DATA({
         index: this.index,
         imageUrl: fileUrl,
         file: file
@@ -2045,22 +2045,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   computed: {
     postContent: {
       get: function get() {
-        return this.getPostContent(this.index); // return this.$store.state.galleryPosts[this.index].content;
+        var galleryPosts = this.getGalleryPosts();
+        return galleryPosts[this.index].content;
       },
       set: function set(value) {
         return this.SET_POST_CONTENT({
           index: this.index,
           data: value
         });
-        /*this.$store.commit('setGalleryPostContent', {
-          index: this.index,
-          data: value,
-        });*/
       }
     },
     uploadImageUrl: {
       get: function get() {
-        return this.$store.state.galleryPosts[this.index].imageUrl;
+        var galleryPost = this.getGalleryPosts();
+        return galleryPost[this.index].imageUrl;
       }
     }
   },
@@ -16373,14 +16371,11 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     getMainTitle: function getMainTitle(state) {
       return state.mainTitle;
     },
-    getGalleryPosts: function getGalleryPosts(state) {
-      return state.galleryPosts;
-    },
     getPostNonce: function getPostNonce(state) {
       return state.postNonce;
     },
-    getPostContent: function getPostContent(state, index) {
-      return state.galleryPosts[index];
+    getGalleryPosts: function getGalleryPosts(state) {
+      return state.galleryPosts;
     }
   },
   mutations: {
@@ -16393,7 +16388,12 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     setPostContent: function setPostContent(state, payload) {
       state.galleryPosts[payload.index].content = payload.data;
     },
-    updateImageUpload: function updateImageUpload(state, payload) {
+
+    /*updateImageUpload(state, payload) {
+      state.galleryPosts[payload.index].imageUrl = payload.imageUrl;
+      state.galleryPosts[payload.index].file = payload.file;
+    },*/
+    setPostImageData: function setPostImageData(state, payload) {
       state.galleryPosts[payload.index].imageUrl = payload.imageUrl;
       state.galleryPosts[payload.index].file = payload.file;
     },
@@ -16420,6 +16420,9 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     },
     SET_POST_CONTENT: function SET_POST_CONTENT(context, payload) {
       context.commit('setPostContent', payload);
+    },
+    SET_POST_IMAGE_DATA: function SET_POST_IMAGE_DATA(context, payload) {
+      context.commit('setPostImageData', payload);
     }
   }
 });

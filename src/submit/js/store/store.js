@@ -19,9 +19,8 @@ export const store = new Vuex.Store({
   },
   getters: {
     getMainTitle: state => state.mainTitle,
-    getGalleryPosts: state => state.galleryPosts,
     getPostNonce: state => state.postNonce,
-    getPostContent: (state, index) => state.galleryPosts[index],
+    getGalleryPosts: state => state.galleryPosts,
   },
   mutations: {
     setMainTitle(state, newTitle) {
@@ -33,7 +32,7 @@ export const store = new Vuex.Store({
     setPostContent(state, payload) {
       state.galleryPosts[payload.index].content = payload.data;
     },
-    updateImageUpload(state, payload) {
+    setPostImageData(state, payload) {
       state.galleryPosts[payload.index].imageUrl = payload.imageUrl;
       state.galleryPosts[payload.index].file = payload.file;
     },
@@ -60,5 +59,8 @@ export const store = new Vuex.Store({
     SET_POST_CONTENT(context, payload) {
       context.commit('setPostContent', payload);
     },
+    SET_POST_IMAGE_DATA(context, payload) {
+      context.commit('setPostImageData', payload)
+    }
   },
 });
