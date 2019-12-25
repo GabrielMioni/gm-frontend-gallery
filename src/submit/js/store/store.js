@@ -1,15 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import {defaultGalleryPostObject} from "./helpers";
 
 Vue.use(Vuex);
-
-const defaultGalleryPostObject = () => {
-  return {
-    content: '',
-    imageUrl: null,
-    file: null,
-  }
-};
 
 export const store = new Vuex.Store({
   state: {

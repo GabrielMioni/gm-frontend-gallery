@@ -16319,6 +16319,26 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./src/submit/js/store/helpers.js":
+/*!****************************************!*\
+  !*** ./src/submit/js/store/helpers.js ***!
+  \****************************************/
+/*! exports provided: defaultGalleryPostObject */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "defaultGalleryPostObject", function() { return defaultGalleryPostObject; });
+var defaultGalleryPostObject = function defaultGalleryPostObject() {
+  return {
+    content: '',
+    imageUrl: null,
+    file: null
+  };
+};
+
+/***/ }),
+
 /***/ "./src/submit/js/store/store.js":
 /*!**************************************!*\
   !*** ./src/submit/js/store/store.js ***!
@@ -16332,22 +16352,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./helpers */ "./src/submit/js/store/helpers.js");
+
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
-
-var defaultGalleryPostObject = function defaultGalleryPostObject() {
-  return {
-    content: '',
-    imageUrl: null,
-    file: null
-  };
-};
-
 var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   state: {
     mainTitle: '',
-    galleryPosts: [defaultGalleryPostObject()],
+    galleryPosts: [Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["defaultGalleryPostObject"])()],
     postNonce: null
   },
   getters: {
@@ -16376,13 +16389,13 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
       state.galleryPosts[payload.index].file = payload.file;
     },
     addPost: function addPost(state) {
-      state.galleryPosts.push(defaultGalleryPostObject());
+      state.galleryPosts.push(Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["defaultGalleryPostObject"])());
     },
     removePost: function removePost(state, index) {
       state.galleryPosts.splice(index, 1);
 
       if (state.galleryPosts.length <= 0) {
-        state.galleryPosts.push(defaultGalleryPostObject());
+        state.galleryPosts.push(Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["defaultGalleryPostObject"])());
       }
     }
   },
