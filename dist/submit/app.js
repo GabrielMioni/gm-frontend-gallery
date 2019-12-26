@@ -1905,7 +1905,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     submitPosts: function submitPosts() {
       var attachmentContents = [];
       var formData = new FormData();
-      this.$store.getters.galleryPosts.map(function (galleryPost) {
+      this.galleryPosts.map(function (galleryPost) {
         attachmentContents.push(galleryPost.content);
         formData.append('image_files[]', galleryPost.file);
       });
