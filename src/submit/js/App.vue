@@ -58,9 +58,10 @@
           }
         })
         .then((response)=>{
-          
-        }).catch((error)=>{
 
+        }).catch((error)=>{
+          const responseData = error.response.data;
+          this.error = responseData.message;
         });
       }
     },

@@ -1903,6 +1903,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return this.ADD_POST();
     },
     submitPosts: function submitPosts() {
+      var _this = this;
+
       var attachmentContents = [];
       var formData = new FormData();
       this.galleryPosts.map(function (galleryPost) {
@@ -1916,7 +1918,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           'Content-Type': 'multipart/form-data',
           'X-WP-Nonce': this.postNonce
         }
-      }).then(function (response) {})["catch"](function (error) {});
+      }).then(function (response) {})["catch"](function (error) {
+        var responseData = error.response.data;
+        _this.error = responseData.message;
+      });
     }
   }),
   computed: {
