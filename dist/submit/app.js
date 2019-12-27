@@ -1914,7 +1914,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/wp-json/gm-frontend-gallery/v1/submit/', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
-          'X-WP-Nonce': this.getPostNonce
+          'X-WP-Nonce': this.postNonce
         }
       }).then(function (response) {})["catch"](function (error) {});
     }

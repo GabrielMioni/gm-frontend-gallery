@@ -54,7 +54,7 @@
         axios.post('/wp-json/gm-frontend-gallery/v1/submit/', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
-            'X-WP-Nonce': this.getPostNonce,
+            'X-WP-Nonce': this.postNonce,
           }
         })
         .then((response)=>{
