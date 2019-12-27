@@ -16338,7 +16338,12 @@ var defaultGalleryPostObject = function defaultGalleryPostObject() {
   return {
     content: '',
     imageUrl: null,
-    file: null
+    file: null,
+    errors: {
+      content: '',
+      imageUrl: '',
+      file: ''
+    }
   };
 };
 
