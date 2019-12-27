@@ -29,6 +29,7 @@
       ...mapActions([
         'SET_MAIN_TITLE',
         'SET_POST_NONCE',
+        'SET_POST_IMAGE_ERROR',
         'ADD_POST',
       ]),
       ...mapGetters([
@@ -42,11 +43,26 @@
       submitPosts() {
         let attachmentContents = [];
         let formData = new FormData();
+        let hasErrors = false;
 
-        this.galleryPosts.map((galleryPost) => {
+        this.galleryPosts.map((galleryPost, index) => {
           attachmentContents.push(galleryPost.content);
+          const imageFile = galleryPost.file;
+
+          if (imageFile === null) {
+            this.SET_POST_IMAGE_ERROR({
+              'index': index,
+              'error': 'An image is required',
+            });
+            hasErrors = true;
+          }
+
           formData.append('image_files[]', galleryPost.file);
         });
+
+        if (hasErrors) {
+          return;
+        }
 
         formData.append('mainTitle', this.mainTitle);
         formData.append('attachmentContents', JSON.stringify(attachmentContents));
