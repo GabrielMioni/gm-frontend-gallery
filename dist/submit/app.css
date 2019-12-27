@@ -55,8 +55,9 @@
 }
 
 #gm-frontend-submit .gm-frontend-submit-post-upload {
-  display: -webkit-box;
-  display: flex;
+  display: grid;
+  grid-template-rows: 1fr -webkit-min-content;
+  grid-template-rows: 1fr min-content;
   -webkit-box-align: center;
           align-items: center;
   -webkit-box-pack: center;

@@ -32,7 +32,8 @@
     }
 
     &-upload {
-      display: flex;
+      display: grid;
+      grid-template-rows: 1fr min-content;
       align-items: center;
       justify-content: center;
       height: 100%;
