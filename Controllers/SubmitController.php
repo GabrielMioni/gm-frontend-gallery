@@ -16,7 +16,7 @@ class SubmitController extends BaseController
             return $userIsRequired;
         }
 
-        $nonce = $nonce = $request->get_header('X-WP-Nonce');
+        $nonce = $request->get_header('X-WP-Nonce');
         $valid = wp_verify_nonce($nonce, $this->gallerySubmitNonce);
 
         if ($valid === false) {
