@@ -1918,8 +1918,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var formData = new FormData();
       var hasErrors = false;
       this.galleryPosts.map(function (galleryPost, index) {
-        attachmentContents.push(galleryPost.content);
+        var postContent = galleryPost.content;
         var imageFile = galleryPost.file;
+
+        if (postContent.trim() === '') {
+          _this.SET_POST_ERROR({
+            'index': index,
+            'type': 'content',
+            'error': 'Content is required'
+          });
+        } else {
+          attachmentContents.push(galleryPost.content);
+        }
 
         if (imageFile === null) {
           _this.SET_POST_ERROR({
@@ -1929,9 +1939,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           });
 
           hasErrors = true;
+        } else {
+          formData.append('image_files[]', galleryPost.file);
         }
-
-        formData.append('image_files[]', galleryPost.file);
       });
 
       if (this.mainTitle.trim() === '') {
@@ -2050,6 +2060,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2093,6 +2112,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return galleryPosts[this.index].content;
       },
       set: function set(value) {
+        var galleryPosts = this.getGalleryPosts();
+
+        if (galleryPosts[this.index].errors.content !== '') {
+          this.SET_POST_ERROR({
+            'index': this.index,
+            'type': 'content',
+            'error': ''
+          });
+        }
+
         return this.SET_POST_CONTENT({
           index: this.index,
           data: value
@@ -2114,6 +2143,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return this.SET_POST_ERROR({
           'index': this.index,
           'type': 'imageUrl',
+          'error': error
+        });
+      }
+    },
+    contentError: {
+      get: function get() {
+        var galleryPost = this.getGalleryPosts();
+        return galleryPost[this.index].errors.content;
+      },
+      set: function set(error) {
+        return this.SET_POST_ERROR({
+          'index': this.index,
+          'type': 'content',
           'error': error
         });
       }
@@ -3052,7 +3094,27 @@ var render = function() {
           _c(
             "label",
             { attrs: { for: _vm.setElementId("gm-frontend-submit-content") } },
-            [_vm._v("Content")]
+            [
+              _vm._v("\n                    Content\n                    "),
+              _c(
+                "div",
+                { staticClass: "gm-frontend-submit-error" },
+                [
+                  _c("transition", { attrs: { name: "fade" } }, [
+                    _vm.contentError !== ""
+                      ? _c("div", [
+                          _vm._v(
+                            "\n                                " +
+                              _vm._s(_vm.contentError) +
+                              "\n                            "
+                          )
+                        ])
+                      : _vm._e()
+                  ])
+                ],
+                1
+              )
+            ]
           ),
           _vm._v(" "),
           _c("textarea", {

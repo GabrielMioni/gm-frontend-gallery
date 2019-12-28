@@ -57,8 +57,18 @@
         let hasErrors = false;
 
         this.galleryPosts.map((galleryPost, index) => {
-          attachmentContents.push(galleryPost.content);
+          const postContent = galleryPost.content;
           const imageFile = galleryPost.file;
+
+          if (postContent.trim() === '') {
+            this.SET_POST_ERROR({
+              'index': index,
+              'type': 'content',
+              'error': 'Content is required',
+            });
+          } else {
+            attachmentContents.push(galleryPost.content);
+          }
 
           if (imageFile === null) {
             this.SET_POST_ERROR({
@@ -67,9 +77,9 @@
               'error': 'An image is required',
             });
             hasErrors = true;
+          } else {
+            formData.append('image_files[]', galleryPost.file);
           }
-
-          formData.append('image_files[]', galleryPost.file);
         });
 
         if (this.mainTitle.trim() === '') {

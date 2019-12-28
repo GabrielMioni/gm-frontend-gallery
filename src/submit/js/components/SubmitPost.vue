@@ -19,7 +19,16 @@
         <div class="gm-frontend-submit-post-right">
             <form>
                 <div class="gm-frontend-submit-form-group">
-                    <label :for="setElementId('gm-frontend-submit-content')">Content</label>
+                    <label :for="setElementId('gm-frontend-submit-content')">
+                        Content
+                        <div class="gm-frontend-submit-error">
+                            <transition name="fade">
+                                <div v-if="contentError !== ''">
+                                    {{ contentError }}
+                                </div>
+                            </transition>
+                        </div>
+                    </label>
                     <textarea v-model="postContent" :id="setElementId('gm-frontend-submit-content')">
                     </textarea>
                 </div>
@@ -85,6 +94,14 @@
           return galleryPosts[this.index].content;
         },
         set(value) {
+          const galleryPosts = this.getGalleryPosts();
+          if (galleryPosts[this.index].errors.content !== '') {
+            this.SET_POST_ERROR({
+              'index': this.index,
+              'type': 'content',
+              'error': '',
+            });
+          }
           return this.SET_POST_CONTENT({
             index: this.index,
             data: value,
@@ -106,6 +123,19 @@
           return this.SET_POST_ERROR({
             'index': this.index,
             'type': 'imageUrl',
+            'error': error,
+          });
+        }
+      },
+      contentError: {
+        get() {
+          const galleryPost = this.getGalleryPosts();
+          return galleryPost[this.index].errors.content;
+        },
+        set(error) {
+          return this.SET_POST_ERROR({
+            'index': this.index,
+            'type': 'content',
             'error': error,
           });
         }
