@@ -63,6 +63,18 @@
       ...mapGetters([
         'getGalleryPostData'
       ]),
+      getGalleryDataByIndex(data) {
+        let payload = {
+          index: this.index,
+          type: data.type,
+        };
+
+        if (typeof data.deepKey !== 'undefined') {
+          payload.deepKey = data.deepKey;
+        }
+
+        return this.galleryDataAccessor(payload);
+      },
       setElementId(idName) {
         return `${idName}-${this.index}`;
       },
@@ -95,14 +107,12 @@
     computed: {
       postContent: {
         get() {
-          return this.galleryDataAccessor({
-            index: this.index,
+          return this.getGalleryDataByIndex({
             type: 'content'
           });
         },
         set(value) {
-          const galleryPostContentError = this.galleryDataAccessor({
-            index: this.index,
+          const galleryPostContentError = this.getGalleryDataByIndex({
             type: 'errors',
             deepKey: 'content',
           });
@@ -121,16 +131,14 @@
       },
       uploadImageUrl: {
         get() {
-          return this.galleryDataAccessor({
-            index: this.index,
+          return this.getGalleryDataByIndex({
             type: 'imageUrl'
           });
         }
       },
       imageError: {
         get() {
-          return this.galleryDataAccessor({
-            index: this.index,
+          return this.getGalleryDataByIndex({
             type: 'errors',
             deepKey: 'imageUrl'
           });
@@ -145,8 +153,7 @@
       },
       contentError: {
         get() {
-          return this.galleryDataAccessor({
-            index: this.index,
+          return this.getGalleryDataByIndex({
             type: 'errors',
             deepKey: 'content'
           });

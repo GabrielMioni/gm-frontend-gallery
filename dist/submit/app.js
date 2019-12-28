@@ -2093,6 +2093,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['REMOVE_POST', 'SET_POST_CONTENT', 'SET_POST_IMAGE_DATA', 'SET_POST_ERROR']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(['getGalleryPostData']), {
+    getGalleryDataByIndex: function getGalleryDataByIndex(data) {
+      var payload = {
+        index: this.index,
+        type: data.type
+      };
+
+      if (typeof data.deepKey !== 'undefined') {
+        payload.deepKey = data.deepKey;
+      }
+
+      return this.galleryDataAccessor(payload);
+    },
     setElementId: function setElementId(idName) {
       return "".concat(idName, "-").concat(this.index);
     },
@@ -2124,14 +2136,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   computed: {
     postContent: {
       get: function get() {
-        return this.galleryDataAccessor({
-          index: this.index,
+        return this.getGalleryDataByIndex({
           type: 'content'
         });
       },
       set: function set(value) {
-        var galleryPostContentError = this.galleryDataAccessor({
-          index: this.index,
+        var galleryPostContentError = this.getGalleryDataByIndex({
           type: 'errors',
           deepKey: 'content'
         });
@@ -2152,16 +2162,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     uploadImageUrl: {
       get: function get() {
-        return this.galleryDataAccessor({
-          index: this.index,
+        return this.getGalleryDataByIndex({
           type: 'imageUrl'
         });
       }
     },
     imageError: {
       get: function get() {
-        return this.galleryDataAccessor({
-          index: this.index,
+        return this.getGalleryDataByIndex({
           type: 'errors',
           deepKey: 'imageUrl'
         });
@@ -2176,8 +2184,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     contentError: {
       get: function get() {
-        return this.galleryDataAccessor({
-          index: this.index,
+        return this.getGalleryDataByIndex({
           type: 'errors',
           deepKey: 'content'
         });
