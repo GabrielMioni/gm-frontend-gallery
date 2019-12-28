@@ -2155,11 +2155,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     imageError: {
       get: function get() {
-        var errors = this.$store.getters.getGalleryPostData({
+        return this.$store.getters.getGalleryPostData({
           index: this.index,
-          type: 'errors'
+          type: 'errors',
+          deepKey: 'imageUrl'
         });
-        return errors.imageUrl;
       },
       set: function set(error) {
         return this.SET_POST_ERROR({
@@ -2171,8 +2171,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     contentError: {
       get: function get() {
-        var galleryPost = this.getGalleryPosts();
-        return galleryPost[this.index].errors.content;
+        // const galleryPost = this.getGalleryPosts();
+        // return galleryPost[this.index].errors.content;
+        return this.$store.getters.getGalleryPostData({
+          index: this.index,
+          type: 'errors',
+          deepKey: 'content'
+        });
       },
       set: function set(error) {
         return this.SET_POST_ERROR({

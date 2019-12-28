@@ -124,11 +124,11 @@
       },
       imageError: {
         get() {
-          const errors = this.$store.getters.getGalleryPostData({
+          return this.$store.getters.getGalleryPostData({
             index: this.index,
-            type: 'errors'
+            type: 'errors',
+            deepKey: 'imageUrl'
           });
-          return errors.imageUrl;
         },
         set(error) {
           return this.SET_POST_ERROR({
@@ -140,8 +140,11 @@
       },
       contentError: {
         get() {
-          const galleryPost = this.getGalleryPosts();
-          return galleryPost[this.index].errors.content;
+          return this.$store.getters.getGalleryPostData({
+            index: this.index,
+            type: 'errors',
+            deepKey: 'content'
+          });
         },
         set(error) {
           return this.SET_POST_ERROR({
