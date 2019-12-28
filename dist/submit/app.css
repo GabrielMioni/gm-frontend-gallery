@@ -13,6 +13,13 @@
   margin: 0 0 0.5rem;
 }
 
+#gm-frontend-submit .gm-frontend-submit-form-group label {
+  display: grid;
+  grid-template-columns: -webkit-min-content 1fr;
+  grid-template-columns: min-content 1fr;
+  grid-column-gap: 1rem;
+}
+
 #gm-frontend-submit .gm-frontend-submit-button {
   width: 100%;
 }
