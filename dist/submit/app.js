@@ -2119,21 +2119,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   computed: {
     postContent: {
       get: function get() {
-        // const galleryPosts = this.getGalleryPosts();
-        // return galleryPosts[this.index].content;
         return this.$store.getters.getGalleryPostData({
           index: this.index,
           type: 'content'
         });
       },
       set: function set(value) {
-        var galleryPosts = this.getGalleryPosts();
+        var galleryPostsContentError = this.$store.getters.getGalleryPostData({
+          index: this.index,
+          type: 'errors',
+          deepKey: 'content'
+        });
 
-        if (galleryPosts[this.index].errors.content !== '') {
+        if (galleryPostsContentError !== '') {
           this.SET_POST_ERROR({
-            'index': this.index,
-            'type': 'content',
-            'error': ''
+            index: this.index,
+            type: 'content',
+            error: ''
           });
         }
 
@@ -16580,6 +16582,10 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     },
     getGalleryPostData: function getGalleryPostData(state) {
       return function (payload) {
+        if (typeof payload.deepKey !== 'undefined') {
+          return state.galleryPosts[payload.index][payload.type][payload.deepKey];
+        }
+
         return state.galleryPosts[payload.index][payload.type];
       };
     }

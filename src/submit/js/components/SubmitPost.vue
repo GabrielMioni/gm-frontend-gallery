@@ -96,12 +96,16 @@
           });
         },
         set(value) {
-          const galleryPosts = this.getGalleryPosts();
-          if (galleryPosts[this.index].errors.content !== '') {
+          const galleryPostsContentError = this.$store.getters.getGalleryPostData({
+            index: this.index,
+            type: 'errors',
+            deepKey: 'content',
+          });
+          if (galleryPostsContentError !== '') {
             this.SET_POST_ERROR({
-              'index': this.index,
-              'type': 'content',
-              'error': '',
+              index: this.index,
+              type: 'content',
+              error: '',
             });
           }
           return this.SET_POST_CONTENT({

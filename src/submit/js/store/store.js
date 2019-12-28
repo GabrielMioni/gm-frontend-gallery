@@ -16,7 +16,12 @@ export const store = new Vuex.Store({
     getPostNonce: state => state.postNonce,
     getGalleryPosts: state => state.galleryPosts,
     getMainTitleError: state => state.mainTitleError,
-    getGalleryPostData: state => (payload) => state.galleryPosts[payload.index][payload.type]
+    getGalleryPostData: state => (payload) => {
+      if (typeof payload.deepKey !== 'undefined') {
+        return state.galleryPosts[payload.index][payload.type][payload.deepKey];
+      }
+      return state.galleryPosts[payload.index][payload.type]
+    }
   },
   mutations: {
     setMainTitle(state, newTitle) {
