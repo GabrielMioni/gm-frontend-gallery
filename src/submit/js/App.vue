@@ -67,7 +67,7 @@
               'error': 'Content is required',
             });
           } else {
-            attachmentContents.push(galleryPost.content);
+            attachmentContents.push(postContent);
           }
 
           if (imageFile === null) {
@@ -78,7 +78,7 @@
             });
             hasErrors = true;
           } else {
-            formData.append('image_files[]', galleryPost.file);
+            formData.append('image_files[]', imageFile);
           }
         });
 

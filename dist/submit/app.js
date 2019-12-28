@@ -1911,7 +1911,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     addPost: function addPost() {
       return this.ADD_POST();
     },
-    createFormData: function createFormData() {
+    createValidateFormData: function createValidateFormData() {
       var _this = this;
 
       var attachmentContents = [];
@@ -1928,7 +1928,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             'error': 'Content is required'
           });
         } else {
-          attachmentContents.push(galleryPost.content);
+          attachmentContents.push(postContent);
         }
 
         if (imageFile === null) {
@@ -1940,7 +1940,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
           hasErrors = true;
         } else {
-          formData.append('image_files[]', galleryPost.file);
+          formData.append('image_files[]', imageFile);
         }
       });
 
@@ -1960,7 +1960,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     submitPosts: function submitPosts() {
       var _this2 = this;
 
-      var formData = this.createFormData();
+      var formData = this.createValidateFormData();
 
       if (formData === false) {
         return;
