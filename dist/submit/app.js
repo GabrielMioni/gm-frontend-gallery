@@ -1911,7 +1911,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     addPost: function addPost() {
       return this.ADD_POST();
     },
-    submitPosts: function submitPosts() {
+    createFormData: function createFormData() {
       var _this = this;
 
       var attachmentContents = [];
@@ -1950,11 +1950,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       if (hasErrors) {
-        return;
+        return false;
       }
 
       formData.append('mainTitle', this.mainTitle);
       formData.append('attachmentContents', JSON.stringify(attachmentContents));
+      return formData;
+    },
+    submitPosts: function submitPosts() {
+      var _this2 = this;
+
+      var formData = this.createFormData();
+
+      if (formData === false) {
+        return;
+      }
+
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/wp-json/gm-frontend-gallery/v1/submit/', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -1962,7 +1973,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       }).then(function (response) {})["catch"](function (error) {
         var responseData = error.response.data;
-        _this.error = responseData.message;
+        _this2.error = responseData.message;
       });
     }
   }),

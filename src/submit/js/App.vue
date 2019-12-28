@@ -51,7 +51,7 @@
       addPost() {
         return this.ADD_POST();
       },
-      submitPosts() {
+      createValidateFormData() {
         let attachmentContents = [];
         let formData = new FormData();
         let hasErrors = false;
@@ -88,11 +88,19 @@
         }
 
         if (hasErrors) {
-          return;
+          return false;
         }
 
         formData.append('mainTitle', this.mainTitle);
         formData.append('attachmentContents', JSON.stringify(attachmentContents));
+
+        return formData;
+      },
+      submitPosts() {
+        const formData = this.createValidateFormData();
+        if (formData === false) {
+          return;
+        }
 
         axios.post('/wp-json/gm-frontend-gallery/v1/submit/', formData, {
           headers: {
