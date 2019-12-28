@@ -29,7 +29,7 @@
       ...mapActions([
         'SET_MAIN_TITLE',
         'SET_POST_NONCE',
-        'SET_POST_IMAGE_ERROR',
+        'SET_POST_ERROR',
         'ADD_POST',
       ]),
       ...mapGetters([
@@ -50,8 +50,9 @@
           const imageFile = galleryPost.file;
 
           if (imageFile === null) {
-            this.SET_POST_IMAGE_ERROR({
+            this.SET_POST_ERROR({
               'index': index,
+              'type': 'imageUrl',
               'error': 'An image is required',
             });
             hasErrors = true;

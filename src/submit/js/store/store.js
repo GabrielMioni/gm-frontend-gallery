@@ -29,8 +29,8 @@ export const store = new Vuex.Store({
       state.galleryPosts[payload.index].imageUrl = payload.imageUrl;
       state.galleryPosts[payload.index].file = payload.file;
     },
-    setPostImageError(state, payload) {
-      state.galleryPosts[payload.index].errors.imageUrl = payload.error;
+    setPostError(state, payload) {
+      state.galleryPosts[payload.index].errors[payload.type] = payload.error;
     },
     addPost(state) {
       state.galleryPosts.push(defaultGalleryPostObject());
@@ -55,8 +55,8 @@ export const store = new Vuex.Store({
     SET_POST_IMAGE_DATA(context, payload) {
       context.commit('setPostImageData', payload)
     },
-    SET_POST_IMAGE_ERROR(context, payload) {
-      context.commit('setPostImageError', payload);
+    SET_POST_ERROR(context, payload) {
+      context.commit('setPostError', payload);
     },
     ADD_POST(context) {
       context.commit('addPost');

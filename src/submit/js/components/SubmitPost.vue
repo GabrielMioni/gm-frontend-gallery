@@ -38,7 +38,7 @@
         'REMOVE_POST',
         'SET_POST_CONTENT',
         'SET_POST_IMAGE_DATA',
-        'SET_POST_IMAGE_ERROR'
+        'SET_POST_ERROR'
       ]),
       ...mapGetters([
         'getGalleryPosts',
@@ -97,8 +97,9 @@
           return galleryPost[this.index].errors.imageUrl;
         },
         set(error) {
-          return this.SET_POST_IMAGE_ERROR({
+          return this.SET_POST_ERROR({
             'index': this.index,
+            'type': 'imageUrl',
             'error': error,
           });
         }

@@ -1898,7 +1898,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   components: {
     SubmitPost: _components_SubmitPost__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['SET_MAIN_TITLE', 'SET_POST_NONCE', 'SET_POST_IMAGE_ERROR', 'ADD_POST']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(['getMainTitle', 'getPostNonce', 'getGalleryPosts']), {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['SET_MAIN_TITLE', 'SET_POST_NONCE', 'SET_POST_ERROR', 'ADD_POST']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(['getMainTitle', 'getPostNonce', 'getGalleryPosts']), {
     addPost: function addPost() {
       return this.ADD_POST();
     },
@@ -1913,8 +1913,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         var imageFile = galleryPost.file;
 
         if (imageFile === null) {
-          _this.SET_POST_IMAGE_ERROR({
+          _this.SET_POST_ERROR({
             'index': index,
+            'type': 'imageUrl',
             'error': 'An image is required'
           });
 
@@ -2024,7 +2025,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   props: {
     index: Number
   },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['REMOVE_POST', 'SET_POST_CONTENT', 'SET_POST_IMAGE_DATA', 'SET_POST_IMAGE_ERROR']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(['getGalleryPosts']), {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['REMOVE_POST', 'SET_POST_CONTENT', 'SET_POST_IMAGE_DATA', 'SET_POST_ERROR']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(['getGalleryPosts']), {
     setElementId: function setElementId(idName) {
       return "".concat(idName, "-").concat(this.index);
     },
@@ -2078,8 +2079,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return galleryPost[this.index].errors.imageUrl;
       },
       set: function set(error) {
-        return this.SET_POST_IMAGE_ERROR({
+        return this.SET_POST_ERROR({
           'index': this.index,
+          'type': 'imageUrl',
           'error': error
         });
       }
@@ -16437,9 +16439,16 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
       state.galleryPosts[payload.index].imageUrl = payload.imageUrl;
       state.galleryPosts[payload.index].file = payload.file;
     },
-    setPostImageError: function setPostImageError(state, payload) {
+    setPostError: function setPostError(state, payload) {
+      state.galleryPosts[payload.index].errors[payload.type] = payload.error;
+    },
+
+    /*setPostImageError(state, payload) {
       state.galleryPosts[payload.index].errors.imageUrl = payload.error;
     },
+    setPostContentError(state, payload) {
+      state.galleryPosts[payload.index].errors.content = payload.error;
+    },*/
     addPost: function addPost(state) {
       state.galleryPosts.push(Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["defaultGalleryPostObject"])());
     },
@@ -16464,8 +16473,12 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     SET_POST_IMAGE_DATA: function SET_POST_IMAGE_DATA(context, payload) {
       context.commit('setPostImageData', payload);
     },
-    SET_POST_IMAGE_ERROR: function SET_POST_IMAGE_ERROR(context, payload) {
+
+    /*SET_POST_IMAGE_ERROR(context, payload) {
       context.commit('setPostImageError', payload);
+    },*/
+    SET_POST_ERROR: function SET_POST_ERROR(context, payload) {
+      context.commit('setPostError', payload);
     },
     ADD_POST: function ADD_POST(context) {
       context.commit('addPost');
