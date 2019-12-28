@@ -2141,14 +2141,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     uploadImageUrl: {
       get: function get() {
-        var galleryPost = this.$store.getters.getGalleryPostByIndex(this.index);
-        return galleryPost.imageUrl;
+        return this.$store.getters.getGalleryPostData({
+          index: this.index,
+          type: 'imageUrl'
+        });
       }
     },
     imageError: {
       get: function get() {
-        var galleryPost = this.getGalleryPosts();
-        return galleryPost[this.index].errors.imageUrl;
+        // const galleryPost = this.getGalleryPosts();
+        // return galleryPost[this.index].errors.imageUrl;
+        var errors = this.$store.getters.getGalleryPostData({
+          index: this.index,
+          type: 'errors'
+        });
+        return errors.imageUrl;
       },
       set: function set(error) {
         return this.SET_POST_ERROR({
@@ -16569,9 +16576,9 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     getMainTitleError: function getMainTitleError(state) {
       return state.mainTitleError;
     },
-    getGalleryPostByIndex: function getGalleryPostByIndex(state) {
-      return function (index) {
-        return state.galleryPosts[index];
+    getGalleryPostData: function getGalleryPostData(state) {
+      return function (payload) {
+        return state.galleryPosts[payload.index][payload.type];
       };
     }
   },

@@ -110,14 +110,19 @@
       },
       uploadImageUrl: {
         get() {
-          const galleryPost = this.$store.getters.getGalleryPostByIndex(this.index);
-          return galleryPost.imageUrl;
+          return this.$store.getters.getGalleryPostData({
+            index: this.index,
+            type: 'imageUrl'
+          });
         }
       },
       imageError: {
         get() {
-          const galleryPost = this.getGalleryPosts();
-          return galleryPost[this.index].errors.imageUrl;
+          const errors = this.$store.getters.getGalleryPostData({
+            index: this.index,
+            type: 'errors'
+          });
+          return errors.imageUrl;
         },
         set(error) {
           return this.SET_POST_ERROR({
