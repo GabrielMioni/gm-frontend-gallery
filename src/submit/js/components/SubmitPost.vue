@@ -37,7 +37,8 @@
       ...mapActions([
         'REMOVE_POST',
         'SET_POST_CONTENT',
-        'SET_POST_IMAGE_DATA'
+        'SET_POST_IMAGE_DATA',
+        'SET_POST_IMAGE_ERROR'
       ]),
       ...mapGetters([
         'getGalleryPosts',
@@ -58,6 +59,11 @@
           imageUrl: fileUrl,
           file: file,
         });
+
+        if (this.imageError !== '') {
+          this.imageError = '';
+        }
+
         const fileInputForm = this.$refs.fileInputForm;
         fileInputForm.reset();
       },
@@ -89,6 +95,12 @@
         get() {
           const galleryPost = this.getGalleryPosts();
           return galleryPost[this.index].errors.imageUrl;
+        },
+        set(error) {
+          return this.SET_POST_IMAGE_ERROR({
+            'index': this.index,
+            'error': error,
+          });
         }
       }
     },

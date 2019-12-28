@@ -1898,7 +1898,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   components: {
     SubmitPost: _components_SubmitPost__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['SET_MAIN_TITLE', 'SET_POST_NONCE', 'ADD_POST']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(['getMainTitle', 'getPostNonce', 'getGalleryPosts']), {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['SET_MAIN_TITLE', 'SET_POST_NONCE', 'SET_POST_IMAGE_ERROR', 'ADD_POST']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(['getMainTitle', 'getPostNonce', 'getGalleryPosts']), {
     addPost: function addPost() {
       return this.ADD_POST();
     },
@@ -1907,10 +1907,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       var attachmentContents = [];
       var formData = new FormData();
-      this.galleryPosts.map(function (galleryPost) {
+      var hasErrors = false;
+      this.galleryPosts.map(function (galleryPost, index) {
         attachmentContents.push(galleryPost.content);
+        var imageFile = galleryPost.file;
+
+        if (imageFile === null) {
+          _this.SET_POST_IMAGE_ERROR({
+            'index': index,
+            'error': 'An image is required'
+          });
+
+          hasErrors = true;
+        }
+
         formData.append('image_files[]', galleryPost.file);
       });
+
+      if (hasErrors) {
+        return;
+      }
+
       formData.append('mainTitle', this.mainTitle);
       formData.append('attachmentContents', JSON.stringify(attachmentContents));
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/wp-json/gm-frontend-gallery/v1/submit/', formData, {
@@ -1999,6 +2016,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2006,7 +2024,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   props: {
     index: Number
   },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['REMOVE_POST', 'SET_POST_CONTENT', 'SET_POST_IMAGE_DATA']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(['getGalleryPosts']), {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['REMOVE_POST', 'SET_POST_CONTENT', 'SET_POST_IMAGE_DATA', 'SET_POST_IMAGE_ERROR']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(['getGalleryPosts']), {
     setElementId: function setElementId(idName) {
       return "".concat(idName, "-").concat(this.index);
     },
@@ -2022,6 +2040,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         imageUrl: fileUrl,
         file: file
       });
+
+      if (this.imageError !== '') {
+        this.imageError = '';
+      }
+
       var fileInputForm = this.$refs.fileInputForm;
       fileInputForm.reset();
     },
@@ -2047,6 +2070,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       get: function get() {
         var galleryPost = this.getGalleryPosts();
         return galleryPost[this.index].imageUrl;
+      }
+    },
+    imageError: {
+      get: function get() {
+        var galleryPost = this.getGalleryPosts();
+        return galleryPost[this.index].errors.imageUrl;
+      },
+      set: function set(error) {
+        return this.SET_POST_IMAGE_ERROR({
+          'index': this.index,
+          'error': error
+        });
       }
     }
   },
@@ -2932,7 +2967,11 @@ var render = function() {
             ? _c("div", [
                 _vm._v("This is the stone on which I will build my empire.")
               ])
-            : _c("img", { attrs: { src: _vm.uploadImageUrl, alt: "" } })
+            : _c("img", { attrs: { src: _vm.uploadImageUrl, alt: "" } }),
+          _vm._v(" "),
+          _c("div", { staticClass: "gm-frontend-submit-post-error" }, [
+            _vm._v(_vm._s(_vm.imageError))
+          ])
         ]
       )
     ]),
@@ -16398,6 +16437,9 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
       state.galleryPosts[payload.index].imageUrl = payload.imageUrl;
       state.galleryPosts[payload.index].file = payload.file;
     },
+    setPostImageError: function setPostImageError(state, payload) {
+      state.galleryPosts[payload.index].errors.imageUrl = payload.error;
+    },
     addPost: function addPost(state) {
       state.galleryPosts.push(Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["defaultGalleryPostObject"])());
     },
@@ -16421,6 +16463,9 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     },
     SET_POST_IMAGE_DATA: function SET_POST_IMAGE_DATA(context, payload) {
       context.commit('setPostImageData', payload);
+    },
+    SET_POST_IMAGE_ERROR: function SET_POST_IMAGE_ERROR(context, payload) {
+      context.commit('setPostImageError', payload);
     },
     ADD_POST: function ADD_POST(context) {
       context.commit('addPost');
