@@ -1890,6 +1890,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 
 
@@ -1898,7 +1901,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   components: {
     SubmitPost: _components_SubmitPost__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['SET_MAIN_TITLE', 'SET_POST_NONCE', 'SET_POST_ERROR', 'ADD_POST']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(['getMainTitle', 'getPostNonce', 'getGalleryPosts']), {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['SET_MAIN_TITLE', 'SET_POST_NONCE', 'SET_POST_ERROR', 'SET_MAIN_TITLE_ERROR', 'ADD_POST']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(['getMainTitle', 'getPostNonce', 'getMainTitleError', 'getGalleryPosts']), {
     addPost: function addPost() {
       return this.ADD_POST();
     },
@@ -1925,6 +1928,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         formData.append('image_files[]', galleryPost.file);
       });
 
+      if (this.mainTitle.trim() === '') {
+        this.SET_MAIN_TITLE_ERROR('A title is required');
+        hasErrors = true;
+      }
+
       if (hasErrors) {
         return;
       }
@@ -1948,6 +1956,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return this.getMainTitle();
       },
       set: function set(newTitle) {
+        if (this.getMainTitleError() !== '') {
+          this.SET_MAIN_TITLE_ERROR('');
+        }
+
         return this.SET_MAIN_TITLE(newTitle);
       }
     },
@@ -1962,6 +1974,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     galleryPosts: {
       get: function get() {
         return this.getGalleryPosts();
+      }
+    },
+    titleError: {
+      get: function get() {
+        return this.getMainTitleError();
+      },
+      set: function set(error) {
+        return this.SET_MAIN_TITLE_ERROR(error);
       }
     }
   },
@@ -2863,7 +2883,11 @@ var render = function() {
     [
       _c("form", [
         _c("div", { staticClass: "gm-frontend-submit-form-group" }, [
-          _c("label", { attrs: { for: "post_title" } }, [_vm._v("Title")]),
+          _c("label", { attrs: { for: "post_title" } }, [
+            _c("span", [_vm._v("Title")]),
+            _vm._v(" "),
+            _c("span", [_vm._v(_vm._s(_vm.titleError))])
+          ]),
           _vm._v(" "),
           _c("input", {
             directives: [
@@ -16411,6 +16435,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
 var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   state: {
     mainTitle: '',
+    mainTitleError: '',
     galleryPosts: [Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["defaultGalleryPostObject"])()],
     postNonce: null
   },
@@ -16423,6 +16448,9 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     },
     getGalleryPosts: function getGalleryPosts(state) {
       return state.galleryPosts;
+    },
+    getMainTitleError: function getMainTitleError(state) {
+      return state.mainTitleError;
     }
   },
   mutations: {
@@ -16442,13 +16470,9 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     setPostError: function setPostError(state, payload) {
       state.galleryPosts[payload.index].errors[payload.type] = payload.error;
     },
-
-    /*setPostImageError(state, payload) {
-      state.galleryPosts[payload.index].errors.imageUrl = payload.error;
+    setMainTitleError: function setMainTitleError(state, error) {
+      state.mainTitleError = error;
     },
-    setPostContentError(state, payload) {
-      state.galleryPosts[payload.index].errors.content = payload.error;
-    },*/
     addPost: function addPost(state) {
       state.galleryPosts.push(Object(_helpers__WEBPACK_IMPORTED_MODULE_2__["defaultGalleryPostObject"])());
     },
@@ -16473,12 +16497,11 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     SET_POST_IMAGE_DATA: function SET_POST_IMAGE_DATA(context, payload) {
       context.commit('setPostImageData', payload);
     },
-
-    /*SET_POST_IMAGE_ERROR(context, payload) {
-      context.commit('setPostImageError', payload);
-    },*/
     SET_POST_ERROR: function SET_POST_ERROR(context, payload) {
       context.commit('setPostError', payload);
+    },
+    SET_MAIN_TITLE_ERROR: function SET_MAIN_TITLE_ERROR(context, error) {
+      context.commit('setMainTitleError', error);
     },
     ADD_POST: function ADD_POST(context) {
       context.commit('addPost');

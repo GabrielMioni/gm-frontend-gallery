@@ -2,7 +2,10 @@
     <div id="gm-frontend-submit">
         <form>
             <div class="gm-frontend-submit-form-group">
-                <label for="post_title">Title</label>
+                <label for="post_title">
+                    <span>Title</span>
+                    <span>{{ titleError  }}</span>
+                </label>
                 <input v-model="mainTitle" type="text" name="post_title" id="post_title">
             </div>
         </form>
@@ -30,11 +33,13 @@
         'SET_MAIN_TITLE',
         'SET_POST_NONCE',
         'SET_POST_ERROR',
+        'SET_MAIN_TITLE_ERROR',
         'ADD_POST',
       ]),
       ...mapGetters([
         'getMainTitle',
         'getPostNonce',
+        'getMainTitleError',
         'getGalleryPosts'
       ]),
       addPost() {
@@ -60,6 +65,11 @@
 
           formData.append('image_files[]', galleryPost.file);
         });
+
+        if (this.mainTitle.trim() === '') {
+          this.SET_MAIN_TITLE_ERROR('A title is required');
+          hasErrors = true;
+        }
 
         if (hasErrors) {
           return;
@@ -88,6 +98,9 @@
           return this.getMainTitle();
         },
         set(newTitle) {
+          if (this.getMainTitleError() !== '') {
+            this.SET_MAIN_TITLE_ERROR('');
+          }
           return this.SET_MAIN_TITLE(newTitle);
         }
       },
@@ -102,6 +115,14 @@
       galleryPosts: {
         get() {
           return this.getGalleryPosts();
+        }
+      },
+      titleError: {
+        get() {
+          return this.getMainTitleError();
+        },
+        set(error) {
+          return this.SET_MAIN_TITLE_ERROR(error);
         }
       }
     },

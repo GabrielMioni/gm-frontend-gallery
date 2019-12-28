@@ -7,6 +7,7 @@ Vue.use(Vuex);
 export const store = new Vuex.Store({
   state: {
     mainTitle: '',
+    mainTitleError: '',
     galleryPosts: [defaultGalleryPostObject()],
     postNonce: null,
   },
@@ -14,6 +15,7 @@ export const store = new Vuex.Store({
     getMainTitle: state => state.mainTitle,
     getPostNonce: state => state.postNonce,
     getGalleryPosts: state => state.galleryPosts,
+    getMainTitleError: state => state.mainTitleError,
   },
   mutations: {
     setMainTitle(state, newTitle) {
@@ -31,6 +33,9 @@ export const store = new Vuex.Store({
     },
     setPostError(state, payload) {
       state.galleryPosts[payload.index].errors[payload.type] = payload.error;
+    },
+    setMainTitleError(state, error) {
+      state.mainTitleError = error;
     },
     addPost(state) {
       state.galleryPosts.push(defaultGalleryPostObject());
@@ -57,6 +62,9 @@ export const store = new Vuex.Store({
     },
     SET_POST_ERROR(context, payload) {
       context.commit('setPostError', payload);
+    },
+    SET_MAIN_TITLE_ERROR(context, error) {
+      context.commit('setMainTitleError', error);
     },
     ADD_POST(context) {
       context.commit('addPost');
