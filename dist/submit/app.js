@@ -2087,7 +2087,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   props: {
     index: Number
   },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['REMOVE_POST', 'SET_POST_CONTENT', 'SET_POST_IMAGE_DATA', 'SET_POST_ERROR']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(['getGalleryPosts']), {
+  data: function data() {
+    return {
+      galleryDataAccessor: this.getGalleryPostData()
+    };
+  },
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['REMOVE_POST', 'SET_POST_CONTENT', 'SET_POST_IMAGE_DATA', 'SET_POST_ERROR']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(['getGalleryPosts', 'getGalleryPostData']), {
     setElementId: function setElementId(idName) {
       return "".concat(idName, "-").concat(this.index);
     },
@@ -2119,19 +2124,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   computed: {
     postContent: {
       get: function get() {
-        return this.$store.getters.getGalleryPostData({
+        return this.galleryDataAccessor({
           index: this.index,
           type: 'content'
         });
       },
       set: function set(value) {
-        var galleryPostsContentError = this.$store.getters.getGalleryPostData({
+        var galleryPostContentError = this.galleryDataAccessor({
           index: this.index,
           type: 'errors',
           deepKey: 'content'
         });
 
-        if (galleryPostsContentError !== '') {
+        if (galleryPostContentError !== '') {
           this.SET_POST_ERROR({
             index: this.index,
             type: 'content',
@@ -2147,7 +2152,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     uploadImageUrl: {
       get: function get() {
-        return this.$store.getters.getGalleryPostData({
+        return this.galleryDataAccessor({
           index: this.index,
           type: 'imageUrl'
         });
@@ -2155,7 +2160,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     imageError: {
       get: function get() {
-        return this.$store.getters.getGalleryPostData({
+        return this.galleryDataAccessor({
           index: this.index,
           type: 'errors',
           deepKey: 'imageUrl'
@@ -2171,9 +2176,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     contentError: {
       get: function get() {
-        // const galleryPost = this.getGalleryPosts();
-        // return galleryPost[this.index].errors.content;
-        return this.$store.getters.getGalleryPostData({
+        return this.galleryDataAccessor({
           index: this.index,
           type: 'errors',
           deepKey: 'content'

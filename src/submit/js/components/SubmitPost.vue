@@ -48,6 +48,11 @@
     props: {
       index: Number,
     },
+    data() {
+      return {
+        galleryDataAccessor: this.getGalleryPostData(),
+      }
+    },
     methods: {
       ...mapActions([
         'REMOVE_POST',
@@ -57,6 +62,7 @@
       ]),
       ...mapGetters([
         'getGalleryPosts',
+        'getGalleryPostData'
       ]),
       setElementId(idName) {
         return `${idName}-${this.index}`;
@@ -90,18 +96,18 @@
     computed: {
       postContent: {
         get() {
-          return this.$store.getters.getGalleryPostData({
+          return this.galleryDataAccessor({
             index: this.index,
             type: 'content'
           });
         },
         set(value) {
-          const galleryPostsContentError = this.$store.getters.getGalleryPostData({
+          const galleryPostContentError = this.galleryDataAccessor({
             index: this.index,
             type: 'errors',
             deepKey: 'content',
           });
-          if (galleryPostsContentError !== '') {
+          if (galleryPostContentError !== '') {
             this.SET_POST_ERROR({
               index: this.index,
               type: 'content',
@@ -116,7 +122,7 @@
       },
       uploadImageUrl: {
         get() {
-          return this.$store.getters.getGalleryPostData({
+          return this.galleryDataAccessor({
             index: this.index,
             type: 'imageUrl'
           });
@@ -124,7 +130,7 @@
       },
       imageError: {
         get() {
-          return this.$store.getters.getGalleryPostData({
+          return this.galleryDataAccessor({
             index: this.index,
             type: 'errors',
             deepKey: 'imageUrl'
@@ -140,7 +146,7 @@
       },
       contentError: {
         get() {
-          return this.$store.getters.getGalleryPostData({
+          return this.galleryDataAccessor({
             index: this.index,
             type: 'errors',
             deepKey: 'content'
