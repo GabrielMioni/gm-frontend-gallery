@@ -2168,9 +2168,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       },
       set: function set(error) {
         return this.SET_POST_ERROR({
-          'index': this.index,
-          'type': 'imageUrl',
-          'error': error
+          index: this.index,
+          type: 'imageUrl',
+          error: error
         });
       }
     },
@@ -2184,9 +2184,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       },
       set: function set(error) {
         return this.SET_POST_ERROR({
-          'index': this.index,
-          'type': 'content',
-          'error': error
+          index: this.index,
+          type: 'content',
+          error: error
         });
       }
     }

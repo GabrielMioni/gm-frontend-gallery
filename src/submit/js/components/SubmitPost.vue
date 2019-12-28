@@ -137,9 +137,9 @@
         },
         set(error) {
           return this.SET_POST_ERROR({
-            'index': this.index,
-            'type': 'imageUrl',
-            'error': error,
+            index: this.index,
+            type: 'imageUrl',
+            error: error,
           });
         }
       },
@@ -153,9 +153,9 @@
         },
         set(error) {
           return this.SET_POST_ERROR({
-            'index': this.index,
-            'type': 'content',
-            'error': error,
+            index: this.index,
+            type: 'content',
+            error: error,
           });
         }
       }
