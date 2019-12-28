@@ -61,7 +61,6 @@
         'SET_POST_ERROR'
       ]),
       ...mapGetters([
-        'getGalleryPosts',
         'getGalleryPostData'
       ]),
       setElementId(idName) {
