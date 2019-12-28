@@ -22,5 +22,10 @@
     &-button {
       width: 100%;
     }
+    &-error {
+      font-style: italic;
+      color: #8B0000;
+      height: 2rem;
+    }
   }
 }

@@ -20,6 +20,8 @@
     &-left {
       grid-column: 1;
       grid-row: 1 / span 3;
+      display: grid;
+      grid-template-rows: 1fr min-content;
     }
 
     &-right {
@@ -32,11 +34,10 @@
     }
 
     &-upload {
-      display: grid;
-      grid-template-rows: 1fr min-content;
+      display: flex;
       align-items: center;
       justify-content: center;
-      height: 100%;
+      height: 15rem;
 
       img {
         max-height: 300px;
