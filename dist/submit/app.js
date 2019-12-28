@@ -1893,6 +1893,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2011,6 +2017,12 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2886,7 +2898,24 @@ var render = function() {
           _c("label", { attrs: { for: "post_title" } }, [
             _c("span", [_vm._v("Title")]),
             _vm._v(" "),
-            _c("span", [_vm._v(_vm._s(_vm.titleError))])
+            _c(
+              "span",
+              { staticClass: "gm-frontend-submit-error" },
+              [
+                _c("transition", { attrs: { name: "fade" } }, [
+                  _vm.titleError !== ""
+                    ? _c("div", [
+                        _vm._v(
+                          "\n                            " +
+                            _vm._s(_vm.titleError) +
+                            "\n                        "
+                        )
+                      ])
+                    : _vm._e()
+                ])
+              ],
+              1
+            )
           ]),
           _vm._v(" "),
           _c("input", {
@@ -2993,12 +3022,27 @@ var render = function() {
             ? _c("div", [
                 _vm._v("This is the stone on which I will build my empire.")
               ])
-            : _c("img", { attrs: { src: _vm.uploadImageUrl, alt: "" } }),
-          _vm._v(" "),
-          _c("div", { staticClass: "gm-frontend-submit-post-error" }, [
-            _vm._v(_vm._s(_vm.imageError))
-          ])
+            : _c("img", { attrs: { src: _vm.uploadImageUrl, alt: "" } })
         ]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "gm-frontend-submit-error" },
+        [
+          _c("transition", { attrs: { name: "fade" } }, [
+            _vm.imageError !== ""
+              ? _c("div", [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(_vm.imageError) +
+                      "\n                "
+                  )
+                ])
+              : _vm._e()
+          ])
+        ],
+        1
       )
     ]),
     _vm._v(" "),

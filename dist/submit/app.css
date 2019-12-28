@@ -24,6 +24,12 @@
   width: 100%;
 }
 
+#gm-frontend-submit .gm-frontend-submit-error {
+  font-style: italic;
+  color: #8B0000;
+  height: 2rem;
+}
+
 #gm-frontend-submit .gm-frontend-submit-post {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -50,6 +56,9 @@
 #gm-frontend-submit .gm-frontend-submit-post-left {
   grid-column: 1;
   grid-row: 1/span 3;
+  display: grid;
+  grid-template-rows: 1fr -webkit-min-content;
+  grid-template-rows: 1fr min-content;
 }
 
 #gm-frontend-submit .gm-frontend-submit-post-right {
@@ -62,14 +71,13 @@
 }
 
 #gm-frontend-submit .gm-frontend-submit-post-upload {
-  display: grid;
-  grid-template-rows: 1fr -webkit-min-content;
-  grid-template-rows: 1fr min-content;
+  display: -webkit-box;
+  display: flex;
   -webkit-box-align: center;
           align-items: center;
   -webkit-box-pack: center;
           justify-content: center;
-  height: 100%;
+  height: 15rem;
 }
 
 #gm-frontend-submit .gm-frontend-submit-post-upload img {
