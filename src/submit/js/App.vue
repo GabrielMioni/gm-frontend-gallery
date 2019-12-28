@@ -4,7 +4,13 @@
             <div class="gm-frontend-submit-form-group">
                 <label for="post_title">
                     <span>Title</span>
-                    <span>{{ titleError  }}</span>
+                    <span class="gm-frontend-submit-error">
+                        <transition name="fade">
+                            <div v-if="titleError !== ''">
+                                {{ titleError }}
+                            </div>
+                        </transition>
+                    </span>
                 </label>
                 <input v-model="mainTitle" type="text" name="post_title" id="post_title">
             </div>
