@@ -90,8 +90,10 @@
     computed: {
       postContent: {
         get() {
-          const galleryPosts = this.getGalleryPosts();
-          return galleryPosts[this.index].content;
+          return this.$store.getters.getGalleryPostData({
+            index: this.index,
+            type: 'content'
+          });
         },
         set(value) {
           const galleryPosts = this.getGalleryPosts();
