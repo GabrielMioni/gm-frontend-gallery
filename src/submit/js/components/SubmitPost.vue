@@ -7,7 +7,13 @@
             <div class="gm-frontend-submit-post-upload" @click="openFileInput" :ref="'dropFile'">
                 <div v-if="uploadImageUrl === null">This is the stone on which I will build my empire.</div>
                 <img v-else :src="uploadImageUrl" alt="">
-                <div class="gm-frontend-submit-post-error">{{ imageError }}</div>
+            </div>
+            <div class="gm-frontend-submit-error">
+                <transition name="fade">
+                    <div v-if="imageError !== ''">
+                        {{ imageError }}
+                    </div>
+                </transition>
             </div>
         </div>
         <div class="gm-frontend-submit-post-right">
