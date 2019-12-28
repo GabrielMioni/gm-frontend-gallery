@@ -110,8 +110,8 @@
       },
       uploadImageUrl: {
         get() {
-          const galleryPost = this.getGalleryPosts();
-          return galleryPost[this.index].imageUrl;
+          const galleryPost = this.$store.getters.getGalleryPostByIndex(this.index);
+          return galleryPost.imageUrl;
         }
       },
       imageError: {

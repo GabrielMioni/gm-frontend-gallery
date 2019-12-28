@@ -16,6 +16,7 @@ export const store = new Vuex.Store({
     getPostNonce: state => state.postNonce,
     getGalleryPosts: state => state.galleryPosts,
     getMainTitleError: state => state.mainTitleError,
+    getGalleryPostByIndex: state => (index) => state.galleryPosts[index]
   },
   mutations: {
     setMainTitle(state, newTitle) {
