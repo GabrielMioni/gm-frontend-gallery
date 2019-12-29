@@ -5,8 +5,8 @@
                 <slot>Please confirm</slot>
             </div>
             <div>
-                <button>Cancel</button>
-                <button>Ok</button>
+                <button @click.stop="confirmNo">Cancel</button>
+                <button @click.stop="confirmYes">Ok</button>
             </div>
         </div>
     </div>
@@ -14,10 +14,14 @@
 
 <script>
   export default {
-    name: "ConfirmationModal"
+    name: "ConfirmationModal",
+    methods: {
+      confirmNo() {
+        this.$emit('confirmNo');
+      },
+      confirmYes() {
+        this.$emit('confirmYes');
+      }
+    }
   }
 </script>
-
-<style scoped>
-
-</style>
