@@ -24,6 +24,7 @@
         </transition-group>
         <button @click.stop="addPost">Add A Post!</button>
         <button @click.stop="submitPosts">Submit</button>
+        <portal-target name="modals"></portal-target>
     </div>
 </template>
 
