@@ -1,7 +1,8 @@
 <template>
     <div class="gm-frontend-submit-post">
         <div class="gm-frontend-submit-post-trash gm-frontend-submit-post-trash--full">
-            <button @click="trashPost">x</button>
+<!--            <button @click="trashPost">x</button>-->
+            <trash-post-button></trash-post-button>
         </div>
         <div class="gm-frontend-submit-post-left">
             <div class="gm-frontend-submit-post-upload" @click="openFileInput" :ref="'dropFile'">
@@ -46,10 +47,12 @@
 </template>
 
 <script>
+  import TrashPostButton from "./TrashPostButton";
   import dragDrop from "drag-drop";
   import { mapGetters, mapActions } from 'vuex';
   export default {
     name: "SubmitPost",
+    components: {TrashPostButton},
     props: {
       index: Number,
     },
