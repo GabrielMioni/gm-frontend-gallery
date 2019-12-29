@@ -3,18 +3,18 @@ export const mainDataModule = {
   state: {
     mainTitle: '',
     mainTitleError: '',
-    postNonce: null,
+    mainNonce: null,
   },
   getters: {
     getMainTitle: state => state.mainTitle,
-    getPostNonce: state => state.postNonce,
+    getMainNonce: state => state.postNonce,
     getMainTitleError: state => state.mainTitleError,
   },
   mutations: {
     setMainTitle(state, newTitle) {
       state.mainTitle = newTitle;
     },
-    setPostNonce(state, nonce) {
+    setMainNonce(state, nonce) {
       state.postNonce = nonce;
     },
     setMainTitleError(state, error) {
@@ -25,8 +25,8 @@ export const mainDataModule = {
     SET_MAIN_TITLE(context, newTitle) {
       context.commit('setMainTitle', newTitle);
     },
-    SET_POST_NONCE(context, postNonce) {
-      context.commit('setPostNonce', postNonce);
+    SET_MAIN_NONCE(context, postNonce) {
+      context.commit('setMainNonce', postNonce);
     },
     SET_MAIN_TITLE_ERROR(context, error) {
       context.commit('setMainTitleError', error);

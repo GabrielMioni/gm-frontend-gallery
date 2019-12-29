@@ -38,14 +38,14 @@
       ...mapActions({
         SET_MAIN_TITLE: 'mainData/SET_MAIN_TITLE',
         SET_MAIN_TITLE_ERROR: 'mainData/SET_MAIN_TITLE_ERROR',
-        SET_POST_NONCE: 'mainData/SET_POST_NONCE',
+        SET_MAIN_NONCE: 'mainData/SET_MAIN_NONCE',
         ADD_POST: 'postData/ADD_POST',
         SET_POST_ERROR: 'postData/SET_POST_ERROR',
       }),
       ...mapGetters({
         getMainTitle: 'mainData/getMainTitle',
         getMainTitleError: 'mainData/getMainTitleError',
-        getPostNonce: 'mainData/getPostNonce',
+        getMainNonce: 'mainData/getMainNonce',
         getGalleryPosts: 'postData/getGalleryPosts'
       }),
       addPost() {
@@ -105,7 +105,7 @@
         axios.post('/wp-json/gm-frontend-gallery/v1/submit/', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
-            'X-WP-Nonce': this.postNonce,
+            'X-WP-Nonce': this.mainNonce,
           }
         })
         .then((response)=>{
@@ -128,12 +128,12 @@
           return this.SET_MAIN_TITLE(newTitle);
         }
       },
-      postNonce: {
+      mainNonce: {
         get() {
-          return this.getPostNonce();
+          return this.getMainNonce();
         },
         set(newPostNonce) {
-          return this.SET_POST_NONCE(newPostNonce);
+          return this.SET_MAIN_NONCE(newPostNonce);
         }
       },
       galleryPosts: {
@@ -152,7 +152,7 @@
     },
     created() {
       const mount = document.getElementById('gm-frontend-submit');
-      this.postNonce = mount.dataset.nonce;
+      this.mainNonce = mount.dataset.nonce;
     },
   }
 </script>

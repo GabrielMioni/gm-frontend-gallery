@@ -1910,13 +1910,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])({
     SET_MAIN_TITLE: 'mainData/SET_MAIN_TITLE',
     SET_MAIN_TITLE_ERROR: 'mainData/SET_MAIN_TITLE_ERROR',
-    SET_POST_NONCE: 'mainData/SET_POST_NONCE',
+    SET_MAIN_NONCE: 'mainData/SET_MAIN_NONCE',
     ADD_POST: 'postData/ADD_POST',
     SET_POST_ERROR: 'postData/SET_POST_ERROR'
   }), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])({
     getMainTitle: 'mainData/getMainTitle',
     getMainTitleError: 'mainData/getMainTitleError',
-    getPostNonce: 'mainData/getPostNonce',
+    getMainNonce: 'mainData/getMainNonce',
     getGalleryPosts: 'postData/getGalleryPosts'
   }), {
     addPost: function addPost() {
@@ -1980,7 +1980,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/wp-json/gm-frontend-gallery/v1/submit/', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
-          'X-WP-Nonce': this.postNonce
+          'X-WP-Nonce': this.mainNonce
         }
       }).then(function (response) {})["catch"](function (error) {
         var responseData = error.response.data;
@@ -2001,12 +2001,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return this.SET_MAIN_TITLE(newTitle);
       }
     },
-    postNonce: {
+    mainNonce: {
       get: function get() {
-        return this.getPostNonce();
+        return this.getMainNonce();
       },
       set: function set(newPostNonce) {
-        return this.SET_POST_NONCE(newPostNonce);
+        return this.SET_MAIN_NONCE(newPostNonce);
       }
     },
     galleryPosts: {
@@ -2025,7 +2025,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   created: function created() {
     var mount = document.getElementById('gm-frontend-submit');
-    this.postNonce = mount.dataset.nonce;
+    this.mainNonce = mount.dataset.nonce;
   }
 });
 
@@ -16590,13 +16590,13 @@ var mainDataModule = {
   state: {
     mainTitle: '',
     mainTitleError: '',
-    postNonce: null
+    mainNonce: null
   },
   getters: {
     getMainTitle: function getMainTitle(state) {
       return state.mainTitle;
     },
-    getPostNonce: function getPostNonce(state) {
+    getMainNonce: function getMainNonce(state) {
       return state.postNonce;
     },
     getMainTitleError: function getMainTitleError(state) {
@@ -16607,7 +16607,7 @@ var mainDataModule = {
     setMainTitle: function setMainTitle(state, newTitle) {
       state.mainTitle = newTitle;
     },
-    setPostNonce: function setPostNonce(state, nonce) {
+    setMainNonce: function setMainNonce(state, nonce) {
       state.postNonce = nonce;
     },
     setMainTitleError: function setMainTitleError(state, error) {
@@ -16618,8 +16618,8 @@ var mainDataModule = {
     SET_MAIN_TITLE: function SET_MAIN_TITLE(context, newTitle) {
       context.commit('setMainTitle', newTitle);
     },
-    SET_POST_NONCE: function SET_POST_NONCE(context, postNonce) {
-      context.commit('setPostNonce', postNonce);
+    SET_MAIN_NONCE: function SET_MAIN_NONCE(context, postNonce) {
+      context.commit('setMainNonce', postNonce);
     },
     SET_MAIN_TITLE_ERROR: function SET_MAIN_TITLE_ERROR(context, error) {
       context.commit('setMainTitleError', error);
