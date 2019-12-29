@@ -36,7 +36,7 @@
         ) {
           this.showModal = true;
         } else {
-          this.confirmYes();
+          this.confirmYesHandler();
         }
       },
       confirmNoHandler() {
