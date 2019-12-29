@@ -1,10 +1,14 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import {defaultGalleryPostObject} from "./helpers";
+import {postDataModule} from "./modules/postDataModule";
 
 Vue.use(Vuex);
 
 export const store = new Vuex.Store({
+  modules: {
+    postData: postDataModule
+  },
   state: {
     mainTitle: '',
     mainTitleError: '',
@@ -16,12 +20,6 @@ export const store = new Vuex.Store({
     getPostNonce: state => state.postNonce,
     getGalleryPosts: state => state.galleryPosts,
     getMainTitleError: state => state.mainTitleError,
-    getGalleryPostData: state => (payload) => {
-      if (typeof payload.deepKey !== 'undefined') {
-        return state.galleryPosts[payload.index][payload.type][payload.deepKey];
-      }
-      return state.galleryPosts[payload.index][payload.type]
-    }
   },
   mutations: {
     setMainTitle(state, newTitle) {

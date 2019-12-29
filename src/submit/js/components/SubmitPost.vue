@@ -60,9 +60,9 @@
         'SET_POST_IMAGE_DATA',
         'SET_POST_ERROR'
       ]),
-      ...mapGetters([
-        'getGalleryPostData'
-      ]),
+      ...mapGetters({
+        getGalleryPostData: 'postData/getGalleryPostData',
+      }),
       getGalleryDataByIndex(data) {
         let payload = {
           index: this.index,

@@ -2092,7 +2092,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       galleryDataAccessor: this.getGalleryPostData()
     };
   },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['REMOVE_POST', 'SET_POST_CONTENT', 'SET_POST_IMAGE_DATA', 'SET_POST_ERROR']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(['getGalleryPostData']), {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['REMOVE_POST', 'SET_POST_CONTENT', 'SET_POST_IMAGE_DATA', 'SET_POST_ERROR']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])({
+    getGalleryPostData: 'postData/getGalleryPostData'
+  }), {
     getGalleryDataByIndex: function getGalleryDataByIndex(data) {
       var payload = {
         index: this.index,
@@ -16557,6 +16559,33 @@ var defaultGalleryPostObject = function defaultGalleryPostObject() {
 
 /***/ }),
 
+/***/ "./src/submit/js/store/modules/postDataModule.js":
+/*!*******************************************************!*\
+  !*** ./src/submit/js/store/modules/postDataModule.js ***!
+  \*******************************************************/
+/*! exports provided: postDataModule */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "postDataModule", function() { return postDataModule; });
+var postDataModule = {
+  namespaced: true,
+  getters: {
+    getGalleryPostData: function getGalleryPostData(state, getters, rootState) {
+      return function (payload) {
+        if (typeof payload.deepKey !== 'undefined') {
+          return rootState.galleryPosts[payload.index][payload.type][payload.deepKey];
+        }
+
+        return rootState.galleryPosts[payload.index][payload.type];
+      };
+    }
+  }
+};
+
+/***/ }),
+
 /***/ "./src/submit/js/store/store.js":
 /*!**************************************!*\
   !*** ./src/submit/js/store/store.js ***!
@@ -16571,11 +16600,30 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./helpers */ "./src/submit/js/store/helpers.js");
+/* harmony import */ var _modules_postDataModule__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/postDataModule */ "./src/submit/js/store/modules/postDataModule.js");
+
 
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
+/*const postDataModule = {
+  namespaced: true,
+  getters: {
+    getGalleryPostData (state, getters, rootState) {
+      return (payload) => {
+        if (typeof payload.deepKey !== 'undefined') {
+          return rootState.galleryPosts[payload.index][payload.type][payload.deepKey];
+        }
+        return rootState.galleryPosts[payload.index][payload.type]
+      }
+    }
+  }
+};*/
+
 var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
+  modules: {
+    postData: _modules_postDataModule__WEBPACK_IMPORTED_MODULE_3__["postDataModule"]
+  },
   state: {
     mainTitle: '',
     mainTitleError: '',
@@ -16594,15 +16642,6 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     },
     getMainTitleError: function getMainTitleError(state) {
       return state.mainTitleError;
-    },
-    getGalleryPostData: function getGalleryPostData(state) {
-      return function (payload) {
-        if (typeof payload.deepKey !== 'undefined') {
-          return state.galleryPosts[payload.index][payload.type][payload.deepKey];
-        }
-
-        return state.galleryPosts[payload.index][payload.type];
-      };
     }
   },
   mutations: {
