@@ -1907,10 +1907,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   components: {
     SubmitPost: _components_SubmitPost__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['SET_MAIN_TITLE', 'SET_POST_NONCE', 'SET_MAIN_TITLE_ERROR']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])({
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])({
+    SET_MAIN_TITLE: 'mainData/SET_MAIN_TITLE',
+    SET_POST_NONCE: 'mainData/SET_POST_NONCE',
+    SET_MAIN_TITLE_ERROR: 'mainData/SET_MAIN_TITLE_ERROR',
     ADD_POST: 'postData/ADD_POST',
     SET_POST_ERROR: 'postData/SET_POST_ERROR'
-  }), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(['getMainTitle', 'getPostNonce', 'getMainTitleError']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])({
+  }), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])({
+    getMainTitle: 'mainData/getMainTitle',
+    getPostNonce: 'mainData/getPostNonce',
+    getMainTitleError: 'mainData/getMainTitleError',
     getGalleryPosts: 'postData/getGalleryPosts'
   }), {
     addPost: function addPost() {
@@ -16569,6 +16575,60 @@ var defaultGalleryPostObject = function defaultGalleryPostObject() {
 
 /***/ }),
 
+/***/ "./src/submit/js/store/modules/mainDataModule.js":
+/*!*******************************************************!*\
+  !*** ./src/submit/js/store/modules/mainDataModule.js ***!
+  \*******************************************************/
+/*! exports provided: mainDataModule */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mainDataModule", function() { return mainDataModule; });
+var mainDataModule = {
+  namespaced: true,
+  state: {
+    mainTitle: '',
+    mainTitleError: '',
+    postNonce: null
+  },
+  getters: {
+    getMainTitle: function getMainTitle(state) {
+      return state.mainTitle;
+    },
+    getPostNonce: function getPostNonce(state) {
+      return state.postNonce;
+    },
+    getMainTitleError: function getMainTitleError(state) {
+      return state.mainTitleError;
+    }
+  },
+  mutations: {
+    setMainTitle: function setMainTitle(state, newTitle) {
+      state.mainTitle = newTitle;
+    },
+    setPostNonce: function setPostNonce(state, nonce) {
+      state.postNonce = nonce;
+    },
+    setMainTitleError: function setMainTitleError(state, error) {
+      state.mainTitleError = error;
+    }
+  },
+  actions: {
+    SET_MAIN_TITLE: function SET_MAIN_TITLE(context, newTitle) {
+      context.commit('setMainTitle', newTitle);
+    },
+    SET_POST_NONCE: function SET_POST_NONCE(context, postNonce) {
+      context.commit('setPostNonce', postNonce);
+    },
+    SET_MAIN_TITLE_ERROR: function SET_MAIN_TITLE_ERROR(context, error) {
+      context.commit('setMainTitleError', error);
+    }
+  }
+};
+
+/***/ }),
+
 /***/ "./src/submit/js/store/modules/postDataModule.js":
 /*!*******************************************************!*\
   !*** ./src/submit/js/store/modules/postDataModule.js ***!
@@ -16657,51 +16717,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _modules_postDataModule__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/postDataModule */ "./src/submit/js/store/modules/postDataModule.js");
+/* harmony import */ var _modules_mainDataModule__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/mainDataModule */ "./src/submit/js/store/modules/mainDataModule.js");
+
 
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
 var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   modules: {
-    postData: _modules_postDataModule__WEBPACK_IMPORTED_MODULE_2__["postDataModule"]
-  },
-  state: {
-    mainTitle: '',
-    mainTitleError: '',
-    postNonce: null
-  },
-  getters: {
-    getMainTitle: function getMainTitle(state) {
-      return state.mainTitle;
-    },
-    getPostNonce: function getPostNonce(state) {
-      return state.postNonce;
-    },
-    getMainTitleError: function getMainTitleError(state) {
-      return state.mainTitleError;
-    }
-  },
-  mutations: {
-    setMainTitle: function setMainTitle(state, newTitle) {
-      state.mainTitle = newTitle;
-    },
-    setPostNonce: function setPostNonce(state, nonce) {
-      state.postNonce = nonce;
-    },
-    setMainTitleError: function setMainTitleError(state, error) {
-      state.mainTitleError = error;
-    }
-  },
-  actions: {
-    SET_MAIN_TITLE: function SET_MAIN_TITLE(context, newTitle) {
-      context.commit('setMainTitle', newTitle);
-    },
-    SET_POST_NONCE: function SET_POST_NONCE(context, postNonce) {
-      context.commit('setPostNonce', postNonce);
-    },
-    SET_MAIN_TITLE_ERROR: function SET_MAIN_TITLE_ERROR(context, error) {
-      context.commit('setMainTitleError', error);
-    }
+    postData: _modules_postDataModule__WEBPACK_IMPORTED_MODULE_2__["postDataModule"],
+    mainData: _modules_mainDataModule__WEBPACK_IMPORTED_MODULE_3__["mainDataModule"]
   }
 });
 
