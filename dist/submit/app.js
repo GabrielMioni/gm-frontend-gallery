@@ -3130,9 +3130,11 @@ var render = function() {
         },
         [
           _vm.uploadImageUrl === null
-            ? _c("div", [
-                _vm._v("This is the stone on which I will build my empire.")
-              ])
+            ? _c(
+                "div",
+                { staticClass: "gm-frontend-submit-post-upload-main" },
+                [_vm._v("This is the stone on which I will build my empire.")]
+              )
             : [
                 _c(
                   "div",
@@ -3148,7 +3150,10 @@ var render = function() {
                   [_vm._v("x")]
                 ),
                 _vm._v(" "),
-                _c("img", { attrs: { src: _vm.uploadImageUrl, alt: "" } })
+                _c("img", {
+                  staticClass: "gm-frontend-submit-post-upload-main",
+                  attrs: { src: _vm.uploadImageUrl, alt: "" }
+                })
               ]
         ],
         2

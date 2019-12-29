@@ -5,10 +5,10 @@
         </div>
         <div class="gm-frontend-submit-post-left">
             <div class="gm-frontend-submit-post-upload" @click="openFileInput" :ref="'dropFile'">
-                <div v-if="uploadImageUrl === null">This is the stone on which I will build my empire.</div>
+                <div class="gm-frontend-submit-post-upload-main" v-if="uploadImageUrl === null">This is the stone on which I will build my empire.</div>
                 <template v-else>
                     <div @click.stop="trashImage" class="gm-frontend-submit-post-upload-trash">x</div>
-                    <img :src="uploadImageUrl" alt="">
+                    <img class="gm-frontend-submit-post-upload-main" :src="uploadImageUrl" alt="">
                 </template>
             </div>
             <div class="gm-frontend-submit-error">
