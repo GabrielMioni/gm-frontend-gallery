@@ -54,12 +54,12 @@
       }
     },
     methods: {
-      ...mapActions([
-        'REMOVE_POST',
-        'SET_POST_CONTENT',
-        'SET_POST_IMAGE_DATA',
-        'SET_POST_ERROR'
-      ]),
+      ...mapActions({
+        SET_POST_CONTENT: 'postData/SET_POST_CONTENT',
+        SET_POST_IMAGE_DATA: 'postData/SET_POST_IMAGE_DATA',
+        SET_POST_ERROR: 'postData/SET_POST_ERROR',
+        REMOVE_POST: 'postData/REMOVE_POST',
+      }),
       ...mapGetters({
         getGalleryPostData: 'postData/getGalleryPostData',
       }),
