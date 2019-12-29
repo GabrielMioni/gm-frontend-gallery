@@ -1909,14 +1909,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])({
     SET_MAIN_TITLE: 'mainData/SET_MAIN_TITLE',
-    SET_POST_NONCE: 'mainData/SET_POST_NONCE',
     SET_MAIN_TITLE_ERROR: 'mainData/SET_MAIN_TITLE_ERROR',
+    SET_POST_NONCE: 'mainData/SET_POST_NONCE',
     ADD_POST: 'postData/ADD_POST',
     SET_POST_ERROR: 'postData/SET_POST_ERROR'
   }), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])({
     getMainTitle: 'mainData/getMainTitle',
-    getPostNonce: 'mainData/getPostNonce',
     getMainTitleError: 'mainData/getMainTitleError',
+    getPostNonce: 'mainData/getPostNonce',
     getGalleryPosts: 'postData/getGalleryPosts'
   }), {
     addPost: function addPost() {
@@ -16550,10 +16550,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./src/submit/js/store/helpers.js":
-/*!****************************************!*\
-  !*** ./src/submit/js/store/helpers.js ***!
-  \****************************************/
+/***/ "./src/submit/js/store/modules/helpers.js":
+/*!************************************************!*\
+  !*** ./src/submit/js/store/modules/helpers.js ***!
+  \************************************************/
 /*! exports provided: defaultGalleryPostObject */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -16639,7 +16639,7 @@ var mainDataModule = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "postDataModule", function() { return postDataModule; });
-/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../helpers */ "./src/submit/js/store/helpers.js");
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./helpers */ "./src/submit/js/store/modules/helpers.js");
 
 var postDataModule = {
   namespaced: true,
