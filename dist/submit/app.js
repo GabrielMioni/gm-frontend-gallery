@@ -2091,6 +2091,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2143,12 +2146,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.imageError = '';
       }
 
+      this.clearFileInput();
+    },
+    clearFileInput: function clearFileInput() {
       var fileInputForm = this.$refs.fileInputForm;
       fileInputForm.reset();
     },
     openFileInput: function openFileInput() {
       var fileInput = this.$refs.fileInput;
       fileInput.click();
+    },
+    trashImage: function trashImage() {
+      this.SET_POST_IMAGE_DATA({
+        index: this.index,
+        imageUrl: null,
+        file: null
+      });
+      this.clearFileInput();
     }
   }),
   computed: {
@@ -3119,8 +3133,25 @@ var render = function() {
             ? _c("div", [
                 _vm._v("This is the stone on which I will build my empire.")
               ])
-            : _c("img", { attrs: { src: _vm.uploadImageUrl, alt: "" } })
-        ]
+            : [
+                _c(
+                  "div",
+                  {
+                    staticClass: "gm-frontend-submit-post-upload-trash",
+                    on: {
+                      click: function($event) {
+                        $event.stopPropagation()
+                        return _vm.trashImage($event)
+                      }
+                    }
+                  },
+                  [_vm._v("x")]
+                ),
+                _vm._v(" "),
+                _c("img", { attrs: { src: _vm.uploadImageUrl, alt: "" } })
+              ]
+        ],
+        2
       ),
       _vm._v(" "),
       _c(

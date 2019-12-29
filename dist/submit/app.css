@@ -78,6 +78,14 @@
   -webkit-box-pack: center;
           justify-content: center;
   height: 15rem;
+  position: relative;
+}
+
+#gm-frontend-submit .gm-frontend-submit-post-upload-trash {
+  position: absolute;
+  top: 0;
+  right: 1rem;
+  cursor: pointer;
 }
 
 #gm-frontend-submit .gm-frontend-submit-post-upload img {

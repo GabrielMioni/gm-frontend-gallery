@@ -6,7 +6,10 @@
         <div class="gm-frontend-submit-post-left">
             <div class="gm-frontend-submit-post-upload" @click="openFileInput" :ref="'dropFile'">
                 <div v-if="uploadImageUrl === null">This is the stone on which I will build my empire.</div>
-                <img v-else :src="uploadImageUrl" alt="">
+                <template v-else>
+                    <div @click.stop="trashImage" class="gm-frontend-submit-post-upload-trash">x</div>
+                    <img :src="uploadImageUrl" alt="">
+                </template>
             </div>
             <div class="gm-frontend-submit-error">
                 <transition name="fade">
@@ -96,13 +99,24 @@
           this.imageError = '';
         }
 
+        this.clearFileInput();
+      },
+      clearFileInput() {
         const fileInputForm = this.$refs.fileInputForm;
         fileInputForm.reset();
       },
       openFileInput() {
         const fileInput = this.$refs.fileInput;
         fileInput.click();
-      }
+      },
+      trashImage() {
+        this.SET_POST_IMAGE_DATA({
+          index: this.index,
+          imageUrl: null,
+          file: null,
+        });
+        this.clearFileInput();
+      },
     },
     computed: {
       postContent: {
