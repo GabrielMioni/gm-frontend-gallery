@@ -35,21 +35,17 @@
     name: "gmGallerySubmit",
     components: {SubmitPost},
     methods: {
-      ...mapActions([
-        'SET_MAIN_TITLE',
-        'SET_POST_NONCE',
-        'SET_MAIN_TITLE_ERROR',
-      ]),
       ...mapActions({
+        SET_MAIN_TITLE: 'mainData/SET_MAIN_TITLE',
+        SET_MAIN_TITLE_ERROR: 'mainData/SET_MAIN_TITLE_ERROR',
+        SET_POST_NONCE: 'mainData/SET_POST_NONCE',
         ADD_POST: 'postData/ADD_POST',
         SET_POST_ERROR: 'postData/SET_POST_ERROR',
       }),
-      ...mapGetters([
-        'getMainTitle',
-        'getPostNonce',
-        'getMainTitleError',
-      ]),
       ...mapGetters({
+        getMainTitle: 'mainData/getMainTitle',
+        getMainTitleError: 'mainData/getMainTitleError',
+        getPostNonce: 'mainData/getPostNonce',
         getGalleryPosts: 'postData/getGalleryPosts'
       }),
       addPost() {
