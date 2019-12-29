@@ -1,8 +1,10 @@
 <template>
     <div class="gm-frontend-submit-post">
         <div class="gm-frontend-submit-post-trash gm-frontend-submit-post-trash--full">
-<!--            <button @click="trashPost">x</button>-->
-            <trash-post-button></trash-post-button>
+            <trash-post-button
+                    @confirmYes="trashPost"
+                    :gallery-data-accessor="getGalleryDataByIndex"
+            ></trash-post-button>
         </div>
         <div class="gm-frontend-submit-post-left">
             <div class="gm-frontend-submit-post-upload" @click="openFileInput" :ref="'dropFile'">
@@ -125,18 +127,7 @@
         this.clearFileInput();
       },
       trashPost() {
-        const galleryData = this.getGalleryDataByIndex();
-        let confirmDelete = false;
-        if (
-          galleryData.content.trim() !== '' ||
-          galleryData.file !== null ||
-          galleryData.imageUrl !== null
-        ) {
-          confirmDelete = confirm("Are you sure you want to delete this image?");
-        }
-        if (confirmDelete) {
-          this.REMOVE_POST();
-        }
+        this.REMOVE_POST();
       }
     },
     computed: {
