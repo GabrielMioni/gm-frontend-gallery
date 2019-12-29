@@ -38,16 +38,20 @@
       ...mapActions([
         'SET_MAIN_TITLE',
         'SET_POST_NONCE',
-        'SET_POST_ERROR',
         'SET_MAIN_TITLE_ERROR',
-        'ADD_POST',
       ]),
+      ...mapActions({
+        ADD_POST: 'postData/ADD_POST',
+        SET_POST_ERROR: 'postData/SET_POST_ERROR',
+      }),
       ...mapGetters([
         'getMainTitle',
         'getPostNonce',
         'getMainTitleError',
-        'getGalleryPosts'
       ]),
+      ...mapGetters({
+        getGalleryPosts: 'postData/getGalleryPosts'
+      }),
       addPost() {
         return this.ADD_POST();
       },
