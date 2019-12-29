@@ -2,8 +2,8 @@
     <div class="gm-frontend-submit-post">
         <div class="gm-frontend-submit-post-trash gm-frontend-submit-post-trash--full">
             <trash-post-button
-                    @confirmYes="trashPost"
-                    :gallery-data-accessor="getGalleryDataByIndex"
+                    :galleryDataAccessor="getGalleryDataByIndex"
+                    :galleryDataDelete="REMOVE_POST"
             ></trash-post-button>
         </div>
         <div class="gm-frontend-submit-post-left">

@@ -18,6 +18,7 @@
     components: {ConfirmationModal},
     props: {
       galleryDataAccessor: Function,
+      galleryDataDelete: Function,
     },
     data() {
       return {
@@ -42,7 +43,7 @@
         this.showModal = false;
       },
       confirmYesHandler() {
-        this.$emit('confirmYes');
+        this.galleryDataDelete();
         this.showModal = false;
       }
     }
