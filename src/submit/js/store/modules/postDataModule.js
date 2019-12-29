@@ -12,7 +12,10 @@ export const postDataModule = {
         if (typeof payload.deepKey !== 'undefined') {
           return state.galleryPosts[payload.index][payload.type][payload.deepKey];
         }
-        return state.galleryPosts[payload.index][payload.type]
+        if (typeof payload.type !== 'undefined') {
+          return state.galleryPosts[payload.index][payload.type];
+        }
+        return state.galleryPosts[payload.index];
       }
     }
   },
