@@ -16588,41 +16588,41 @@ __webpack_require__.r(__webpack_exports__);
 var mainDataModule = {
   namespaced: true,
   state: {
+    mainNonce: null,
     mainTitle: '',
-    mainTitleError: '',
-    mainNonce: null
+    mainTitleError: ''
   },
   getters: {
+    getMainNonce: function getMainNonce(state) {
+      return state.postNonce;
+    },
     getMainTitle: function getMainTitle(state) {
       return state.mainTitle;
     },
     getMainTitleError: function getMainTitleError(state) {
       return state.mainTitleError;
-    },
-    getMainNonce: function getMainNonce(state) {
-      return state.postNonce;
     }
   },
   mutations: {
+    setMainNonce: function setMainNonce(state, nonce) {
+      state.postNonce = nonce;
+    },
     setMainTitle: function setMainTitle(state, newTitle) {
       state.mainTitle = newTitle;
     },
     setMainTitleError: function setMainTitleError(state, error) {
       state.mainTitleError = error;
-    },
-    setMainNonce: function setMainNonce(state, nonce) {
-      state.postNonce = nonce;
     }
   },
   actions: {
+    SET_MAIN_NONCE: function SET_MAIN_NONCE(context, postNonce) {
+      context.commit('setMainNonce', postNonce);
+    },
     SET_MAIN_TITLE: function SET_MAIN_TITLE(context, newTitle) {
       context.commit('setMainTitle', newTitle);
     },
     SET_MAIN_TITLE_ERROR: function SET_MAIN_TITLE_ERROR(context, error) {
       context.commit('setMainTitleError', error);
-    },
-    SET_MAIN_NONCE: function SET_MAIN_NONCE(context, postNonce) {
-      context.commit('setMainNonce', postNonce);
     }
   }
 };
