@@ -1,7 +1,7 @@
 <template>
     <div class="gm-frontend-submit-post">
         <div class="gm-frontend-submit-post-trash gm-frontend-submit-post-trash--full">
-            <button @click="REMOVE_POST">x</button>
+            <button @click="trashPost">x</button>
         </div>
         <div class="gm-frontend-submit-post-left">
             <div class="gm-frontend-submit-post-upload" @click="openFileInput" :ref="'dropFile'">
@@ -69,11 +69,13 @@
         getGalleryPostData: 'postData/getGalleryPostData',
       }),
       getGalleryDataByIndex(data) {
+        data = data == null ? {} : data;
         let payload = {
           index: this.index,
-          type: data.type,
         };
-
+        if (typeof data.type !== 'undefined') {
+          payload.type = data.type;
+        }
         if (typeof data.deepKey !== 'undefined') {
           payload.deepKey = data.deepKey;
         }
@@ -119,6 +121,20 @@
         });
         this.clearFileInput();
       },
+      trashPost() {
+        const galleryData = this.getGalleryDataByIndex();
+        let confirmDelete = false;
+        if (
+          galleryData.content.trim() !== '' ||
+          galleryData.file !== null ||
+          galleryData.imageUrl !== null
+        ) {
+          confirmDelete = confirm("Are you sure you want to delete this image?");
+        }
+        if (confirmDelete) {
+          this.REMOVE_POST();
+        }
+      }
     },
     computed: {
       postContent: {

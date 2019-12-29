@@ -2117,10 +2117,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     getGalleryPostData: 'postData/getGalleryPostData'
   }), {
     getGalleryDataByIndex: function getGalleryDataByIndex(data) {
+      data = data == null ? {} : data;
       var payload = {
-        index: this.index,
-        type: data.type
+        index: this.index
       };
+
+      if (typeof data.type !== 'undefined') {
+        payload.type = data.type;
+      }
 
       if (typeof data.deepKey !== 'undefined') {
         payload.deepKey = data.deepKey;
@@ -2165,6 +2169,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         file: null
       });
       this.clearFileInput();
+    },
+    trashPost: function trashPost() {
+      var galleryData = this.getGalleryDataByIndex();
+      var confirmDelete = false;
+
+      if (galleryData.content.trim() !== '' || galleryData.file !== null || galleryData.imageUrl !== null) {
+        confirmDelete = confirm("Are you sure you want to delete this image?");
+      }
+
+      if (confirmDelete) {
+        this.REMOVE_POST();
+      }
     }
   }),
   computed: {
@@ -3124,7 +3140,7 @@ var render = function() {
         staticClass:
           "gm-frontend-submit-post-trash gm-frontend-submit-post-trash--full"
       },
-      [_c("button", { on: { click: _vm.REMOVE_POST } }, [_vm._v("x")])]
+      [_c("button", { on: { click: _vm.trashPost } }, [_vm._v("x")])]
     ),
     _vm._v(" "),
     _c("div", { staticClass: "gm-frontend-submit-post-left" }, [
@@ -16700,7 +16716,11 @@ var postDataModule = {
           return state.galleryPosts[payload.index][payload.type][payload.deepKey];
         }
 
-        return state.galleryPosts[payload.index][payload.type];
+        if (typeof payload.type !== 'undefined') {
+          return state.galleryPosts[payload.index][payload.type];
+        }
+
+        return state.galleryPosts[payload.index];
       };
     }
   },
