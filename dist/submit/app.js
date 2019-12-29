@@ -16596,33 +16596,33 @@ var mainDataModule = {
     getMainTitle: function getMainTitle(state) {
       return state.mainTitle;
     },
-    getMainNonce: function getMainNonce(state) {
-      return state.postNonce;
-    },
     getMainTitleError: function getMainTitleError(state) {
       return state.mainTitleError;
+    },
+    getMainNonce: function getMainNonce(state) {
+      return state.postNonce;
     }
   },
   mutations: {
     setMainTitle: function setMainTitle(state, newTitle) {
       state.mainTitle = newTitle;
     },
-    setMainNonce: function setMainNonce(state, nonce) {
-      state.postNonce = nonce;
-    },
     setMainTitleError: function setMainTitleError(state, error) {
       state.mainTitleError = error;
+    },
+    setMainNonce: function setMainNonce(state, nonce) {
+      state.postNonce = nonce;
     }
   },
   actions: {
     SET_MAIN_TITLE: function SET_MAIN_TITLE(context, newTitle) {
       context.commit('setMainTitle', newTitle);
     },
-    SET_MAIN_NONCE: function SET_MAIN_NONCE(context, postNonce) {
-      context.commit('setMainNonce', postNonce);
-    },
     SET_MAIN_TITLE_ERROR: function SET_MAIN_TITLE_ERROR(context, error) {
       context.commit('setMainTitleError', error);
+    },
+    SET_MAIN_NONCE: function SET_MAIN_NONCE(context, postNonce) {
+      context.commit('setMainNonce', postNonce);
     }
   }
 };
