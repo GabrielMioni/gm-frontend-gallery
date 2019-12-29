@@ -2014,7 +2014,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return this.getGalleryPosts();
       }
     },
-    titleError: {
+    mainTitleError: {
       get: function get() {
         return this.getMainTitleError();
       },
@@ -3000,11 +3000,11 @@ var render = function() {
               { staticClass: "gm-frontend-submit-error" },
               [
                 _c("transition", { attrs: { name: "fade" } }, [
-                  _vm.titleError !== ""
+                  _vm.mainTitleError !== ""
                     ? _c("div", [
                         _vm._v(
                           "\n                            " +
-                            _vm._s(_vm.titleError) +
+                            _vm._s(_vm.mainTitleError) +
                             "\n                        "
                         )
                       ])

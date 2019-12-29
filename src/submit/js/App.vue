@@ -6,8 +6,8 @@
                     <span>Title</span>
                     <span class="gm-frontend-submit-error">
                         <transition name="fade">
-                            <div v-if="titleError !== ''">
-                                {{ titleError }}
+                            <div v-if="mainTitleError !== ''">
+                                {{ mainTitleError }}
                             </div>
                         </transition>
                     </span>
@@ -141,7 +141,7 @@
           return this.getGalleryPosts();
         }
       },
-      titleError: {
+      mainTitleError: {
         get() {
           return this.getMainTitleError();
         },
