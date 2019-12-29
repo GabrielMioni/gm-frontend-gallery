@@ -1,13 +1,15 @@
 <template>
     <div class="gm-frontend-submit-post">
-        <div class="gm-frontend-submit-post-trash">
-            <div @click="REMOVE_POST">x</div>
+        <div class="gm-frontend-submit-post-trash gm-frontend-submit-post-trash--full">
+            <button @click="REMOVE_POST">x</button>
         </div>
         <div class="gm-frontend-submit-post-left">
             <div class="gm-frontend-submit-post-upload" @click="openFileInput" :ref="'dropFile'">
-                <div class="gm-frontend-submit-post-upload-main" v-if="uploadImageUrl === null">This is the stone on which I will build my empire.</div>
+                <div v-if="uploadImageUrl === null" class="gm-frontend-submit-post-upload-main">This is the stone on which I will build my empire.</div>
                 <template v-else>
-                    <div @click.stop="trashImage" class="gm-frontend-submit-post-upload-trash">x</div>
+                    <div class="gm-frontend-submit-post-trash">
+                        <button @click.stop="trashImage">x</button>
+                    </div>
                     <img class="gm-frontend-submit-post-upload-main" :src="uploadImageUrl" alt="">
                 </template>
             </div>

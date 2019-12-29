@@ -2094,6 +2094,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3116,9 +3118,14 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "gm-frontend-submit-post" }, [
-    _c("div", { staticClass: "gm-frontend-submit-post-trash" }, [
-      _c("div", { on: { click: _vm.REMOVE_POST } }, [_vm._v("x")])
-    ]),
+    _c(
+      "div",
+      {
+        staticClass:
+          "gm-frontend-submit-post-trash gm-frontend-submit-post-trash--full"
+      },
+      [_c("button", { on: { click: _vm.REMOVE_POST } }, [_vm._v("x")])]
+    ),
     _vm._v(" "),
     _c("div", { staticClass: "gm-frontend-submit-post-left" }, [
       _c(
@@ -3136,19 +3143,20 @@ var render = function() {
                 [_vm._v("This is the stone on which I will build my empire.")]
               )
             : [
-                _c(
-                  "div",
-                  {
-                    staticClass: "gm-frontend-submit-post-upload-trash",
-                    on: {
-                      click: function($event) {
-                        $event.stopPropagation()
-                        return _vm.trashImage($event)
+                _c("div", { staticClass: "gm-frontend-submit-post-trash" }, [
+                  _c(
+                    "button",
+                    {
+                      on: {
+                        click: function($event) {
+                          $event.stopPropagation()
+                          return _vm.trashImage($event)
+                        }
                       }
-                    }
-                  },
-                  [_vm._v("x")]
-                ),
+                    },
+                    [_vm._v("x")]
+                  )
+                ]),
                 _vm._v(" "),
                 _c("img", {
                   staticClass: "gm-frontend-submit-post-upload-main",
