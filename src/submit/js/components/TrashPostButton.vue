@@ -1,8 +1,12 @@
 <template>
-    <button @click="showModal = true">
+    <button @click.stop="checkShowModal">
         x
         <portal to="modals" v-if="showModal">
-            <confirmation-modal></confirmation-modal>
+            <confirmation-modal
+                    @confirmNo="confirmNoHandler"
+                    @confirmYes="confirmYesHandler">
+                Are you sure you want to delete this post?
+            </confirmation-modal>
         </portal>
     </button>
 </template>
@@ -12,10 +16,35 @@
   export default {
     name: "TrashPostButton",
     components: {ConfirmationModal},
+    props: {
+      galleryDataAccessor: Function,
+    },
     data() {
       return {
         showModal: false,
       }
     },
+    methods: {
+      checkShowModal() {
+        const galleryData = this.galleryDataAccessor();
+
+        if (
+          galleryData.content.trim() !== '' ||
+          galleryData.file !== null ||
+          galleryData.imageUrl !== null
+        ) {
+          this.showModal = true;
+        } else {
+          this.confirmYes();
+        }
+      },
+      confirmNoHandler() {
+        this.showModal = false;
+      },
+      confirmYesHandler() {
+        this.$emit('confirmYes');
+        this.showModal = false;
+      }
+    }
   }
 </script>
