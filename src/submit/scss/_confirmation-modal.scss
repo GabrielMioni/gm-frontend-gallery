@@ -19,6 +19,12 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
+
+      &-button {
+        &--danger {
+          background-color: $themeColor5;
+        }
+      }
     }
   }
 }

@@ -34,7 +34,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 300px;
-  border: solid 1px #ccc;
+  border: solid 1px #cccccc;
   border-radius: 0.2rem;
   margin: 1rem 0;
   padding: 1rem;
@@ -148,5 +148,9 @@
           justify-content: center;
   -webkit-box-align: center;
           align-items: center;
+}
+
+#gm-frontend-submit .gm-frontend-confirmation-modal-button--danger {
+  background-color: #8B0000;
 }
 
