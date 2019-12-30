@@ -3,6 +3,7 @@
         x
         <portal to="modals" v-if="showModal">
             <confirmation-modal
+                    :confirm-is-dangerous="true"
                     @confirmNo="confirmNoHandler"
                     @confirmYes="confirmYesHandler">
                 Are you sure you want to delete this post?

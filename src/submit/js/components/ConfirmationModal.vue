@@ -6,7 +6,11 @@
             </h5>
             <div>
                 <button @click.stop="confirmNo">Cancel</button>
-                <button @click.stop="confirmYes">Ok</button>
+                <button
+                        @click.stop="confirmYes"
+                        v-bind:class="{ 'gm-frontend-confirmation-modal-button--danger': confirmIsDangerous }">
+                    Ok
+                </button>
             </div>
         </div>
     </div>
@@ -15,6 +19,12 @@
 <script>
   export default {
     name: "ConfirmationModal",
+    props: {
+      'confirmIsDangerous' : {
+        default: false,
+        type: Boolean
+      },
+    },
     methods: {
       confirmNo() {
         this.$emit('confirmNo');

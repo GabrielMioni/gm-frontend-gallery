@@ -2055,8 +2055,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ConfirmationModal",
+  props: {
+    'confirmIsDangerous': {
+      "default": false,
+      type: Boolean
+    }
+  },
   methods: {
     confirmNo: function confirmNo() {
       this.$emit('confirmNo');
@@ -2306,6 +2316,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ConfirmationModal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ConfirmationModal */ "./src/submit/js/components/ConfirmationModal.vue");
+//
 //
 //
 //
@@ -3881,6 +3892,10 @@ var render = function() {
         _c(
           "button",
           {
+            class: {
+              "gm-frontend-confirmation-modal-button--danger":
+                _vm.confirmIsDangerous
+            },
             on: {
               click: function($event) {
                 $event.stopPropagation()
@@ -3888,7 +3903,7 @@ var render = function() {
               }
             }
           },
-          [_vm._v("Ok")]
+          [_vm._v("\n                Ok\n            ")]
         )
       ])
     ])
@@ -4099,6 +4114,7 @@ var render = function() {
               _c(
                 "confirmation-modal",
                 {
+                  attrs: { "confirm-is-dangerous": true },
                   on: {
                     confirmNo: _vm.confirmNoHandler,
                     confirmYes: _vm.confirmYesHandler
