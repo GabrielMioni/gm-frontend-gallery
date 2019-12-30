@@ -4,11 +4,13 @@ export const mainDataModule = {
     mainNonce: null,
     mainTitle: '',
     mainTitleError: '',
+    mainSubmitting: false,
   },
   getters: {
     getMainNonce: state => state.postNonce,
     getMainTitle: state => state.mainTitle,
     getMainTitleError: state => state.mainTitleError,
+    getMainSubmitting: state => state.mainSubmitting,
   },
   mutations: {
     setMainNonce(state, nonce) {
@@ -20,6 +22,9 @@ export const mainDataModule = {
     setMainTitleError(state, error) {
       state.mainTitleError = error;
     },
+    setMainSubmitting(state, value) {
+      state.mainSubmitting = value;
+    }
   },
   actions: {
     SET_MAIN_NONCE(context, postNonce) {
@@ -31,5 +36,8 @@ export const mainDataModule = {
     SET_MAIN_TITLE_ERROR(context, error) {
       context.commit('setMainTitleError', error);
     },
+    SET_MAIN_SUBMITTING(context, value) {
+      context.commit('setMainSubmitting', value);
+    }
   },
 };

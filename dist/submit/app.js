@@ -2257,6 +2257,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -2272,10 +2277,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])({
     SET_MAIN_TITLE_ERROR: 'mainData/SET_MAIN_TITLE_ERROR',
+    SET_MAIN_SUBMITTING: 'mainData/SET_MAIN_SUBMITTING',
     SET_POST_ERROR: 'postData/SET_POST_ERROR'
   }), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])({
     getMainTitle: 'mainData/getMainTitle',
     getMainNonce: 'mainData/getMainNonce',
+    getMainSubmitting: 'mainData/getMainSubmitting',
     getGalleryPosts: 'postData/getGalleryPosts'
   }), {
     createValidateFormData: function createValidateFormData() {
@@ -2329,6 +2336,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     submitPosts: function submitPosts() {
       var _this2 = this;
 
+      this.submitting = true;
       var formData = this.createValidateFormData();
 
       if (formData === false) {
@@ -2345,6 +2353,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }).then(function (response) {
         setTimeout(function () {
           self.showModal = true;
+          self.submitting = false;
         }, 1000);
       })["catch"](function (error) {
         var responseData = error.response.data;
@@ -2357,7 +2366,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     confirmYesHandler: function confirmYesHandler() {
       this.showModal = false;
     }
-  })
+  }),
+  computed: {
+    submitting: {
+      get: function get() {
+        return this.getMainSubmitting();
+      },
+      set: function set(value) {
+        return this.SET_MAIN_SUBMITTING(value);
+      }
+    }
+  }
 });
 
 /***/ }),
@@ -4150,7 +4169,9 @@ var render = function() {
       }
     },
     [
-      _vm._t("default", [_vm._v("Submit")]),
+      _vm.submitting === false
+        ? _vm._t("default", [_vm._v("\n        Submit\n    ")])
+        : [_vm._v("\n        Submitting\n    ")],
       _vm._v(" "),
       _vm.showModal
         ? _c(
@@ -17837,7 +17858,8 @@ var mainDataModule = {
   state: {
     mainNonce: null,
     mainTitle: '',
-    mainTitleError: ''
+    mainTitleError: '',
+    mainSubmitting: false
   },
   getters: {
     getMainNonce: function getMainNonce(state) {
@@ -17848,6 +17870,9 @@ var mainDataModule = {
     },
     getMainTitleError: function getMainTitleError(state) {
       return state.mainTitleError;
+    },
+    getMainSubmitting: function getMainSubmitting(state) {
+      return state.mainSubmitting;
     }
   },
   mutations: {
@@ -17859,6 +17884,9 @@ var mainDataModule = {
     },
     setMainTitleError: function setMainTitleError(state, error) {
       state.mainTitleError = error;
+    },
+    setMainSubmitting: function setMainSubmitting(state, value) {
+      state.mainSubmitting = value;
     }
   },
   actions: {
@@ -17870,6 +17898,9 @@ var mainDataModule = {
     },
     SET_MAIN_TITLE_ERROR: function SET_MAIN_TITLE_ERROR(context, error) {
       context.commit('setMainTitleError', error);
+    },
+    SET_MAIN_SUBMITTING: function SET_MAIN_SUBMITTING(context, value) {
+      context.commit('setMainSubmitting', value);
     }
   }
 };

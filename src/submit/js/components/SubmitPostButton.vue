@@ -1,6 +1,11 @@
 <template>
     <button @click.stop="submitPosts">
-        <slot>Submit</slot>
+        <slot v-if="submitting === false">
+            Submit
+        </slot>
+        <template v-else>
+            Submitting
+        </template>
         <portal to="modals" v-if="showModal">
             <confirmation-modal
                     :confirm-is-dangerous="false"
@@ -27,11 +32,13 @@
     methods: {
       ...mapActions({
         SET_MAIN_TITLE_ERROR: 'mainData/SET_MAIN_TITLE_ERROR',
-        SET_POST_ERROR: 'postData/SET_POST_ERROR',
+        SET_MAIN_SUBMITTING: 'mainData/SET_MAIN_SUBMITTING',
+        SET_POST_ERROR: 'postData/SET_POST_ERROR'
       }),
       ...mapGetters({
         getMainTitle: 'mainData/getMainTitle',
         getMainNonce: 'mainData/getMainNonce',
+        getMainSubmitting: 'mainData/getMainSubmitting',
         getGalleryPosts: 'postData/getGalleryPosts'
       }),
       createValidateFormData() {
@@ -84,6 +91,7 @@
         return formData;
       },
       submitPosts() {
+        this.submitting = true;
         const formData = this.createValidateFormData();
         if (formData === false) {
           return;
@@ -101,6 +109,7 @@
           .then((response)=>{
             setTimeout(()=>{
               self.showModal = true;
+              self.submitting = false;
             }, 1000);
           }).catch((error)=>{
           const responseData = error.response.data;
@@ -114,5 +123,15 @@
         this.showModal = false;
       }
     },
+    computed: {
+      submitting: {
+        get() {
+          return this.getMainSubmitting();
+        },
+        set(value) {
+          return this.SET_MAIN_SUBMITTING(value);
+        }
+      }
+    }
   }
 </script>
