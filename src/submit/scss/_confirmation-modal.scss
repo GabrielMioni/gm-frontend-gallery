@@ -1,3 +1,5 @@
+@import "../../utilities/variables";
+
 #gm-frontend-submit {
   .gm-frontend-confirmation {
     position: fixed;
@@ -8,10 +10,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(0,0,0,.8);
+    background: rgba($themeColor1, .8);
 
     &-modal {
-      background: #FFFFFF;
+      background: $themeColor2;
       padding: 2rem;
       display: flex;
       flex-direction: column;

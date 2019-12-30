@@ -1,14 +1,17 @@
 // Colors
+$transparent: transparent;
 $black: #000000;
 $white: #FFFFFF;
+$grey: #cccccc;
 $active: #5bc0de;
 $danger: #8B0000;
 
-$themeColor0: transparent;
+$themeColor0: $transparent;
 $themeColor1: $black;
 $themeColor2: $white;
-$themeColor3: $active;
-$themeColor4: $danger;
+$themeColor3: $grey;
+$themeColor4: $active;
+$themeColor5: $danger;
 
 // Breakpoints
 $small: 576px;
