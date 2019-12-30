@@ -2055,8 +2055,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ConfirmationModal",
   methods: {
@@ -3864,7 +3862,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "gm-frontend-confirmation" }, [
     _c("div", { staticClass: "gm-frontend-confirmation-modal" }, [
-      _c("div", [_c("h5", [_vm._t("default", [_vm._v("Please confirm")])], 2)]),
+      _c("h5", [_vm._t("default", [_vm._v("Please confirm")])], 2),
       _vm._v(" "),
       _c("div", [
         _c(

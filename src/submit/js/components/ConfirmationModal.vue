@@ -1,11 +1,9 @@
 <template>
     <div class="gm-frontend-confirmation">
         <div class="gm-frontend-confirmation-modal">
-            <div>
-                <h5>
-                    <slot>Please confirm</slot>
-                </h5>
-            </div>
+            <h5>
+                <slot>Please confirm</slot>
+            </h5>
             <div>
                 <button @click.stop="confirmNo">Cancel</button>
                 <button @click.stop="confirmYes">Ok</button>
