@@ -10,8 +10,7 @@
             <confirmation-modal
                     :single-button="true"
                     :confirm-is-dangerous="false"
-                    @confirmNo="confirmNoHandler"
-                    @confirmYes="confirmYesHandler">
+                    @confirmNo="confirmNoHandler">
                 Your gallery submission was successful!
                 <div slot="confirmNo">
                     Return to Gallery Submit Form
@@ -37,7 +36,9 @@
       ...mapActions({
         SET_MAIN_TITLE_ERROR: 'mainData/SET_MAIN_TITLE_ERROR',
         SET_MAIN_SUBMITTING: 'mainData/SET_MAIN_SUBMITTING',
-        SET_POST_ERROR: 'postData/SET_POST_ERROR'
+        SET_POST_ERROR: 'postData/SET_POST_ERROR',
+        RESET_MAIN_DATA: 'mainData/RESET_MAIN_DATA',
+        RESET_GALLERY_POST_DATA: 'postData/RESET_GALLERY_POST_DATA'
       }),
       ...mapGetters({
         getMainTitle: 'mainData/getMainTitle',
@@ -121,9 +122,8 @@
         });
       },
       confirmNoHandler() {
-        this.showModal = false;
-      },
-      confirmYesHandler() {
+        this.RESET_MAIN_DATA();
+        this.RESET_GALLERY_POST_DATA();
         this.showModal = false;
       }
     },

@@ -24,6 +24,11 @@ export const mainDataModule = {
     },
     setMainSubmitting(state, value) {
       state.mainSubmitting = value;
+    },
+    resetMainData(state) {
+      state.mainTitle = '';
+      state.mainTitleError = '';
+      state.mainSubmitting = false;
     }
   },
   actions: {
@@ -38,6 +43,9 @@ export const mainDataModule = {
     },
     SET_MAIN_SUBMITTING(context, value) {
       context.commit('setMainSubmitting', value);
+    },
+    RESET_MAIN_DATA(context) {
+      context.commit('resetMainData');
     }
   },
 };

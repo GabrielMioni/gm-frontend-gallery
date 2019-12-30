@@ -2275,7 +2275,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
 
 
 
@@ -2292,7 +2291,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])({
     SET_MAIN_TITLE_ERROR: 'mainData/SET_MAIN_TITLE_ERROR',
     SET_MAIN_SUBMITTING: 'mainData/SET_MAIN_SUBMITTING',
-    SET_POST_ERROR: 'postData/SET_POST_ERROR'
+    SET_POST_ERROR: 'postData/SET_POST_ERROR',
+    RESET_MAIN_DATA: 'mainData/RESET_MAIN_DATA',
+    RESET_GALLERY_POST_DATA: 'postData/RESET_GALLERY_POST_DATA'
   }), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])({
     getMainTitle: 'mainData/getMainTitle',
     getMainNonce: 'mainData/getMainNonce',
@@ -2375,9 +2376,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     confirmNoHandler: function confirmNoHandler() {
-      this.showModal = false;
-    },
-    confirmYesHandler: function confirmYesHandler() {
+      this.RESET_MAIN_DATA();
+      this.RESET_GALLERY_POST_DATA();
       this.showModal = false;
     }
   }),
@@ -4211,10 +4211,7 @@ var render = function() {
                     "single-button": true,
                     "confirm-is-dangerous": false
                   },
-                  on: {
-                    confirmNo: _vm.confirmNoHandler,
-                    confirmYes: _vm.confirmYesHandler
-                  }
+                  on: { confirmNo: _vm.confirmNoHandler }
                 },
                 [
                   _vm._v(
@@ -17925,6 +17922,11 @@ var mainDataModule = {
     },
     setMainSubmitting: function setMainSubmitting(state, value) {
       state.mainSubmitting = value;
+    },
+    resetMainData: function resetMainData(state) {
+      state.mainTitle = '';
+      state.mainTitleError = '';
+      state.mainSubmitting = false;
     }
   },
   actions: {
@@ -17939,6 +17941,9 @@ var mainDataModule = {
     },
     SET_MAIN_SUBMITTING: function SET_MAIN_SUBMITTING(context, value) {
       context.commit('setMainSubmitting', value);
+    },
+    RESET_MAIN_DATA: function RESET_MAIN_DATA(context) {
+      context.commit('resetMainData');
     }
   }
 };
@@ -18000,6 +18005,9 @@ var postDataModule = {
       if (state.galleryPosts.length <= 0) {
         state.galleryPosts.push(Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["defaultGalleryPostObject"])());
       }
+    },
+    resetGalleryPostData: function resetGalleryPostData(state) {
+      state.galleryPosts = [Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["defaultGalleryPostObject"])()];
     }
   },
   actions: {
@@ -18017,6 +18025,9 @@ var postDataModule = {
     },
     REMOVE_POST: function REMOVE_POST(context, index) {
       context.commit('removePost', index);
+    },
+    RESET_GALLERY_POST_DATA: function RESET_GALLERY_POST_DATA(context) {
+      context.commit('resetGalleryPostData');
     }
   }
 };

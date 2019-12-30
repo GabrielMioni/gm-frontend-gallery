@@ -38,6 +38,9 @@ export const postDataModule = {
       if (state.galleryPosts.length <= 0) {
         state.galleryPosts.push(defaultGalleryPostObject());
       }
+    },
+    resetGalleryPostData(state) {
+      state.galleryPosts = [defaultGalleryPostObject()];
     }
   },
   actions: {
@@ -56,5 +59,8 @@ export const postDataModule = {
     REMOVE_POST(context, index) {
       context.commit('removePost', index);
     },
+    RESET_GALLERY_POST_DATA(context) {
+      context.commit('resetGalleryPostData');
+    }
   }
 };
