@@ -1980,6 +1980,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ConfirmationModal",
   props: {
+    'singleButton': {
+      "default": false,
+      type: Boolean
+    },
     'confirmIsDangerous': {
       "default": false,
       type: Boolean
@@ -2243,6 +2247,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
 //
 //
 //
@@ -3953,22 +3958,24 @@ var render = function() {
           [_vm._v("Cancel")]
         ),
         _vm._v(" "),
-        _c(
-          "button",
-          {
-            class: {
-              "gm-frontend-confirmation-modal-button--danger":
-                _vm.confirmIsDangerous
-            },
-            on: {
-              click: function($event) {
-                $event.stopPropagation()
-                return _vm.confirmYes($event)
-              }
-            }
-          },
-          [_vm._v("\n                Ok\n            ")]
-        )
+        !_vm.singleButton
+          ? _c(
+              "button",
+              {
+                class: {
+                  "gm-frontend-confirmation-modal-button--danger":
+                    _vm.confirmIsDangerous
+                },
+                on: {
+                  click: function($event) {
+                    $event.stopPropagation()
+                    return _vm.confirmYes($event)
+                  }
+                }
+              },
+              [_vm._v("\n                Ok\n            ")]
+            )
+          : _vm._e()
       ])
     ])
   ])
@@ -4181,7 +4188,10 @@ var render = function() {
               _c(
                 "confirmation-modal",
                 {
-                  attrs: { "confirm-is-dangerous": false },
+                  attrs: {
+                    "single-button": true,
+                    "confirm-is-dangerous": false
+                  },
                   on: {
                     confirmNo: _vm.confirmNoHandler,
                     confirmYes: _vm.confirmYesHandler

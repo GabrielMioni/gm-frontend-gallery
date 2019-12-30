@@ -8,6 +8,7 @@
         </template>
         <portal to="modals" v-if="showModal">
             <confirmation-modal
+                    :single-button="true"
                     :confirm-is-dangerous="false"
                     @confirmNo="confirmNoHandler"
                     @confirmYes="confirmYesHandler">

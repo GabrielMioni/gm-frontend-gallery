@@ -6,7 +6,7 @@
             </h5>
             <div>
                 <button @click.stop="confirmNo">Cancel</button>
-                <button
+                <button v-if="!singleButton"
                         @click.stop="confirmYes"
                         v-bind:class="{ 'gm-frontend-confirmation-modal-button--danger': confirmIsDangerous } ">
                     Ok
@@ -20,10 +20,14 @@
   export default {
     name: "ConfirmationModal",
     props: {
-      'confirmIsDangerous' : {
+      'singleButton' : {
         default: false,
         type: Boolean
       },
+      'confirmIsDangerous' : {
+        default: false,
+        type: Boolean
+      }
     },
     methods: {
       confirmNo() {
