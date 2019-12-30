@@ -3833,7 +3833,7 @@ var render = function() {
         [_vm._v("Submit")]
       ),
       _vm._v(" "),
-      _c("portal-target", { attrs: { name: "modals" } })
+      _c("portal-target", { attrs: { name: "modals", slim: "" } })
     ],
     1
   )
