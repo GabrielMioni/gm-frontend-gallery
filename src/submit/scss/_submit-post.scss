@@ -3,7 +3,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 300px;
-    border: 1px solid grey;
+    border: solid 1px #ccc;
     border-radius: 0.2rem;
     margin: 1rem 0;
     padding: 1rem;
@@ -52,20 +52,6 @@
       justify-content: center;
       height: 15rem;
       position: relative;
-
-      /*&-trash {
-        grid-row: 1;
-        grid-column: 1;
-        display: flex;
-        justify-content: flex-end;
-        z-index: 1;
-
-        button {
-          background-color: unset;
-          color: #000000;
-          padding: .5rem;
-        }
-      }*/
 
       &-main {
         grid-row: 1 / span 2;
