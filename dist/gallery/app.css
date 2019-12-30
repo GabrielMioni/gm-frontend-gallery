@@ -23,6 +23,11 @@
   grid-gap: 0.25rem;
 }
 
+#gm-frontend-main .gm-frontend-gallery-posts img {
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+
 @media (min-width: 576px) {
   #gm-frontend-main .gm-frontend-gallery-posts {
     grid-template-columns: repeat(2, 1fr);
