@@ -8,7 +8,7 @@
                 <button @click.stop="confirmNo">Cancel</button>
                 <button
                         @click.stop="confirmYes"
-                        v-bind:class="{ 'gm-frontend-confirmation-modal-button--danger': confirmIsDangerous }">
+                        v-bind:class="{ 'gm-frontend-confirmation-modal-button--danger': confirmIsDangerous } ">
                     Ok
                 </button>
             </div>
