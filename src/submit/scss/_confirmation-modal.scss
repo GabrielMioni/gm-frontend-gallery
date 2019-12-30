@@ -11,6 +11,7 @@
     align-items: center;
     justify-content: center;
     background: rgba($themeColor1, .8);
+    z-index: 1;
 
     &-modal {
       background: $themeColor2;

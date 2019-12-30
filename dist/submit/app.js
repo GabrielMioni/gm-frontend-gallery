@@ -4224,9 +4224,9 @@ var render = function() {
                     "div",
                     { attrs: { slot: "confirmNo" }, slot: "confirmNo" },
                     [
-                      _vm._v("\n                Return to Gallery"),
-                      _c("br"),
-                      _vm._v("Submit Form\n            ")
+                      _vm._v(
+                        "\n                Return to Gallery Submit Form\n            "
+                      )
                     ]
                   )
                 ]
