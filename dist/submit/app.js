@@ -1912,18 +1912,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     SET_MAIN_TITLE: 'mainData/SET_MAIN_TITLE',
     SET_MAIN_TITLE_ERROR: 'mainData/SET_MAIN_TITLE_ERROR',
     SET_MAIN_NONCE: 'mainData/SET_MAIN_NONCE',
-    ADD_POST: 'postData/ADD_POST' // SET_POST_ERROR: 'postData/SET_POST_ERROR',
-
+    ADD_POST: 'postData/ADD_POST'
   }), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapGetters"])({
     getMainTitle: 'mainData/getMainTitle',
     getMainTitleError: 'mainData/getMainTitleError',
-    // getMainNonce: 'mainData/getMainNonce',
     getGalleryPosts: 'postData/getGalleryPosts'
-  }), {
-    addPost: function addPost() {
-      return this.ADD_POST();
-    }
-  }),
+  })),
   computed: {
     mainTitle: {
       get: function get() {
@@ -3886,7 +3880,7 @@ var render = function() {
           on: {
             click: function($event) {
               $event.stopPropagation()
-              return _vm.addPost($event)
+              return _vm.ADD_POST($event)
             }
           }
         },

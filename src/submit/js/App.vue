@@ -22,7 +22,7 @@
                     :index="index">
             </submit-post>
         </transition-group>
-        <button @click.stop="addPost">Add A Post!</button>
+        <button @click.stop="ADD_POST">Add A Post!</button>
         <submit-post-button>Submit</submit-post-button>
         <portal-target name="modals" slim></portal-target>
     </div>
@@ -47,9 +47,6 @@
         getMainTitleError: 'mainData/getMainTitleError',
         getGalleryPosts: 'postData/getGalleryPosts'
       }),
-      addPost() {
-        return this.ADD_POST();
-      },
     },
     computed: {
       mainTitle: {
