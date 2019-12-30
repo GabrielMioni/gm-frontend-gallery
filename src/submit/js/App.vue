@@ -41,12 +41,10 @@
         SET_MAIN_TITLE_ERROR: 'mainData/SET_MAIN_TITLE_ERROR',
         SET_MAIN_NONCE: 'mainData/SET_MAIN_NONCE',
         ADD_POST: 'postData/ADD_POST',
-        // SET_POST_ERROR: 'postData/SET_POST_ERROR',
       }),
       ...mapGetters({
         getMainTitle: 'mainData/getMainTitle',
         getMainTitleError: 'mainData/getMainTitleError',
-        // getMainNonce: 'mainData/getMainNonce',
         getGalleryPosts: 'postData/getGalleryPosts'
       }),
       addPost() {
@@ -68,9 +66,6 @@
       mainTitleError: {
         get() {
           return this.getMainTitleError();
-        },
-        set(error) {
-          return this.SET_MAIN_TITLE_ERROR(error);
         }
       },
       galleryPosts: {

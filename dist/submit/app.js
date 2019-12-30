@@ -1940,9 +1940,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     mainTitleError: {
       get: function get() {
         return this.getMainTitleError();
-      },
-      set: function set(error) {
-        return this.SET_MAIN_TITLE_ERROR(error);
       }
     },
     galleryPosts: {
