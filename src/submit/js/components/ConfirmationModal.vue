@@ -5,11 +5,17 @@
                 <slot>Please confirm</slot>
             </h5>
             <div>
-                <button @click.stop="confirmNo">Cancel</button>
+                <button @click.stop="confirmNo">
+                    <slot name="confirmNo">
+                        Cancel
+                    </slot>
+                </button>
                 <button v-if="!singleButton"
                         @click.stop="confirmYes"
                         v-bind:class="{ 'gm-frontend-confirmation-modal-button--danger': confirmIsDangerous } ">
-                    Ok
+                    <slot name="confirmYes">
+                        Ok
+                    </slot>
                 </button>
             </div>
         </div>

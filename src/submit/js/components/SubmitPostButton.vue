@@ -13,6 +13,9 @@
                     @confirmNo="confirmNoHandler"
                     @confirmYes="confirmYesHandler">
                 Your gallery submission was successful!
+                <div slot="confirmNo">
+                    Return to Gallery Submit Form
+                </div>
             </confirmation-modal>
         </portal>
     </button>

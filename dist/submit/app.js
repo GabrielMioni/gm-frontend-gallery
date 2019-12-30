@@ -1977,6 +1977,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ConfirmationModal",
   props: {
@@ -2247,6 +2253,9 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
 //
 //
 //
@@ -3955,7 +3964,12 @@ var render = function() {
               }
             }
           },
-          [_vm._v("Cancel")]
+          [
+            _vm._t("confirmNo", [
+              _vm._v("\n                    Cancel\n                ")
+            ])
+          ],
+          2
         ),
         _vm._v(" "),
         !_vm.singleButton
@@ -3973,7 +3987,12 @@ var render = function() {
                   }
                 }
               },
-              [_vm._v("\n                Ok\n            ")]
+              [
+                _vm._t("confirmYes", [
+                  _vm._v("\n                    Ok\n                ")
+                ])
+              ],
+              2
             )
           : _vm._e()
       ])
@@ -4199,7 +4218,16 @@ var render = function() {
                 },
                 [
                   _vm._v(
-                    "\n            Your gallery submission was successful!\n        "
+                    "\n            Your gallery submission was successful!\n            "
+                  ),
+                  _c(
+                    "div",
+                    { attrs: { slot: "confirmNo" }, slot: "confirmNo" },
+                    [
+                      _vm._v("\n                Return to Gallery"),
+                      _c("br"),
+                      _vm._v("Submit Form\n            ")
+                    ]
                   )
                 ]
               )
