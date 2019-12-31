@@ -150,7 +150,8 @@
 }
 
 #gm-frontend-submit .gm-frontend-confirmation-modal {
-  background: #FFFFFF;
+  background-color: #FFFFFF;
+  color: #000000;
   padding: 2rem;
   display: -webkit-box;
   display: flex;
@@ -167,19 +168,19 @@
   background-color: #8B0000;
 }
 
-#gm-frontend-submit button.gm-frontend-submit-post-button .gm-frontend-submit-post-button-main {
+button.gm-frontend-loading-button .gm-frontend-loading-button-main {
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr;
 }
 
-#gm-frontend-submit button.gm-frontend-submit-post-button .gm-frontend-submit-post-button-main span {
+button.gm-frontend-loading-button .gm-frontend-loading-button-main span {
   grid-row: 1;
   grid-column: 1;
   visibility: hidden;
 }
 
-#gm-frontend-submit button.gm-frontend-submit-post-button .gm-frontend-submit-post-button-main span.gm-frontend-submit-post-button-main--show {
+button.gm-frontend-loading-button .gm-frontend-loading-button-main span.gm-frontend-loading-button-main--show {
   visibility: visible;
 }
 
