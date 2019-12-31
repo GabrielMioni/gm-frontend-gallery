@@ -1914,15 +1914,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     SET_MAIN_TITLE: 'mainData/SET_MAIN_TITLE',
     SET_MAIN_TITLE_ERROR: 'mainData/SET_MAIN_TITLE_ERROR',
     SET_MAIN_NONCE: 'mainData/SET_MAIN_NONCE',
+    SET_MAIN_OPTIONS: 'mainData/SET_MAIN_OPTIONS',
     ADD_POST: 'postData/ADD_POST'
   }), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapGetters"])({
     getMainTitle: 'mainData/getMainTitle',
     getMainTitleError: 'mainData/getMainTitleError',
     getGalleryPosts: 'postData/getGalleryPosts',
-    getMainSubmitting: 'mainData/getMainSubmitting'
+    getMainSubmitting: 'mainData/getMainSubmitting',
+    getMainOptions: 'mainData/getMainOptions'
   }), {
     addPost: function addPost() {
       this.$refs.addPostButton.blur();
+
+      if (this.galleryPosts.length >= this.options['maxAttachments']) {
+        return;
+      }
+
       this.ADD_POST();
     }
   }),
@@ -1953,13 +1960,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       get: function get() {
         return this.getMainSubmitting();
       }
+    },
+    options: {
+      get: function get() {
+        return this.getMainOptions();
+      }
     }
   },
   created: function created() {
     var mount = document.getElementById('gm-frontend-submit');
-    var options = JSON.parse(mount.dataset.options);
-    console.log(options);
     this.SET_MAIN_NONCE(mount.dataset.nonce);
+    this.SET_MAIN_OPTIONS(mount.dataset.options);
   }
 });
 
@@ -18025,7 +18036,8 @@ var mainDataModule = {
     mainNonce: null,
     mainTitle: '',
     mainTitleError: '',
-    mainSubmitting: false
+    mainSubmitting: false,
+    mainOptions: {}
   },
   getters: {
     getMainNonce: function getMainNonce(state) {
@@ -18039,6 +18051,9 @@ var mainDataModule = {
     },
     getMainSubmitting: function getMainSubmitting(state) {
       return state.mainSubmitting;
+    },
+    getMainOptions: function getMainOptions(state) {
+      return state.mainOptions;
     }
   },
   mutations: {
@@ -18058,6 +18073,9 @@ var mainDataModule = {
       state.mainTitle = '';
       state.mainTitleError = '';
       state.mainSubmitting = false;
+    },
+    setMainOptions: function setMainOptions(state, value) {
+      state.mainOptions = JSON.parse(value);
     }
   },
   actions: {
@@ -18075,6 +18093,9 @@ var mainDataModule = {
     },
     RESET_MAIN_DATA: function RESET_MAIN_DATA(context) {
       context.commit('resetMainData');
+    },
+    SET_MAIN_OPTIONS: function SET_MAIN_OPTIONS(context, value) {
+      context.commit('setMainOptions', value);
     }
   }
 };

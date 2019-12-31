@@ -49,10 +49,14 @@
         getMainTitle: 'mainData/getMainTitle',
         getMainTitleError: 'mainData/getMainTitleError',
         getGalleryPosts: 'postData/getGalleryPosts',
-        getMainSubmitting: 'mainData/getMainSubmitting'
+        getMainSubmitting: 'mainData/getMainSubmitting',
+        getMainOptions: 'mainData/getMainOptions'
       }),
       addPost() {
         this.$refs.addPostButton.blur();
+        if (this.galleryPosts.length >= this.options['maxAttachments']) {
+          return;
+        }
         this.ADD_POST();
       }
     },
@@ -81,6 +85,11 @@
       submitting: {
         get() {
           return this.getMainSubmitting();
+        }
+      },
+      options: {
+        get() {
+          return this.getMainOptions();
         }
       }
     },
