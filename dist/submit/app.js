@@ -2162,9 +2162,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         file: null
       });
       this.clearFileInput();
-    },
-    trashPost: function trashPost() {
-      this.REMOVE_POST();
     }
   }),
   computed: {

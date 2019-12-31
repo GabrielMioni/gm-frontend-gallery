@@ -128,9 +128,6 @@
           file: null,
         });
         this.clearFileInput();
-      },
-      trashPost() {
-        this.REMOVE_POST();
       }
     },
     computed: {
