@@ -167,3 +167,19 @@
   background-color: #8B0000;
 }
 
+#gm-frontend-submit button.gm-frontend-submit-post-button .gm-frontend-submit-post-button-main {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+}
+
+#gm-frontend-submit button.gm-frontend-submit-post-button .gm-frontend-submit-post-button-main span {
+  grid-row: 1;
+  grid-column: 1;
+  visibility: hidden;
+}
+
+#gm-frontend-submit button.gm-frontend-submit-post-button .gm-frontend-submit-post-button-main span.gm-frontend-submit-post-button-main--show {
+  visibility: visible;
+}
+

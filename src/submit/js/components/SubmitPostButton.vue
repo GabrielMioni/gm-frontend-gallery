@@ -1,11 +1,15 @@
 <template>
-    <button @click.stop="submitPosts">
-        <slot v-if="submitting === false">
-            Submit
-        </slot>
-        <template v-else>
-            Submitting
-        </template>
+    <button class="gm-frontend-submit-post-button" @click.stop="submitPosts">
+        <span class="gm-frontend-submit-post-button-main">
+            <span v-bind:class="{ 'gm-frontend-submit-post-button-main--show' : submitting }">
+                Submitting
+            </span>
+            <span v-bind:class="{ 'gm-frontend-submit-post-button-main--show' : !submitting }">
+                <slot>
+                    Submit
+                </slot>
+            </span>
+        </span>
         <portal to="modals" v-if="showModal">
             <confirmation-modal
                     :single-button="true"

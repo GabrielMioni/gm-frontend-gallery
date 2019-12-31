@@ -2281,6 +2281,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -4200,6 +4204,7 @@ var render = function() {
   return _c(
     "button",
     {
+      staticClass: "gm-frontend-submit-post-button",
       on: {
         click: function($event) {
           $event.stopPropagation()
@@ -4208,9 +4213,32 @@ var render = function() {
       }
     },
     [
-      _vm.submitting === false
-        ? _vm._t("default", [_vm._v("\n        Submit\n    ")])
-        : [_vm._v("\n        Submitting\n    ")],
+      _c("span", { staticClass: "gm-frontend-submit-post-button-main" }, [
+        _c(
+          "span",
+          {
+            class: {
+              "gm-frontend-submit-post-button-main--show": _vm.submitting
+            }
+          },
+          [_vm._v("\n            Submitting\n        ")]
+        ),
+        _vm._v(" "),
+        _c(
+          "span",
+          {
+            class: {
+              "gm-frontend-submit-post-button-main--show": !_vm.submitting
+            }
+          },
+          [
+            _vm._t("default", [
+              _vm._v("\n                Submit\n            ")
+            ])
+          ],
+          2
+        )
+      ]),
       _vm._v(" "),
       _vm.showModal
         ? _c(
@@ -4246,7 +4274,7 @@ var render = function() {
           )
         : _vm._e()
     ],
-    2
+    1
   )
 }
 var staticRenderFns = []
