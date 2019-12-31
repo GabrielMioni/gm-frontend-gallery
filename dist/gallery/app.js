@@ -407,6 +407,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "LoadingButton",
   props: {
@@ -417,6 +419,12 @@ __webpack_require__.r(__webpack_exports__);
     clickAction: {
       type: Function,
       required: true
+    }
+  },
+  methods: {
+    doClick: function doClick() {
+      this.$refs.loadingButton.blur();
+      this.clickAction();
     }
   }
 });
@@ -1222,11 +1230,12 @@ var render = function() {
   return _c(
     "button",
     {
+      ref: "loadingButton",
       staticClass: "gm-frontend-loading-button",
       on: {
         click: function($event) {
           $event.stopPropagation()
-          return _vm.clickAction()
+          return _vm.doClick()
         }
       }
     },

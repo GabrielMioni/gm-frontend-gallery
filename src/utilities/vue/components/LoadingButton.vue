@@ -1,5 +1,7 @@
 <template>
-    <button class="gm-frontend-loading-button" @click.stop="clickAction()">
+    <button class="gm-frontend-loading-button"
+            :ref="'loadingButton'"
+            @click.stop="doClick()">
         <span class="gm-frontend-loading-button-main">
             <span v-bind:class="{ 'gm-frontend-loading-button-main--show' : !loading }">
                 <slot name="defaultText">
@@ -27,6 +29,12 @@
       clickAction: {
         type: Function,
         required: true,
+      }
+    },
+    methods: {
+      doClick() {
+        this.$refs.loadingButton.blur();
+        this.clickAction();
       }
     }
   }
