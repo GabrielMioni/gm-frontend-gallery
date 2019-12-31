@@ -72,6 +72,7 @@
       }),
       ...mapGetters({
         getGalleryPostData: 'postData/getGalleryPostData',
+        getMainOptions: 'mainData/getMainOptions'
       }),
       getGalleryDataByIndex(data) {
         data = data == null ? {} : data;
@@ -97,15 +98,26 @@
 
         const file = fileData[0];
         const fileUrl = URL.createObjectURL(file);
+        const mimeIsAllowed = this.allowedMimes.indexOf(file.type) > -1;
 
-        this.SET_POST_IMAGE_DATA({
-          index: this.index,
-          imageUrl: fileUrl,
-          file: file,
-        });
+        if (mimeIsAllowed) {
+          this.SET_POST_IMAGE_DATA({
+            index: this.index,
+            imageUrl: fileUrl,
+            file: file,
+          });
 
-        if (this.imageError !== '') {
-          this.imageError = '';
+          if (this.imageError !== '') {
+            this.imageError = '';
+          }
+        }
+        if (!mimeIsAllowed) {
+          this.imageError = 'The selected file type is not allowed';
+          this.SET_POST_IMAGE_DATA({
+            index: this.index,
+            imageUrl: null,
+            file: null,
+          });
         }
 
         this.clearFileInput();
@@ -190,6 +202,12 @@
             type: 'content',
             error: error,
           });
+        }
+      },
+      allowedMimes: {
+        get() {
+          const options = this.getMainOptions();
+          return options.allowedMimes;
         }
       }
     },

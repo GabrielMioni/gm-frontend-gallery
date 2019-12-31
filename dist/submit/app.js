@@ -2124,7 +2124,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     SET_POST_ERROR: 'postData/SET_POST_ERROR',
     REMOVE_POST: 'postData/REMOVE_POST'
   }), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapGetters"])({
-    getGalleryPostData: 'postData/getGalleryPostData'
+    getGalleryPostData: 'postData/getGalleryPostData',
+    getMainOptions: 'mainData/getMainOptions'
   }), {
     getGalleryDataByIndex: function getGalleryDataByIndex(data) {
       data = data == null ? {} : data;
@@ -2152,15 +2153,37 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       var file = fileData[0];
       var fileUrl = URL.createObjectURL(file);
-      this.SET_POST_IMAGE_DATA({
+      var mimeIsAllowed = this.allowedMimes.indexOf(file.type) > -1;
+
+      if (mimeIsAllowed) {
+        this.SET_POST_IMAGE_DATA({
+          index: this.index,
+          imageUrl: fileUrl,
+          file: file
+        });
+
+        if (this.imageError !== '') {
+          this.imageError = '';
+        }
+      }
+
+      if (!mimeIsAllowed) {
+        this.imageError = 'The selected file type is not allowed';
+        this.SET_POST_IMAGE_DATA({
+          index: this.index,
+          imageUrl: null,
+          file: null
+        });
+      }
+      /*this.SET_POST_IMAGE_DATA({
         index: this.index,
         imageUrl: fileUrl,
-        file: file
+        file: file,
       });
-
-      if (this.imageError !== '') {
+       if (this.imageError !== '') {
         this.imageError = '';
-      }
+      }*/
+
 
       this.clearFileInput();
     },
@@ -2246,6 +2269,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           type: 'content',
           error: error
         });
+      }
+    },
+    allowedMimes: {
+      get: function get() {
+        var options = this.getMainOptions();
+        return options.allowedMimes;
       }
     }
   },
