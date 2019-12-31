@@ -14,7 +14,8 @@
     z-index: 1;
 
     &-modal {
-      background: $themeColor2;
+      background-color: $themeColor2;
+      color: $themeColor1;
       padding: 2rem;
       display: flex;
       flex-direction: column;
