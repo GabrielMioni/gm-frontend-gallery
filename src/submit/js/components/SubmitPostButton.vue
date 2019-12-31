@@ -1,36 +1,32 @@
 <template>
-    <button class="gm-frontend-submit-post-button" @click.stop="submitPosts">
-        <span class="gm-frontend-submit-post-button-main">
-            <span v-bind:class="{ 'gm-frontend-submit-post-button-main--show' : submitting }">
-                Submitting
-            </span>
-            <span v-bind:class="{ 'gm-frontend-submit-post-button-main--show' : !submitting }">
-                <slot>
-                    Submit
-                </slot>
-            </span>
-        </span>
-        <portal to="modals" v-if="showModal">
-            <confirmation-modal
-                    :single-button="true"
-                    :confirm-is-dangerous="false"
-                    @confirmNo="confirmNoHandler">
-                Your gallery submission was successful!
-                <div slot="confirmNo">
-                    Return to Gallery Submit Form
-                </div>
-            </confirmation-modal>
-        </portal>
-    </button>
+    <loading-button :loading="submitting" :click-action="submitPosts">
+        <template slot="defaultText">
+            Submit
+        </template>
+        <template slot="loadingText">
+            Loading
+        </template>
+        <confirmation-modal slot="confirmationModal"
+                            v-if="showModal"
+                            :single-button="true"
+                            :confirm-is-dangerous="false"
+                            @confirmNo="confirmNoHandler">
+            Your gallery submission was successful!
+            <div slot="confirmNo">
+                Return to Gallery Submit Form
+            </div>
+        </confirmation-modal>
+    </loading-button>
 </template>
 
 <script>
   import axios from "axios";
   import { mapGetters, mapActions } from 'vuex';
   import ConfirmationModal from "./ConfirmationModal";
+  import LoadingButton from "../../../utilities/vue/components/LoadingButton";
   export default {
     name: "SubmitPostButton",
-    components: {ConfirmationModal},
+    components: {LoadingButton, ConfirmationModal},
     data() {
       return {
         showModal: false,

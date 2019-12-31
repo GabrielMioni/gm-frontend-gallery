@@ -1,0 +1,19 @@
+button {
+  &.gm-frontend-loading-button {
+    .gm-frontend-loading-button-main {
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr;
+
+      span {
+        grid-row: 1;
+        grid-column: 1;
+        visibility: hidden;
+
+        &.gm-frontend-loading-button-main--show {
+          visibility: visible;
+        }
+      }
+    }
+  }
+}
