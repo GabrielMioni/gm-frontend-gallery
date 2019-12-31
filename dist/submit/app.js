@@ -2281,8 +2281,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
 
 
 
@@ -2477,6 +2475,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -4262,39 +4262,28 @@ var render = function() {
         _vm._v("\n        Loading\n    ")
       ]),
       _vm._v(" "),
-      _c(
-        "template",
-        { slot: "confirmationModal" },
-        [
-          _vm.showModal
-            ? _c(
-                "confirmation-modal",
-                {
-                  attrs: {
-                    "single-button": true,
-                    "confirm-is-dangerous": false
-                  },
-                  on: { confirmNo: _vm.confirmNoHandler }
-                },
-                [
-                  _vm._v(
-                    "\n            Your gallery submission was successful!\n            "
-                  ),
-                  _c(
-                    "div",
-                    { attrs: { slot: "confirmNo" }, slot: "confirmNo" },
-                    [
-                      _vm._v(
-                        "\n                Return to Gallery Submit Form\n            "
-                      )
-                    ]
-                  )
-                ]
-              )
-            : _vm._e()
-        ],
-        1
-      )
+      _vm.showModal
+        ? _c(
+            "confirmation-modal",
+            {
+              attrs: {
+                slot: "confirmationModal",
+                "single-button": true,
+                "confirm-is-dangerous": false
+              },
+              on: { confirmNo: _vm.confirmNoHandler },
+              slot: "confirmationModal"
+            },
+            [
+              _vm._v(
+                "\n        Your gallery submission was successful!\n        "
+              ),
+              _c("div", { attrs: { slot: "confirmNo" }, slot: "confirmNo" }, [
+                _vm._v("\n            Return to Gallery Submit Form\n        ")
+              ])
+            ]
+          )
+        : _vm._e()
     ],
     2
   )
@@ -4420,9 +4409,14 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _vm._t("confirmationModal")
+      _c(
+        "portal",
+        { attrs: { to: "modals" } },
+        [_vm._t("confirmationModal")],
+        2
+      )
     ],
-    2
+    1
   )
 }
 var staticRenderFns = []

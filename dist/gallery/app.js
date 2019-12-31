@@ -409,6 +409,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "LoadingButton",
   props: {
@@ -1264,9 +1266,14 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _vm._t("confirmationModal")
+      _c(
+        "portal",
+        { attrs: { to: "modals" } },
+        [_vm._t("confirmationModal")],
+        2
+      )
     ],
-    2
+    1
   )
 }
 var staticRenderFns = []
