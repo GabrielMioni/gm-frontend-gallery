@@ -5,12 +5,14 @@ export const mainDataModule = {
     mainTitle: '',
     mainTitleError: '',
     mainSubmitting: false,
+    mainOptions: {}
   },
   getters: {
     getMainNonce: state => state.mainNonce,
     getMainTitle: state => state.mainTitle,
     getMainTitleError: state => state.mainTitleError,
     getMainSubmitting: state => state.mainSubmitting,
+    getMainOptions: state => state.mainOptions
   },
   mutations: {
     setMainNonce(state, nonce) {
@@ -29,6 +31,9 @@ export const mainDataModule = {
       state.mainTitle = '';
       state.mainTitleError = '';
       state.mainSubmitting = false;
+    },
+    setMainOptions(state, value) {
+      state.mainOptions = JSON.parse(value);
     }
   },
   actions: {
@@ -46,6 +51,9 @@ export const mainDataModule = {
     },
     RESET_MAIN_DATA(context) {
       context.commit('resetMainData');
+    },
+    SET_MAIN_OPTIONS(context, value) {
+      context.commit('setMainOptions', value);
     }
   },
 };
