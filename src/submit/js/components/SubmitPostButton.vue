@@ -6,18 +6,16 @@
         <template slot="loadingText">
             Loading
         </template>
-        <template slot="confirmationModal">
-            <confirmation-modal
-                    v-if="showModal"
-                    :single-button="true"
-                    :confirm-is-dangerous="false"
-                    @confirmNo="confirmNoHandler">
-                Your gallery submission was successful!
-                <div slot="confirmNo">
-                    Return to Gallery Submit Form
-                </div>
-            </confirmation-modal>
-        </template>
+        <confirmation-modal slot="confirmationModal"
+                            v-if="showModal"
+                            :single-button="true"
+                            :confirm-is-dangerous="false"
+                            @confirmNo="confirmNoHandler">
+            Your gallery submission was successful!
+            <div slot="confirmNo">
+                Return to Gallery Submit Form
+            </div>
+        </confirmation-modal>
     </loading-button>
 </template>
 
