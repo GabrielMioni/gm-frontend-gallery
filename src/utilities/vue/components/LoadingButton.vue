@@ -14,7 +14,9 @@
                 </slot>
             </span>
         </span>
-        <slot name="confirmationModal"></slot>
+        <portal to="modals">
+            <slot name="confirmationModal"></slot>
+        </portal>
     </button>
 </template>
 
