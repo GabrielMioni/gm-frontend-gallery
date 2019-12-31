@@ -18042,7 +18042,6 @@ var postDataModule = {
       state.galleryPosts.push(Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["defaultGalleryPostObject"])());
     },
     removePost: function removePost(state, index) {
-      console.log(index);
       state.galleryPosts.splice(index, 1);
 
       if (state.galleryPosts.length <= 0) {
