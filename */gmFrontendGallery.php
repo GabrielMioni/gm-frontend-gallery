@@ -181,6 +181,23 @@ class gmFrontendGallery
         wp_enqueue_script($this->scriptHandleSubmit);
         wp_enqueue_style($this->scriptHandleSubmit);
         $nonce = wp_create_nonce($this->gallerySubmitNonce);
-        return '<div id="gm-frontend-submit" data-nonce="'.$nonce.'"></div>';
+        $jsonEncodedOptions = $this->createOptionsJson();
+
+        return '<div id="gm-frontend-submit" data-nonce="'.$nonce.'" data-options="'.$jsonEncodedOptions.'"></div>';
+    }
+
+    protected function createOptionsJson() {
+        $options = get_option($this->pluginOptionName);
+
+        $setOptions = [
+            'maxAttachments' => $this->getOptionValue($options,'max_attachments'),
+            'allowedMimes' => $this->getOptionValue($options,'allowed_mimes')
+        ];
+
+        return htmlspecialchars(json_encode($setOptions), ENT_QUOTES, 'UTF-8');
+    }
+
+    protected function getOptionValue(array $options, $optionType) {
+        return isset($options[$optionType]) ? $options[$optionType] : $this->defaultOptions[$optionType];
     }
 }
