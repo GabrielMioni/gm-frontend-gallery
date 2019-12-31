@@ -1,17 +1,18 @@
 <template>
     <button class="gm-frontend-loading-button" @click.stop="submitAction()">
         <span class="gm-frontend-loading-button-main">
-            <span v-bind:class="{ 'gm-frontend-submit-post-button-main--show' : !loading }">
+            <span v-bind:class="{ 'gm-frontend-loading-button-main--show' : !loading }">
                 <slot name="defaultText">
                     Submit
                 </slot>
             </span>
-            <span v-bind:class="{ 'gm-frontend-submit-post-button-main--show' : loading }">
+            <span v-bind:class="{ 'gm-frontend-loading-button-main--show' : loading }">
                 <slot name="loadingText">
                     Loading
                 </slot>
             </span>
         </span>
+        <slot name="confirmationModal"></slot>
     </button>
 </template>
 
