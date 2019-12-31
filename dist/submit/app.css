@@ -3,6 +3,18 @@
   padding: 0;
   width: 100%;
   max-width: 100%;
+  position: relative;
+}
+
+#gm-frontend-submit.gm-frontend-submit--active:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.5);
+  z-index: 1;
 }
 
 #gm-frontend-submit .gm-frontend-submit-form-group {

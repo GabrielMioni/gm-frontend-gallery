@@ -1916,7 +1916,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   }), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapGetters"])({
     getMainTitle: 'mainData/getMainTitle',
     getMainTitleError: 'mainData/getMainTitleError',
-    getGalleryPosts: 'postData/getGalleryPosts'
+    getGalleryPosts: 'postData/getGalleryPosts',
+    getMainSubmitting: 'mainData/getMainSubmitting'
   })),
   computed: {
     mainTitle: {
@@ -1939,6 +1940,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     galleryPosts: {
       get: function get() {
         return this.getGalleryPosts();
+      }
+    },
+    submitting: {
+      get: function get() {
+        return this.getMainSubmitting();
       }
     }
   },
@@ -2350,6 +2356,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     submitPosts: function submitPosts() {
       var _this2 = this;
+
+      if (this.submitting) {
+        return;
+      }
 
       this.submitting = true;
       var formData = this.createValidateFormData();
@@ -3845,7 +3855,10 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { attrs: { id: "gm-frontend-submit" } },
+    {
+      class: { "gm-frontend-submit--active": _vm.submitting },
+      attrs: { id: "gm-frontend-submit" }
+    },
     [
       _c("form", [
         _c("div", { staticClass: "gm-frontend-submit-form-group" }, [

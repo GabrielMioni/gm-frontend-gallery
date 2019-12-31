@@ -1,5 +1,5 @@
 <template>
-    <div id="gm-frontend-submit">
+    <div id="gm-frontend-submit" v-bind:class="{ 'gm-frontend-submit--active' : submitting }">
         <form>
             <div class="gm-frontend-submit-form-group">
                 <label for="post_title">
@@ -45,7 +45,8 @@
       ...mapGetters({
         getMainTitle: 'mainData/getMainTitle',
         getMainTitleError: 'mainData/getMainTitleError',
-        getGalleryPosts: 'postData/getGalleryPosts'
+        getGalleryPosts: 'postData/getGalleryPosts',
+        getMainSubmitting: 'mainData/getMainSubmitting'
       }),
     },
     computed: {
@@ -70,6 +71,11 @@
           return this.getGalleryPosts();
         }
       },
+      submitting: {
+        get() {
+          return this.getMainSubmitting();
+        }
+      }
     },
     created() {
       const mount = document.getElementById('gm-frontend-submit');
