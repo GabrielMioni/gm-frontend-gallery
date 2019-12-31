@@ -2152,6 +2152,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var fileInput = this.$refs.fileInput;
       fileInput.click();
     },
+    removePost: function removePost() {
+      this.REMOVE_POST(this.index);
+    },
     trashImage: function trashImage() {
       this.SET_POST_IMAGE_DATA({
         index: this.index,
@@ -4047,7 +4050,7 @@ var render = function() {
         _c("trash-post-button", {
           attrs: {
             galleryDataAccessor: _vm.getGalleryDataByIndex,
-            galleryDataDelete: _vm.REMOVE_POST
+            galleryDataDelete: _vm.removePost
           }
         })
       ],
@@ -18039,6 +18042,7 @@ var postDataModule = {
       state.galleryPosts.push(Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["defaultGalleryPostObject"])());
     },
     removePost: function removePost(state, index) {
+      console.log(index);
       state.galleryPosts.splice(index, 1);
 
       if (state.galleryPosts.length <= 0) {

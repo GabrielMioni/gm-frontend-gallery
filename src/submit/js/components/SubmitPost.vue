@@ -3,7 +3,7 @@
         <div class="gm-frontend-submit-post-trash gm-frontend-submit-post-trash--full">
             <trash-post-button
                     :galleryDataAccessor="getGalleryDataByIndex"
-                    :galleryDataDelete="REMOVE_POST"
+                    :galleryDataDelete="removePost"
             ></trash-post-button>
         </div>
         <div class="gm-frontend-submit-post-left">
@@ -117,6 +117,9 @@
       openFileInput() {
         const fileInput = this.$refs.fileInput;
         fileInput.click();
+      },
+      removePost() {
+        this.REMOVE_POST(this.index);
       },
       trashImage() {
         this.SET_POST_IMAGE_DATA({
