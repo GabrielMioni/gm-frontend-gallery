@@ -96,6 +96,9 @@
         return formData;
       },
       submitPosts() {
+        if (this.submitting) {
+          return;
+        }
         this.submitting = true;
         const formData = this.createValidateFormData();
         if (formData === false) {
@@ -111,12 +114,12 @@
             'X-WP-Nonce': mainNonce,
           }
         })
-          .then((response)=>{
-            setTimeout(()=>{
-              self.showModal = true;
-              self.submitting = false;
-            }, 1000);
-          }).catch((error)=>{
+        .then((response)=>{
+          setTimeout(()=>{
+            self.showModal = true;
+            self.submitting = false;
+          }, 1000);
+        }).catch((error)=>{
           const responseData = error.response.data;
           this.error = responseData.message;
         });
