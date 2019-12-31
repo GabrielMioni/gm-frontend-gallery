@@ -2359,13 +2359,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return formData;
     },
     submitPosts: function submitPosts() {
-      var _this2 = this;
-
       if (this.submitting) {
         return;
       }
 
-      this.submitting = true;
       var formData = this.createValidateFormData();
 
       if (formData === false) {
@@ -2373,7 +2370,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       var self = this;
-      var mainNonce = this.getMainNonce();
+      self.submitting = true;
+      var mainNonce = self.getMainNonce();
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/wp-json/gm-frontend-gallery/v1/submit/', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -2386,7 +2384,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }, 1000);
       })["catch"](function (error) {
         var responseData = error.response.data;
-        _this2.error = responseData.message;
+        self.error = responseData.message;
       });
     },
     confirmNoHandler: function confirmNoHandler() {

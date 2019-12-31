@@ -103,14 +103,15 @@
         if (this.submitting) {
           return;
         }
-        this.submitting = true;
+
         const formData = this.createValidateFormData();
         if (formData === false) {
           return;
         }
 
         const self = this;
-        const mainNonce = this.getMainNonce();
+        self.submitting = true;
+        const mainNonce = self.getMainNonce();
 
         axios.post('/wp-json/gm-frontend-gallery/v1/submit/', formData, {
           headers: {
@@ -125,7 +126,7 @@
           }, 1000);
         }).catch((error)=>{
           const responseData = error.response.data;
-          this.error = responseData.message;
+          self.error = responseData.message;
         });
       },
       confirmNoHandler() {
