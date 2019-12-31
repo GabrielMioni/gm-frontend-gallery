@@ -7,14 +7,14 @@ export const mainDataModule = {
     mainSubmitting: false,
   },
   getters: {
-    getMainNonce: state => state.postNonce,
+    getMainNonce: state => state.mainNonce,
     getMainTitle: state => state.mainTitle,
     getMainTitleError: state => state.mainTitleError,
     getMainSubmitting: state => state.mainSubmitting,
   },
   mutations: {
     setMainNonce(state, nonce) {
-      state.postNonce = nonce;
+      state.mainNonce = nonce;
     },
     setMainTitle(state, newTitle) {
       state.mainTitle = newTitle;

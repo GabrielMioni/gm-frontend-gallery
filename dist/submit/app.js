@@ -17911,7 +17911,7 @@ var mainDataModule = {
   },
   getters: {
     getMainNonce: function getMainNonce(state) {
-      return state.postNonce;
+      return state.mainNonce;
     },
     getMainTitle: function getMainTitle(state) {
       return state.mainTitle;
@@ -17925,7 +17925,7 @@ var mainDataModule = {
   },
   mutations: {
     setMainNonce: function setMainNonce(state, nonce) {
-      state.postNonce = nonce;
+      state.mainNonce = nonce;
     },
     setMainTitle: function setMainTitle(state, newTitle) {
       state.mainTitle = newTitle;
