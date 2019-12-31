@@ -358,3 +358,19 @@
   opacity: 0;
 }
 
+button.gm-frontend-loading-button .gm-frontend-loading-button-main {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+}
+
+button.gm-frontend-loading-button .gm-frontend-loading-button-main span {
+  grid-row: 1;
+  grid-column: 1;
+  visibility: hidden;
+}
+
+button.gm-frontend-loading-button .gm-frontend-loading-button-main span.gm-frontend-loading-button-main--show {
+  visibility: visible;
+}
+
