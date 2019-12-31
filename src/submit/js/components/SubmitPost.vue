@@ -8,7 +8,12 @@
         </div>
         <div class="gm-frontend-submit-post-left">
             <div class="gm-frontend-submit-post-upload" @click="openFileInput" :ref="'dropFile'">
-                <div v-if="uploadImageUrl === null" class="gm-frontend-submit-post-upload-main">This is the stone on which I will build my empire.</div>
+                <div v-if="uploadImageUrl === null" class="gm-frontend-submit-post-upload-main">
+                    This is the stone on which I will build my empire.
+                    <div>
+                        Allowed file types: {{ displayAllowedMimes }}
+                    </div>
+                </div>
                 <template v-else>
                     <div class="gm-frontend-submit-post-trash">
                         <button @click.stop="trashImage">x</button>
@@ -208,6 +213,21 @@
         get() {
           const options = this.getMainOptions();
           return options.allowedMimes;
+        }
+      },
+      displayAllowedMimes: {
+        get() {
+          const options = this.getMainOptions();
+          const allowedMimes = options.allowedMimes;
+
+          let display = [];
+
+          allowedMimes.map((mime) => {
+            const fileType = mime.substr(mime.indexOf('/') + 1);
+            display.push('.' + fileType);
+          });
+
+          return display.join(', ');
         }
       }
     },

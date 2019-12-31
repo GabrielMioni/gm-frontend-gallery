@@ -2102,6 +2102,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -2175,15 +2180,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           file: null
         });
       }
-      /*this.SET_POST_IMAGE_DATA({
-        index: this.index,
-        imageUrl: fileUrl,
-        file: file,
-      });
-       if (this.imageError !== '') {
-        this.imageError = '';
-      }*/
-
 
       this.clearFileInput();
     },
@@ -2275,6 +2271,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       get: function get() {
         var options = this.getMainOptions();
         return options.allowedMimes;
+      }
+    },
+    displayAllowedMimes: {
+      get: function get() {
+        var options = this.getMainOptions();
+        var allowedMimes = options.allowedMimes;
+        var display = [];
+        allowedMimes.map(function (mime) {
+          var fileType = mime.substr(mime.indexOf('/') + 1);
+          display.push('.' + fileType);
+        });
+        return display.join(', ');
       }
     }
   },
@@ -4168,7 +4176,18 @@ var render = function() {
             ? _c(
                 "div",
                 { staticClass: "gm-frontend-submit-post-upload-main" },
-                [_vm._v("This is the stone on which I will build my empire.")]
+                [
+                  _vm._v(
+                    "\n                This is the stone on which I will build my empire.\n                "
+                  ),
+                  _c("div", [
+                    _vm._v(
+                      "\n                    Allowed file types: " +
+                        _vm._s(_vm.displayAllowedMimes) +
+                        "\n                "
+                    )
+                  ])
+                ]
               )
             : [
                 _c("div", { staticClass: "gm-frontend-submit-post-trash" }, [
