@@ -11,8 +11,17 @@
                 </template>
             </div>
             <div class="gm-frontend-gallery-loading">
-                <div v-if="galleryLoading">Loading!</div>
-                <button v-if="!galleryLoading && galleryPosts.length < galleryCount" @click.stop="setGalleryItems">Load More</button>
+                <loading-button
+                        v-if="galleryPosts.length < galleryCount"
+                        :loading="galleryLoading"
+                        :submit-action="setGalleryItems">
+                    <template slot="defaultText">
+                        Load More
+                    </template>
+                    <template slot="loadingText">
+                        Loading!
+                    </template>
+                </loading-button>
             </div>
             <transition name="fade">
                 <GalleryLightBox v-if="openedPostIndex !== null"
@@ -29,9 +38,10 @@
 <script>
   import GalleryPost from "./components/GalleryPost";
   import GalleryLightBox from "./components/GalleryLightBox";
+  import LoadingButton from "../../utilities/vue/components/LoadingButton";
   export default {
     name: 'gmGallery',
-    components: {GalleryLightBox, GalleryPost},
+    components: {LoadingButton, GalleryLightBox, GalleryPost},
     data() {
       return {
         galleryPosts: [],
@@ -44,11 +54,8 @@
       }
     },
     methods: {
-      setGalleryItems(event) {
+      setGalleryItems() {
         const self = this;
-        if (event.type === 'click' && this.galleryLoading === true) {
-          return;
-        }
         self.galleryLoading = true;
         let xhr = new XMLHttpRequest();
         xhr.open('GET', `/wp-json/gm-frontend-gallery/v1/get/${self.pageLoaded}/${self.postsPerPage}`);
