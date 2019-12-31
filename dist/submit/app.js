@@ -1899,6 +1899,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 
 
@@ -1918,7 +1920,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     getMainTitleError: 'mainData/getMainTitleError',
     getGalleryPosts: 'postData/getGalleryPosts',
     getMainSubmitting: 'mainData/getMainSubmitting'
-  })),
+  }), {
+    addPost: function addPost() {
+      this.$refs.addPostButton.blur();
+      this.ADD_POST();
+    }
+  }),
   computed: {
     mainTitle: {
       get: function get() {
@@ -3976,10 +3983,11 @@ var render = function() {
       _c(
         "button",
         {
+          ref: "addPostButton",
           on: {
             click: function($event) {
               $event.stopPropagation()
-              return _vm.ADD_POST($event)
+              return _vm.addPost($event)
             }
           }
         },
