@@ -2502,7 +2502,7 @@ __webpack_require__.r(__webpack_exports__);
       type: Boolean,
       "default": false
     },
-    submitAction: {
+    clickAction: {
       type: Function,
       required: true
     }
@@ -4244,7 +4244,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "loading-button",
-    { attrs: { loading: _vm.submitting, "submit-action": _vm.submitPosts } },
+    { attrs: { loading: _vm.submitting, "click-action": _vm.submitPosts } },
     [
       _c("template", { slot: "defaultText" }, [
         _vm._v("\n        Submit\n    ")
@@ -4382,7 +4382,7 @@ var render = function() {
       on: {
         click: function($event) {
           $event.stopPropagation()
-          return _vm.submitAction()
+          return _vm.clickAction()
         }
       }
     },

@@ -135,8 +135,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 
 
@@ -159,12 +157,8 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    setGalleryItems: function setGalleryItems(event) {
+    setGalleryItems: function setGalleryItems() {
       var self = this;
-      /*if (event.type === 'click' && this.galleryLoading === true) {
-        return;
-      }*/
-
       self.galleryLoading = true;
       var xhr = new XMLHttpRequest();
       xhr.open('GET', "/wp-json/gm-frontend-gallery/v1/get/".concat(self.pageLoaded, "/").concat(self.postsPerPage));
@@ -420,7 +414,7 @@ __webpack_require__.r(__webpack_exports__);
       type: Boolean,
       "default": false
     },
-    submitAction: {
+    clickAction: {
       type: Function,
       required: true
     }
@@ -943,7 +937,7 @@ var render = function() {
                   {
                     attrs: {
                       loading: _vm.galleryLoading,
-                      "submit-action": _vm.setGalleryItems
+                      "click-action": _vm.setGalleryItems
                     }
                   },
                   [
@@ -1232,7 +1226,7 @@ var render = function() {
       on: {
         click: function($event) {
           $event.stopPropagation()
-          return _vm.submitAction()
+          return _vm.clickAction()
         }
       }
     },

@@ -1,5 +1,5 @@
 <template>
-    <button class="gm-frontend-loading-button" @click.stop="submitAction()">
+    <button class="gm-frontend-loading-button" @click.stop="clickAction()">
         <span class="gm-frontend-loading-button-main">
             <span v-bind:class="{ 'gm-frontend-loading-button-main--show' : !loading }">
                 <slot name="defaultText">
@@ -24,7 +24,7 @@
         type: Boolean,
         default: false,
       },
-      submitAction: {
+      clickAction: {
         type: Function,
         required: true,
       }

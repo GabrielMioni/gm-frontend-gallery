@@ -14,7 +14,7 @@
                 <loading-button
                         v-if="galleryPosts.length < galleryCount"
                         :loading="galleryLoading"
-                        :submit-action="setGalleryItems">
+                        :click-action="setGalleryItems">
                     <template slot="defaultText">
                         Load More
                     </template>

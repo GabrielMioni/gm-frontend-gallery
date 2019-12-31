@@ -1,5 +1,5 @@
 <template>
-    <loading-button :loading="submitting" :submit-action="submitPosts">
+    <loading-button :loading="submitting" :click-action="submitPosts">
         <template slot="defaultText">
             Submit
         </template>
