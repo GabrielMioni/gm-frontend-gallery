@@ -1957,6 +1957,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   created: function created() {
     var mount = document.getElementById('gm-frontend-submit');
+    var options = JSON.parse(mount.dataset.options);
+    console.log(options);
     this.SET_MAIN_NONCE(mount.dataset.nonce);
   }
 });

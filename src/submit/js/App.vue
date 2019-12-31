@@ -85,6 +85,8 @@
     },
     created() {
       const mount = document.getElementById('gm-frontend-submit');
+      const options = JSON.parse(mount.dataset.options);
+
       this.SET_MAIN_NONCE(mount.dataset.nonce);
     },
   }
