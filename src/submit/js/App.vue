@@ -42,7 +42,8 @@
         SET_MAIN_TITLE: 'mainData/SET_MAIN_TITLE',
         SET_MAIN_TITLE_ERROR: 'mainData/SET_MAIN_TITLE_ERROR',
         SET_MAIN_NONCE: 'mainData/SET_MAIN_NONCE',
-        ADD_POST: 'postData/ADD_POST',
+        SET_MAIN_OPTIONS: 'mainData/SET_MAIN_OPTIONS',
+        ADD_POST: 'postData/ADD_POST'
       }),
       ...mapGetters({
         getMainTitle: 'mainData/getMainTitle',
@@ -85,9 +86,9 @@
     },
     created() {
       const mount = document.getElementById('gm-frontend-submit');
-      const options = JSON.parse(mount.dataset.options);
 
       this.SET_MAIN_NONCE(mount.dataset.nonce);
+      this.SET_MAIN_OPTIONS(mount.dataset.options);
     },
   }
 </script>
