@@ -54,7 +54,7 @@
 </template>
 
 <script>
-  import TrashPostButton from "./TrashPostButton";
+  import TrashPostButton from "../TrashPostButton";
   import dragDrop from "drag-drop";
   import { mapGetters, mapActions } from 'vuex';
   export default {

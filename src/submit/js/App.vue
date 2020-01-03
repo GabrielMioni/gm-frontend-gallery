@@ -31,7 +31,7 @@
 </template>
 
 <script>
-  import GalleryPost from "./components/GalleryPost";
+  import GalleryPost from "./components/GalleryPost/GalleryPost";
   import SubmitPostButton from "./components/SubmitPostButton";
   import { mapGetters, mapActions } from 'vuex';
   export default {
