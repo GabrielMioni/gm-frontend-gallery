@@ -45,13 +45,10 @@
     },
     methods: {
       ...mapActions({
-        SET_POST_CONTENT: 'postData/SET_POST_CONTENT',
         SET_POST_IMAGE_DATA: 'postData/SET_POST_IMAGE_DATA',
-        SET_POST_ERROR: 'postData/SET_POST_ERROR',
-        REMOVE_POST: 'postData/REMOVE_POST',
+        SET_POST_ERROR: 'postData/SET_POST_ERROR'
       }),
       ...mapGetters({
-        getGalleryPostData: 'postData/getGalleryPostData',
         getMainOptions: 'mainData/getMainOptions'
       }),
       imageUpdate(fileData) {

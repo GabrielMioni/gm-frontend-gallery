@@ -2243,12 +2243,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])({
-    SET_POST_CONTENT: 'postData/SET_POST_CONTENT',
     SET_POST_IMAGE_DATA: 'postData/SET_POST_IMAGE_DATA',
-    SET_POST_ERROR: 'postData/SET_POST_ERROR',
-    REMOVE_POST: 'postData/REMOVE_POST'
+    SET_POST_ERROR: 'postData/SET_POST_ERROR'
   }), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])({
-    getGalleryPostData: 'postData/getGalleryPostData',
     getMainOptions: 'mainData/getMainOptions'
   }), {
     imageUpdate: function imageUpdate(fileData) {
