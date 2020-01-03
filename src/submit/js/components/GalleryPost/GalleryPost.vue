@@ -6,29 +6,10 @@
                     :galleryDataDelete="removePost"
             ></trash-post-button>
         </div>
-        <div class="gm-frontend-gallery-post-left">
-            <div class="gm-frontend-gallery-post-upload" @click="openFileInput" :ref="'dropFile'">
-                <div v-if="uploadImageUrl === null" class="gm-frontend-gallery-post-upload-main">
-                    This is the stone on which I will build my empire.
-                    <div>
-                        Allowed file types: {{ displayAllowedMimes }}
-                    </div>
-                </div>
-                <template v-else>
-                    <div class="gm-frontend-gallery-post-trash">
-                        <button @click.stop="trashImage">x</button>
-                    </div>
-                    <img class="gm-frontend-gallery-post-upload-main" :src="uploadImageUrl" alt="">
-                </template>
-            </div>
-            <div class="gm-frontend-submit-error">
-                <transition name="fade">
-                    <div v-if="imageError !== ''">
-                        {{ imageError }}
-                    </div>
-                </transition>
-            </div>
-        </div>
+        <gallery-post-image
+                :index="index"
+                :get-gallery-data-by-index="getGalleryDataByIndex">
+        </gallery-post-image>
         <div class="gm-frontend-gallery-post-right">
             <form>
                 <div class="gm-frontend-submit-form-group">
@@ -46,20 +27,17 @@
                     </textarea>
                 </div>
             </form>
-            <form :ref="'fileInputForm'">
-                <input class="gm-frontend-gallery-post-file" type="file" name="image" @change="imageUpdate" :ref="'fileInput'">
-            </form>
         </div>
     </div>
 </template>
 
 <script>
   import TrashPostButton from "../TrashPostButton";
-  import dragDrop from "drag-drop";
+  import GalleryPostImage from "./GalleryPostImage";
   import { mapGetters, mapActions } from 'vuex';
   export default {
     name: "GalleryPost",
-    components: {TrashPostButton},
+    components: {GalleryPostImage, TrashPostButton},
     props: {
       index: Number,
     },
@@ -96,56 +74,9 @@
       setElementId(idName) {
         return `${idName}-${this.index}`;
       },
-      imageUpdate(fileData) {
-        if (fileData.type === 'change') {
-          fileData[0] = fileData.target.files[0];
-        }
-
-        const file = fileData[0];
-        const fileUrl = URL.createObjectURL(file);
-        const mimeIsAllowed = this.allowedMimes.indexOf(file.type) > -1;
-
-        if (mimeIsAllowed) {
-          this.SET_POST_IMAGE_DATA({
-            index: this.index,
-            imageUrl: fileUrl,
-            file: file,
-          });
-
-          if (this.imageError !== '') {
-            this.imageError = '';
-          }
-        }
-        if (!mimeIsAllowed) {
-          this.imageError = 'The selected file type is not allowed';
-          this.SET_POST_IMAGE_DATA({
-            index: this.index,
-            imageUrl: null,
-            file: null,
-          });
-        }
-
-        this.clearFileInput();
-      },
-      clearFileInput() {
-        const fileInputForm = this.$refs.fileInputForm;
-        fileInputForm.reset();
-      },
-      openFileInput() {
-        const fileInput = this.$refs.fileInput;
-        fileInput.click();
-      },
       removePost() {
         this.REMOVE_POST(this.index);
       },
-      trashImage() {
-        this.SET_POST_IMAGE_DATA({
-          index: this.index,
-          imageUrl: null,
-          file: null,
-        });
-        this.clearFileInput();
-      }
     },
     computed: {
       postContent: {
@@ -172,28 +103,6 @@
           });
         }
       },
-      uploadImageUrl: {
-        get() {
-          return this.getGalleryDataByIndex({
-            type: 'imageUrl'
-          });
-        }
-      },
-      imageError: {
-        get() {
-          return this.getGalleryDataByIndex({
-            type: 'errors',
-            deepKey: 'imageUrl'
-          });
-        },
-        set(error) {
-          return this.SET_POST_ERROR({
-            index: this.index,
-            type: 'imageUrl',
-            error: error,
-          });
-        }
-      },
       contentError: {
         get() {
           return this.getGalleryDataByIndex({
@@ -208,35 +117,7 @@
             error: error,
           });
         }
-      },
-      allowedMimes: {
-        get() {
-          const options = this.getMainOptions();
-          return options.allowedMimes;
-        }
-      },
-      displayAllowedMimes: {
-        get() {
-          const options = this.getMainOptions();
-          const allowedMimes = options.allowedMimes;
-
-          let display = [];
-
-          allowedMimes.map((mime) => {
-            const fileType = mime.substr(mime.indexOf('/') + 1);
-            display.push('.' + fileType);
-          });
-
-          return display.join(', ');
-        }
       }
-    },
-    mounted() {
-      const dropArea = this.$refs.dropFile;
-      const self = this;
-      dragDrop(dropArea, (files) => {
-        self.imageUpdate(files);
-      })
     }
   }
 </script>
