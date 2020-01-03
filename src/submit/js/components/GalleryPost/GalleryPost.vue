@@ -3,8 +3,8 @@
         <div class="gm-frontend-gallery-post-trash gm-frontend-gallery-post-trash--full">
             <trash-post-button
                     :galleryDataAccessor="getGalleryDataByIndex"
-                    :galleryDataDelete="removePost"
-            ></trash-post-button>
+                    :galleryDataDelete="removePost">
+            </trash-post-button>
         </div>
         <gallery-post-image
                 :index="index"
@@ -49,7 +49,6 @@
     methods: {
       ...mapActions({
         SET_POST_CONTENT: 'postData/SET_POST_CONTENT',
-        SET_POST_IMAGE_DATA: 'postData/SET_POST_IMAGE_DATA',
         SET_POST_ERROR: 'postData/SET_POST_ERROR',
         REMOVE_POST: 'postData/REMOVE_POST',
       }),

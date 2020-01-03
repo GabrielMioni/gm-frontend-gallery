@@ -2043,8 +2043,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _TrashPostButton__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../TrashPostButton */ "./src/submit/js/components/TrashPostButton.vue");
-/* harmony import */ var drag_drop__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! drag-drop */ "./node_modules/drag-drop/index.js");
-/* harmony import */ var drag_drop__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(drag_drop__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _GalleryPostImage__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./GalleryPostImage */ "./src/submit/js/components/GalleryPost/GalleryPostImage.vue");
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -2085,34 +2084,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "GalleryPost",
   components: {
+    GalleryPostImage: _GalleryPostImage__WEBPACK_IMPORTED_MODULE_1__["default"],
     TrashPostButton: _TrashPostButton__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   props: {
@@ -2125,7 +2103,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapActions"])({
     SET_POST_CONTENT: 'postData/SET_POST_CONTENT',
-    SET_POST_IMAGE_DATA: 'postData/SET_POST_IMAGE_DATA',
     SET_POST_ERROR: 'postData/SET_POST_ERROR',
     REMOVE_POST: 'postData/REMOVE_POST'
   }), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapGetters"])({
@@ -2151,6 +2128,127 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     setElementId: function setElementId(idName) {
       return "".concat(idName, "-").concat(this.index);
     },
+    removePost: function removePost() {
+      this.REMOVE_POST(this.index);
+    }
+  }),
+  computed: {
+    postContent: {
+      get: function get() {
+        return this.getGalleryDataByIndex({
+          type: 'content'
+        });
+      },
+      set: function set(value) {
+        var galleryPostContentError = this.getGalleryDataByIndex({
+          type: 'errors',
+          deepKey: 'content'
+        });
+
+        if (galleryPostContentError !== '') {
+          this.SET_POST_ERROR({
+            index: this.index,
+            type: 'content',
+            error: ''
+          });
+        }
+
+        return this.SET_POST_CONTENT({
+          index: this.index,
+          data: value
+        });
+      }
+    },
+    contentError: {
+      get: function get() {
+        return this.getGalleryDataByIndex({
+          type: 'errors',
+          deepKey: 'content'
+        });
+      },
+      set: function set(error) {
+        return this.SET_POST_ERROR({
+          index: this.index,
+          type: 'content',
+          error: error
+        });
+      }
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./src/submit/js/components/GalleryPost/GalleryPostImage.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./src/submit/js/components/GalleryPost/GalleryPostImage.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var drag_drop__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! drag-drop */ "./node_modules/drag-drop/index.js");
+/* harmony import */ var drag_drop__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(drag_drop__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "GalleryPostImage",
+  props: {
+    index: {
+      type: Number,
+      required: true
+    },
+    getGalleryDataByIndex: {
+      type: Function,
+      required: true
+    }
+  },
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])({
+    SET_POST_CONTENT: 'postData/SET_POST_CONTENT',
+    SET_POST_IMAGE_DATA: 'postData/SET_POST_IMAGE_DATA',
+    SET_POST_ERROR: 'postData/SET_POST_ERROR',
+    REMOVE_POST: 'postData/REMOVE_POST'
+  }), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])({
+    getGalleryPostData: 'postData/getGalleryPostData',
+    getMainOptions: 'mainData/getMainOptions'
+  }), {
     imageUpdate: function imageUpdate(fileData) {
       if (fileData.type === 'change') {
         fileData[0] = fileData.target.files[0];
@@ -2191,9 +2289,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var fileInput = this.$refs.fileInput;
       fileInput.click();
     },
-    removePost: function removePost() {
-      this.REMOVE_POST(this.index);
-    },
     trashImage: function trashImage() {
       this.SET_POST_IMAGE_DATA({
         index: this.index,
@@ -2204,32 +2299,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   }),
   computed: {
-    postContent: {
-      get: function get() {
-        return this.getGalleryDataByIndex({
-          type: 'content'
-        });
-      },
-      set: function set(value) {
-        var galleryPostContentError = this.getGalleryDataByIndex({
-          type: 'errors',
-          deepKey: 'content'
-        });
-
-        if (galleryPostContentError !== '') {
-          this.SET_POST_ERROR({
-            index: this.index,
-            type: 'content',
-            error: ''
-          });
-        }
-
-        return this.SET_POST_CONTENT({
-          index: this.index,
-          data: value
-        });
-      }
-    },
     uploadImageUrl: {
       get: function get() {
         return this.getGalleryDataByIndex({
@@ -2248,21 +2317,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return this.SET_POST_ERROR({
           index: this.index,
           type: 'imageUrl',
-          error: error
-        });
-      }
-    },
-    contentError: {
-      get: function get() {
-        return this.getGalleryDataByIndex({
-          type: 'errors',
-          deepKey: 'content'
-        });
-      },
-      set: function set(error) {
-        return this.SET_POST_ERROR({
-          index: this.index,
-          type: 'content',
           error: error
         });
       }
@@ -2289,7 +2343,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   mounted: function mounted() {
     var dropArea = this.$refs.dropFile;
     var self = this;
-    drag_drop__WEBPACK_IMPORTED_MODULE_1___default()(dropArea, function (files) {
+    drag_drop__WEBPACK_IMPORTED_MODULE_0___default()(dropArea, function (files) {
       self.imageUpdate(files);
     });
   }
@@ -4145,155 +4199,187 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "gm-frontend-gallery-post" }, [
+  return _c(
+    "div",
+    { staticClass: "gm-frontend-gallery-post" },
+    [
+      _c(
+        "div",
+        {
+          staticClass:
+            "gm-frontend-gallery-post-trash gm-frontend-gallery-post-trash--full"
+        },
+        [
+          _c("trash-post-button", {
+            attrs: {
+              galleryDataAccessor: _vm.getGalleryDataByIndex,
+              galleryDataDelete: _vm.removePost
+            }
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("gallery-post-image", {
+        attrs: {
+          index: _vm.index,
+          "get-gallery-data-by-index": _vm.getGalleryDataByIndex
+        }
+      }),
+      _vm._v(" "),
+      _c("div", { staticClass: "gm-frontend-gallery-post-right" }, [
+        _c("form", [
+          _c("div", { staticClass: "gm-frontend-submit-form-group" }, [
+            _c(
+              "label",
+              {
+                attrs: { for: _vm.setElementId("gm-frontend-submit-content") }
+              },
+              [
+                _vm._v("\n                    Content\n                    "),
+                _c(
+                  "div",
+                  { staticClass: "gm-frontend-submit-error" },
+                  [
+                    _c("transition", { attrs: { name: "fade" } }, [
+                      _vm.contentError !== ""
+                        ? _c("div", [
+                            _vm._v(
+                              "\n                                " +
+                                _vm._s(_vm.contentError) +
+                                "\n                            "
+                            )
+                          ])
+                        : _vm._e()
+                    ])
+                  ],
+                  1
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c("textarea", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.postContent,
+                  expression: "postContent"
+                }
+              ],
+              attrs: { id: _vm.setElementId("gm-frontend-submit-content") },
+              domProps: { value: _vm.postContent },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.postContent = $event.target.value
+                }
+              }
+            })
+          ])
+        ])
+      ])
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./src/submit/js/components/GalleryPost/GalleryPostImage.vue?vue&type=template&id=0844a067&":
+/*!********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./src/submit/js/components/GalleryPost/GalleryPostImage.vue?vue&type=template&id=0844a067& ***!
+  \********************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "gm-frontend-gallery-post-left" }, [
     _c(
       "div",
       {
-        staticClass:
-          "gm-frontend-gallery-post-trash gm-frontend-gallery-post-trash--full"
+        ref: "dropFile",
+        staticClass: "gm-frontend-gallery-post-upload",
+        on: { click: _vm.openFileInput }
       },
       [
-        _c("trash-post-button", {
-          attrs: {
-            galleryDataAccessor: _vm.getGalleryDataByIndex,
-            galleryDataDelete: _vm.removePost
-          }
-        })
+        _vm.uploadImageUrl === null
+          ? _c("div", { staticClass: "gm-frontend-gallery-post-upload-main" }, [
+              _vm._v(
+                "\n            This is the stone on which I will build my empire.\n            "
+              ),
+              _c("div", [
+                _vm._v(
+                  "\n                Allowed file types: " +
+                    _vm._s(_vm.displayAllowedMimes) +
+                    "\n            "
+                )
+              ])
+            ])
+          : [
+              _c("div", { staticClass: "gm-frontend-gallery-post-trash" }, [
+                _c(
+                  "button",
+                  {
+                    on: {
+                      click: function($event) {
+                        $event.stopPropagation()
+                        return _vm.trashImage($event)
+                      }
+                    }
+                  },
+                  [_vm._v("x")]
+                )
+              ]),
+              _vm._v(" "),
+              _c("img", {
+                staticClass: "gm-frontend-gallery-post-upload-main",
+                attrs: { src: _vm.uploadImageUrl, alt: "" }
+              })
+            ]
+      ],
+      2
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "gm-frontend-submit-error" },
+      [
+        _c("transition", { attrs: { name: "fade" } }, [
+          _vm.imageError !== ""
+            ? _c("div", [
+                _vm._v(
+                  "\n                " +
+                    _vm._s(_vm.imageError) +
+                    "\n            "
+                )
+              ])
+            : _vm._e()
+        ])
       ],
       1
     ),
     _vm._v(" "),
-    _c("div", { staticClass: "gm-frontend-gallery-post-left" }, [
-      _c(
-        "div",
-        {
-          ref: "dropFile",
-          staticClass: "gm-frontend-gallery-post-upload",
-          on: { click: _vm.openFileInput }
-        },
-        [
-          _vm.uploadImageUrl === null
-            ? _c(
-                "div",
-                { staticClass: "gm-frontend-gallery-post-upload-main" },
-                [
-                  _vm._v(
-                    "\n                This is the stone on which I will build my empire.\n                "
-                  ),
-                  _c("div", [
-                    _vm._v(
-                      "\n                    Allowed file types: " +
-                        _vm._s(_vm.displayAllowedMimes) +
-                        "\n                "
-                    )
-                  ])
-                ]
-              )
-            : [
-                _c("div", { staticClass: "gm-frontend-gallery-post-trash" }, [
-                  _c(
-                    "button",
-                    {
-                      on: {
-                        click: function($event) {
-                          $event.stopPropagation()
-                          return _vm.trashImage($event)
-                        }
-                      }
-                    },
-                    [_vm._v("x")]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("img", {
-                  staticClass: "gm-frontend-gallery-post-upload-main",
-                  attrs: { src: _vm.uploadImageUrl, alt: "" }
-                })
-              ]
-        ],
-        2
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "gm-frontend-submit-error" },
-        [
-          _c("transition", { attrs: { name: "fade" } }, [
-            _vm.imageError !== ""
-              ? _c("div", [
-                  _vm._v(
-                    "\n                    " +
-                      _vm._s(_vm.imageError) +
-                      "\n                "
-                  )
-                ])
-              : _vm._e()
-          ])
-        ],
-        1
-      )
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "gm-frontend-gallery-post-right" }, [
-      _c("form", [
-        _c("div", { staticClass: "gm-frontend-submit-form-group" }, [
-          _c(
-            "label",
-            { attrs: { for: _vm.setElementId("gm-frontend-submit-content") } },
-            [
-              _vm._v("\n                    Content\n                    "),
-              _c(
-                "div",
-                { staticClass: "gm-frontend-submit-error" },
-                [
-                  _c("transition", { attrs: { name: "fade" } }, [
-                    _vm.contentError !== ""
-                      ? _c("div", [
-                          _vm._v(
-                            "\n                                " +
-                              _vm._s(_vm.contentError) +
-                              "\n                            "
-                          )
-                        ])
-                      : _vm._e()
-                  ])
-                ],
-                1
-              )
-            ]
-          ),
-          _vm._v(" "),
-          _c("textarea", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.postContent,
-                expression: "postContent"
-              }
-            ],
-            attrs: { id: _vm.setElementId("gm-frontend-submit-content") },
-            domProps: { value: _vm.postContent },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.postContent = $event.target.value
-              }
-            }
-          })
-        ])
-      ]),
-      _vm._v(" "),
-      _c("form", { ref: "fileInputForm" }, [
-        _c("input", {
-          ref: "fileInput",
-          staticClass: "gm-frontend-gallery-post-file",
-          attrs: { type: "file", name: "image" },
-          on: { change: _vm.imageUpdate }
-        })
-      ])
+    _c("form", { ref: "fileInputForm" }, [
+      _c("input", {
+        ref: "fileInput",
+        staticClass: "gm-frontend-gallery-post-file",
+        attrs: { type: "file", name: "image" },
+        on: { change: _vm.imageUpdate }
+      })
     ])
   ])
 }
@@ -17900,6 +17986,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_GalleryPost_vue_vue_type_template_id_8edb27f8___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_GalleryPost_vue_vue_type_template_id_8edb27f8___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./src/submit/js/components/GalleryPost/GalleryPostImage.vue":
+/*!*******************************************************************!*\
+  !*** ./src/submit/js/components/GalleryPost/GalleryPostImage.vue ***!
+  \*******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _GalleryPostImage_vue_vue_type_template_id_0844a067___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./GalleryPostImage.vue?vue&type=template&id=0844a067& */ "./src/submit/js/components/GalleryPost/GalleryPostImage.vue?vue&type=template&id=0844a067&");
+/* harmony import */ var _GalleryPostImage_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./GalleryPostImage.vue?vue&type=script&lang=js& */ "./src/submit/js/components/GalleryPost/GalleryPostImage.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _GalleryPostImage_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _GalleryPostImage_vue_vue_type_template_id_0844a067___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _GalleryPostImage_vue_vue_type_template_id_0844a067___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "src/submit/js/components/GalleryPost/GalleryPostImage.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./src/submit/js/components/GalleryPost/GalleryPostImage.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************!*\
+  !*** ./src/submit/js/components/GalleryPost/GalleryPostImage.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_GalleryPostImage_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./GalleryPostImage.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./src/submit/js/components/GalleryPost/GalleryPostImage.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_GalleryPostImage_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./src/submit/js/components/GalleryPost/GalleryPostImage.vue?vue&type=template&id=0844a067&":
+/*!**************************************************************************************************!*\
+  !*** ./src/submit/js/components/GalleryPost/GalleryPostImage.vue?vue&type=template&id=0844a067& ***!
+  \**************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_GalleryPostImage_vue_vue_type_template_id_0844a067___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./GalleryPostImage.vue?vue&type=template&id=0844a067& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./src/submit/js/components/GalleryPost/GalleryPostImage.vue?vue&type=template&id=0844a067&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_GalleryPostImage_vue_vue_type_template_id_0844a067___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_GalleryPostImage_vue_vue_type_template_id_0844a067___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
