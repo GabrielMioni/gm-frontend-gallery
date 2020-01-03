@@ -54,7 +54,7 @@
         this.showModal = false;
       },
       confirmYesHandler() {
-        this.REMOVE_POST();
+        this.REMOVE_POST(this.index);
         this.showModal = false;
       }
     }

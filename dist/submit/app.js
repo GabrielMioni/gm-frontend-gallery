@@ -2626,7 +2626,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.showModal = false;
     },
     confirmYesHandler: function confirmYesHandler() {
-      this.REMOVE_POST();
+      this.REMOVE_POST(this.index);
       this.showModal = false;
     }
   })
