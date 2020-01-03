@@ -13,7 +13,7 @@
 </template>
 
 <script>
-  import ConfirmationModal from "../ConfirmationModal";
+  import ConfirmationModal from "../../../../utilities/vue/components/ConfirmationModal";
   import { mapActions } from 'vuex';
   export default {
     name: "TrashPostButton",
