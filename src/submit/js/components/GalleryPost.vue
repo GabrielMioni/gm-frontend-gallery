@@ -58,7 +58,7 @@
   import dragDrop from "drag-drop";
   import { mapGetters, mapActions } from 'vuex';
   export default {
-    name: "SubmitPost",
+    name: "GalleryPost",
     components: {TrashPostButton},
     props: {
       index: Number,

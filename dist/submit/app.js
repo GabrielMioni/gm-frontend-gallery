@@ -1908,7 +1908,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   name: "gmGallerySubmit",
   components: {
     SubmitPostButton: _components_SubmitPostButton__WEBPACK_IMPORTED_MODULE_1__["default"],
-    SubmitPost: _components_GalleryPost__WEBPACK_IMPORTED_MODULE_0__["default"]
+    GalleryPost: _components_GalleryPost__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapActions"])({
     SET_MAIN_TITLE: 'mainData/SET_MAIN_TITLE',
@@ -2111,7 +2111,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "SubmitPost",
+  name: "GalleryPost",
   components: {
     TrashPostButton: _TrashPostButton__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
@@ -4022,7 +4022,7 @@ var render = function() {
         "transition-group",
         { attrs: { name: "fade" } },
         _vm._l(_vm.galleryPosts, function(post, index) {
-          return _c("submit-post", {
+          return _c("gallery-post", {
             key: "submitPost-" + index,
             attrs: { index: index }
           })

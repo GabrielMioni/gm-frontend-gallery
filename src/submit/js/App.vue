@@ -16,11 +16,11 @@
             </div>
         </form>
         <transition-group name="fade">
-            <submit-post
+            <gallery-post
                     v-for="(post, index) in galleryPosts"
                     v-bind:key="`submitPost-${index}`"
                     :index="index">
-            </submit-post>
+            </gallery-post>
         </transition-group>
         <button
                 :ref="'addPostButton'"
@@ -31,12 +31,12 @@
 </template>
 
 <script>
-  import SubmitPost from "./components/GalleryPost";
+  import GalleryPost from "./components/GalleryPost";
   import SubmitPostButton from "./components/SubmitPostButton";
   import { mapGetters, mapActions } from 'vuex';
   export default {
     name: "gmGallerySubmit",
-    components: {SubmitPostButton, SubmitPost},
+    components: {SubmitPostButton, GalleryPost},
     methods: {
       ...mapActions({
         SET_MAIN_TITLE: 'mainData/SET_MAIN_TITLE',
