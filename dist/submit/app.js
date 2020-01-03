@@ -1901,6 +1901,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 
 
@@ -4153,7 +4155,7 @@ var render = function() {
             }
           }
         },
-        [_vm._v("Add A Post!")]
+        [_vm._v("\n        Add A Post!\n    ")]
       ),
       _vm._v(" "),
       _c("submit-post-button", [_vm._v("Submit")]),

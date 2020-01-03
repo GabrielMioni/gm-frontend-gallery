@@ -24,7 +24,9 @@
         </transition-group>
         <button
                 :ref="'addPostButton'"
-                @click.stop="addPost">Add A Post!</button>
+                @click.stop="addPost">
+            Add A Post!
+        </button>
         <submit-post-button>Submit</submit-post-button>
         <portal-target name="modals" slim></portal-target>
     </div>
