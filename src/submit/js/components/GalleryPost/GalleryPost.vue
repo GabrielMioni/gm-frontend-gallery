@@ -13,22 +13,10 @@
             </gallery-post-image>
         </div>
         <div class="gm-frontend-gallery-post-right">
-            <form>
-                <div class="gm-frontend-submit-form-group">
-                    <label :for="setElementId('gm-frontend-submit-content')">
-                        Content
-                        <div class="gm-frontend-submit-error">
-                            <transition name="fade">
-                                <div v-if="contentError !== ''">
-                                    {{ contentError }}
-                                </div>
-                            </transition>
-                        </div>
-                    </label>
-                    <textarea v-model="postContent" :id="setElementId('gm-frontend-submit-content')">
-                    </textarea>
-                </div>
-            </form>
+            <gallery-post-content
+                    :index="index"
+                    :getGalleryDataByIndex="getGalleryDataByIndex">
+            </gallery-post-content>
         </div>
     </div>
 </template>
@@ -36,10 +24,11 @@
 <script>
   import TrashPostButton from "../TrashPostButton";
   import GalleryPostImage from "./GalleryPostImage";
-  import { mapGetters, mapActions } from 'vuex';
+  import GalleryPostContent from "./GalleryPostContent";
+  import { mapGetters } from 'vuex';
   export default {
     name: "GalleryPost",
-    components: {GalleryPostImage, TrashPostButton},
+    components: {GalleryPostContent, GalleryPostImage, TrashPostButton},
     props: {
       index: Number,
     },
@@ -49,13 +38,8 @@
       }
     },
     methods: {
-      ...mapActions({
-        SET_POST_CONTENT: 'postData/SET_POST_CONTENT',
-        SET_POST_ERROR: 'postData/SET_POST_ERROR'
-      }),
       ...mapGetters({
-        getGalleryPostData: 'postData/getGalleryPostData',
-        getMainOptions: 'mainData/getMainOptions'
+        getGalleryPostData: 'postData/getGalleryPostData'
       }),
       getGalleryDataByIndex(data) {
         data = data == null ? {} : data;
@@ -70,53 +54,6 @@
         }
 
         return this.galleryDataAccessor(payload);
-      },
-      setElementId(idName) {
-        return `${idName}-${this.index}`;
-      },
-      removePost() {
-        this.REMOVE_POST(this.index);
-      },
-    },
-    computed: {
-      postContent: {
-        get() {
-          return this.getGalleryDataByIndex({
-            type: 'content'
-          });
-        },
-        set(value) {
-          const galleryPostContentError = this.getGalleryDataByIndex({
-            type: 'errors',
-            deepKey: 'content',
-          });
-          if (galleryPostContentError !== '') {
-            this.SET_POST_ERROR({
-              index: this.index,
-              type: 'content',
-              error: '',
-            });
-          }
-          return this.SET_POST_CONTENT({
-            index: this.index,
-            data: value,
-          });
-        }
-      },
-      contentError: {
-        get() {
-          return this.getGalleryDataByIndex({
-            type: 'errors',
-            deepKey: 'content'
-          });
-        },
-        set(error) {
-          return this.SET_POST_ERROR({
-            index: this.index,
-            type: 'content',
-            error: error,
-          });
-        }
       }
     }
   }
