@@ -9,7 +9,7 @@
         <div class="gm-frontend-gallery-post-left">
             <gallery-post-image
                     :index="index"
-                    :get-gallery-data-by-index="getGalleryDataByIndex">
+                    :getGalleryDataByIndex="getGalleryDataByIndex">
             </gallery-post-image>
         </div>
         <div class="gm-frontend-gallery-post-right">

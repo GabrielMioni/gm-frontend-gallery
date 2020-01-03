@@ -4223,7 +4223,7 @@ var render = function() {
         _c("gallery-post-image", {
           attrs: {
             index: _vm.index,
-            "get-gallery-data-by-index": _vm.getGalleryDataByIndex
+            getGalleryDataByIndex: _vm.getGalleryDataByIndex
           }
         })
       ],
