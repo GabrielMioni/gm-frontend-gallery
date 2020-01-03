@@ -21,6 +21,9 @@
                 </div>
             </transition>
         </div>
+        <form :ref="'fileInputForm'">
+            <input class="gm-frontend-gallery-post-file" type="file" name="image" @change="imageUpdate" :ref="'fileInput'">
+        </form>
     </div>
 </template>
 
@@ -31,7 +34,14 @@
   export default {
     name: "GalleryPostImage",
     props: {
-
+      index: {
+        type: Number,
+        required: true
+      },
+      getGalleryDataByIndex: {
+        type: Function,
+        required: true
+      }
     },
     methods: {
       ...mapActions({
@@ -137,5 +147,12 @@
         }
       }
     },
+    mounted() {
+      const dropArea = this.$refs.dropFile;
+      const self = this;
+      dragDrop(dropArea, (files) => {
+        self.imageUpdate(files);
+      })
+    }
   }
 </script>
