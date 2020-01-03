@@ -2546,7 +2546,7 @@ __webpack_require__.r(__webpack_exports__);
     ConfirmationModal: _ConfirmationModal__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   props: {
-    galleryDataAccessor: Function,
+    getGalleryDataByIndex: Function,
     galleryDataDelete: Function
   },
   data: function data() {
@@ -2556,7 +2556,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     checkShowModal: function checkShowModal() {
-      var galleryData = this.galleryDataAccessor();
+      var galleryData = this.getGalleryDataByIndex();
 
       if (galleryData.content.trim() !== '' || galleryData.file !== null || galleryData.imageUrl !== null) {
         this.showModal = true;
@@ -4208,7 +4208,7 @@ var render = function() {
       [
         _c("trash-post-button", {
           attrs: {
-            galleryDataAccessor: _vm.getGalleryDataByIndex,
+            getGalleryDataByIndex: _vm.getGalleryDataByIndex,
             galleryDataDelete: _vm.removePost
           }
         })

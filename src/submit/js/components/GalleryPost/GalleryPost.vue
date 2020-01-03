@@ -2,7 +2,7 @@
     <div class="gm-frontend-gallery-post">
         <div class="gm-frontend-gallery-post-trash gm-frontend-gallery-post-trash--full">
             <trash-post-button
-                    :galleryDataAccessor="getGalleryDataByIndex"
+                    :getGalleryDataByIndex="getGalleryDataByIndex"
                     :galleryDataDelete="removePost">
             </trash-post-button>
         </div>

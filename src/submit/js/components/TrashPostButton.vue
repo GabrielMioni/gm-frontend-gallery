@@ -18,7 +18,7 @@
     name: "TrashPostButton",
     components: {ConfirmationModal},
     props: {
-      galleryDataAccessor: Function,
+      getGalleryDataByIndex: Function,
       galleryDataDelete: Function,
     },
     data() {
@@ -28,7 +28,7 @@
     },
     methods: {
       checkShowModal() {
-        const galleryData = this.galleryDataAccessor();
+        const galleryData = this.getGalleryDataByIndex();
 
         if (
           galleryData.content.trim() !== '' ||
