@@ -1,7 +1,7 @@
 <template>
-    <div class="gm-frontend-gallery-post-left">
-        <div class="gm-frontend-gallery-post-image" @click="openFileInput" :ref="'dropFile'">
-            <div v-if="uploadImageUrl === null" class="gm-frontend-gallery-post-image-main">
+    <div class="gm-frontend-gallery-post-image">
+        <div class="gm-frontend-gallery-post-image-upload" @click="openFileInput" :ref="'dropFile'">
+            <div v-if="uploadImageUrl === null" class="gm-frontend-gallery-post-image-upload-main">
                 This is the stone on which I will build my empire.
                 <div>
                     Allowed file types: {{ displayAllowedMimes }}
@@ -11,7 +11,7 @@
                 <div class="gm-frontend-gallery-post-trash">
                     <button @click.stop="trashImage">x</button>
                 </div>
-                <img class="gm-frontend-gallery-post-image-main" :src="uploadImageUrl" alt="">
+                <img class="gm-frontend-gallery-post-image-upload-main" :src="uploadImageUrl" alt="">
             </template>
         </div>
         <div class="gm-frontend-submit-error">
@@ -21,7 +21,7 @@
                 </div>
             </transition>
         </div>
-        <form class="gm-frontend-gallery-post-image-file" :ref="'fileInputForm'">
+        <form class="gm-frontend-gallery-post-image-upload-file" :ref="'fileInputForm'">
             <input type="file" name="image" @change="imageUpdate" :ref="'fileInput'">
         </form>
     </div>

@@ -91,7 +91,7 @@
   height: 100%;
 }
 
-.gm-frontend-gallery-post-image {
+.gm-frontend-gallery-post-image-upload {
   display: grid;
   grid-template-rows: -webkit-min-content 1fr;
   grid-template-rows: min-content 1fr;
@@ -104,7 +104,7 @@
   position: relative;
 }
 
-.gm-frontend-gallery-post-image-main {
+.gm-frontend-gallery-post-image-upload-main {
   grid-row: 1/span 2;
   grid-column: 1;
   max-height: 300px;
@@ -121,7 +121,7 @@
           align-items: center;
 }
 
-.gm-frontend-gallery-post-image-file {
+.gm-frontend-gallery-post-image-upload-file {
   display: none;
 }
 

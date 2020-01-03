@@ -6,10 +6,12 @@
                     :galleryDataDelete="removePost">
             </trash-post-button>
         </div>
-        <gallery-post-image
-                :index="index"
-                :get-gallery-data-by-index="getGalleryDataByIndex">
-        </gallery-post-image>
+        <div class="gm-frontend-gallery-post-left">
+            <gallery-post-image
+                    :index="index"
+                    :get-gallery-data-by-index="getGalleryDataByIndex">
+            </gallery-post-image>
+        </div>
         <div class="gm-frontend-gallery-post-right">
             <form>
                 <div class="gm-frontend-submit-form-group">

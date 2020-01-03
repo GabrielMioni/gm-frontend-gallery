@@ -2084,6 +2084,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 
 
@@ -4199,91 +4201,91 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "gm-frontend-gallery-post" },
-    [
-      _c(
-        "div",
-        {
-          staticClass:
-            "gm-frontend-gallery-post-trash gm-frontend-gallery-post-trash--full"
-        },
-        [
-          _c("trash-post-button", {
-            attrs: {
-              galleryDataAccessor: _vm.getGalleryDataByIndex,
-              galleryDataDelete: _vm.removePost
+  return _c("div", { staticClass: "gm-frontend-gallery-post" }, [
+    _c(
+      "div",
+      {
+        staticClass:
+          "gm-frontend-gallery-post-trash gm-frontend-gallery-post-trash--full"
+      },
+      [
+        _c("trash-post-button", {
+          attrs: {
+            galleryDataAccessor: _vm.getGalleryDataByIndex,
+            galleryDataDelete: _vm.removePost
+          }
+        })
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "gm-frontend-gallery-post-left" },
+      [
+        _c("gallery-post-image", {
+          attrs: {
+            index: _vm.index,
+            "get-gallery-data-by-index": _vm.getGalleryDataByIndex
+          }
+        })
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "gm-frontend-gallery-post-right" }, [
+      _c("form", [
+        _c("div", { staticClass: "gm-frontend-submit-form-group" }, [
+          _c(
+            "label",
+            { attrs: { for: _vm.setElementId("gm-frontend-submit-content") } },
+            [
+              _vm._v("\n                    Content\n                    "),
+              _c(
+                "div",
+                { staticClass: "gm-frontend-submit-error" },
+                [
+                  _c("transition", { attrs: { name: "fade" } }, [
+                    _vm.contentError !== ""
+                      ? _c("div", [
+                          _vm._v(
+                            "\n                                " +
+                              _vm._s(_vm.contentError) +
+                              "\n                            "
+                          )
+                        ])
+                      : _vm._e()
+                  ])
+                ],
+                1
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c("textarea", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.postContent,
+                expression: "postContent"
+              }
+            ],
+            attrs: { id: _vm.setElementId("gm-frontend-submit-content") },
+            domProps: { value: _vm.postContent },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.postContent = $event.target.value
+              }
             }
           })
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c("gallery-post-image", {
-        attrs: {
-          index: _vm.index,
-          "get-gallery-data-by-index": _vm.getGalleryDataByIndex
-        }
-      }),
-      _vm._v(" "),
-      _c("div", { staticClass: "gm-frontend-gallery-post-right" }, [
-        _c("form", [
-          _c("div", { staticClass: "gm-frontend-submit-form-group" }, [
-            _c(
-              "label",
-              {
-                attrs: { for: _vm.setElementId("gm-frontend-submit-content") }
-              },
-              [
-                _vm._v("\n                    Content\n                    "),
-                _c(
-                  "div",
-                  { staticClass: "gm-frontend-submit-error" },
-                  [
-                    _c("transition", { attrs: { name: "fade" } }, [
-                      _vm.contentError !== ""
-                        ? _c("div", [
-                            _vm._v(
-                              "\n                                " +
-                                _vm._s(_vm.contentError) +
-                                "\n                            "
-                            )
-                          ])
-                        : _vm._e()
-                    ])
-                  ],
-                  1
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c("textarea", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.postContent,
-                  expression: "postContent"
-                }
-              ],
-              attrs: { id: _vm.setElementId("gm-frontend-submit-content") },
-              domProps: { value: _vm.postContent },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.postContent = $event.target.value
-                }
-              }
-            })
-          ])
         ])
       ])
-    ],
-    1
-  )
+    ])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -4307,28 +4309,32 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "gm-frontend-gallery-post-left" }, [
+  return _c("div", { staticClass: "gm-frontend-gallery-post-image" }, [
     _c(
       "div",
       {
         ref: "dropFile",
-        staticClass: "gm-frontend-gallery-post-image",
+        staticClass: "gm-frontend-gallery-post-image-upload",
         on: { click: _vm.openFileInput }
       },
       [
         _vm.uploadImageUrl === null
-          ? _c("div", { staticClass: "gm-frontend-gallery-post-image-main" }, [
-              _vm._v(
-                "\n            This is the stone on which I will build my empire.\n            "
-              ),
-              _c("div", [
+          ? _c(
+              "div",
+              { staticClass: "gm-frontend-gallery-post-image-upload-main" },
+              [
                 _vm._v(
-                  "\n                Allowed file types: " +
-                    _vm._s(_vm.displayAllowedMimes) +
-                    "\n            "
-                )
-              ])
-            ])
+                  "\n            This is the stone on which I will build my empire.\n            "
+                ),
+                _c("div", [
+                  _vm._v(
+                    "\n                Allowed file types: " +
+                      _vm._s(_vm.displayAllowedMimes) +
+                      "\n            "
+                  )
+                ])
+              ]
+            )
           : [
               _c("div", { staticClass: "gm-frontend-gallery-post-trash" }, [
                 _c(
@@ -4346,7 +4352,7 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("img", {
-                staticClass: "gm-frontend-gallery-post-image-main",
+                staticClass: "gm-frontend-gallery-post-image-upload-main",
                 attrs: { src: _vm.uploadImageUrl, alt: "" }
               })
             ]
@@ -4377,7 +4383,7 @@ var render = function() {
       "form",
       {
         ref: "fileInputForm",
-        staticClass: "gm-frontend-gallery-post-image-file"
+        staticClass: "gm-frontend-gallery-post-image-upload-file"
       },
       [
         _c("input", {
