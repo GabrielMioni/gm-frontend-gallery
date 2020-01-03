@@ -91,7 +91,7 @@
   height: 100%;
 }
 
-#gm-frontend-submit .gm-frontend-gallery-post-upload {
+.gm-frontend-gallery-post-image {
   display: grid;
   grid-template-rows: -webkit-min-content 1fr;
   grid-template-rows: min-content 1fr;
@@ -104,7 +104,7 @@
   position: relative;
 }
 
-#gm-frontend-submit .gm-frontend-gallery-post-upload-main {
+.gm-frontend-gallery-post-image-main {
   grid-row: 1/span 2;
   grid-column: 1;
   max-height: 300px;
@@ -121,8 +121,8 @@
           align-items: center;
 }
 
-#gm-frontend-submit .gm-frontend-gallery-post-file {
-  visibility: hidden;
+.gm-frontend-gallery-post-image-file {
+  display: none;
 }
 
 .fade-enter-active {

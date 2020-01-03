@@ -4312,12 +4312,12 @@ var render = function() {
       "div",
       {
         ref: "dropFile",
-        staticClass: "gm-frontend-gallery-post-upload",
+        staticClass: "gm-frontend-gallery-post-image",
         on: { click: _vm.openFileInput }
       },
       [
         _vm.uploadImageUrl === null
-          ? _c("div", { staticClass: "gm-frontend-gallery-post-upload-main" }, [
+          ? _c("div", { staticClass: "gm-frontend-gallery-post-image-main" }, [
               _vm._v(
                 "\n            This is the stone on which I will build my empire.\n            "
               ),
@@ -4346,7 +4346,7 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("img", {
-                staticClass: "gm-frontend-gallery-post-upload-main",
+                staticClass: "gm-frontend-gallery-post-image-main",
                 attrs: { src: _vm.uploadImageUrl, alt: "" }
               })
             ]
@@ -4373,14 +4373,20 @@ var render = function() {
       1
     ),
     _vm._v(" "),
-    _c("form", { ref: "fileInputForm" }, [
-      _c("input", {
-        ref: "fileInput",
-        staticClass: "gm-frontend-gallery-post-file",
-        attrs: { type: "file", name: "image" },
-        on: { change: _vm.imageUpdate }
-      })
-    ])
+    _c(
+      "form",
+      {
+        ref: "fileInputForm",
+        staticClass: "gm-frontend-gallery-post-image-file"
+      },
+      [
+        _c("input", {
+          ref: "fileInput",
+          attrs: { type: "file", name: "image" },
+          on: { change: _vm.imageUpdate }
+        })
+      ]
+    )
   ])
 }
 var staticRenderFns = []
