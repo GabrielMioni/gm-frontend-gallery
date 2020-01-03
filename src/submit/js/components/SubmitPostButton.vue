@@ -6,11 +6,12 @@
         <template slot="loadingText">
             Loading
         </template>
-        <confirmation-modal slot="confirmationModal"
-                            v-if="showModal"
-                            :single-button="true"
-                            :confirm-is-dangerous="false"
-                            @confirmNo="confirmNoHandler">
+        <confirmation-modal
+                slot="confirmationModal"
+                v-if="showModal"
+                :single-button="true"
+                :confirm-is-dangerous="false"
+                @confirmNo="confirmNoHandler">
             Your gallery submission was successful!
             <div slot="confirmNo">
                 Return to Gallery Submit Form
