@@ -1,24 +1,24 @@
 <template>
-    <div class="gm-frontend-submit-post">
-        <div class="gm-frontend-submit-post-trash gm-frontend-submit-post-trash--full">
+    <div class="gm-frontend-gallery-post">
+        <div class="gm-frontend-gallery-post-trash gm-frontend-gallery-post-trash--full">
             <trash-post-button
                     :galleryDataAccessor="getGalleryDataByIndex"
                     :galleryDataDelete="removePost"
             ></trash-post-button>
         </div>
-        <div class="gm-frontend-submit-post-left">
-            <div class="gm-frontend-submit-post-upload" @click="openFileInput" :ref="'dropFile'">
-                <div v-if="uploadImageUrl === null" class="gm-frontend-submit-post-upload-main">
+        <div class="gm-frontend-gallery-post-left">
+            <div class="gm-frontend-gallery-post-upload" @click="openFileInput" :ref="'dropFile'">
+                <div v-if="uploadImageUrl === null" class="gm-frontend-gallery-post-upload-main">
                     This is the stone on which I will build my empire.
                     <div>
                         Allowed file types: {{ displayAllowedMimes }}
                     </div>
                 </div>
                 <template v-else>
-                    <div class="gm-frontend-submit-post-trash">
+                    <div class="gm-frontend-gallery-post-trash">
                         <button @click.stop="trashImage">x</button>
                     </div>
-                    <img class="gm-frontend-submit-post-upload-main" :src="uploadImageUrl" alt="">
+                    <img class="gm-frontend-gallery-post-upload-main" :src="uploadImageUrl" alt="">
                 </template>
             </div>
             <div class="gm-frontend-submit-error">
@@ -29,7 +29,7 @@
                 </transition>
             </div>
         </div>
-        <div class="gm-frontend-submit-post-right">
+        <div class="gm-frontend-gallery-post-right">
             <form>
                 <div class="gm-frontend-submit-form-group">
                     <label :for="setElementId('gm-frontend-submit-content')">
@@ -47,7 +47,7 @@
                 </div>
             </form>
             <form :ref="'fileInputForm'">
-                <input class="gm-frontend-submit-post-file" type="file" name="image" @change="imageUpdate" :ref="'fileInput'">
+                <input class="gm-frontend-gallery-post-file" type="file" name="image" @change="imageUpdate" :ref="'fileInput'">
             </form>
         </div>
     </div>

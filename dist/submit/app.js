@@ -4145,12 +4145,12 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "gm-frontend-submit-post" }, [
+  return _c("div", { staticClass: "gm-frontend-gallery-post" }, [
     _c(
       "div",
       {
         staticClass:
-          "gm-frontend-submit-post-trash gm-frontend-submit-post-trash--full"
+          "gm-frontend-gallery-post-trash gm-frontend-gallery-post-trash--full"
       },
       [
         _c("trash-post-button", {
@@ -4163,19 +4163,19 @@ var render = function() {
       1
     ),
     _vm._v(" "),
-    _c("div", { staticClass: "gm-frontend-submit-post-left" }, [
+    _c("div", { staticClass: "gm-frontend-gallery-post-left" }, [
       _c(
         "div",
         {
           ref: "dropFile",
-          staticClass: "gm-frontend-submit-post-upload",
+          staticClass: "gm-frontend-gallery-post-upload",
           on: { click: _vm.openFileInput }
         },
         [
           _vm.uploadImageUrl === null
             ? _c(
                 "div",
-                { staticClass: "gm-frontend-submit-post-upload-main" },
+                { staticClass: "gm-frontend-gallery-post-upload-main" },
                 [
                   _vm._v(
                     "\n                This is the stone on which I will build my empire.\n                "
@@ -4190,7 +4190,7 @@ var render = function() {
                 ]
               )
             : [
-                _c("div", { staticClass: "gm-frontend-submit-post-trash" }, [
+                _c("div", { staticClass: "gm-frontend-gallery-post-trash" }, [
                   _c(
                     "button",
                     {
@@ -4206,7 +4206,7 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("img", {
-                  staticClass: "gm-frontend-submit-post-upload-main",
+                  staticClass: "gm-frontend-gallery-post-upload-main",
                   attrs: { src: _vm.uploadImageUrl, alt: "" }
                 })
               ]
@@ -4234,7 +4234,7 @@ var render = function() {
       )
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "gm-frontend-submit-post-right" }, [
+    _c("div", { staticClass: "gm-frontend-gallery-post-right" }, [
       _c("form", [
         _c("div", { staticClass: "gm-frontend-submit-form-group" }, [
           _c(
@@ -4289,7 +4289,7 @@ var render = function() {
       _c("form", { ref: "fileInputForm" }, [
         _c("input", {
           ref: "fileInput",
-          staticClass: "gm-frontend-submit-post-file",
+          staticClass: "gm-frontend-gallery-post-file",
           attrs: { type: "file", name: "image" },
           on: { change: _vm.imageUpdate }
         })
