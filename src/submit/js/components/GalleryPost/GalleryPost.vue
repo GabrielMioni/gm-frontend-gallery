@@ -22,7 +22,7 @@
 </template>
 
 <script>
-  import TrashPostButton from "../TrashPostButton";
+  import TrashPostButton from "./TrashPostButton";
   import GalleryPostImage from "./GalleryPostImage";
   import GalleryPostContent from "./GalleryPostContent";
   import { mapGetters } from 'vuex';
