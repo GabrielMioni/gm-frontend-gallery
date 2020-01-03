@@ -2105,8 +2105,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapActions"])({
     SET_POST_CONTENT: 'postData/SET_POST_CONTENT',
-    SET_POST_ERROR: 'postData/SET_POST_ERROR',
-    REMOVE_POST: 'postData/REMOVE_POST'
+    SET_POST_ERROR: 'postData/SET_POST_ERROR'
   }), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapGetters"])({
     getGalleryPostData: 'postData/getGalleryPostData',
     getMainOptions: 'mainData/getMainOptions'
@@ -2525,6 +2524,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ConfirmationModal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ConfirmationModal */ "./src/submit/js/components/ConfirmationModal.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -2540,21 +2546,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "TrashPostButton",
   components: {
     ConfirmationModal: _ConfirmationModal__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   props: {
-    getGalleryDataByIndex: Function,
-    galleryDataDelete: Function
+    index: {
+      type: Number,
+      required: true
+    },
+    getGalleryDataByIndex: Function
   },
   data: function data() {
     return {
       showModal: false
     };
   },
-  methods: {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])({
+    REMOVE_POST: 'postData/REMOVE_POST'
+  }), {
     checkShowModal: function checkShowModal() {
       var galleryData = this.getGalleryDataByIndex();
 
@@ -2568,10 +2580,10 @@ __webpack_require__.r(__webpack_exports__);
       this.showModal = false;
     },
     confirmYesHandler: function confirmYesHandler() {
-      this.galleryDataDelete();
+      this.REMOVE_POST();
       this.showModal = false;
     }
-  }
+  })
 });
 
 /***/ }),
@@ -4208,8 +4220,8 @@ var render = function() {
       [
         _c("trash-post-button", {
           attrs: {
-            getGalleryDataByIndex: _vm.getGalleryDataByIndex,
-            galleryDataDelete: _vm.removePost
+            index: _vm.index,
+            getGalleryDataByIndex: _vm.getGalleryDataByIndex
           }
         })
       ],

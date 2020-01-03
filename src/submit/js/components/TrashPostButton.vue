@@ -14,12 +14,19 @@
 
 <script>
   import ConfirmationModal from "./ConfirmationModal";
+  import { mapActions } from 'vuex';
   export default {
     name: "TrashPostButton",
     components: {ConfirmationModal},
     props: {
-      getGalleryDataByIndex: Function,
-      galleryDataDelete: Function,
+      index: {
+        type: Number,
+        required: true
+      },
+      getGalleryDataByIndex: {
+        type: Function,
+        required: true
+      }
     },
     data() {
       return {
@@ -27,6 +34,9 @@
       }
     },
     methods: {
+      ...mapActions({
+        REMOVE_POST: 'postData/REMOVE_POST',
+      }),
       checkShowModal() {
         const galleryData = this.getGalleryDataByIndex();
 
@@ -44,7 +54,7 @@
         this.showModal = false;
       },
       confirmYesHandler() {
-        this.galleryDataDelete();
+        this.REMOVE_POST();
         this.showModal = false;
       }
     }
