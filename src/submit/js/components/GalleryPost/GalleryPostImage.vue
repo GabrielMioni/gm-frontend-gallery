@@ -93,30 +93,6 @@
       }
     },
     computed: {
-      postContent: {
-        get() {
-          return this.getGalleryDataByIndex({
-            type: 'content'
-          });
-        },
-        set(value) {
-          const galleryPostContentError = this.getGalleryDataByIndex({
-            type: 'errors',
-            deepKey: 'content',
-          });
-          if (galleryPostContentError !== '') {
-            this.SET_POST_ERROR({
-              index: this.index,
-              type: 'content',
-              error: '',
-            });
-          }
-          return this.SET_POST_CONTENT({
-            index: this.index,
-            data: value,
-          });
-        }
-      },
       uploadImageUrl: {
         get() {
           return this.getGalleryDataByIndex({
