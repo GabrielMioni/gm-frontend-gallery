@@ -13,7 +13,8 @@
         <div class="gm-frontend-gallery-post-right">
             <gallery-post-content
                     :index="index"
-                    :getGalleryDataByIndex="getGalleryDataByIndex">
+                    :content="postState.content"
+                    :content-error="postState.errors.content">
             </gallery-post-content>
         </div>
     </div>

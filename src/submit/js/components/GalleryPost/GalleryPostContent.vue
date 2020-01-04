@@ -28,8 +28,12 @@
         type: Number,
         required: true
       },
-      getGalleryDataByIndex: {
-        type: Function,
+      content: {
+        type: String,
+        required: true
+      },
+      contentError: {
+        type: String,
         required: true
       }
     },
@@ -45,16 +49,10 @@
     computed: {
       postContent: {
         get() {
-          return this.getGalleryDataByIndex({
-            type: 'content'
-          });
+          return this.content;
         },
         set(value) {
-          const galleryPostContentError = this.getGalleryDataByIndex({
-            type: 'errors',
-            deepKey: 'content',
-          });
-          if (galleryPostContentError !== '') {
+          if (this.contentError !== '') {
             this.SET_POST_ERROR({
               index: this.index,
               type: 'content',
@@ -64,21 +62,6 @@
           return this.SET_POST_CONTENT({
             index: this.index,
             data: value,
-          });
-        }
-      },
-      contentError: {
-        get() {
-          return this.getGalleryDataByIndex({
-            type: 'errors',
-            deepKey: 'content'
-          });
-        },
-        set(error) {
-          return this.SET_POST_ERROR({
-            index: this.index,
-            type: 'content',
-            error: error,
           });
         }
       }
