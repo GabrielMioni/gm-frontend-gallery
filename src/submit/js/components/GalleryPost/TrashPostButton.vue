@@ -53,8 +53,11 @@
         this.showModal = false;
       },
       deletePost() {
-        this.REMOVE_POST(this.index);
-        this.showModal = false;
+        new Promise((resolve) => {
+          resolve(this.REMOVE_POST(this.index));
+        }).then(()=>{
+          this.showModal = false;
+        });
       }
     }
   }

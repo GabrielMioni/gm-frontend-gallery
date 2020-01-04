@@ -2365,8 +2365,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.showModal = false;
     },
     deletePost: function deletePost() {
-      this.REMOVE_POST(this.index);
-      this.showModal = false;
+      var _this = this;
+
+      new Promise(function (resolve) {
+        resolve(_this.REMOVE_POST(_this.index));
+      }).then(function () {
+        _this.showModal = false;
+      });
     }
   })
 });
