@@ -1,7 +1,11 @@
 <template>
     <div class="gm-frontend-gallery-post">
         <div class="gm-frontend-gallery-post-trash gm-frontend-gallery-post-trash--full">
-            <trash-post-button :post-state="postState"></trash-post-button>
+            <trash-post-button
+                    :index="index"
+                    :image-url="postState.imageUrl"
+                    :content="postState.content">
+            </trash-post-button>
         </div>
         <div class="gm-frontend-gallery-post-left">
             <gallery-post-image

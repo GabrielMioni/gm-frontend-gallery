@@ -2013,6 +2013,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -2328,8 +2332,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     ConfirmationModal: _utilities_vue_components_ConfirmationModal__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   props: {
-    postState: {
-      type: Object,
+    index: {
+      type: Number,
+      required: true
+    },
+    imageUrl: {
+      validator: function validator(prop) {
+        return typeof prop === 'string' || prop === null;
+      },
+      required: true
+    },
+    content: {
+      type: String,
       required: true
     }
   },
@@ -2342,7 +2356,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     REMOVE_POST: 'postData/REMOVE_POST'
   }), {
     checkShowModal: function checkShowModal() {
-      if (this.postState.content.trim() !== '' || this.postState.file !== null || this.postState.imageUrl !== null) {
+      if (this.content.trim() !== '' || this.file !== null || this.imageUrl !== null) {
         this.showModal = true;
       } else {
         this.confirmYesHandler();
@@ -4140,7 +4154,15 @@ var render = function() {
         staticClass:
           "gm-frontend-gallery-post-trash gm-frontend-gallery-post-trash--full"
       },
-      [_c("trash-post-button", { attrs: { "post-state": _vm.postState } })],
+      [
+        _c("trash-post-button", {
+          attrs: {
+            index: _vm.index,
+            "image-url": _vm.postState.imageUrl,
+            content: _vm.postState.content
+          }
+        })
+      ],
       1
     ),
     _vm._v(" "),

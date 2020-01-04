@@ -19,10 +19,18 @@
     name: "TrashPostButton",
     components: {ConfirmationModal},
     props: {
-      postState: {
-        type: Object,
+      index: {
+        type: Number,
         required: true
-      }
+      },
+      imageUrl: {
+        validator: prop => typeof prop === 'string' || prop === null,
+        required: true,
+      },
+      content: {
+        type: String,
+        required: true,
+      },
     },
     data() {
       return {
@@ -35,9 +43,9 @@
       }),
       checkShowModal() {
         if (
-          this.postState.content.trim() !== '' ||
-          this.postState.file !== null ||
-          this.postState.imageUrl !== null
+          this.content.trim() !== '' ||
+          this.file !== null ||
+          this.imageUrl !== null
         ) {
           this.showModal = true;
         } else {
