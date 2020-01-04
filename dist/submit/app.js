@@ -2358,9 +2358,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     checkShowModal: function checkShowModal() {
       if (this.content.trim() !== '' || this.imageUrl !== null) {
         this.showModal = true;
-      } else {
-        this.confirmYesHandler();
+        return;
       }
+
+      this.confirmYesHandler();
     },
     confirmNoHandler: function confirmNoHandler() {
       this.showModal = false;

@@ -43,14 +43,11 @@
         REMOVE_POST: 'postData/REMOVE_POST',
       }),
       checkShowModal() {
-        if (
-          this.content.trim() !== '' ||
-          this.imageUrl !== null
-        ) {
+        if (this.content.trim() !== '' || this.imageUrl !== null) {
           this.showModal = true;
-        } else {
-          this.confirmYesHandler();
+          return;
         }
+        this.confirmYesHandler();
       },
       confirmNoHandler() {
         this.showModal = false;
