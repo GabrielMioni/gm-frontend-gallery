@@ -34,34 +34,19 @@
     data() {
       return {
         galleryDataAccessor: this.getGalleryPostDataFunction(),
-        // postState: this.getGalleryDataByIndex({index: this.index})
-        postState: this.setPostState()
+        postState: this.getPostState()
       }
     },
     methods: {
       ...mapGetters({
         getGalleryPostDataFunction: 'postData/getGalleryPostDataFunction'
       }),
-      setPostState() {
+      getPostState() {
         const galleryPostDataFunction = this.getGalleryPostDataFunction();
 
         return galleryPostDataFunction({
           index: this.index
         });
-      },
-      getGalleryDataByIndex(data) {
-        data = data == null ? {} : data;
-        let payload = {
-          index: this.index,
-        };
-        if (typeof data.type !== 'undefined') {
-          payload.type = data.type;
-        }
-        if (typeof data.deepKey !== 'undefined') {
-          payload.deepKey = data.deepKey;
-        }
-
-        return this.galleryDataAccessor(payload);
       }
     }
   }

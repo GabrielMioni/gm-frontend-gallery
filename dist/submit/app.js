@@ -2019,7 +2019,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
 
 
 
@@ -2036,27 +2035,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   data: function data() {
     return {
-      galleryDataAccessor: this.getGalleryPostData()
+      galleryDataAccessor: this.getGalleryPostDataFunction(),
+      postState: this.getPostState()
     };
   },
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_3__["mapGetters"])({
-    getGalleryPostData: 'postData/getGalleryPostData'
+    getGalleryPostDataFunction: 'postData/getGalleryPostDataFunction'
   }), {
-    getGalleryDataByIndex: function getGalleryDataByIndex(data) {
-      data = data == null ? {} : data;
-      var payload = {
+    getPostState: function getPostState() {
+      var galleryPostDataFunction = this.getGalleryPostDataFunction();
+      return galleryPostDataFunction({
         index: this.index
-      };
-
-      if (typeof data.type !== 'undefined') {
-        payload.type = data.type;
-      }
-
-      if (typeof data.deepKey !== 'undefined') {
-        payload.deepKey = data.deepKey;
-      }
-
-      return this.galleryDataAccessor(payload);
+      });
     }
   })
 });
@@ -2108,8 +2098,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       type: Number,
       required: true
     },
-    getGalleryDataByIndex: {
-      type: Function,
+    content: {
+      type: String,
+      required: true
+    },
+    contentError: {
+      type: String,
       required: true
     }
   },
@@ -2124,17 +2118,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   computed: {
     postContent: {
       get: function get() {
-        return this.getGalleryDataByIndex({
-          type: 'content'
-        });
+        return this.content;
       },
       set: function set(value) {
-        var galleryPostContentError = this.getGalleryDataByIndex({
-          type: 'errors',
-          deepKey: 'content'
-        });
-
-        if (galleryPostContentError !== '') {
+        if (this.contentError !== '') {
           this.SET_POST_ERROR({
             index: this.index,
             type: 'content',
@@ -2145,21 +2132,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return this.SET_POST_CONTENT({
           index: this.index,
           data: value
-        });
-      }
-    },
-    contentError: {
-      get: function get() {
-        return this.getGalleryDataByIndex({
-          type: 'errors',
-          deepKey: 'content'
-        });
-      },
-      set: function set(error) {
-        return this.SET_POST_ERROR({
-          index: this.index,
-          type: 'content',
-          error: error
         });
       }
     }
@@ -2224,8 +2196,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       type: Number,
       required: true
     },
-    getGalleryDataByIndex: {
-      type: Function,
+    imageUrl: {
+      validator: function validator(prop) {
+        return typeof prop === 'string' || prop === null;
+      },
+      required: true
+    },
+    imageUrlError: {
+      type: String,
       required: true
     }
   },
@@ -2285,19 +2263,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   }),
   computed: {
-    uploadImageUrl: {
-      get: function get() {
-        return this.getGalleryDataByIndex({
-          type: 'imageUrl'
-        });
-      }
-    },
     imageError: {
       get: function get() {
-        return this.getGalleryDataByIndex({
-          type: 'errors',
-          deepKey: 'imageUrl'
-        });
+        return this.imageUrlError;
       },
       set: function set(error) {
         return this.SET_POST_ERROR({
@@ -2376,12 +2344,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     ConfirmationModal: _utilities_vue_components_ConfirmationModal__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   props: {
-    index: {
-      type: Number,
-      required: true
-    },
-    getGalleryDataByIndex: {
-      type: Function,
+    postState: {
+      type: Object,
       required: true
     }
   },
@@ -2394,9 +2358,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     REMOVE_POST: 'postData/REMOVE_POST'
   }), {
     checkShowModal: function checkShowModal() {
-      var galleryData = this.getGalleryDataByIndex();
-
-      if (galleryData.content.trim() !== '' || galleryData.file !== null || galleryData.imageUrl !== null) {
+      if (this.postState.content.trim() !== '' || this.postState.file !== null || this.postState.imageUrl !== null) {
         this.showModal = true;
       } else {
         this.confirmYesHandler();
@@ -4194,14 +4156,7 @@ var render = function() {
         staticClass:
           "gm-frontend-gallery-post-trash gm-frontend-gallery-post-trash--full"
       },
-      [
-        _c("trash-post-button", {
-          attrs: {
-            index: _vm.index,
-            getGalleryDataByIndex: _vm.getGalleryDataByIndex
-          }
-        })
-      ],
+      [_c("trash-post-button", { attrs: { "post-state": _vm.postState } })],
       1
     ),
     _vm._v(" "),
@@ -4212,7 +4167,8 @@ var render = function() {
         _c("gallery-post-image", {
           attrs: {
             index: _vm.index,
-            getGalleryDataByIndex: _vm.getGalleryDataByIndex
+            "image-url": _vm.postState.imageUrl,
+            "image-url-error": _vm.postState.errors.imageUrl
           }
         })
       ],
@@ -4226,7 +4182,8 @@ var render = function() {
         _c("gallery-post-content", {
           attrs: {
             index: _vm.index,
-            getGalleryDataByIndex: _vm.getGalleryDataByIndex
+            content: _vm.postState.content,
+            "content-error": _vm.postState.errors.content
           }
         })
       ],
@@ -4338,7 +4295,7 @@ var render = function() {
         on: { click: _vm.openFileInput }
       },
       [
-        _vm.uploadImageUrl === null
+        _vm.imageUrl === null
           ? _c(
               "div",
               { staticClass: "gm-frontend-gallery-post-image-upload-main" },
@@ -4373,7 +4330,7 @@ var render = function() {
               _vm._v(" "),
               _c("img", {
                 staticClass: "gm-frontend-gallery-post-image-upload-main",
-                attrs: { src: _vm.uploadImageUrl, alt: "" }
+                attrs: { src: _vm.imageUrl, alt: "" }
               })
             ]
       ],
@@ -18430,7 +18387,7 @@ var postDataModule = {
     getGalleryPosts: function getGalleryPosts(state) {
       return state.galleryPosts;
     },
-    getGalleryPostData: function getGalleryPostData(state) {
+    getGalleryPostDataFunction: function getGalleryPostDataFunction(state) {
       return function (payload) {
         if (typeof payload.deepKey !== 'undefined') {
           return state.galleryPosts[payload.index][payload.type][payload.deepKey];
