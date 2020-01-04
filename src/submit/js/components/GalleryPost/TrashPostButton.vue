@@ -19,12 +19,8 @@
     name: "TrashPostButton",
     components: {ConfirmationModal},
     props: {
-      index: {
-        type: Number,
-        required: true
-      },
-      getGalleryDataByIndex: {
-        type: Function,
+      postState: {
+        type: Object,
         required: true
       }
     },
@@ -38,12 +34,10 @@
         REMOVE_POST: 'postData/REMOVE_POST',
       }),
       checkShowModal() {
-        const galleryData = this.getGalleryDataByIndex();
-
         if (
-          galleryData.content.trim() !== '' ||
-          galleryData.file !== null ||
-          galleryData.imageUrl !== null
+          this.postState.content.trim() !== '' ||
+          this.postState.file !== null ||
+          this.postState.imageUrl !== null
         ) {
           this.showModal = true;
         } else {
