@@ -1,7 +1,7 @@
 <template>
     <div class="gm-frontend-gallery-post-image">
         <div class="gm-frontend-gallery-post-image-upload" @click="openFileInput" :ref="'dropFile'">
-            <div v-if="uploadImageUrl === null" class="gm-frontend-gallery-post-image-upload-main">
+            <div v-if="imageUrl === null" class="gm-frontend-gallery-post-image-upload-main">
                 This is the stone on which I will build my empire.
                 <div>
                     Allowed file types: {{ displayAllowedMimes }}
@@ -11,7 +11,7 @@
                 <div class="gm-frontend-gallery-post-trash">
                     <button @click.stop="trashImage">x</button>
                 </div>
-                <img class="gm-frontend-gallery-post-image-upload-main" :src="uploadImageUrl" alt="">
+                <img class="gm-frontend-gallery-post-image-upload-main" :src="imageUrl" alt="">
             </template>
         </div>
         <div class="gm-frontend-submit-error">
@@ -38,9 +38,13 @@
         type: Number,
         required: true
       },
-      getGalleryDataByIndex: {
-        type: Function,
+      imageUrl: {
+        validator: prop => typeof prop === 'string' || prop === null,
         required: true
+      },
+      imageUrlError: {
+        type: String,
+        required: true,
       }
     },
     methods: {
@@ -100,19 +104,9 @@
       }
     },
     computed: {
-      uploadImageUrl: {
-        get() {
-          return this.getGalleryDataByIndex({
-            type: 'imageUrl'
-          });
-        }
-      },
       imageError: {
         get() {
-          return this.getGalleryDataByIndex({
-            type: 'errors',
-            deepKey: 'imageUrl'
-          });
+          return this.imageUrlError;
         },
         set(error) {
           return this.SET_POST_ERROR({

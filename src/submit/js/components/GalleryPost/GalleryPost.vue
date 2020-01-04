@@ -6,7 +6,8 @@
         <div class="gm-frontend-gallery-post-left">
             <gallery-post-image
                     :index="index"
-                    :getGalleryDataByIndex="getGalleryDataByIndex">
+                    :image-url="postState.imageUrl"
+                    :image-url-error="postState.errors.imageUrl">
             </gallery-post-image>
         </div>
         <div class="gm-frontend-gallery-post-right">
