@@ -4,7 +4,7 @@
         <portal to="modals" v-if="showModal">
             <confirmation-modal
                     :confirm-is-dangerous="true"
-                    @confirmNo="confirmNoHandler"
+                    @confirmNo="cancelDelete"
                     @confirmYes="deletePost">
                 Are you sure you want to delete this post?
             </confirmation-modal>
@@ -49,7 +49,7 @@
         }
         this.deletePost();
       },
-      confirmNoHandler() {
+      cancelDelete() {
         this.showModal = false;
       },
       deletePost() {
