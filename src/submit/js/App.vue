@@ -19,7 +19,8 @@
             <gallery-post
                     v-for="(post, index) in galleryPosts"
                     v-bind:key="`submitPost-${index}`"
-                    :index="index">
+                    :index="index"
+                    :post-state="post">
             </gallery-post>
         </transition-group>
         <button

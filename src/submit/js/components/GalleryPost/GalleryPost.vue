@@ -24,29 +24,17 @@
   import TrashPostButton from "./TrashPostButton";
   import GalleryPostImage from "./GalleryPostImage";
   import GalleryPostContent from "./GalleryPostContent";
-  import { mapGetters } from 'vuex';
   export default {
     name: "GalleryPost",
     components: {GalleryPostContent, GalleryPostImage, TrashPostButton},
     props: {
-      index: Number,
-    },
-    data() {
-      return {
-        galleryDataAccessor: this.getGalleryPostDataFunction(),
-        postState: this.getPostState()
-      }
-    },
-    methods: {
-      ...mapGetters({
-        getGalleryPostDataFunction: 'postData/getGalleryPostDataFunction'
-      }),
-      getPostState() {
-        const galleryPostDataFunction = this.getGalleryPostDataFunction();
-
-        return galleryPostDataFunction({
-          index: this.index
-        });
+      index: {
+        type: Number,
+        required: true
+      },
+      postState: {
+        type: Object,
+        required: true
       }
     }
   }
