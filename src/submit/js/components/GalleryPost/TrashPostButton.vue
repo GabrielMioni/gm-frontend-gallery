@@ -5,7 +5,7 @@
             <confirmation-modal
                     :confirm-is-dangerous="true"
                     @confirmNo="confirmNoHandler"
-                    @confirmYes="confirmYesHandler">
+                    @confirmYes="deletePost">
                 Are you sure you want to delete this post?
             </confirmation-modal>
         </portal>
@@ -47,12 +47,12 @@
           this.showModal = true;
           return;
         }
-        this.confirmYesHandler();
+        this.deletePost();
       },
       confirmNoHandler() {
         this.showModal = false;
       },
-      confirmYesHandler() {
+      deletePost() {
         this.REMOVE_POST(this.index);
         this.showModal = false;
       }

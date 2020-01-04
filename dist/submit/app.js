@@ -2361,12 +2361,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return;
       }
 
-      this.confirmYesHandler();
+      this.deletePost();
     },
     confirmNoHandler: function confirmNoHandler() {
       this.showModal = false;
     },
-    confirmYesHandler: function confirmYesHandler() {
+    deletePost: function deletePost() {
       this.REMOVE_POST(this.index);
       this.showModal = false;
     }
@@ -4424,7 +4424,7 @@ var render = function() {
                   attrs: { "confirm-is-dangerous": true },
                   on: {
                     confirmNo: _vm.confirmNoHandler,
-                    confirmYes: _vm.confirmYesHandler
+                    confirmYes: _vm.deletePost
                   }
                 },
                 [
