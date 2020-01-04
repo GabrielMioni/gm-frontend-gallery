@@ -45,7 +45,6 @@
       checkShowModal() {
         if (
           this.content.trim() !== '' ||
-          this.file !== null ||
           this.imageUrl !== null
         ) {
           this.showModal = true;
