@@ -1,10 +1,7 @@
 <template>
     <div class="gm-frontend-gallery-post">
         <div class="gm-frontend-gallery-post-trash gm-frontend-gallery-post-trash--full">
-            <trash-post-button
-                    :index="index"
-                    :getGalleryDataByIndex="getGalleryDataByIndex">
-            </trash-post-button>
+            <trash-post-button :post-state="postState"></trash-post-button>
         </div>
         <div class="gm-frontend-gallery-post-left">
             <gallery-post-image
@@ -34,13 +31,22 @@
     },
     data() {
       return {
-        galleryDataAccessor: this.getGalleryPostData(),
+        galleryDataAccessor: this.getGalleryPostDataFunction(),
+        // postState: this.getGalleryDataByIndex({index: this.index})
+        postState: this.setPostState()
       }
     },
     methods: {
       ...mapGetters({
-        getGalleryPostData: 'postData/getGalleryPostData'
+        getGalleryPostDataFunction: 'postData/getGalleryPostDataFunction'
       }),
+      setPostState() {
+        const galleryPostDataFunction = this.getGalleryPostDataFunction();
+
+        return galleryPostDataFunction({
+          index: this.index
+        });
+      },
       getGalleryDataByIndex(data) {
         data = data == null ? {} : data;
         let payload = {
