@@ -2140,6 +2140,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var drag_drop__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! drag-drop */ "./node_modules/drag-drop/index.js");
 /* harmony import */ var drag_drop__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(drag_drop__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _store_modules_helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../store/modules/helpers */ "./src/submit/js/store/modules/helpers.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -2177,6 +2178,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "GalleryPostImage",
   props: {
@@ -2185,9 +2187,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       required: true
     },
     imageUrl: {
-      validator: function validator(prop) {
-        return typeof prop === 'string' || prop === null;
-      },
+      validator: _store_modules_helpers__WEBPACK_IMPORTED_MODULE_2__["imageUrlValidator"],
       required: true
     },
     imageUrlError: {
@@ -2304,6 +2304,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utilities_vue_components_ConfirmationModal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../utilities/vue/components/ConfirmationModal */ "./src/utilities/vue/components/ConfirmationModal.vue");
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _store_modules_helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../store/modules/helpers */ "./src/submit/js/store/modules/helpers.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -2326,6 +2327,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "TrashPostButton",
   components: {
@@ -2337,9 +2339,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       required: true
     },
     imageUrl: {
-      validator: function validator(prop) {
-        return typeof prop === 'string' || prop === null;
-      },
+      validator: _store_modules_helpers__WEBPACK_IMPORTED_MODULE_2__["imageUrlValidator"],
       required: true
     },
     content: {
@@ -18269,12 +18269,13 @@ __webpack_require__.r(__webpack_exports__);
 /*!************************************************!*\
   !*** ./src/submit/js/store/modules/helpers.js ***!
   \************************************************/
-/*! exports provided: defaultGalleryPostObject */
+/*! exports provided: defaultGalleryPostObject, imageUrlValidator */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "defaultGalleryPostObject", function() { return defaultGalleryPostObject; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "imageUrlValidator", function() { return imageUrlValidator; });
 var defaultGalleryPostObject = function defaultGalleryPostObject() {
   return {
     content: '',
@@ -18286,6 +18287,9 @@ var defaultGalleryPostObject = function defaultGalleryPostObject() {
       file: ''
     }
   };
+};
+var imageUrlValidator = function imageUrlValidator(prop) {
+  return typeof prop === 'string' || prop === null;
 };
 
 /***/ }),

@@ -10,3 +10,5 @@ export const defaultGalleryPostObject = () => {
     }
   }
 };
+
+export const imageUrlValidator = prop => typeof prop === 'string' || prop === null;

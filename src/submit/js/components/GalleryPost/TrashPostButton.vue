@@ -15,6 +15,7 @@
 <script>
   import ConfirmationModal from "../../../../utilities/vue/components/ConfirmationModal";
   import { mapActions } from 'vuex';
+  import { imageUrlValidator} from "../../store/modules/helpers";
   export default {
     name: "TrashPostButton",
     components: {ConfirmationModal},
@@ -24,7 +25,7 @@
         required: true
       },
       imageUrl: {
-        validator: prop => typeof prop === 'string' || prop === null,
+        validator: imageUrlValidator,
         required: true,
       },
       content: {
