@@ -1,4 +1,4 @@
-import {defaultGalleryPostObject} from "./helpers";
+import {defaultGalleryPostObject} from "../../../../utilities/helpers";
 
 export const postDataModule = {
   namespaced: true,

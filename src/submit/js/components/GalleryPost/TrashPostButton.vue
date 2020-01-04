@@ -14,8 +14,8 @@
 
 <script>
   import ConfirmationModal from "../../../../utilities/vue/components/ConfirmationModal";
+  import { imageUrlValidator} from "../../../../utilities/helpers";
   import { mapActions } from 'vuex';
-  import { imageUrlValidator} from "../../store/modules/helpers";
   export default {
     name: "TrashPostButton",
     components: {ConfirmationModal},
