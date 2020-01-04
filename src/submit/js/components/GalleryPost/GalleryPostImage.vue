@@ -128,11 +128,8 @@
           const options = this.getMainOptions();
           const allowedMimes = options.allowedMimes;
 
-          let display = [];
-
-          allowedMimes.map((mime) => {
-            const fileType = mime.substr(mime.indexOf('/') + 1);
-            display.push('.' + fileType);
+          const display = allowedMimes.map((mime) => {
+            return '.' + mime.substr(mime.indexOf('/') + 1);
           });
 
           return display.join(', ');

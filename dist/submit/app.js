@@ -2273,10 +2273,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       get: function get() {
         var options = this.getMainOptions();
         var allowedMimes = options.allowedMimes;
-        var display = [];
-        allowedMimes.map(function (mime) {
-          var fileType = mime.substr(mime.indexOf('/') + 1);
-          display.push('.' + fileType);
+        var display = allowedMimes.map(function (mime) {
+          return '.' + mime.substr(mime.indexOf('/') + 1);
         });
         return display.join(', ');
       }
