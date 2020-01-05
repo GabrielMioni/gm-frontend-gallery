@@ -1,6 +1,9 @@
 @import "../../utilities/variables";
 
 #gm-frontend-submit {
+  input[type="text"] {
+    border: none;
+  }
   .gm-frontend-gallery-post {
     display: grid;
     grid-template-columns: 1fr;
