@@ -2087,13 +2087,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "GalleryPostContent",
@@ -2163,11 +2156,6 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
-//
-//
-//
-//
 //
 //
 //
@@ -4212,56 +4200,30 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("form", { staticClass: "gm-frontend-gallery-post-content" }, [
-    _c("div", { staticClass: "gm-frontend-submit-form-group" }, [
-      _c(
-        "label",
-        { attrs: { for: _vm.setElementId("gm-frontend-submit-content") } },
-        [
-          _vm._v("\n            Content\n            "),
-          _c(
-            "span",
-            { staticClass: "gm-frontend-submit-error" },
-            [
-              _c("transition", { attrs: { name: "fade" } }, [
-                _vm.contentError !== ""
-                  ? _c("div", [
-                      _vm._v(
-                        "\n                        " +
-                          _vm._s(_vm.contentError) +
-                          "\n                    "
-                      )
-                    ])
-                  : _vm._e()
-              ])
-            ],
-            1
-          )
-        ]
-      ),
-      _vm._v(" "),
-      _c("textarea", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.postContent,
-            expression: "postContent"
-          }
-        ],
-        attrs: { id: _vm.setElementId("gm-frontend-submit-content") },
-        domProps: { value: _vm.postContent },
-        on: {
-          input: function($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.postContent = $event.target.value
-          }
+  return _c(
+    "v-card",
+    { staticClass: "gm-frontend-gallery-post-content" },
+    [
+      _c("v-textarea", {
+        attrs: {
+          solo: "",
+          flat: "",
+          rows: "20",
+          name: _vm.setElementId("gm-frontend-submit-content"),
+          "error-messages": _vm.contentError,
+          label: "Content"
+        },
+        model: {
+          value: _vm.postContent,
+          callback: function($$v) {
+            _vm.postContent = $$v
+          },
+          expression: "postContent"
         }
       })
-    ])
-  ])
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

@@ -121,6 +121,10 @@
   }
 }
 
+#gm-frontend-submit .gm-frontend-gallery-post-right textarea {
+  resize: none;
+}
+
 #gm-frontend-submit .gm-frontend-gallery-post-right form {
   height: 100%;
 }
