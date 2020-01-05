@@ -2195,6 +2195,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 
 
@@ -4281,17 +4284,27 @@ var render = function() {
               "div",
               { staticClass: "gm-frontend-gallery-post-image-upload-main" },
               [
-                _c("v-input", { attrs: { "error-messages": _vm.imageError } }),
-                _vm._v(
-                  "\n            This is the stone on which I will build my empire.\n            "
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "gm-frontend-gallery-post-image-upload-main-icon"
+                  },
+                  [_c("v-icon", [_vm._v("image")])],
+                  1
                 ),
+                _vm._v(" "),
+                _c("div", [_vm._v("Click or drag and drop files to upload")]),
+                _vm._v(" "),
                 _c("div", [
                   _vm._v(
                     "\n                Allowed file types: " +
                       _vm._s(_vm.displayAllowedMimes) +
                       "\n            "
                   )
-                ])
+                ]),
+                _vm._v(" "),
+                _c("v-input", { attrs: { "error-messages": _vm.imageError } })
               ],
               1
             )

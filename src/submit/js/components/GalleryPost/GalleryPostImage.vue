@@ -2,13 +2,16 @@
     <v-card class="gm-frontend-gallery-post-image">
         <div class="gm-frontend-gallery-post-image-upload" @click="openFileInput" :ref="'dropFile'">
             <div v-if="imageUrl === null" class="gm-frontend-gallery-post-image-upload-main">
-                <v-input
-                        :error-messages="imageError">
-                </v-input>
-                This is the stone on which I will build my empire.
+                <div class="gm-frontend-gallery-post-image-upload-main-icon">
+                    <v-icon>image</v-icon>
+                </div>
+                <div>Click or drag and drop files to upload</div>
                 <div>
                     Allowed file types: {{ displayAllowedMimes }}
                 </div>
+                <v-input
+                        :error-messages="imageError">
+                </v-input>
             </div>
             <template v-else>
                 <div class="gm-frontend-gallery-post-trash">

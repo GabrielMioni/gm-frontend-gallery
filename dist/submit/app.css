@@ -167,6 +167,10 @@
           align-items: center;
 }
 
+.gm-frontend-gallery-post-image-upload-main-icon i.v-icon {
+  font-size: 5rem;
+}
+
 .gm-frontend-gallery-post-image-upload-file {
   display: none;
 }
