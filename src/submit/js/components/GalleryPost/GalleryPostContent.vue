@@ -5,6 +5,7 @@
                 solo
                 flat
                 rows="20"
+                :counter="maxContentLength"
                 :name="setElementId('gm-frontend-submit-content')"
                 :error-messages="contentError"
                 label="Content"
@@ -13,7 +14,8 @@
 </template>
 
 <script>
-  import { mapActions } from 'vuex';
+  import { mapGetters, mapActions } from 'vuex';
+  import { getOptionsType } from '@/utilities/helpers';
   export default {
     name: "GalleryPostContent",
     props: {
@@ -34,6 +36,9 @@
       ...mapActions({
         SET_POST_CONTENT: 'postData/SET_POST_CONTENT',
         SET_POST_ERROR: 'postData/SET_POST_ERROR'
+      }),
+      ...mapGetters({
+        getMainOptions: 'mainData/getMainOptions'
       }),
       setElementId(idName) {
         return `${idName}-${this.index}`;
@@ -56,6 +61,11 @@
             index: this.index,
             data: value,
           });
+        }
+      },
+      maxContentLength: {
+        get() {
+          return getOptionsType(this.getMainOptions, 'maxContentLength');
         }
       }
     }
