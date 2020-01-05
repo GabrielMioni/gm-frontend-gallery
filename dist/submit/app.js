@@ -2200,6 +2200,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 
@@ -4278,7 +4279,18 @@ var render = function() {
         ref: "dropFile",
         staticClass: "gm-frontend-gallery-post-image-upload",
         attrs: { tabindex: 0 },
-        on: { click: _vm.openFileInput }
+        on: {
+          keyup: function($event) {
+            if (
+              !$event.type.indexOf("key") &&
+              _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+            ) {
+              return null
+            }
+            return _vm.openFileInput($event)
+          },
+          click: _vm.openFileInput
+        }
       },
       [
         _vm.imageUrl === null

@@ -1,6 +1,7 @@
 <template>
     <v-card class="gm-frontend-gallery-post-image">
         <div class="gm-frontend-gallery-post-image-upload"
+             @keyup.enter="openFileInput"
              @click="openFileInput"
              :tabindex="0"
              :ref="'dropFile'">
