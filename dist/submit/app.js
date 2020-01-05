@@ -2192,6 +2192,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -4280,7 +4286,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "gm-frontend-gallery-post-image" }, [
+  return _c("v-card", { staticClass: "gm-frontend-gallery-post-image" }, [
     _c(
       "div",
       {
@@ -4295,13 +4301,13 @@ var render = function() {
               { staticClass: "gm-frontend-gallery-post-image-upload-main" },
               [
                 _vm._v(
-                  "\n            This is the stone on which I will build my empire.\n            "
+                  "\n                This is the stone on which I will build my empire.\n                "
                 ),
                 _c("div", [
                   _vm._v(
-                    "\n                Allowed file types: " +
+                    "\n                    Allowed file types: " +
                       _vm._s(_vm.displayAllowedMimes) +
-                      "\n            "
+                      "\n                "
                   )
                 ])
               ]
@@ -4322,9 +4328,9 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
-              _c("img", {
-                staticClass: "gm-frontend-gallery-post-image-upload-main",
-                attrs: { src: _vm.imageUrl, alt: "" }
+              _c("v-img", {
+                staticClass: "grey darken-4",
+                attrs: { src: _vm.imageUrl, height: "100%", contain: "" }
               })
             ]
       ],
@@ -4339,9 +4345,9 @@ var render = function() {
           _vm.imageError !== ""
             ? _c("div", [
                 _vm._v(
-                  "\n                " +
+                  "\n                    " +
                     _vm._s(_vm.imageError) +
-                    "\n            "
+                    "\n                "
                 )
               ])
             : _vm._e()

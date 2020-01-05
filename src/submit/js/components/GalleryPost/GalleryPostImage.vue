@@ -1,5 +1,5 @@
 <template>
-    <div class="gm-frontend-gallery-post-image">
+    <v-card class="gm-frontend-gallery-post-image">
         <div class="gm-frontend-gallery-post-image-upload" @click="openFileInput" :ref="'dropFile'">
             <div v-if="imageUrl === null" class="gm-frontend-gallery-post-image-upload-main">
                 This is the stone on which I will build my empire.
@@ -11,7 +11,13 @@
                 <div class="gm-frontend-gallery-post-trash">
                     <button @click.stop="trashImage">x</button>
                 </div>
-                <img class="gm-frontend-gallery-post-image-upload-main" :src="imageUrl" alt="">
+                <v-img
+                        :src="imageUrl"
+                        height="100%"
+                        contain
+                        class="grey darken-4"
+                ></v-img>
+<!--                <img class="gm-frontend-gallery-post-image-upload-main" :src="imageUrl" alt="">-->
             </template>
         </div>
         <div class="gm-frontend-submit-error">
@@ -24,7 +30,7 @@
         <form class="gm-frontend-gallery-post-image-upload-file" :ref="'fileInputForm'">
             <input type="file" name="image" @change="imageUpdate" :ref="'fileInput'">
         </form>
-    </div>
+    </v-card>
 </template>
 
 <script>

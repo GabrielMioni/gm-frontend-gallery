@@ -1,11 +1,12 @@
 .gm-frontend-gallery-post-image {
+  height: 100%;
   &-upload {
     display: grid;
     grid-template-rows: min-content 1fr;
     grid-template-columns: 1fr;
     align-items: center;
     justify-content: center;
-    height: 15rem;
+    height: 100%;
     position: relative;
 
     &-main {
