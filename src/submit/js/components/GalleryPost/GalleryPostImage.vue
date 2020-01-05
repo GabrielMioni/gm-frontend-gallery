@@ -1,6 +1,9 @@
 <template>
     <v-card class="gm-frontend-gallery-post-image">
-        <div class="gm-frontend-gallery-post-image-upload" @click="openFileInput" :ref="'dropFile'">
+        <div class="gm-frontend-gallery-post-image-upload"
+             @click="openFileInput"
+             :tabindex="0"
+             :ref="'dropFile'">
             <div v-if="imageUrl === null" class="gm-frontend-gallery-post-image-upload-main">
                 <div class="gm-frontend-gallery-post-image-upload-main-icon">
                     <v-icon>image</v-icon>

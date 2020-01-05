@@ -2,7 +2,6 @@
     <v-app id="gm-frontend-submit">
         <v-container fluid>
             <v-text-field
-                    class="blah"
                     v-model="mainTitle"
                     :error-messages="mainTitleError"
                     :label="'Title'">

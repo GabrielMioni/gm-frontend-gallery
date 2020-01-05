@@ -1919,7 +1919,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
 
 
 
@@ -2166,6 +2165,9 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
 //
 //
 //
@@ -4081,7 +4083,6 @@ var render = function() {
         { attrs: { fluid: "" } },
         [
           _c("v-text-field", {
-            staticClass: "blah",
             attrs: { "error-messages": _vm.mainTitleError, label: "Title" },
             model: {
               value: _vm.mainTitle,
@@ -4276,6 +4277,7 @@ var render = function() {
       {
         ref: "dropFile",
         staticClass: "gm-frontend-gallery-post-image-upload",
+        attrs: { tabindex: 0 },
         on: { click: _vm.openFileInput }
       },
       [
