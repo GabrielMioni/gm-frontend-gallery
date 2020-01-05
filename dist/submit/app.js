@@ -4230,7 +4230,7 @@ var render = function() {
         attrs: {
           solo: "",
           flat: "",
-          rows: "20",
+          rows: "5",
           counter: _vm.maxContentLength,
           name: _vm.setElementId("gm-frontend-submit-content"),
           "error-messages": _vm.contentError,

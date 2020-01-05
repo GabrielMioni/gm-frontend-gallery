@@ -4,7 +4,7 @@
                 v-model="postContent"
                 solo
                 flat
-                rows="20"
+                rows="5"
                 :counter="maxContentLength"
                 :name="setElementId('gm-frontend-submit-content')"
                 :error-messages="contentError"
