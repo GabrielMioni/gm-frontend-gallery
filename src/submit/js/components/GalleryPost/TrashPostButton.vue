@@ -1,6 +1,8 @@
 <template>
-    <button @click.stop="checkShowModal">
-        x
+    <v-btn class="gm-frontend-gallery-post-trash-button"
+           fab dark small color="grey darken-4"
+           @click.stop="checkShowModal">
+        <v-icon>close</v-icon>
         <portal to="modals" v-if="showModal">
             <confirmation-modal
                     :confirm-is-dangerous="true"
@@ -9,7 +11,7 @@
                 Are you sure you want to delete this post?
             </confirmation-modal>
         </portal>
-    </button>
+    </v-btn>
 </template>
 
 <script>
