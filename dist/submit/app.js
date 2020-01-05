@@ -2067,6 +2067,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _utilities_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/utilities/helpers */ "./src/utilities/helpers.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -2087,6 +2088,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "GalleryPostContent",
@@ -2107,6 +2110,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])({
     SET_POST_CONTENT: 'postData/SET_POST_CONTENT',
     SET_POST_ERROR: 'postData/SET_POST_ERROR'
+  }), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])({
+    getMainOptions: 'mainData/getMainOptions'
   }), {
     setElementId: function setElementId(idName) {
       return "".concat(idName, "-").concat(this.index);
@@ -2130,6 +2135,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           index: this.index,
           data: value
         });
+      }
+    },
+    maxContentLength: {
+      get: function get() {
+        return Object(_utilities_helpers__WEBPACK_IMPORTED_MODULE_1__["getOptionsType"])(this.getMainOptions, 'maxContentLength');
       }
     }
   }
@@ -2185,6 +2195,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+
 
 
 
@@ -2274,14 +2285,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     allowedMimes: {
       get: function get() {
-        var options = this.getMainOptions();
-        return options.allowedMimes;
+        return Object(_utilities_helpers__WEBPACK_IMPORTED_MODULE_2__["getOptionsType"])(this.getMainOptions, 'allowedMimes');
       }
     },
     displayAllowedMimes: {
       get: function get() {
-        var options = this.getMainOptions();
-        var allowedMimes = options.allowedMimes;
+        var allowedMimes = Object(_utilities_helpers__WEBPACK_IMPORTED_MODULE_2__["getOptionsType"])(this.getMainOptions, 'allowedMimes');
         var display = allowedMimes.map(function (mime) {
           return '.' + mime.substr(mime.indexOf('/') + 1);
         });
@@ -2399,8 +2408,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var _utilities_vue_components_ConfirmationModal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/utilities/vue/components/ConfirmationModal */ "./src/utilities/vue/components/ConfirmationModal.vue");
-/* harmony import */ var _utilities_vue_components_LoadingButton__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/utilities/vue/components/LoadingButton */ "./src/utilities/vue/components/LoadingButton.vue");
+/* harmony import */ var _utilities_helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/utilities/helpers */ "./src/utilities/helpers.js");
+/* harmony import */ var _utilities_vue_components_ConfirmationModal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/utilities/vue/components/ConfirmationModal */ "./src/utilities/vue/components/ConfirmationModal.vue");
+/* harmony import */ var _utilities_vue_components_LoadingButton__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/utilities/vue/components/LoadingButton */ "./src/utilities/vue/components/LoadingButton.vue");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -2433,11 +2443,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SubmitPostButton",
   components: {
-    LoadingButton: _utilities_vue_components_LoadingButton__WEBPACK_IMPORTED_MODULE_3__["default"],
-    ConfirmationModal: _utilities_vue_components_ConfirmationModal__WEBPACK_IMPORTED_MODULE_2__["default"]
+    LoadingButton: _utilities_vue_components_LoadingButton__WEBPACK_IMPORTED_MODULE_4__["default"],
+    ConfirmationModal: _utilities_vue_components_ConfirmationModal__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   data: function data() {
     return {
@@ -2454,7 +2465,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     getMainTitle: 'mainData/getMainTitle',
     getMainNonce: 'mainData/getMainNonce',
     getMainSubmitting: 'mainData/getMainSubmitting',
-    getGalleryPosts: 'postData/getGalleryPosts'
+    getGalleryPosts: 'postData/getGalleryPosts',
+    getMainOptions: 'mainData/getMainOptions'
   }), {
     createValidateFormData: function createValidateFormData() {
       var _this = this;
@@ -2464,14 +2476,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var hasErrors = false;
       var galleryPosts = this.getGalleryPosts();
       galleryPosts.map(function (galleryPost, index) {
-        var postContent = galleryPost.content;
+        var postContent = galleryPost.content.trim();
         var imageFile = galleryPost.file;
 
-        if (postContent.trim() === '') {
+        if (postContent === '' || postContent.length > _this.maxContentLength) {
+          var contentError = postContent === '' ? 'Content is required' : "Content cannot be greater than ".concat(_this.maxContentLength, " characters");
+
           _this.SET_POST_ERROR({
             'index': index,
             'type': 'content',
-            'error': 'Content is required'
+            'error': contentError
           });
         } else {
           attachmentContents.push(postContent);
@@ -2546,6 +2560,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       },
       set: function set(value) {
         return this.SET_MAIN_SUBMITTING(value);
+      }
+    },
+    maxContentLength: {
+      get: function get() {
+        return Object(_utilities_helpers__WEBPACK_IMPORTED_MODULE_2__["getOptionsType"])(this.getMainOptions, 'maxContentLength');
       }
     }
   }
@@ -4209,6 +4228,7 @@ var render = function() {
           solo: "",
           flat: "",
           rows: "20",
+          counter: _vm.maxContentLength,
           name: _vm.setElementId("gm-frontend-submit-content"),
           "error-messages": _vm.contentError,
           label: "Content"
@@ -59479,13 +59499,14 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
 /*!**********************************!*\
   !*** ./src/utilities/helpers.js ***!
   \**********************************/
-/*! exports provided: defaultGalleryPostObject, imageUrlValidator */
+/*! exports provided: defaultGalleryPostObject, imageUrlValidator, getOptionsType */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "defaultGalleryPostObject", function() { return defaultGalleryPostObject; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "imageUrlValidator", function() { return imageUrlValidator; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getOptionsType", function() { return getOptionsType; });
 var defaultGalleryPostObject = function defaultGalleryPostObject() {
   return {
     content: '',
@@ -59500,6 +59521,14 @@ var defaultGalleryPostObject = function defaultGalleryPostObject() {
 };
 var imageUrlValidator = function imageUrlValidator(prop) {
   return typeof prop === 'string' || prop === null;
+};
+var getOptionsType = function getOptionsType(getMainOptions, type) {
+  if (typeof getMainOptions === 'function') {
+    var options = getMainOptions();
+    return options[type];
+  }
+
+  return getMainOptions[type];
 };
 
 /***/ }),

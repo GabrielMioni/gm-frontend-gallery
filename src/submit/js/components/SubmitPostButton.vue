@@ -23,6 +23,7 @@
 <script>
   import axios from "axios";
   import { mapGetters, mapActions } from 'vuex';
+  import { getOptionsType } from '@/utilities/helpers';
   import ConfirmationModal from "@/utilities/vue/components/ConfirmationModal";
   import LoadingButton from "@/utilities/vue/components/LoadingButton";
   export default {
@@ -45,7 +46,8 @@
         getMainTitle: 'mainData/getMainTitle',
         getMainNonce: 'mainData/getMainNonce',
         getMainSubmitting: 'mainData/getMainSubmitting',
-        getGalleryPosts: 'postData/getGalleryPosts'
+        getGalleryPosts: 'postData/getGalleryPosts',
+        getMainOptions: 'mainData/getMainOptions'
       }),
       createValidateFormData() {
         let attachmentContents = [];
@@ -55,14 +57,17 @@
         const galleryPosts = this.getGalleryPosts();
 
         galleryPosts.map((galleryPost, index) => {
-          const postContent = galleryPost.content;
+          const postContent = galleryPost.content.trim();
           const imageFile = galleryPost.file;
 
-          if (postContent.trim() === '') {
+          if (postContent === '' || postContent.length > this.maxContentLength) {
+
+            const contentError = postContent === '' ? 'Content is required' : `Content cannot be greater than ${this.maxContentLength} characters`;
+
             this.SET_POST_ERROR({
               'index': index,
               'type': 'content',
-              'error': 'Content is required',
+              'error': contentError,
             });
           } else {
             attachmentContents.push(postContent);
@@ -139,6 +144,11 @@
         },
         set(value) {
           return this.SET_MAIN_SUBMITTING(value);
+        }
+      },
+      maxContentLength: {
+        get() {
+          return getOptionsType(this.getMainOptions, 'maxContentLength');
         }
       }
     }
