@@ -30,6 +30,7 @@
 <script>
   import dragDrop from "drag-drop";
   import { mapGetters, mapActions } from 'vuex';
+  import { getOptionsType } from '@/utilities/helpers';
   import { imageUrlValidator } from "@/utilities/helpers";
 
   export default {
@@ -119,14 +120,12 @@
       },
       allowedMimes: {
         get() {
-          const options = this.getMainOptions();
-          return options.allowedMimes;
+          return getOptionsType(this.getMainOptions, 'allowedMimes');
         }
       },
       displayAllowedMimes: {
         get() {
-          const options = this.getMainOptions();
-          const allowedMimes = options.allowedMimes;
+          const allowedMimes = getOptionsType(this.getMainOptions, 'allowedMimes');
 
           const display = allowedMimes.map((mime) => {
             return '.' + mime.substr(mime.indexOf('/') + 1);
