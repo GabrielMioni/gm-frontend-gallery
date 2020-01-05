@@ -18,6 +18,7 @@ trait definitionsTrait
         'user_required' => false,
         'admin_must_approve' => false,
         'max_attachments' => 5,
+        'max_content_length' => 500,
         'allowed_mimes' => [
             'image/jpeg',
             'image/gif',

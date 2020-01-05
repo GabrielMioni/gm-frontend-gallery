@@ -191,7 +191,8 @@ class gmFrontendGallery
 
         $setOptions = [
             'maxAttachments' => $this->getOptionValue($options,'max_attachments'),
-            'allowedMimes' => $this->getOptionValue($options,'allowed_mimes')
+            'allowedMimes' => $this->getOptionValue($options,'allowed_mimes'),
+            'maxContentLength' => $this->getOptionValue($options, 'max_content_length')
         ];
 
         return htmlspecialchars(json_encode($setOptions), ENT_QUOTES, 'UTF-8');
