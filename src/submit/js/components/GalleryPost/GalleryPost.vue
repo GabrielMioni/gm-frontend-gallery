@@ -1,5 +1,5 @@
 <template>
-    <div class="gm-frontend-gallery-post">
+    <v-card :class="'gm-frontend-gallery-post'">
         <div class="gm-frontend-gallery-post-trash gm-frontend-gallery-post-trash--full">
             <trash-post-button
                     :index="index"
@@ -21,7 +21,7 @@
                     :content-error="postState.errors.content">
             </gallery-post-content>
         </div>
-    </div>
+    </v-card>
 </template>
 
 <script>
