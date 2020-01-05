@@ -1,27 +1,28 @@
 <template>
-    <v-card :class="'gm-frontend-gallery-post'">
-        <div class="gm-frontend-gallery-post-trash gm-frontend-gallery-post-trash--full">
-            <trash-post-button
-                    :index="index"
-                    :image-url="postState.imageUrl"
-                    :content="postState.content">
-            </trash-post-button>
-        </div>
-        <div class="gm-frontend-gallery-post-left">
-            <gallery-post-image
-                    :index="index"
-                    :image-url="postState.imageUrl"
-                    :image-url-error="postState.errors.imageUrl">
-            </gallery-post-image>
-        </div>
-        <div class="gm-frontend-gallery-post-right">
-            <gallery-post-content
-                    :index="index"
-                    :content="postState.content"
-                    :content-error="postState.errors.content">
-            </gallery-post-content>
-        </div>
-    </v-card>
+    <div class="gm-frontend-gallery-post-container">
+        <v-card :class="'gm-frontend-gallery-post'">
+            <div class="gm-frontend-gallery-post-left">
+                <gallery-post-image
+                        :index="index"
+                        :image-url="postState.imageUrl"
+                        :image-url-error="postState.errors.imageUrl">
+                </gallery-post-image>
+            </div>
+            <div class="gm-frontend-gallery-post-right">
+                <gallery-post-content
+                        :index="index"
+                        :content="postState.content"
+                        :content-error="postState.errors.content">
+                </gallery-post-content>
+            </div>
+        </v-card>
+        <trash-post-button
+                :index="index"
+                :image-url="postState.imageUrl"
+                :content="postState.content">
+        </trash-post-button>
+    </div>
+
 </template>
 
 <script>
