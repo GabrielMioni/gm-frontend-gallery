@@ -1,22 +1,15 @@
 <template>
-    <form class="gm-frontend-gallery-post-content">
-        <div class="gm-frontend-submit-form-group">
-            <label :for="setElementId('gm-frontend-submit-content')">
-                Content
-                <span class="gm-frontend-submit-error">
-                    <transition name="fade">
-                        <div v-if="contentError !== ''">
-                            {{ contentError }}
-                        </div>
-                    </transition>
-                </span>
-            </label>
-            <textarea
-                    v-model="postContent"
-                    :id="setElementId('gm-frontend-submit-content')">
-            </textarea>
-        </div>
-    </form>
+    <v-card class="gm-frontend-gallery-post-content">
+        <v-textarea
+                v-model="postContent"
+                solo
+                flat
+                rows="20"
+                :name="setElementId('gm-frontend-submit-content')"
+                :error-messages="contentError"
+                label="Content"
+        ></v-textarea>
+    </v-card>
 </template>
 
 <script>
