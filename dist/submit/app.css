@@ -135,6 +135,7 @@
 
 .gm-frontend-gallery-post-image {
   height: 100%;
+  cursor: pointer;
 }
 
 .gm-frontend-gallery-post-image-upload {

@@ -1,5 +1,6 @@
 .gm-frontend-gallery-post-image {
   height: 100%;
+  cursor: pointer;
   &-upload {
     display: grid;
     grid-template-rows: min-content 1fr;
