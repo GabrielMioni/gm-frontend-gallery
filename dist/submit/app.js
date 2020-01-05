@@ -2032,6 +2032,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -2333,6 +2334,8 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
 //
 //
 //
@@ -4152,55 +4155,52 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("v-card", { class: "gm-frontend-gallery-post" }, [
-    _c(
-      "div",
-      {
-        staticClass:
-          "gm-frontend-gallery-post-trash gm-frontend-gallery-post-trash--full"
-      },
-      [
-        _c("trash-post-button", {
-          attrs: {
-            index: _vm.index,
-            "image-url": _vm.postState.imageUrl,
-            content: _vm.postState.content
-          }
-        })
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "gm-frontend-gallery-post-left" },
-      [
-        _c("gallery-post-image", {
-          attrs: {
-            index: _vm.index,
-            "image-url": _vm.postState.imageUrl,
-            "image-url-error": _vm.postState.errors.imageUrl
-          }
-        })
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "gm-frontend-gallery-post-right" },
-      [
-        _c("gallery-post-content", {
-          attrs: {
-            index: _vm.index,
-            content: _vm.postState.content,
-            "content-error": _vm.postState.errors.content
-          }
-        })
-      ],
-      1
-    )
-  ])
+  return _c(
+    "div",
+    { staticClass: "gm-frontend-gallery-post" },
+    [
+      _c("v-card", { staticClass: "gm-frontend-gallery-post-card" }, [
+        _c(
+          "div",
+          { staticClass: "gm-frontend-gallery-post-card-left" },
+          [
+            _c("gallery-post-image", {
+              attrs: {
+                index: _vm.index,
+                "image-url": _vm.postState.imageUrl,
+                "image-url-error": _vm.postState.errors.imageUrl
+              }
+            })
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "gm-frontend-gallery-post-card-right" },
+          [
+            _c("gallery-post-content", {
+              attrs: {
+                index: _vm.index,
+                content: _vm.postState.content,
+                "content-error": _vm.postState.errors.content
+              }
+            })
+          ],
+          1
+        )
+      ]),
+      _vm._v(" "),
+      _c("trash-post-button", {
+        attrs: {
+          index: _vm.index,
+          "image-url": _vm.postState.imageUrl,
+          content: _vm.postState.content
+        }
+      })
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -4387,8 +4387,10 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "button",
+    "v-btn",
     {
+      staticClass: "gm-frontend-gallery-post-trash-button",
+      attrs: { fab: "", dark: "", small: "", color: "grey darken-4" },
       on: {
         click: function($event) {
           $event.stopPropagation()
@@ -4397,7 +4399,8 @@ var render = function() {
       }
     },
     [
-      _vm._v("\n    x\n    "),
+      _c("v-icon", [_vm._v("close")]),
+      _vm._v(" "),
       _vm.showModal
         ? _c(
             "portal",

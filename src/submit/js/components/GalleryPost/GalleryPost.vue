@@ -1,14 +1,14 @@
 <template>
-    <div class="gm-frontend-gallery-post-container">
-        <v-card :class="'gm-frontend-gallery-post'">
-            <div class="gm-frontend-gallery-post-left">
+    <div class="gm-frontend-gallery-post">
+        <v-card class="gm-frontend-gallery-post-card">
+            <div class="gm-frontend-gallery-post-card-left">
                 <gallery-post-image
                         :index="index"
                         :image-url="postState.imageUrl"
                         :image-url-error="postState.errors.imageUrl">
                 </gallery-post-image>
             </div>
-            <div class="gm-frontend-gallery-post-right">
+            <div class="gm-frontend-gallery-post-card-right">
                 <gallery-post-content
                         :index="index"
                         :content="postState.content"

@@ -54,6 +54,11 @@
 }
 
 #gm-frontend-submit .gm-frontend-gallery-post {
+  position: relative;
+  margin: 0 0 1.75rem 0;
+}
+
+#gm-frontend-submit .gm-frontend-gallery-post-card {
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr 1fr;
@@ -65,13 +70,13 @@
 }
 
 @media (min-width: 768px) {
-  #gm-frontend-submit .gm-frontend-gallery-post {
+  #gm-frontend-submit .gm-frontend-gallery-post-card {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr;
   }
 }
 
-#gm-frontend-submit .gm-frontend-gallery-post-trash {
+#gm-frontend-submit .gm-frontend-gallery-post-card-trash {
   grid-row: 1;
   grid-column: 1;
   display: -webkit-box;
@@ -83,23 +88,23 @@
 }
 
 @media (min-width: 768px) {
-  #gm-frontend-submit .gm-frontend-gallery-post-trash--full {
+  #gm-frontend-submit .gm-frontend-gallery-post-card-trash--full {
     grid-column: 1/span 2;
   }
 }
 
-#gm-frontend-submit .gm-frontend-gallery-post-trash button {
+#gm-frontend-submit .gm-frontend-gallery-post-card-trash button {
   background-color: unset;
   color: #000000;
   padding: 0.5rem;
 }
 
-#gm-frontend-submit .gm-frontend-gallery-post-left,
-#gm-frontend-submit .gm-frontend-gallery-post-right {
+#gm-frontend-submit .gm-frontend-gallery-post-card-left,
+#gm-frontend-submit .gm-frontend-gallery-post-card-right {
   height: 300px;
 }
 
-#gm-frontend-submit .gm-frontend-gallery-post-left {
+#gm-frontend-submit .gm-frontend-gallery-post-card-left {
   grid-column: 1;
   grid-row: 2;
   display: grid;
@@ -108,29 +113,29 @@
 }
 
 @media (min-width: 768px) {
-  #gm-frontend-submit .gm-frontend-gallery-post-left {
+  #gm-frontend-submit .gm-frontend-gallery-post-card-left {
     grid-column: 1;
     grid-row: 1/span 3;
   }
 }
 
-#gm-frontend-submit .gm-frontend-gallery-post-right {
+#gm-frontend-submit .gm-frontend-gallery-post-card-right {
   grid-column: 1;
   grid-row: 1;
 }
 
 @media (min-width: 768px) {
-  #gm-frontend-submit .gm-frontend-gallery-post-right {
+  #gm-frontend-submit .gm-frontend-gallery-post-card-right {
     grid-column: 2;
     grid-row: 1/span 2;
   }
 }
 
-#gm-frontend-submit .gm-frontend-gallery-post-right textarea {
+#gm-frontend-submit .gm-frontend-gallery-post-card-right textarea {
   resize: none;
 }
 
-#gm-frontend-submit .gm-frontend-gallery-post-right form {
+#gm-frontend-submit .gm-frontend-gallery-post-card-right form {
   height: 100%;
 }
 
@@ -207,6 +212,12 @@
 
 .gm-frontend-gallery-post-content .v-textarea {
   height: 100%;
+}
+
+.gm-frontend-gallery-post-trash-button {
+  position: absolute;
+  right: -1.25rem;
+  top: -1.25rem;
 }
 
 .fade-enter-active {
