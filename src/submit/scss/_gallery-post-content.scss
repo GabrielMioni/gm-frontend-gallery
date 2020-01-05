@@ -1,0 +1,26 @@
+.gm-frontend-gallery-post-content {
+  height: 100%;
+
+  .v-input {
+    height: inherit;
+
+    &__control {
+      height: inherit;
+    }
+    &__slot {
+      height: 85%;
+
+      .v-text-field__slot {
+        height: 100%;
+
+        textarea {
+          height: inherit;
+        }
+      }
+    }
+  }
+
+  .v-textarea {
+    height: 100%;
+  }
+}

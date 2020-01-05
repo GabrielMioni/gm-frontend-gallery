@@ -60,33 +60,6 @@
       grid-column: 1;
       grid-row: 1;
 
-      .gm-frontend-gallery-post-content {
-        height: 100%;
-
-        .v-input {
-          height: inherit;
-
-          &__control {
-            height: inherit;
-          }
-          &__slot {
-            height: 85%;
-
-            .v-text-field__slot {
-              height: 100%;
-
-              textarea {
-                height: inherit;
-              }
-            }
-          }
-        }
-
-        .v-textarea {
-          height: 100%;
-        }
-      }
-
       @media (min-width: $medium) {
         grid-column: 2;
         grid-row: 1 / span 2;
