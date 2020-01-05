@@ -62,7 +62,9 @@
 
           if (postContent === '' || postContent.length > this.maxContentLength) {
 
-            const contentError = postContent === '' ? 'Content is required' : `Content cannot be greater than ${this.maxContentLength} characters`;
+            const contentError = postContent === '' ?
+              'Content is required' :
+              `Content cannot be greater than ${this.maxContentLength} characters`;
 
             this.SET_POST_ERROR({
               'index': index,
