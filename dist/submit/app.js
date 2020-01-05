@@ -2202,6 +2202,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 
 
@@ -4323,20 +4326,27 @@ var render = function() {
               1
             )
           : [
-              _c("div", { staticClass: "gm-frontend-gallery-post-trash" }, [
-                _c(
-                  "button",
-                  {
-                    on: {
-                      click: function($event) {
-                        $event.stopPropagation()
-                        return _vm.trashImage($event)
-                      }
-                    }
+              _c(
+                "v-btn",
+                {
+                  staticClass: "gm-frontend-gallery-post-image-upload-trash",
+                  attrs: {
+                    tabindex: "-1",
+                    fab: "",
+                    dark: "",
+                    small: "",
+                    color: "red darken-4"
                   },
-                  [_vm._v("x")]
-                )
-              ]),
+                  on: {
+                    click: function($event) {
+                      $event.stopPropagation()
+                      return _vm.trashImage($event)
+                    }
+                  }
+                },
+                [_c("v-icon", [_vm._v("delete")])],
+                1
+              ),
               _vm._v(" "),
               _c("v-img", {
                 staticClass:

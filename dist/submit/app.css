@@ -161,6 +161,20 @@
   position: relative;
 }
 
+.gm-frontend-gallery-post-image-upload:hover .gm-frontend-gallery-post-image-upload-trash {
+  opacity: 1;
+}
+
+.gm-frontend-gallery-post-image-upload-trash {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1;
+  opacity: 0;
+  -webkit-transition: opacity 0.25s;
+  transition: opacity 0.25s;
+}
+
 .gm-frontend-gallery-post-image-upload-main {
   grid-row: 1/span 2;
   grid-column: 1;

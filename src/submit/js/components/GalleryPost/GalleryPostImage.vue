@@ -18,9 +18,12 @@
                 </v-input>
             </div>
             <template v-else>
-                <div class="gm-frontend-gallery-post-trash">
-                    <button @click.stop="trashImage">x</button>
-                </div>
+                <v-btn class="gm-frontend-gallery-post-image-upload-trash"
+                       tabindex="-1"
+                       @click.stop="trashImage"
+                       fab dark small color="red darken-4">
+                    <v-icon>delete</v-icon>
+                </v-btn>
                 <v-img
                         :src="imageUrl"
                         contain
