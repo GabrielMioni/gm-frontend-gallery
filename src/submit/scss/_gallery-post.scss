@@ -1,9 +1,8 @@
 @import "../../utilities/variables";
 
 #gm-frontend-submit {
-  input[type="text"] {
-    border: none;
-  }
+  background: none;
+
   .gm-frontend-gallery-post {
     display: grid;
     grid-template-columns: 1fr;
@@ -65,5 +64,9 @@
         height: 100%;
       }
     }
+  }
+
+  input[type="text"] {
+    border: none;
   }
 }

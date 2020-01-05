@@ -49,8 +49,8 @@
   height: 2rem;
 }
 
-#gm-frontend-submit input[type=text] {
-  border: none;
+#gm-frontend-submit {
+  background: none;
 }
 
 #gm-frontend-submit .gm-frontend-gallery-post {
@@ -123,6 +123,10 @@
 
 #gm-frontend-submit .gm-frontend-gallery-post-right form {
   height: 100%;
+}
+
+#gm-frontend-submit input[type=text] {
+  border: none;
 }
 
 .gm-frontend-gallery-post-image-upload {
