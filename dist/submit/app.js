@@ -4230,11 +4230,11 @@ var render = function() {
         attrs: {
           solo: "",
           flat: "",
-          rows: "5",
           counter: _vm.maxContentLength,
           name: _vm.setElementId("gm-frontend-submit-content"),
           "error-messages": _vm.contentError,
-          label: "Content"
+          label: "Content",
+          hint: "Say something about the image"
         },
         model: {
           value: _vm.postContent,

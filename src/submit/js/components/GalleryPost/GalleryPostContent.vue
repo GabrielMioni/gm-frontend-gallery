@@ -4,11 +4,11 @@
                 v-model="postContent"
                 solo
                 flat
-                rows="5"
                 :counter="maxContentLength"
                 :name="setElementId('gm-frontend-submit-content')"
                 :error-messages="contentError"
                 label="Content"
+                hint="Say something about the image"
         ></v-textarea>
     </v-card>
 </template>
