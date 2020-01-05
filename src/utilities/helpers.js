@@ -12,3 +12,11 @@ export const defaultGalleryPostObject = () => {
 };
 
 export const imageUrlValidator = prop => typeof prop === 'string' || prop === null;
+
+export const getOptionsType = (getMainOptions, type) => {
+  if (typeof getMainOptions === 'function') {
+    const options = getMainOptions();
+    return options[type];
+  }
+  return getMainOptions[type];
+};
