@@ -129,6 +129,10 @@
   border: none;
 }
 
+.gm-frontend-gallery-post-image {
+  height: 100%;
+}
+
 .gm-frontend-gallery-post-image-upload {
   display: grid;
   grid-template-rows: -webkit-min-content 1fr;
@@ -138,7 +142,7 @@
           align-items: center;
   -webkit-box-pack: center;
           justify-content: center;
-  height: 15rem;
+  height: 100%;
   position: relative;
 }
 

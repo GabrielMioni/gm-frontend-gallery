@@ -2,6 +2,9 @@
     <v-card class="gm-frontend-gallery-post-image">
         <div class="gm-frontend-gallery-post-image-upload" @click="openFileInput" :ref="'dropFile'">
             <div v-if="imageUrl === null" class="gm-frontend-gallery-post-image-upload-main">
+                <v-input
+                        :error-messages="imageError">
+                </v-input>
                 This is the stone on which I will build my empire.
                 <div>
                     Allowed file types: {{ displayAllowedMimes }}
@@ -13,19 +16,10 @@
                 </div>
                 <v-img
                         :src="imageUrl"
-                        height="100%"
                         contain
-                        class="grey darken-4"
-                ></v-img>
-<!--                <img class="gm-frontend-gallery-post-image-upload-main" :src="imageUrl" alt="">-->
+                        class="grey darken-4 gm-frontend-gallery-post-image-upload-main">
+                </v-img>
             </template>
-        </div>
-        <div class="gm-frontend-submit-error">
-            <transition name="fade">
-                <div v-if="imageError !== ''">
-                    {{ imageError }}
-                </div>
-            </transition>
         </div>
         <form class="gm-frontend-gallery-post-image-upload-file" :ref="'fileInputForm'">
             <input type="file" name="image" @change="imageUpdate" :ref="'fileInput'">

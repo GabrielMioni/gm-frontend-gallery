@@ -2197,7 +2197,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
 
 
 
@@ -4300,17 +4299,19 @@ var render = function() {
               "div",
               { staticClass: "gm-frontend-gallery-post-image-upload-main" },
               [
+                _c("v-input", { attrs: { "error-messages": _vm.imageError } }),
                 _vm._v(
-                  "\n                This is the stone on which I will build my empire.\n                "
+                  "\n            This is the stone on which I will build my empire.\n            "
                 ),
                 _c("div", [
                   _vm._v(
-                    "\n                    Allowed file types: " +
+                    "\n                Allowed file types: " +
                       _vm._s(_vm.displayAllowedMimes) +
-                      "\n                "
+                      "\n            "
                   )
                 ])
-              ]
+              ],
+              1
             )
           : [
               _c("div", { staticClass: "gm-frontend-gallery-post-trash" }, [
@@ -4329,31 +4330,13 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("v-img", {
-                staticClass: "grey darken-4",
-                attrs: { src: _vm.imageUrl, height: "100%", contain: "" }
+                staticClass:
+                  "grey darken-4 gm-frontend-gallery-post-image-upload-main",
+                attrs: { src: _vm.imageUrl, contain: "" }
               })
             ]
       ],
       2
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "gm-frontend-submit-error" },
-      [
-        _c("transition", { attrs: { name: "fade" } }, [
-          _vm.imageError !== ""
-            ? _c("div", [
-                _vm._v(
-                  "\n                    " +
-                    _vm._s(_vm.imageError) +
-                    "\n                "
-                )
-              ])
-            : _vm._e()
-        ])
-      ],
-      1
     ),
     _vm._v(" "),
     _c(
