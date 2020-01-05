@@ -67,7 +67,7 @@
 @media (min-width: 768px) {
   #gm-frontend-submit .gm-frontend-gallery-post {
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 300px;
+    grid-template-rows: 1fr;
   }
 }
 
