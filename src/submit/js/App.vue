@@ -1,20 +1,36 @@
 <template>
-    <div id="gm-frontend-submit" v-bind:class="{ 'gm-frontend-submit--active' : submitting }">
-        <form>
-            <div class="gm-frontend-submit-form-group">
-                <label for="post_title">
-                    <span>Title</span>
-                    <span class="gm-frontend-submit-error">
-                        <transition name="fade">
-                            <div v-if="mainTitleError !== ''">
-                                {{ mainTitleError }}
-                            </div>
-                        </transition>
-                    </span>
-                </label>
-                <input v-model="mainTitle" type="text" name="post_title" id="post_title">
-            </div>
-        </form>
+    <v-app id="gm-frontend-submit">
+        <v-container fluid>
+            <v-text-field
+                    class="blah"
+                    v-model="mainTitle"
+                    :error-messages="mainTitleError"
+                    :label="'Title'">
+            </v-text-field>
+            <transition-group name="fade">
+                <gallery-post
+                        v-for="(post, index) in galleryPosts"
+                        v-bind:key="`submitPost-${index}`"
+                        :index="index"
+                        :post-state="post">
+                </gallery-post>
+            </transition-group>
+            <button
+                    :ref="'addPostButton'"
+                    @click.stop="addPost">
+                Add A Post!
+            </button>
+            <submit-post-button>Submit</submit-post-button>
+            <portal-target name="modals" slim></portal-target>
+        </v-container>
+    </v-app>
+    <!--<div id="gm-frontend-submit" v-bind:class="{ 'gm-frontend-submit&#45;&#45;active' : submitting }">
+        <v-text-field
+                class="blah"
+                v-model="mainTitle"
+                :error-messages="mainTitleError"
+                :label="'Title'">
+        </v-text-field>
         <transition-group name="fade">
             <gallery-post
                     v-for="(post, index) in galleryPosts"
@@ -30,7 +46,7 @@
         </button>
         <submit-post-button>Submit</submit-post-button>
         <portal-target name="modals" slim></portal-target>
-    </div>
+    </div>-->
 </template>
 
 <script>
