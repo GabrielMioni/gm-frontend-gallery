@@ -60,6 +60,10 @@
         grid-row: 1 / span 2;
       }
 
+      textarea {
+        resize: none;
+      }
+
       form {
         height: 100%;
       }
