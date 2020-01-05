@@ -23,8 +23,8 @@
 <script>
   import axios from "axios";
   import { mapGetters, mapActions } from 'vuex';
-  import ConfirmationModal from "../../../utilities/vue/components/ConfirmationModal";
-  import LoadingButton from "../../../utilities/vue/components/LoadingButton";
+  import ConfirmationModal from "@/utilities/vue/components/ConfirmationModal";
+  import LoadingButton from "@/utilities/vue/components/LoadingButton";
   export default {
     name: "SubmitPostButton",
     components: {LoadingButton, ConfirmationModal},

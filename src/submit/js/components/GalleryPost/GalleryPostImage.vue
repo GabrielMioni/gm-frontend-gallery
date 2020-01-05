@@ -30,7 +30,7 @@
 <script>
   import dragDrop from "drag-drop";
   import { mapGetters, mapActions } from 'vuex';
-  import { imageUrlValidator } from "../../../../utilities/helpers";
+  import { imageUrlValidator } from "@/utilities/helpers";
 
   export default {
     name: "GalleryPostImage",
