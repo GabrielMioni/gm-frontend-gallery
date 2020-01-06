@@ -1,9 +1,10 @@
-import {defaultGalleryPostObject} from "../../../../utilities/helpers";
+import { defaultGalleryPostObject, setUniqueIds } from "@/utilities/helpers";
 
 export const postDataModule = {
   namespaced: true,
   state: {
-    galleryPosts: [defaultGalleryPostObject()],
+    galleryPosts: [defaultGalleryPostObject('z')],
+    uniqueIds: setUniqueIds()
   },
   getters: {
     getGalleryPosts: state => state.galleryPosts,
@@ -31,16 +32,20 @@ export const postDataModule = {
       state.galleryPosts[payload.index].errors[payload.type] = payload.error;
     },
     addPost(state) {
-      state.galleryPosts.push(defaultGalleryPostObject());
+      const current = state.uniqueIds[state.uniqueIds.length-1];
+      state.uniqueIds.pop();
+      state.galleryPosts.push(defaultGalleryPostObject(current));
     },
     removePost(state, index) {
       state.galleryPosts.splice(index, 1);
       if (state.galleryPosts.length <= 0) {
-        state.galleryPosts.push(defaultGalleryPostObject());
+        state.uniqueIds = setUniqueIds();
+        state.galleryPosts.push(defaultGalleryPostObject('z'));
       }
     },
     resetGalleryPostData(state) {
-      state.galleryPosts = [defaultGalleryPostObject()];
+      state.uniqueIds = setUniqueIds();
+      state.galleryPosts = [defaultGalleryPostObject('z')];
     }
   },
   actions: {

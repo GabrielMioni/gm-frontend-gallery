@@ -1,14 +1,19 @@
-export const defaultGalleryPostObject = () => {
+export const defaultGalleryPostObject = (uniqueId) => {
   return {
     content: '',
     imageUrl: null,
     file: null,
+    uniqueId: uniqueId,
     errors: {
       content: '',
       imageUrl: '',
       file: '',
     }
   }
+};
+
+export const setUniqueIds = () => {
+  return 'abcdefghijklmnopqrstuvwxy'.split('');
 };
 
 export const imageUrlValidator = prop => typeof prop === 'string' || prop === null;

@@ -1928,6 +1928,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     SubmitPostButton: _components_SubmitPostButton__WEBPACK_IMPORTED_MODULE_1__["default"],
     GalleryPost: _components_GalleryPost_GalleryPost__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
+  data: function data() {
+    return {
+      things: ['a', 'b', 'c', 'd', 'e', 'f']
+    };
+  },
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapActions"])({
     SET_MAIN_TITLE: 'mainData/SET_MAIN_TITLE',
     SET_MAIN_TITLE_ERROR: 'mainData/SET_MAIN_TITLE_ERROR',
@@ -1949,6 +1954,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       this.ADD_POST();
+    },
+    generateKey: function generateKey() {
+      var rand = Math.floor(Math.random() * 100);
+      return "submitPost-".concat(rand);
     }
   }),
   computed: {
@@ -4105,7 +4114,7 @@ var render = function() {
             { attrs: { name: "fade" } },
             _vm._l(_vm.galleryPosts, function(post, index) {
               return _c("gallery-post", {
-                key: "submitPost-" + index,
+                key: "submitPost-" + post.uniqueId,
                 attrs: { index: index, "post-state": post }
               })
             }),
@@ -59432,12 +59441,13 @@ var mainDataModule = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "postDataModule", function() { return postDataModule; });
-/* harmony import */ var _utilities_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../utilities/helpers */ "./src/utilities/helpers.js");
+/* harmony import */ var _utilities_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/utilities/helpers */ "./src/utilities/helpers.js");
 
 var postDataModule = {
   namespaced: true,
   state: {
-    galleryPosts: [Object(_utilities_helpers__WEBPACK_IMPORTED_MODULE_0__["defaultGalleryPostObject"])()]
+    galleryPosts: [Object(_utilities_helpers__WEBPACK_IMPORTED_MODULE_0__["defaultGalleryPostObject"])('z')],
+    uniqueIds: Object(_utilities_helpers__WEBPACK_IMPORTED_MODULE_0__["setUniqueIds"])()
   },
   getters: {
     getGalleryPosts: function getGalleryPosts(state) {
@@ -59469,17 +59479,21 @@ var postDataModule = {
       state.galleryPosts[payload.index].errors[payload.type] = payload.error;
     },
     addPost: function addPost(state) {
-      state.galleryPosts.push(Object(_utilities_helpers__WEBPACK_IMPORTED_MODULE_0__["defaultGalleryPostObject"])());
+      var current = state.uniqueIds[state.uniqueIds.length - 1];
+      state.uniqueIds.pop();
+      state.galleryPosts.push(Object(_utilities_helpers__WEBPACK_IMPORTED_MODULE_0__["defaultGalleryPostObject"])(current));
     },
     removePost: function removePost(state, index) {
       state.galleryPosts.splice(index, 1);
 
       if (state.galleryPosts.length <= 0) {
-        state.galleryPosts.push(Object(_utilities_helpers__WEBPACK_IMPORTED_MODULE_0__["defaultGalleryPostObject"])());
+        state.uniqueIds = Object(_utilities_helpers__WEBPACK_IMPORTED_MODULE_0__["setUniqueIds"])();
+        state.galleryPosts.push(Object(_utilities_helpers__WEBPACK_IMPORTED_MODULE_0__["defaultGalleryPostObject"])('z'));
       }
     },
     resetGalleryPostData: function resetGalleryPostData(state) {
-      state.galleryPosts = [Object(_utilities_helpers__WEBPACK_IMPORTED_MODULE_0__["defaultGalleryPostObject"])()];
+      state.uniqueIds = Object(_utilities_helpers__WEBPACK_IMPORTED_MODULE_0__["setUniqueIds"])();
+      state.galleryPosts = [Object(_utilities_helpers__WEBPACK_IMPORTED_MODULE_0__["defaultGalleryPostObject"])('z')];
     }
   },
   actions: {
@@ -59539,25 +59553,30 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
 /*!**********************************!*\
   !*** ./src/utilities/helpers.js ***!
   \**********************************/
-/*! exports provided: defaultGalleryPostObject, imageUrlValidator, getOptionsType */
+/*! exports provided: defaultGalleryPostObject, setUniqueIds, imageUrlValidator, getOptionsType */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "defaultGalleryPostObject", function() { return defaultGalleryPostObject; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setUniqueIds", function() { return setUniqueIds; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "imageUrlValidator", function() { return imageUrlValidator; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getOptionsType", function() { return getOptionsType; });
-var defaultGalleryPostObject = function defaultGalleryPostObject() {
+var defaultGalleryPostObject = function defaultGalleryPostObject(uniqueId) {
   return {
     content: '',
     imageUrl: null,
     file: null,
+    uniqueId: uniqueId,
     errors: {
       content: '',
       imageUrl: '',
       file: ''
     }
   };
+};
+var setUniqueIds = function setUniqueIds() {
+  return 'abcdefghijklmnopqrstuvwxy'.split('');
 };
 var imageUrlValidator = function imageUrlValidator(prop) {
   return typeof prop === 'string' || prop === null;

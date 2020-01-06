@@ -9,7 +9,7 @@
             <transition-group name="fade">
                 <gallery-post
                         v-for="(post, index) in galleryPosts"
-                        v-bind:key="`submitPost-${index}`"
+                        v-bind:key="`submitPost-${post.uniqueId}`"
                         :index="index"
                         :post-state="post">
                 </gallery-post>
@@ -55,6 +55,11 @@
   export default {
     name: "gmGallerySubmit",
     components: {SubmitPostButton, GalleryPost},
+    data() {
+      return {
+        things: ['a','b','c','d','e','f'],
+      }
+    },
     methods: {
       ...mapActions({
         SET_MAIN_TITLE: 'mainData/SET_MAIN_TITLE',
@@ -76,6 +81,10 @@
           return;
         }
         this.ADD_POST();
+      },
+      generateKey() {
+        const rand = Math.floor(Math.random() * 100);
+        return `submitPost-${rand}`
       }
     },
     computed: {
