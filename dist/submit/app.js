@@ -2366,7 +2366,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       showModal: false
     };
   },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapActions"])({
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapGetters"])({
+    getGalleryPostsLength: 'postData/getGalleryPostsLength'
+  }), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapActions"])({
     REMOVE_POST: 'postData/REMOVE_POST'
   }), {
     checkShowModal: function checkShowModal() {
@@ -2382,6 +2384,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     deletePost: function deletePost() {
       var _this = this;
+
+      if (this.getGalleryPostsLength() <= 1) {
+        console.log('too few');
+        return;
+      }
 
       new Promise(function (resolve) {
         resolve(_this.REMOVE_POST(_this.index));
@@ -59429,6 +59436,9 @@ var postDataModule = {
   getters: {
     getGalleryPosts: function getGalleryPosts(state) {
       return state.galleryPosts;
+    },
+    getGalleryPostsLength: function getGalleryPostsLength(state) {
+      return state.galleryPosts.length;
     },
     getGalleryPostDataFunction: function getGalleryPostDataFunction(state) {
       return function (payload) {

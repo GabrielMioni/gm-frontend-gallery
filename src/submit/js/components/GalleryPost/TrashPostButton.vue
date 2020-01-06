@@ -17,7 +17,7 @@
 <script>
   import ConfirmationModal from "@/utilities/vue/components/ConfirmationModal";
   import { imageUrlValidator} from "@/utilities/helpers";
-  import { mapActions } from 'vuex';
+  import { mapGetters, mapActions } from 'vuex';
   export default {
     name: "TrashPostButton",
     components: {ConfirmationModal},
@@ -41,6 +41,9 @@
       }
     },
     methods: {
+      ...mapGetters({
+        getGalleryPostsLength: 'postData/getGalleryPostsLength'
+      }),
       ...mapActions({
         REMOVE_POST: 'postData/REMOVE_POST',
       }),
@@ -55,6 +58,11 @@
         this.showModal = false;
       },
       deletePost() {
+        if (this.getGalleryPostsLength() <= 1) {
+          console.log('too few');
+          return;
+        }
+
         new Promise((resolve) => {
           resolve(this.REMOVE_POST(this.index));
         }).then(()=>{

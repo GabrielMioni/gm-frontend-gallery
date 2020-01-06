@@ -8,6 +8,7 @@ export const postDataModule = {
   },
   getters: {
     getGalleryPosts: state => state.galleryPosts,
+    getGalleryPostsLength: state => state.galleryPosts.length,
     getGalleryPostDataFunction (state) {
       return (payload) => {
         if (typeof payload.deepKey !== 'undefined') {
