@@ -2339,6 +2339,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 
@@ -2372,21 +2373,32 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     REMOVE_POST: 'postData/REMOVE_POST'
   }), {
     checkShowModal: function checkShowModal() {
+      var deleteButton = this.$refs.deleteButton.$el;
+      deleteButton.blur();
+
       if (this.content.trim() !== '' || this.imageUrl !== null) {
         this.showModal = true;
         return;
       }
 
-      this.deletePost();
+      this.deletePost(deleteButton);
     },
     cancelDelete: function cancelDelete() {
       this.showModal = false;
     },
-    deletePost: function deletePost() {
+    deletePost: function deletePost(buttonElm) {
       var _this = this;
 
       if (this.getGalleryPostsLength() <= 1) {
-        console.log('too few');
+        var shakeClass = 'gm-frontend-shake';
+
+        if (!buttonElm.classList.contains(shakeClass)) {
+          buttonElm.classList.add('gm-frontend-shake');
+          setTimeout(function () {
+            buttonElm.classList.remove('gm-frontend-shake');
+          }, 1000);
+        }
+
         return;
       }
 
@@ -4392,6 +4404,7 @@ var render = function() {
   return _c(
     "v-btn",
     {
+      ref: "deleteButton",
       staticClass: "gm-frontend-gallery-post-trash-button",
       attrs: { fab: "", dark: "", small: "", color: "grey darken-4" },
       on: {

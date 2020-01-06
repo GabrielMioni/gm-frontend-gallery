@@ -1,6 +1,7 @@
 <template>
     <v-btn class="gm-frontend-gallery-post-trash-button"
            fab dark small color="grey darken-4"
+           :ref="'deleteButton'"
            @click.stop="checkShowModal">
         <v-icon>close</v-icon>
         <portal to="modals" v-if="showModal">
@@ -48,18 +49,30 @@
         REMOVE_POST: 'postData/REMOVE_POST',
       }),
       checkShowModal() {
+        const deleteButton = this.$refs.deleteButton.$el;
+        deleteButton.blur();
+
         if (this.content.trim() !== '' || this.imageUrl !== null) {
           this.showModal = true;
           return;
         }
-        this.deletePost();
+        this.deletePost(deleteButton);
       },
       cancelDelete() {
         this.showModal = false;
       },
-      deletePost() {
+      deletePost(buttonElm) {
         if (this.getGalleryPostsLength() <= 1) {
-          console.log('too few');
+          const shakeClass = 'gm-frontend-shake';
+
+          if (!buttonElm.classList.contains(shakeClass)) {
+            buttonElm.classList.add('gm-frontend-shake');
+
+            setTimeout(()=>{
+              buttonElm.classList.remove('gm-frontend-shake');
+            }, 1000);
+          }
+
           return;
         }
 
