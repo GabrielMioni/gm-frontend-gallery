@@ -2258,11 +2258,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       fileInput.click();
     },
     trashImage: function trashImage() {
-      this.SET_POST_IMAGE_DATA({
-        index: this.index,
-        imageUrl: null,
-        file: null
-      });
+      var _this = this;
+
+      setTimeout(function () {
+        _this.SET_POST_IMAGE_DATA({
+          index: _this.index,
+          imageUrl: null,
+          file: null
+        });
+      }, 500);
       this.clearFileInput();
     }
   }),

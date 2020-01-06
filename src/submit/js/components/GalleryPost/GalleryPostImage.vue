@@ -107,11 +107,13 @@
         fileInput.click();
       },
       trashImage() {
-        this.SET_POST_IMAGE_DATA({
-          index: this.index,
-          imageUrl: null,
-          file: null,
-        });
+        setTimeout(()=>{
+          this.SET_POST_IMAGE_DATA({
+            index: this.index,
+            imageUrl: null,
+            file: null,
+          });
+        }, 500);
         this.clearFileInput();
       }
     },
