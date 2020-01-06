@@ -83,4 +83,10 @@
   input[type="text"] {
     border: none;
   }
+
+  button {
+    &:focus {
+      outline: 0;
+    }
+  }
 }

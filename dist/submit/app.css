@@ -143,6 +143,10 @@
   border: none;
 }
 
+#gm-frontend-submit button:focus {
+  outline: 0;
+}
+
 .gm-frontend-gallery-post-image {
   height: 100%;
   cursor: pointer;
@@ -232,10 +236,6 @@
   position: absolute;
   right: -1.25rem;
   top: -1.25rem;
-}
-
-.gm-frontend-gallery-post-trash-button:focus {
-  outline: 0;
 }
 
 .fade-enter-active {
