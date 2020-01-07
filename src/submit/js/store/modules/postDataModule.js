@@ -29,6 +29,9 @@ export const postDataModule = {
       state.galleryPosts[payload.index].imageUrl = payload.imageUrl;
       state.galleryPosts[payload.index].file = payload.file;
     },
+    setPostImageFile(state, payload) {
+      state.galleryPosts[payload.index].file = payload.file;
+    },
     setPostError(state, payload) {
       state.galleryPosts[payload.index].errors[payload.type] = payload.error;
     },
@@ -55,6 +58,9 @@ export const postDataModule = {
     },
     SET_POST_IMAGE_DATA(context, payload) {
       context.commit('setPostImageData', payload)
+    },
+    SET_POST_IMAGE_FILE(context, payload) {
+      context.commit('setPostImageFile', payload)
     },
     SET_POST_ERROR(context, payload) {
       context.commit('setPostError', payload);
