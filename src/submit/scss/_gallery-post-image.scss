@@ -1,6 +1,15 @@
 .gm-frontend-gallery-post-image {
   height: 100%;
   cursor: pointer;
+
+  img {
+    max-width: unset;
+  }
+  button {
+    &:hover {
+      background: unset;
+    }
+  }
   &-upload {
     display: grid;
     grid-template-rows: min-content 1fr;

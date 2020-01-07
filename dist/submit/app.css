@@ -67,6 +67,10 @@
   margin: 1rem 0;
   padding: 1rem;
   grid-column-gap: 0.5rem;
+  /*&-left,
+  &-right {
+    height: 300px;
+  }*/
 }
 
 @media (min-width: 768px) {
@@ -97,11 +101,6 @@
   background-color: unset;
   color: #000000;
   padding: 0.5rem;
-}
-
-#gm-frontend-submit .gm-frontend-gallery-post-card-left,
-#gm-frontend-submit .gm-frontend-gallery-post-card-right {
-  height: 300px;
 }
 
 #gm-frontend-submit .gm-frontend-gallery-post-card-left {
@@ -150,6 +149,14 @@
 .gm-frontend-gallery-post-image {
   height: 100%;
   cursor: pointer;
+}
+
+.gm-frontend-gallery-post-image img {
+  max-width: unset;
+}
+
+.gm-frontend-gallery-post-image button:hover {
+  background: unset;
 }
 
 .gm-frontend-gallery-post-image-upload {
