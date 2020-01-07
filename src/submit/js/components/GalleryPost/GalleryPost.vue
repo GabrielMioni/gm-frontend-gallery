@@ -5,6 +5,7 @@
                 <gallery-post-image
                         :index="index"
                         :image-url="postState.imageUrl"
+                        :image-file="postState.file"
                         :image-url-error="postState.errors.imageUrl">
                 </gallery-post-image>
             </div>
