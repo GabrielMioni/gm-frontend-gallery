@@ -8,7 +8,7 @@
             <confirmation-modal
                     :confirm-is-dangerous="true"
                     @confirmNo="cancelDelete"
-                    @confirmYes="deletePost">
+                    @confirmYes="deletePost()">
                 Are you sure you want to delete this post?
             </confirmation-modal>
         </portal>
@@ -56,26 +56,23 @@
           this.showModal = true;
           return;
         }
-        this.deletePost(deleteButton);
+
+        const shakeClass = 'gm-frontend-shake';
+
+        if (this.getGalleryPostsLength() <= 1 && !deleteButton.classList.contains(shakeClass)) {
+          deleteButton.classList.add(shakeClass);
+
+          setTimeout(()=>{
+            deleteButton.classList.remove(shakeClass);
+          }, 1000);
+        }
+
+        this.deletePost();
       },
       cancelDelete() {
         this.showModal = false;
       },
-      deletePost(buttonElm) {
-        if (this.getGalleryPostsLength() <= 1) {
-          const shakeClass = 'gm-frontend-shake';
-
-          if (!buttonElm.classList.contains(shakeClass)) {
-            buttonElm.classList.add('gm-frontend-shake');
-
-            setTimeout(()=>{
-              buttonElm.classList.remove('gm-frontend-shake');
-            }, 1000);
-          }
-
-          return;
-        }
-
+      deletePost() {
         new Promise((resolve) => {
           resolve(this.REMOVE_POST(this.index));
         }).then(()=>{
