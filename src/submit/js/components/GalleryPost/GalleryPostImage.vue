@@ -1,6 +1,6 @@
 <template>
-    <v-card class="gm-frontend-gallery-post-image">
-        <div class="gm-frontend-gallery-post-image-upload"
+<!--    <v-card class="gm-frontend-gallery-post-image">
+        &lt;!&ndash;<div class="gm-frontend-gallery-post-image-upload"
              @keyup.enter="openFileInput"
              @click="openFileInput"
              :tabindex="0"
@@ -30,11 +30,37 @@
                         class="grey darken-4 gm-frontend-gallery-post-image-upload-main">
                 </v-img>
             </template>
-        </div>
+        </div>&ndash;&gt;
+        <v-image-input
+                v-model="imageData"
+                :image-quality="0.85"
+                imageMinScaling="cover"
+                clearable
+                clearIcon="delete"
+                image-format="jpeg"
+                :fullHeight="true"
+                :fullWidth="true"
+        />
         <form class="gm-frontend-gallery-post-image-upload-file" :ref="'fileInputForm'">
             <input type="file" name="image" @change="imageUpdate" :ref="'fileInput'">
         </form>
-    </v-card>
+    </v-card>-->
+    <div class="gm-frontend-gallery-post-image">
+        <v-image-input
+                v-model="imageData"
+                class="gm-frontend-gallery-post-image-edit"
+                :image-quality="0.85"
+                imageMinScaling="cover"
+                clearable
+                clearIcon="delete"
+                image-format="jpeg"
+                rotateClockwiseIcon="rotate_right"
+                rotateCounterClockwiseIcon="rotate_left"
+                uploadIcon="image"
+                :fullHeight="false"
+                :fullWidth="false"
+        />
+    </div>
 </template>
 
 <script>
@@ -42,12 +68,17 @@
   import { mapGetters, mapActions } from 'vuex';
   import { getOptionsType } from '@/utilities/helpers';
   import { imageUrlValidator } from "@/utilities/helpers";
+  import VImageInput from 'vuetify-image-input';
 
   export default {
     name: "GalleryPostImage",
+    components: { VImageInput },
     props: {
       index: {
         type: Number,
+        required: true
+      },
+      imageFile: {
         required: true
       },
       imageUrl: {
@@ -62,7 +93,8 @@
     methods: {
       ...mapActions({
         SET_POST_IMAGE_DATA: 'postData/SET_POST_IMAGE_DATA',
-        SET_POST_ERROR: 'postData/SET_POST_ERROR'
+        SET_POST_ERROR: 'postData/SET_POST_ERROR',
+        SET_POST_IMAGE_FILE: 'postData/SET_POST_IMAGE_FILE'
       }),
       ...mapGetters({
         getMainOptions: 'mainData/getMainOptions'
@@ -118,6 +150,17 @@
       }
     },
     computed: {
+      imageData: {
+        get() {
+          return this.imageFile;
+        },
+        set(file) {
+          return this.SET_POST_IMAGE_FILE({
+            index: this.index,
+            file: file
+          });
+        }
+      },
       imageError: {
         get() {
           return this.imageUrlError;
@@ -148,11 +191,11 @@
       }
     },
     mounted() {
-      const dropArea = this.$refs.dropFile;
+      /*const dropArea = this.$refs.dropFile;
       const self = this;
       dragDrop(dropArea, (files) => {
         self.imageUpdate(files);
-      })
+      })*/
     }
   }
 </script>
