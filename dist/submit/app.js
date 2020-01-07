@@ -2385,26 +2385,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return;
       }
 
-      this.deletePost(deleteButton);
+      var shakeClass = 'gm-frontend-shake';
+
+      if (this.getGalleryPostsLength() <= 1 && !deleteButton.classList.contains(shakeClass)) {
+        deleteButton.classList.add(shakeClass);
+        setTimeout(function () {
+          deleteButton.classList.remove(shakeClass);
+        }, 1000);
+      }
+
+      this.deletePost();
     },
     cancelDelete: function cancelDelete() {
       this.showModal = false;
     },
-    deletePost: function deletePost(buttonElm) {
+    deletePost: function deletePost() {
       var _this = this;
-
-      if (this.getGalleryPostsLength() <= 1) {
-        var shakeClass = 'gm-frontend-shake';
-
-        if (!buttonElm.classList.contains(shakeClass)) {
-          buttonElm.classList.add('gm-frontend-shake');
-          setTimeout(function () {
-            buttonElm.classList.remove('gm-frontend-shake');
-          }, 1000);
-        }
-
-        return;
-      }
 
       new Promise(function (resolve) {
         resolve(_this.REMOVE_POST(_this.index));
@@ -4432,7 +4428,9 @@ var render = function() {
                   attrs: { "confirm-is-dangerous": true },
                   on: {
                     confirmNo: _vm.cancelDelete,
-                    confirmYes: _vm.deletePost
+                    confirmYes: function($event) {
+                      return _vm.deletePost()
+                    }
                   }
                 },
                 [

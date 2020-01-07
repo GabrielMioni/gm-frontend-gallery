@@ -166,6 +166,10 @@
 }
 
 .gm-frontend-gallery-post-image-upload:hover .gm-frontend-gallery-post-image-upload-trash {
+  opacity: 0.5;
+}
+
+.gm-frontend-gallery-post-image-upload:hover .gm-frontend-gallery-post-image-upload-trash:hover {
   opacity: 1;
 }
 
