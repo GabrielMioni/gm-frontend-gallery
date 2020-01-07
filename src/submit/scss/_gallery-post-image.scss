@@ -12,7 +12,11 @@
 
     &:hover {
       .gm-frontend-gallery-post-image-upload-trash {
-        opacity: 1;
+        opacity: .5;
+
+        &:hover {
+          opacity: 1;
+        }
       }
     }
 
