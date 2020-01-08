@@ -2199,6 +2199,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -2291,8 +2296,11 @@ __webpack_require__(/*! blueimp-canvas-to-blob */ "./node_modules/blueimp-canvas
         canvas: true
       });
     },
-    rotateImage: function rotateImage() {
+    rotateImageLeft: function rotateImageLeft() {
       this.processImage(this.imageFile, 8);
+    },
+    rotateImageRight: function rotateImageRight() {
+      this.processImage(this.imageFile, 6);
     },
     clearFileInput: function clearFileInput() {
       var fileInputForm = this.$refs.fileInputForm;
@@ -6531,14 +6539,42 @@ var render = function() {
               _c(
                 "v-btn",
                 {
+                  staticClass: "gm-frontend-gallery-post-image-upload-rotate",
+                  attrs: {
+                    fab: "",
+                    dark: "",
+                    small: "",
+                    color: "blue darken-4"
+                  },
                   on: {
                     click: function($event) {
                       $event.stopPropagation()
-                      return _vm.rotateImage($event)
+                      return _vm.rotateImageLeft($event)
                     }
                   }
                 },
-                [_c("v-icon", [_vm._v("image")])],
+                [_c("v-icon", [_vm._v("rotate_left")])],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-btn",
+                {
+                  staticClass: "gm-frontend-gallery-post-image-upload-rotate",
+                  attrs: {
+                    fab: "",
+                    dark: "",
+                    small: "",
+                    color: "blue darken-4"
+                  },
+                  on: {
+                    click: function($event) {
+                      $event.stopPropagation()
+                      return _vm.rotateImageRight($event)
+                    }
+                  }
+                },
+                [_c("v-icon", [_vm._v("rotate_right")])],
                 1
               ),
               _vm._v(" "),

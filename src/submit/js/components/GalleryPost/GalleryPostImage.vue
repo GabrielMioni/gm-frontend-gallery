@@ -24,10 +24,15 @@
                        fab dark small color="red darken-4">
                     <v-icon>delete</v-icon>
                 </v-btn>
-                <v-btn
-                        @click.stop="rotateImage"
-                >
-                    <v-icon>image</v-icon>
+                <v-btn class="gm-frontend-gallery-post-image-upload-rotate"
+                       fab dark small color="blue darken-4"
+                       @click.stop="rotateImageLeft">
+                    <v-icon>rotate_left</v-icon>
+                </v-btn>
+                <v-btn class="gm-frontend-gallery-post-image-upload-rotate"
+                       fab dark small color="blue darken-4"
+                       @click.stop="rotateImageRight">
+                    <v-icon>rotate_right</v-icon>
                 </v-btn>
                 <v-img
                         :src="imageUrl"
@@ -135,8 +140,11 @@
             canvas: true
           });
       },
-      rotateImage() {
+      rotateImageLeft() {
         this.processImage(this.imageFile, 8);
+      },
+      rotateImageRight() {
+        this.processImage(this.imageFile, 6);
       },
       clearFileInput() {
         const fileInputForm = this.$refs.fileInputForm;
