@@ -126,23 +126,22 @@
       },
       processImage(imageFile, orientationValue = true) {
         const self = this;
-        const mimeType = imageFile.type;
-        const fileName = imageFile.name;
+        const imageData = {
+          lastModified: Math.round((new Date()).getTime() / 1000),
+          type: imageFile.type
+        };
 
         loadImage(imageFile,
           (canvas) => {
             canvas.toBlob((blob) => {
-              const fileBlob = URL.createObjectURL(blob);
-              const file = new File([blob], fileName, {
-                lastModified: Math.round((new Date()).getTime() / 1000),
-                type: mimeType
-              });
+              const imageUrl = URL.createObjectURL(blob);
+              const file = new File([blob], imageFile.name, imageData);
               self.SET_POST_IMAGE_DATA({
                 index: self.index,
-                imageUrl: fileBlob,
+                imageUrl: imageUrl,
                 file: file,
               });
-            }, mimeType);
+            }, imageFile.type);
           },
           {
             orientation: orientationValue,

@@ -2285,21 +2285,20 @@ __webpack_require__(/*! blueimp-canvas-to-blob */ "./node_modules/blueimp-canvas
     processImage: function processImage(imageFile) {
       var orientationValue = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
       var self = this;
-      var mimeType = imageFile.type;
-      var fileName = imageFile.name;
+      var imageData = {
+        lastModified: Math.round(new Date().getTime() / 1000),
+        type: imageFile.type
+      };
       blueimp_load_image__WEBPACK_IMPORTED_MODULE_3__(imageFile, function (canvas) {
         canvas.toBlob(function (blob) {
-          var fileBlob = URL.createObjectURL(blob);
-          var file = new File([blob], fileName, {
-            lastModified: Math.round(new Date().getTime() / 1000),
-            type: mimeType
-          });
+          var imageUrl = URL.createObjectURL(blob);
+          var file = new File([blob], imageFile.name, imageData);
           self.SET_POST_IMAGE_DATA({
             index: self.index,
-            imageUrl: fileBlob,
+            imageUrl: imageUrl,
             file: file
           });
-        }, mimeType);
+        }, imageFile.type);
       }, {
         orientation: orientationValue,
         canvas: true
