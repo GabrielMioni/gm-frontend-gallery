@@ -11,7 +11,8 @@
     position: relative;
 
     &:hover {
-      .gm-frontend-gallery-post-image-upload-trash {
+      .gm-frontend-gallery-post-image-upload-trash,
+      .gm-frontend-gallery-post-image-upload-rotate {
         opacity: .5;
 
         &:hover {
@@ -20,13 +21,29 @@
       }
     }
 
-    &-trash {
+    &-trash,
+    &-rotate {
       position: absolute;
-      top: 1rem;
-      right: 1rem;
       z-index: 1;
       opacity: 0;
       transition: opacity .25s;
+    }
+
+    &-trash {
+      top: 1rem;
+      right: 1rem;
+    }
+
+    &-rotate {
+      bottom: 1rem;
+
+      &--left {
+        left: 1rem;
+      }
+
+      &--right {
+        right: 1rem;
+      }
     }
 
     &-main {

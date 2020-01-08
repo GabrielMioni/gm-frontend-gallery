@@ -24,12 +24,12 @@
                        fab dark small color="red darken-4">
                     <v-icon>delete</v-icon>
                 </v-btn>
-                <v-btn class="gm-frontend-gallery-post-image-upload-rotate"
+                <v-btn class="gm-frontend-gallery-post-image-upload-rotate gm-frontend-gallery-post-image-upload-rotate--left"
                        fab dark small color="blue darken-4"
                        @click.stop="rotateImageLeft">
                     <v-icon>rotate_left</v-icon>
                 </v-btn>
-                <v-btn class="gm-frontend-gallery-post-image-upload-rotate"
+                <v-btn class="gm-frontend-gallery-post-image-upload-rotate gm-frontend-gallery-post-image-upload-rotate--right"
                        fab dark small color="blue darken-4"
                        @click.stop="rotateImageRight">
                     <v-icon>rotate_right</v-icon>

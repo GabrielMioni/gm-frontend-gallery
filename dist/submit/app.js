@@ -6539,7 +6539,8 @@ var render = function() {
               _c(
                 "v-btn",
                 {
-                  staticClass: "gm-frontend-gallery-post-image-upload-rotate",
+                  staticClass:
+                    "gm-frontend-gallery-post-image-upload-rotate gm-frontend-gallery-post-image-upload-rotate--left",
                   attrs: {
                     fab: "",
                     dark: "",
@@ -6560,7 +6561,8 @@ var render = function() {
               _c(
                 "v-btn",
                 {
-                  staticClass: "gm-frontend-gallery-post-image-upload-rotate",
+                  staticClass:
+                    "gm-frontend-gallery-post-image-upload-rotate gm-frontend-gallery-post-image-upload-rotate--right",
                   attrs: {
                     fab: "",
                     dark: "",
