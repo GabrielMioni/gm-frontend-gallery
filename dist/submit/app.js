@@ -2359,14 +2359,21 @@ __webpack_require__(/*! blueimp-canvas-to-blob */ "./node_modules/blueimp-canvas
     trashImage: function trashImage() {
       var _this = this;
 
-      setTimeout(function () {
-        _this.SET_POST_IMAGE_DATA({
-          index: _this.index,
-          imageUrl: null,
-          file: null
-        });
-      }, 500);
-      this.clearFileInput();
+      this.SET_POST_IMAGE_DATA({
+        index: this.index,
+        imageUrl: '',
+        file: ''
+      }).then(function () {
+        setTimeout(function () {
+          _this.SET_POST_IMAGE_DATA({
+            index: _this.index,
+            imageUrl: null,
+            file: null
+          });
+        }, 500);
+
+        _this.clearFileInput();
+      });
     }
   }),
   computed: {

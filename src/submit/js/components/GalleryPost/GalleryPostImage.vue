@@ -201,14 +201,20 @@
         fileInput.click();
       },
       trashImage() {
-        setTimeout(()=>{
-          this.SET_POST_IMAGE_DATA({
-            index: this.index,
-            imageUrl: null,
-            file: null,
-          });
-        }, 500);
-        this.clearFileInput();
+        this.SET_POST_IMAGE_DATA({
+          index: this.index,
+          imageUrl: '',
+          file: '',
+        }).then(()=>{
+          setTimeout(()=>{
+            this.SET_POST_IMAGE_DATA({
+              index: this.index,
+              imageUrl: null,
+              file: null,
+            });
+          }, 500);
+          this.clearFileInput();
+        });
       }
     },
     computed: {
