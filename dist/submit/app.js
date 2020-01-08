@@ -2204,6 +2204,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 
 
@@ -2231,6 +2233,11 @@ __webpack_require__(/*! blueimp-canvas-to-blob */ "./node_modules/blueimp-canvas
       required: true
     }
   },
+  data: function data() {
+    return {
+      canBeRotated: false
+    };
+  },
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])({
     SET_POST_IMAGE_DATA: 'postData/SET_POST_IMAGE_DATA',
     SET_POST_ERROR: 'postData/SET_POST_ERROR'
@@ -2247,6 +2254,7 @@ __webpack_require__(/*! blueimp-canvas-to-blob */ "./node_modules/blueimp-canvas
       var mimeIsAllowed = this.allowedMimes.indexOf(mimeType) > -1;
 
       if (mimeIsAllowed && mimeType === 'image/gif') {
+        this.canBeRotated = false;
         this.SET_POST_IMAGE_DATA({
           index: this.index,
           imageUrl: URL.createObjectURL(file),
@@ -2255,6 +2263,7 @@ __webpack_require__(/*! blueimp-canvas-to-blob */ "./node_modules/blueimp-canvas
       }
 
       if (mimeIsAllowed && mimeType !== 'image/gif') {
+        this.canBeRotated = true;
         this.processImage(file, true);
       }
 
@@ -6536,49 +6545,53 @@ var render = function() {
                 1
               ),
               _vm._v(" "),
-              _c(
-                "v-btn",
-                {
-                  staticClass:
-                    "gm-frontend-gallery-post-image-upload-rotate gm-frontend-gallery-post-image-upload-rotate--left",
-                  attrs: {
-                    fab: "",
-                    dark: "",
-                    small: "",
-                    color: "blue darken-4"
-                  },
-                  on: {
-                    click: function($event) {
-                      $event.stopPropagation()
-                      return _vm.rotateImageLeft($event)
-                    }
-                  }
-                },
-                [_c("v-icon", [_vm._v("rotate_left")])],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-btn",
-                {
-                  staticClass:
-                    "gm-frontend-gallery-post-image-upload-rotate gm-frontend-gallery-post-image-upload-rotate--right",
-                  attrs: {
-                    fab: "",
-                    dark: "",
-                    small: "",
-                    color: "blue darken-4"
-                  },
-                  on: {
-                    click: function($event) {
-                      $event.stopPropagation()
-                      return _vm.rotateImageRight($event)
-                    }
-                  }
-                },
-                [_c("v-icon", [_vm._v("rotate_right")])],
-                1
-              ),
+              _vm.canBeRotated
+                ? [
+                    _c(
+                      "v-btn",
+                      {
+                        staticClass:
+                          "gm-frontend-gallery-post-image-upload-rotate gm-frontend-gallery-post-image-upload-rotate--left",
+                        attrs: {
+                          fab: "",
+                          dark: "",
+                          small: "",
+                          color: "blue darken-4"
+                        },
+                        on: {
+                          click: function($event) {
+                            $event.stopPropagation()
+                            return _vm.rotateImageLeft($event)
+                          }
+                        }
+                      },
+                      [_c("v-icon", [_vm._v("rotate_left")])],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "v-btn",
+                      {
+                        staticClass:
+                          "gm-frontend-gallery-post-image-upload-rotate gm-frontend-gallery-post-image-upload-rotate--right",
+                        attrs: {
+                          fab: "",
+                          dark: "",
+                          small: "",
+                          color: "blue darken-4"
+                        },
+                        on: {
+                          click: function($event) {
+                            $event.stopPropagation()
+                            return _vm.rotateImageRight($event)
+                          }
+                        }
+                      },
+                      [_c("v-icon", [_vm._v("rotate_right")])],
+                      1
+                    )
+                  ]
+                : _vm._e(),
               _vm._v(" "),
               _c("v-img", {
                 staticClass:

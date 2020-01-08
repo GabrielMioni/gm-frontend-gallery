@@ -24,16 +24,18 @@
                        fab dark small color="red darken-4">
                     <v-icon>delete</v-icon>
                 </v-btn>
-                <v-btn class="gm-frontend-gallery-post-image-upload-rotate gm-frontend-gallery-post-image-upload-rotate--left"
-                       fab dark small color="blue darken-4"
-                       @click.stop="rotateImageLeft">
-                    <v-icon>rotate_left</v-icon>
-                </v-btn>
-                <v-btn class="gm-frontend-gallery-post-image-upload-rotate gm-frontend-gallery-post-image-upload-rotate--right"
-                       fab dark small color="blue darken-4"
-                       @click.stop="rotateImageRight">
-                    <v-icon>rotate_right</v-icon>
-                </v-btn>
+                <template v-if="canBeRotated">
+                    <v-btn class="gm-frontend-gallery-post-image-upload-rotate gm-frontend-gallery-post-image-upload-rotate--left"
+                           fab dark small color="blue darken-4"
+                           @click.stop="rotateImageLeft">
+                        <v-icon>rotate_left</v-icon>
+                    </v-btn>
+                    <v-btn class="gm-frontend-gallery-post-image-upload-rotate gm-frontend-gallery-post-image-upload-rotate--right"
+                           fab dark small color="blue darken-4"
+                           @click.stop="rotateImageRight">
+                        <v-icon>rotate_right</v-icon>
+                    </v-btn>
+                </template>
                 <v-img
                         :src="imageUrl"
                         contain
@@ -74,6 +76,11 @@
         required: true,
       }
     },
+    data() {
+      return {
+        canBeRotated: false
+      }
+    },
     methods: {
       ...mapActions({
         SET_POST_IMAGE_DATA: 'postData/SET_POST_IMAGE_DATA',
@@ -92,6 +99,7 @@
         const mimeIsAllowed = this.allowedMimes.indexOf(mimeType) > -1;
 
         if (mimeIsAllowed && mimeType === 'image/gif') {
+          this.canBeRotated = false;
           this.SET_POST_IMAGE_DATA({
             index: this.index,
             imageUrl: URL.createObjectURL(file),
@@ -99,6 +107,7 @@
           });
         }
         if (mimeIsAllowed && mimeType !== 'image/gif') {
+          this.canBeRotated = true;
           this.processImage(file, true);
         }
         if (mimeIsAllowed && this.imageError !== '') {
