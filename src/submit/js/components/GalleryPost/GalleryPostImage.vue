@@ -24,6 +24,11 @@
                        fab dark small color="red darken-4">
                     <v-icon>delete</v-icon>
                 </v-btn>
+                <v-btn
+                        @click.stop="rotateImage"
+                >
+                    <v-icon>image</v-icon>
+                </v-btn>
                 <v-img
                         :src="imageUrl"
                         contain
@@ -42,6 +47,7 @@
   import { mapGetters, mapActions } from 'vuex';
   import { getOptionsType } from '@/utilities/helpers';
   import { imageUrlValidator } from "@/utilities/helpers";
+  import * as loadImage from 'blueimp-load-image';
 
   export default {
     name: "GalleryPostImage",
@@ -53,6 +59,9 @@
       imageUrl: {
         validator: imageUrlValidator,
         required: true
+      },
+      imageFile: {
+        require: true,
       },
       imageUrlError: {
         type: String,
@@ -97,6 +106,37 @@
         }
 
         this.clearFileInput();
+      },
+      rotateImage() {
+        const self = this;
+
+        /*
+        const result = loadImage(
+          self.imageFile,
+          function(img, data) {
+            console.log(typeof img);
+            console.log('img', img);
+            console.log('data', data);
+            // document.body.appendChild(img);
+          },
+          {
+            orientation: 7
+          } // Options
+        );
+         */
+
+        const result = loadImage(self.imageUrl, null, {orientation: 7});
+
+        // 3 is upside down
+        // 4 is upside down
+        // 5 is left
+        // 7 is right
+
+        // const src = result.src;
+        console.log('Result1', result);
+        console.log('Result2', result.src);
+
+        
       },
       clearFileInput() {
         const fileInputForm = this.$refs.fileInputForm;
