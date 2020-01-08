@@ -30,7 +30,7 @@
                                     class="gm-frontend-gallery-post-image-upload-controls__button"
                                     fab dark small color="blue darken-4"
                                     @keyup.enter.stop
-                                    @click.stop="rotateImageLeft">
+                                    @click.stop="orientImage('left')">
                                 <v-icon>rotate_left</v-icon>
                             </v-btn>
                         </span>
@@ -39,7 +39,7 @@
                                     class="gm-frontend-gallery-post-image-upload-controls__button"
                                     fab dark small color="blue darken-4"
                                     @keyup.enter.stop
-                                    @click.stop="rotateImageRight">
+                                    @click.stop="orientImage('right')">
                                 <v-icon>rotate_right</v-icon>
                             </v-btn>
                         </span>
@@ -48,7 +48,7 @@
                                     class="gm-frontend-gallery-post-image-upload-controls__button"
                                     fab dark small color="blue darken-4"
                                     @keyup.enter.stop
-                                    @click.stop="orientImageVertical">
+                                    @click.stop="orientImage('vertical')">
                                 <v-icon>flip</v-icon>
                             </v-btn>
                         </span>
@@ -58,7 +58,7 @@
                                     style="transform: rotate(90deg)"
                                     fab dark small color="blue darken-4"
                                     @keyup.enter.stop
-                                    @click.stop="orientImageHorizontal">
+                                    @click.stop="orientImage('horizontal')">
                                 <v-icon>flip</v-icon>
                             </v-btn>
                         </span>
@@ -180,17 +180,16 @@
             canvas: true
           });
       },
-      rotateImageLeft() {
-        this.processImage(this.imageFile, 8);
-      },
-      rotateImageRight() {
-        this.processImage(this.imageFile, 6);
-      },
-      orientImageVertical() {
-        this.processImage(this.imageFile, 2);
-      },
-      orientImageHorizontal() {
-        this.processImage(this.imageFile, 4);
+      orientImage(direction) {
+        const directions = {
+          left: 8,
+          right: 6,
+          vertical: 2,
+          horizontal: 4
+        };
+
+        const directionValue = typeof directions[direction] !== 'undefined' ? directions[direction] : true;
+        this.processImage(this.imageFile, directionValue);
       },
       clearFileInput() {
         const fileInputForm = this.$refs.fileInputForm;

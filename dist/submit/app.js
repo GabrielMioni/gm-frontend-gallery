@@ -2336,6 +2336,16 @@ __webpack_require__(/*! blueimp-canvas-to-blob */ "./node_modules/blueimp-canvas
         canvas: true
       });
     },
+    orientImage: function orientImage(direction) {
+      var directions = {
+        left: 8,
+        right: 6,
+        vertical: 2,
+        horizontal: 4
+      };
+      var directionValue = typeof directions[direction] !== 'undefined' ? directions[direction] : true;
+      this.processImage(this.imageFile, directionValue);
+    },
     rotateImageLeft: function rotateImageLeft() {
       this.processImage(this.imageFile, 8);
     },
@@ -6617,7 +6627,7 @@ var render = function() {
                                   },
                                   click: function($event) {
                                     $event.stopPropagation()
-                                    return _vm.rotateImageLeft($event)
+                                    return _vm.orientImage("left")
                                   }
                                 }
                               },
@@ -6664,7 +6674,7 @@ var render = function() {
                                   },
                                   click: function($event) {
                                     $event.stopPropagation()
-                                    return _vm.rotateImageRight($event)
+                                    return _vm.orientImage("right")
                                   }
                                 }
                               },
@@ -6711,7 +6721,7 @@ var render = function() {
                                   },
                                   click: function($event) {
                                     $event.stopPropagation()
-                                    return _vm.orientImageVertical($event)
+                                    return _vm.orientImage("vertical")
                                   }
                                 }
                               },
@@ -6759,7 +6769,7 @@ var render = function() {
                                   },
                                   click: function($event) {
                                     $event.stopPropagation()
-                                    return _vm.orientImageHorizontal($event)
+                                    return _vm.orientImage("horizontal")
                                   }
                                 }
                               },
