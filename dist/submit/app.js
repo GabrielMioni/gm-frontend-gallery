@@ -2219,6 +2219,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2322,6 +2341,12 @@ __webpack_require__(/*! blueimp-canvas-to-blob */ "./node_modules/blueimp-canvas
     },
     rotateImageRight: function rotateImageRight() {
       this.processImage(this.imageFile, 6);
+    },
+    orientImageVertical: function orientImageVertical() {
+      this.processImage(this.imageFile, 2);
+    },
+    orientImageHorizontal: function orientImageHorizontal() {
+      this.processImage(this.imageFile, 4);
     },
     clearFileInput: function clearFileInput() {
       var fileInputForm = this.$refs.fileInputForm;
@@ -6637,6 +6662,101 @@ var render = function() {
                                 }
                               },
                               [_c("v-icon", [_vm._v("rotate_right")])],
+                              1
+                            )
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "span",
+                          {
+                            staticClass:
+                              "gm-frontend-gallery-post-image-upload-controls__button-container"
+                          },
+                          [
+                            _c(
+                              "v-btn",
+                              {
+                                staticClass:
+                                  "gm-frontend-gallery-post-image-upload-controls__button",
+                                attrs: {
+                                  fab: "",
+                                  dark: "",
+                                  small: "",
+                                  color: "blue darken-4"
+                                },
+                                on: {
+                                  keyup: function($event) {
+                                    if (
+                                      !$event.type.indexOf("key") &&
+                                      _vm._k(
+                                        $event.keyCode,
+                                        "enter",
+                                        13,
+                                        $event.key,
+                                        "Enter"
+                                      )
+                                    ) {
+                                      return null
+                                    }
+                                    $event.stopPropagation()
+                                  },
+                                  click: function($event) {
+                                    $event.stopPropagation()
+                                    return _vm.orientImageVertical($event)
+                                  }
+                                }
+                              },
+                              [_c("v-icon", [_vm._v("flip")])],
+                              1
+                            )
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "span",
+                          {
+                            staticClass:
+                              "gm-frontend-gallery-post-image-upload-controls__button-container"
+                          },
+                          [
+                            _c(
+                              "v-btn",
+                              {
+                                staticClass:
+                                  "gm-frontend-gallery-post-image-upload-controls__button",
+                                staticStyle: { transform: "rotate(90deg)" },
+                                attrs: {
+                                  fab: "",
+                                  dark: "",
+                                  small: "",
+                                  color: "blue darken-4"
+                                },
+                                on: {
+                                  keyup: function($event) {
+                                    if (
+                                      !$event.type.indexOf("key") &&
+                                      _vm._k(
+                                        $event.keyCode,
+                                        "enter",
+                                        13,
+                                        $event.key,
+                                        "Enter"
+                                      )
+                                    ) {
+                                      return null
+                                    }
+                                    $event.stopPropagation()
+                                  },
+                                  click: function($event) {
+                                    $event.stopPropagation()
+                                    return _vm.orientImageHorizontal($event)
+                                  }
+                                }
+                              },
+                              [_c("v-icon", [_vm._v("flip")])],
                               1
                             )
                           ],

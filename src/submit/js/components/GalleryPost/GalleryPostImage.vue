@@ -43,6 +43,25 @@
                                 <v-icon>rotate_right</v-icon>
                             </v-btn>
                         </span>
+                        <span class="gm-frontend-gallery-post-image-upload-controls__button-container">
+                            <v-btn
+                                    class="gm-frontend-gallery-post-image-upload-controls__button"
+                                    fab dark small color="blue darken-4"
+                                    @keyup.enter.stop
+                                    @click.stop="orientImageVertical">
+                                <v-icon>flip</v-icon>
+                            </v-btn>
+                        </span>
+                        <span class="gm-frontend-gallery-post-image-upload-controls__button-container">
+                            <v-btn
+                                    class="gm-frontend-gallery-post-image-upload-controls__button"
+                                    style="transform: rotate(90deg)"
+                                    fab dark small color="blue darken-4"
+                                    @keyup.enter.stop
+                                    @click.stop="orientImageHorizontal">
+                                <v-icon>flip</v-icon>
+                            </v-btn>
+                        </span>
                     </template>
                     <span class="gm-frontend-gallery-post-image-upload-controls__trash-container">
                         <v-btn
@@ -166,6 +185,12 @@
       },
       rotateImageRight() {
         this.processImage(this.imageFile, 6);
+      },
+      orientImageVertical() {
+        this.processImage(this.imageFile, 2);
+      },
+      orientImageHorizontal() {
+        this.processImage(this.imageFile, 4);
       },
       clearFileInput() {
         const fileInputForm = this.$refs.fileInputForm;
