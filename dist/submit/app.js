@@ -2206,6 +2206,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -6522,81 +6535,165 @@ var render = function() {
               1
             )
           : [
-              _c(
-                "v-btn",
-                {
-                  staticClass: "gm-frontend-gallery-post-image-upload-trash",
-                  attrs: {
-                    tabindex: "-1",
-                    fab: "",
-                    dark: "",
-                    small: "",
-                    color: "red darken-4"
-                  },
-                  on: {
-                    click: function($event) {
-                      $event.stopPropagation()
-                      return _vm.trashImage($event)
-                    }
-                  }
-                },
-                [_c("v-icon", [_vm._v("delete")])],
-                1
-              ),
-              _vm._v(" "),
-              _vm.canBeRotated
-                ? [
-                    _c(
-                      "v-btn",
-                      {
-                        staticClass:
-                          "gm-frontend-gallery-post-image-upload-rotate gm-frontend-gallery-post-image-upload-rotate--left",
-                        attrs: {
-                          fab: "",
-                          dark: "",
-                          small: "",
-                          color: "blue darken-4"
-                        },
-                        on: {
-                          click: function($event) {
-                            $event.stopPropagation()
-                            return _vm.rotateImageLeft($event)
-                          }
-                        }
-                      },
-                      [_c("v-icon", [_vm._v("rotate_left")])],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "v-btn",
-                      {
-                        staticClass:
-                          "gm-frontend-gallery-post-image-upload-rotate gm-frontend-gallery-post-image-upload-rotate--right",
-                        attrs: {
-                          fab: "",
-                          dark: "",
-                          small: "",
-                          color: "blue darken-4"
-                        },
-                        on: {
-                          click: function($event) {
-                            $event.stopPropagation()
-                            return _vm.rotateImageRight($event)
-                          }
-                        }
-                      },
-                      [_c("v-icon", [_vm._v("rotate_right")])],
-                      1
-                    )
-                  ]
-                : _vm._e(),
-              _vm._v(" "),
               _c("v-img", {
                 staticClass:
                   "grey darken-4 gm-frontend-gallery-post-image-upload-main",
                 attrs: { src: _vm.imageUrl, contain: "" }
-              })
+              }),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "gm-frontend-gallery-post-image-upload-controls"
+                },
+                [
+                  _vm.canBeRotated
+                    ? [
+                        _c(
+                          "span",
+                          {
+                            staticClass:
+                              "gm-frontend-gallery-post-image-upload-controls__button-container"
+                          },
+                          [
+                            _c(
+                              "v-btn",
+                              {
+                                staticClass:
+                                  "gm-frontend-gallery-post-image-upload-controls__button",
+                                attrs: {
+                                  fab: "",
+                                  dark: "",
+                                  small: "",
+                                  color: "blue darken-4"
+                                },
+                                on: {
+                                  keyup: function($event) {
+                                    if (
+                                      !$event.type.indexOf("key") &&
+                                      _vm._k(
+                                        $event.keyCode,
+                                        "enter",
+                                        13,
+                                        $event.key,
+                                        "Enter"
+                                      )
+                                    ) {
+                                      return null
+                                    }
+                                    $event.stopPropagation()
+                                  },
+                                  click: function($event) {
+                                    $event.stopPropagation()
+                                    return _vm.rotateImageLeft($event)
+                                  }
+                                }
+                              },
+                              [_c("v-icon", [_vm._v("rotate_left")])],
+                              1
+                            )
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "span",
+                          {
+                            staticClass:
+                              "gm-frontend-gallery-post-image-upload-controls__button-container"
+                          },
+                          [
+                            _c(
+                              "v-btn",
+                              {
+                                staticClass:
+                                  "gm-frontend-gallery-post-image-upload-controls__button",
+                                attrs: {
+                                  fab: "",
+                                  dark: "",
+                                  small: "",
+                                  color: "blue darken-4"
+                                },
+                                on: {
+                                  keyup: function($event) {
+                                    if (
+                                      !$event.type.indexOf("key") &&
+                                      _vm._k(
+                                        $event.keyCode,
+                                        "enter",
+                                        13,
+                                        $event.key,
+                                        "Enter"
+                                      )
+                                    ) {
+                                      return null
+                                    }
+                                    $event.stopPropagation()
+                                  },
+                                  click: function($event) {
+                                    $event.stopPropagation()
+                                    return _vm.rotateImageRight($event)
+                                  }
+                                }
+                              },
+                              [_c("v-icon", [_vm._v("rotate_right")])],
+                              1
+                            )
+                          ],
+                          1
+                        )
+                      ]
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    {
+                      staticClass:
+                        "gm-frontend-gallery-post-image-upload-controls__trash-container"
+                    },
+                    [
+                      _c(
+                        "v-btn",
+                        {
+                          staticClass:
+                            "gm-frontend-gallery-post-image-upload-controls__button",
+                          attrs: {
+                            fab: "",
+                            dark: "",
+                            small: "",
+                            color: "red darken-4"
+                          },
+                          on: {
+                            keyup: function($event) {
+                              if (
+                                !$event.type.indexOf("key") &&
+                                _vm._k(
+                                  $event.keyCode,
+                                  "enter",
+                                  13,
+                                  $event.key,
+                                  "Enter"
+                                )
+                              ) {
+                                return null
+                              }
+                              $event.stopPropagation()
+                            },
+                            click: function($event) {
+                              $event.stopPropagation()
+                              return _vm.trashImage($event)
+                            }
+                          }
+                        },
+                        [_c("v-icon", [_vm._v("delete")])],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                2
+              )
             ]
       ],
       2

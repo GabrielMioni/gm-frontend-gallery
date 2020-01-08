@@ -154,9 +154,9 @@
 
 .gm-frontend-gallery-post-image-upload {
   display: grid;
-  grid-template-rows: -webkit-min-content 1fr;
-  grid-template-rows: min-content 1fr;
-  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  grid-template-columns: 1fr -webkit-min-content;
+  grid-template-columns: 1fr min-content;
   -webkit-box-align: center;
           align-items: center;
   -webkit-box-pack: center;
@@ -165,40 +165,40 @@
   position: relative;
 }
 
-.gm-frontend-gallery-post-image-upload:hover .gm-frontend-gallery-post-image-upload-trash,
-.gm-frontend-gallery-post-image-upload:hover .gm-frontend-gallery-post-image-upload-rotate {
+.gm-frontend-gallery-post-image-upload-controls {
+  padding: 0.25rem;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+          flex-direction: column;
+  height: 100%;
+}
+
+.gm-frontend-gallery-post-image-upload-controls__button-container {
+  padding: 0.5rem 0 0 0;
+}
+
+.gm-frontend-gallery-post-image-upload-controls__trash-container {
+  padding: 0 0 0.5rem 0;
+  -webkit-box-flex: 1;
+          flex-grow: 1;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-align: end;
+          align-items: flex-end;
+}
+
+.gm-frontend-gallery-post-image-upload-controls__button {
   opacity: 0.5;
-}
-
-.gm-frontend-gallery-post-image-upload:hover .gm-frontend-gallery-post-image-upload-trash:hover,
-.gm-frontend-gallery-post-image-upload:hover .gm-frontend-gallery-post-image-upload-rotate:hover {
-  opacity: 1;
-}
-
-.gm-frontend-gallery-post-image-upload-trash,
-.gm-frontend-gallery-post-image-upload-rotate {
-  position: absolute;
-  z-index: 1;
-  opacity: 0;
   -webkit-transition: opacity 0.25s;
   transition: opacity 0.25s;
+  z-index: 1;
 }
 
-.gm-frontend-gallery-post-image-upload-trash {
-  top: 1rem;
-  right: 1rem;
-}
-
-.gm-frontend-gallery-post-image-upload-rotate {
-  bottom: 1rem;
-}
-
-.gm-frontend-gallery-post-image-upload-rotate--left {
-  left: 1rem;
-}
-
-.gm-frontend-gallery-post-image-upload-rotate--right {
-  right: 1rem;
+.gm-frontend-gallery-post-image-upload-controls__button:hover,
+.gm-frontend-gallery-post-image-upload-controls__button:focus {
+  opacity: 1;
 }
 
 .gm-frontend-gallery-post-image-upload-main {

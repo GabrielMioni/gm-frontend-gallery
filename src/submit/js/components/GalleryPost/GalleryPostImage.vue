@@ -18,29 +18,42 @@
                 </v-input>
             </div>
             <template v-else>
-                <v-btn class="gm-frontend-gallery-post-image-upload-trash"
-                       tabindex="-1"
-                       @click.stop="trashImage"
-                       fab dark small color="red darken-4">
-                    <v-icon>delete</v-icon>
-                </v-btn>
-                <template v-if="canBeRotated">
-                    <v-btn class="gm-frontend-gallery-post-image-upload-rotate gm-frontend-gallery-post-image-upload-rotate--left"
-                           fab dark small color="blue darken-4"
-                           @click.stop="rotateImageLeft">
-                        <v-icon>rotate_left</v-icon>
-                    </v-btn>
-                    <v-btn class="gm-frontend-gallery-post-image-upload-rotate gm-frontend-gallery-post-image-upload-rotate--right"
-                           fab dark small color="blue darken-4"
-                           @click.stop="rotateImageRight">
-                        <v-icon>rotate_right</v-icon>
-                    </v-btn>
-                </template>
                 <v-img
                         :src="imageUrl"
                         contain
                         class="grey darken-4 gm-frontend-gallery-post-image-upload-main">
                 </v-img>
+                <div class="gm-frontend-gallery-post-image-upload-controls">
+                    <template v-if="canBeRotated">
+                        <span class="gm-frontend-gallery-post-image-upload-controls__button-container">
+                            <v-btn
+                                    class="gm-frontend-gallery-post-image-upload-controls__button"
+                                    fab dark small color="blue darken-4"
+                                    @keyup.enter.stop
+                                    @click.stop="rotateImageLeft">
+                                <v-icon>rotate_left</v-icon>
+                            </v-btn>
+                        </span>
+                        <span class="gm-frontend-gallery-post-image-upload-controls__button-container">
+                            <v-btn
+                                    class="gm-frontend-gallery-post-image-upload-controls__button"
+                                    fab dark small color="blue darken-4"
+                                    @keyup.enter.stop
+                                    @click.stop="rotateImageRight">
+                                <v-icon>rotate_right</v-icon>
+                            </v-btn>
+                        </span>
+                    </template>
+                    <span class="gm-frontend-gallery-post-image-upload-controls__trash-container">
+                        <v-btn
+                                class="gm-frontend-gallery-post-image-upload-controls__button"
+                                @keyup.enter.stop
+                                @click.stop="trashImage"
+                                fab dark small color="red darken-4">
+                            <v-icon>delete</v-icon>
+                        </v-btn>
+                    </span>
+                </div>
             </template>
         </div>
         <form class="gm-frontend-gallery-post-image-upload-file" :ref="'fileInputForm'">

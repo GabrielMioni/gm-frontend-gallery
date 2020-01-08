@@ -3,46 +3,35 @@
   cursor: pointer;
   &-upload {
     display: grid;
-    grid-template-rows: min-content 1fr;
-    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr min-content;
     align-items: center;
     justify-content: center;
     height: 100%;
     position: relative;
 
-    &:hover {
-      .gm-frontend-gallery-post-image-upload-trash,
-      .gm-frontend-gallery-post-image-upload-rotate {
+    &-controls {
+      padding: .25rem;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      &__button-container {
+        padding: .5rem 0 0 0;
+      }
+      &__trash-container {
+        padding: 0 0 .5rem 0;
+        flex-grow: 1;
+        display: flex;
+        align-items: flex-end;
+      }
+      &__button {
         opacity: .5;
+        transition: opacity .25s;
+        z-index: 1;
 
-        &:hover {
+        &:hover, &:focus {
           opacity: 1;
         }
-      }
-    }
-
-    &-trash,
-    &-rotate {
-      position: absolute;
-      z-index: 1;
-      opacity: 0;
-      transition: opacity .25s;
-    }
-
-    &-trash {
-      top: 1rem;
-      right: 1rem;
-    }
-
-    &-rotate {
-      bottom: 1rem;
-
-      &--left {
-        left: 1rem;
-      }
-
-      &--right {
-        right: 1rem;
       }
     }
 
