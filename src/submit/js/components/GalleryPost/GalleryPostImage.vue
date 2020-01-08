@@ -48,6 +48,7 @@
   import { getOptionsType } from '@/utilities/helpers';
   import { imageUrlValidator } from "@/utilities/helpers";
   import * as loadImage from 'blueimp-load-image';
+  require('blueimp-canvas-to-blob');
 
   export default {
     name: "GalleryPostImage",
@@ -82,15 +83,19 @@
         }
 
         const file = fileData[0];
-        const fileUrl = URL.createObjectURL(file);
-        const mimeIsAllowed = this.allowedMimes.indexOf(file.type) > -1;
+        const mimeType = file.type;
+        const mimeIsAllowed = this.allowedMimes.indexOf(mimeType) > -1;
 
         if (mimeIsAllowed) {
-          this.SET_POST_IMAGE_DATA({
-            index: this.index,
-            imageUrl: fileUrl,
-            file: file,
-          });
+          if (mimeType === 'image/gif') {
+            this.SET_POST_IMAGE_DATA({
+              index: this.index,
+              imageUrl: URL.createObjectURL(file),
+              file: file,
+            });
+          } else {
+            this.processImage(file, true);
+          }
 
           if (this.imageError !== '') {
             this.imageError = '';
@@ -107,36 +112,33 @@
 
         this.clearFileInput();
       },
-      rotateImage() {
+      processImage(imageFile, orientationValue = true) {
         const self = this;
+        const mimeType = imageFile.type;
+        const fileName = imageFile.name;
 
-        /*
-        const result = loadImage(
-          self.imageFile,
-          function(img, data) {
-            console.log(typeof img);
-            console.log('img', img);
-            console.log('data', data);
-            // document.body.appendChild(img);
+        loadImage(imageFile,
+          (canvas) => {
+            canvas.toBlob((blob) => {
+              const fileBlob = URL.createObjectURL(blob);
+              const file = new File([blob], fileName, {
+                lastModified: Math.round((new Date()).getTime() / 1000),
+                type: mimeType
+              });
+              self.SET_POST_IMAGE_DATA({
+                index: self.index,
+                imageUrl: fileBlob,
+                file: file,
+              });
+            }, mimeType);
           },
           {
-            orientation: 7
-          } // Options
-        );
-         */
-
-        const result = loadImage(self.imageUrl, null, {orientation: 7});
-
-        // 3 is upside down
-        // 4 is upside down
-        // 5 is left
-        // 7 is right
-
-        // const src = result.src;
-        console.log('Result1', result);
-        console.log('Result2', result.src);
-
-        
+            orientation: orientationValue,
+            canvas: true
+          });
+      },
+      rotateImage() {
+        this.processImage(this.imageFile, 8);
       },
       clearFileInput() {
         const fileInputForm = this.$refs.fileInputForm;
