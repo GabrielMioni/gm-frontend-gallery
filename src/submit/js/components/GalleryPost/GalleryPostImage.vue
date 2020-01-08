@@ -86,20 +86,18 @@
         const mimeType = file.type;
         const mimeIsAllowed = this.allowedMimes.indexOf(mimeType) > -1;
 
-        if (mimeIsAllowed) {
-          if (mimeType === 'image/gif') {
-            this.SET_POST_IMAGE_DATA({
-              index: this.index,
-              imageUrl: URL.createObjectURL(file),
-              file: file,
-            });
-          } else {
-            this.processImage(file, true);
-          }
-
-          if (this.imageError !== '') {
-            this.imageError = '';
-          }
+        if (mimeIsAllowed && mimeType === 'image/gif') {
+          this.SET_POST_IMAGE_DATA({
+            index: this.index,
+            imageUrl: URL.createObjectURL(file),
+            file: file,
+          });
+        }
+        if (mimeIsAllowed && mimeType !== 'image/gif') {
+          this.processImage(file, true);
+        }
+        if (mimeIsAllowed && this.imageError !== '') {
+          this.imageError = '';
         }
         if (!mimeIsAllowed) {
           this.imageError = 'The selected file type is not allowed';

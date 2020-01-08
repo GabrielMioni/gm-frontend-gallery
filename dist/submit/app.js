@@ -2241,20 +2241,20 @@ __webpack_require__(/*! blueimp-canvas-to-blob */ "./node_modules/blueimp-canvas
       var mimeType = file.type;
       var mimeIsAllowed = this.allowedMimes.indexOf(mimeType) > -1;
 
-      if (mimeIsAllowed) {
-        if (mimeType === 'image/gif') {
-          this.SET_POST_IMAGE_DATA({
-            index: this.index,
-            imageUrl: URL.createObjectURL(file),
-            file: file
-          });
-        } else {
-          this.processImage(file, true);
-        }
+      if (mimeIsAllowed && mimeType === 'image/gif') {
+        this.SET_POST_IMAGE_DATA({
+          index: this.index,
+          imageUrl: URL.createObjectURL(file),
+          file: file
+        });
+      }
 
-        if (this.imageError !== '') {
-          this.imageError = '';
-        }
+      if (mimeIsAllowed && mimeType !== 'image/gif') {
+        this.processImage(file, true);
+      }
+
+      if (mimeIsAllowed && this.imageError !== '') {
+        this.imageError = '';
       }
 
       if (!mimeIsAllowed) {
