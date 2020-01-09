@@ -218,6 +218,12 @@
           align-items: center;
 }
 
+.gm-frontend-gallery-post-image-upload-main__button-big.v-btn {
+  top: 0;
+  left: 0;
+  box-shadow: none;
+}
+
 .gm-frontend-gallery-post-image-upload-main-icon i.v-icon {
   font-size: 5rem;
 }

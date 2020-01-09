@@ -2238,6 +2238,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -2345,18 +2350,6 @@ __webpack_require__(/*! blueimp-canvas-to-blob */ "./node_modules/blueimp-canvas
       };
       var directionValue = typeof directions[direction] !== 'undefined' ? directions[direction] : true;
       this.processImage(this.imageFile, directionValue);
-    },
-    rotateImageLeft: function rotateImageLeft() {
-      this.processImage(this.imageFile, 8);
-    },
-    rotateImageRight: function rotateImageRight() {
-      this.processImage(this.imageFile, 6);
-    },
-    orientImageVertical: function orientImageVertical() {
-      this.processImage(this.imageFile, 2);
-    },
-    orientImageHorizontal: function orientImageHorizontal() {
-      this.processImage(this.imageFile, 4);
     },
     clearFileInput: function clearFileInput() {
       var fileInputForm = this.$refs.fileInputForm;
@@ -6532,7 +6525,6 @@ var render = function() {
       {
         ref: "dropFile",
         staticClass: "gm-frontend-gallery-post-image-upload",
-        attrs: { tabindex: 0 },
         on: {
           keyup: function($event) {
             if (
@@ -6552,6 +6544,17 @@ var render = function() {
               "div",
               { staticClass: "gm-frontend-gallery-post-image-upload-main" },
               [
+                _c("v-btn", {
+                  staticClass:
+                    "gm-frontend-gallery-post-image-upload-main__button-big",
+                  attrs: {
+                    absolute: "",
+                    color: "transparent",
+                    height: "100%",
+                    width: "100%"
+                  }
+                }),
+                _vm._v(" "),
                 _c(
                   "div",
                   {

@@ -46,6 +46,14 @@
       flex-direction: column;
       align-items: center;
 
+      &__button-big {
+        &.v-btn {
+          top: 0;
+          left: 0;
+          box-shadow: none;
+        }
+      }
+
       &-icon {
         i.v-icon {
           font-size: 5rem;

@@ -3,9 +3,14 @@
         <div class="gm-frontend-gallery-post-image-upload"
              @keyup.enter="openFileInput"
              @click="openFileInput"
-             :tabindex="0"
              :ref="'dropFile'">
             <div v-if="imageUrl === null" class="gm-frontend-gallery-post-image-upload-main">
+                <v-btn class="gm-frontend-gallery-post-image-upload-main__button-big"
+                        absolute
+                        color="transparent"
+                        height="100%"
+                        width="100%"
+                ></v-btn>
                 <div class="gm-frontend-gallery-post-image-upload-main-icon">
                     <v-icon>image</v-icon>
                 </div>
