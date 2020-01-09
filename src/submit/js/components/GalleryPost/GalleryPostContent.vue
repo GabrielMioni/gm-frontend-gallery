@@ -1,6 +1,7 @@
 <template>
-    <v-card class="gm-frontend-gallery-post-content">
+    <v-card class="gm-frontend-gallery-post-content" ref="content">
         <v-textarea
+                ref="textArea"
                 v-model="postContent"
                 solo
                 flat

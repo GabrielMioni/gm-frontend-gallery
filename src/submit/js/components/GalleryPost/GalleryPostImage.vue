@@ -160,6 +160,7 @@
         }
 
         this.clearFileInput();
+        this.focusTextArea();
       },
       processImage(imageFile, orientationValue = true) {
         const self = this;
@@ -219,6 +220,14 @@
           }, 500);
           this.clearFileInput();
         });
+      },
+      focusTextArea() {
+        const parent = this.$parent.$el;
+        const textarea = parent.querySelectorAll('textarea');
+
+        if (textarea.length > 0) {
+          textarea[0].focus();
+        }
       }
     },
     computed: {

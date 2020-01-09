@@ -2076,6 +2076,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2318,6 +2319,7 @@ __webpack_require__(/*! blueimp-canvas-to-blob */ "./node_modules/blueimp-canvas
       }
 
       this.clearFileInput();
+      this.focusTextArea();
     },
     processImage: function processImage(imageFile) {
       var orientationValue = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
@@ -2377,6 +2379,14 @@ __webpack_require__(/*! blueimp-canvas-to-blob */ "./node_modules/blueimp-canvas
 
         _this.clearFileInput();
       });
+    },
+    focusTextArea: function focusTextArea() {
+      var parent = this.$parent.$el;
+      var textarea = parent.querySelectorAll('textarea');
+
+      if (textarea.length > 0) {
+        textarea[0].focus();
+      }
     }
   }),
   computed: {
@@ -6473,9 +6483,10 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "v-card",
-    { staticClass: "gm-frontend-gallery-post-content" },
+    { ref: "content", staticClass: "gm-frontend-gallery-post-content" },
     [
       _c("v-textarea", {
+        ref: "textArea",
         attrs: {
           solo: "",
           flat: "",
