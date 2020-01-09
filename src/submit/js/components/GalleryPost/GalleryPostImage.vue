@@ -12,7 +12,7 @@
                         width="100%"
                 ></v-btn>
                 <div class="gm-frontend-gallery-post-image-upload-main-icon">
-                    <v-icon>image</v-icon>
+                    <v-icon>add_photo_alternate</v-icon>
                 </div>
                 <div>Click or drag and drop files to upload</div>
                 <div>

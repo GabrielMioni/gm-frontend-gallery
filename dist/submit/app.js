@@ -6572,7 +6572,7 @@ var render = function() {
                     staticClass:
                       "gm-frontend-gallery-post-image-upload-main-icon"
                   },
-                  [_c("v-icon", [_vm._v("image")])],
+                  [_c("v-icon", [_vm._v("add_photo_alternate")])],
                   1
                 ),
                 _vm._v(" "),
