@@ -128,6 +128,11 @@ class SubmitController extends BaseController
         foreach ($imageData as $imageDatum) {
             $path = $imageDatum['path'];
             $mimeContent = mime_content_type($path);
+
+            // @todo
+            // Maybe use wp_check_filetype()
+            // https://developer.wordpress.org/reference/functions/wp_check_filetype/
+
             if (!in_array($mimeContent, $allowedMimes)) {
                 return $this->createWPError('invalid_mime', 'Invalid mime type', 400);
             }
