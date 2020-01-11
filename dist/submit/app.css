@@ -381,3 +381,7 @@ button.gm-frontend-loading-button .gm-frontend-loading-button-main span.gm-front
   visibility: visible;
 }
 
+.gm-frontend-gallery-submit-button {
+  display: inline-block;
+}
+

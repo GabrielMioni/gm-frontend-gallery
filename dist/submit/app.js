@@ -2584,6 +2584,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 
@@ -6966,16 +6967,17 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "loading-button",
-    { attrs: { loading: _vm.submitting, "click-action": _vm.submitPosts } },
+    "div",
+    { staticClass: "gm-frontend-gallery-submit-button" },
     [
-      _c("template", { slot: "defaultText" }, [
-        _vm._v("\n        Submit\n    ")
-      ]),
-      _vm._v(" "),
-      _c("template", { slot: "loadingText" }, [
-        _vm._v("\n        Loading\n    ")
-      ]),
+      _c(
+        "v-btn",
+        {
+          attrs: { large: "", color: "primary", loading: _vm.submitting },
+          on: { click: _vm.submitPosts }
+        },
+        [_vm._v("\n        Submit\n    ")]
+      ),
       _vm._v(" "),
       _vm.showModal
         ? _c(
@@ -7000,7 +7002,7 @@ var render = function() {
           )
         : _vm._e()
     ],
-    2
+    1
   )
 }
 var staticRenderFns = []

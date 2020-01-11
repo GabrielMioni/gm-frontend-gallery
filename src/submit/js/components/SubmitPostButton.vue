@@ -1,23 +1,21 @@
 <template>
-    <loading-button :loading="submitting" :click-action="submitPosts">
-        <template slot="defaultText">
+    <div class="gm-frontend-gallery-submit-button">
+        <v-btn large color="primary" @click="submitPosts" :loading="submitting">
             Submit
-        </template>
-        <template slot="loadingText">
-            Loading
-        </template>
+        </v-btn>
         <confirmation-modal
                 slot="confirmationModal"
                 v-if="showModal"
                 :single-button="true"
                 :confirm-is-dangerous="false"
-                @confirmNo="confirmNoHandler">
+                @confirmNo="confirmNoHandler"
+        >
             Your gallery submission was successful!
             <div slot="confirmNo">
                 Return to Gallery Submit Form
             </div>
         </confirmation-modal>
-    </loading-button>
+    </div>
 </template>
 
 <script>
