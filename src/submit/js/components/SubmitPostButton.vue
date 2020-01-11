@@ -23,10 +23,9 @@
   import { mapGetters, mapActions } from 'vuex';
   import { getOptionsType } from '@/utilities/helpers';
   import ConfirmationModal from "@/utilities/vue/components/ConfirmationModal";
-  import LoadingButton from "@/utilities/vue/components/LoadingButton";
   export default {
     name: "SubmitPostButton",
-    components: {LoadingButton, ConfirmationModal},
+    components: {ConfirmationModal},
     data() {
       return {
         showModal: false,
