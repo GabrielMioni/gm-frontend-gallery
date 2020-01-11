@@ -182,6 +182,9 @@
             }, imageFile.type);
           },
           {
+            maxWidth: 1024,
+            maxHeight: 1024,
+            crop: true,
             orientation: orientationValue,
             canvas: true
           });
