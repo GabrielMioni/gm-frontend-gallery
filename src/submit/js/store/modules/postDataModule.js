@@ -40,7 +40,10 @@ export const postDataModule = {
     addPostAtIndex(state, index) {
       const current = state.uniqueIds[state.uniqueIds.length-1];
       state.uniqueIds.pop();
-      state.galleryPosts.splice(index+1, 0, defaultGalleryPostObject(current))
+      state.galleryPosts.splice(index+1, 0, defaultGalleryPostObject(current));
+      if (state.uniqueIds.length <= 0) {
+        state.uniqueIds = setUniqueIds();
+      }
     },
     removePost(state, index) {
       state.galleryPosts.splice(index, 1);

@@ -62112,6 +62112,10 @@ var postDataModule = {
       var current = state.uniqueIds[state.uniqueIds.length - 1];
       state.uniqueIds.pop();
       state.galleryPosts.splice(index + 1, 0, Object(_utilities_helpers__WEBPACK_IMPORTED_MODULE_0__["defaultGalleryPostObject"])(current));
+
+      if (state.uniqueIds.length <= 0) {
+        state.uniqueIds = Object(_utilities_helpers__WEBPACK_IMPORTED_MODULE_0__["setUniqueIds"])();
+      }
     },
     removePost: function removePost(state, index) {
       state.galleryPosts.splice(index, 1);
