@@ -1,7 +1,7 @@
 <template>
     <div class="gm-frontend-gallery-submit-button">
         <v-btn large color="primary" @click="submitPosts" :loading="submitting">
-            Submit
+            <slot>Do Thing</slot>
         </v-btn>
         <confirmation-modal
                 slot="confirmationModal"

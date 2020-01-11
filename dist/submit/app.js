@@ -6330,7 +6330,7 @@ var render = function() {
             [_vm._v("\n            Add A Post!\n        ")]
           ),
           _vm._v(" "),
-          _c("submit-post-button", [_vm._v("Submit")]),
+          _c("submit-post-button", [_vm._v("P. Cool")]),
           _vm._v(" "),
           _c("portal-target", { attrs: { name: "modals", slim: "" } })
         ],
@@ -6917,7 +6917,8 @@ var render = function() {
           attrs: { large: "", color: "primary", loading: _vm.submitting },
           on: { click: _vm.submitPosts }
         },
-        [_vm._v("\n        Submit\n    ")]
+        [_vm._t("default", [_vm._v("Do Thing")])],
+        2
       ),
       _vm._v(" "),
       _vm.showModal
