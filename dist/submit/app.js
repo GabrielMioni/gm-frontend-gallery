@@ -2609,15 +2609,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     CLEAR_POST: 'postData/CLEAR_POST'
   }), {
     checkShowModal: function checkShowModal() {
-      if (this.content.trim() !== '' || this.imageUrl !== null) {
-        this.showModal = true;
-        return;
-      }
-
       var galleryPostLength = this.getGalleryPostsLength();
 
       if (galleryPostLength <= 1) {
         Object(_utilities_helpers__WEBPACK_IMPORTED_MODULE_1__["applyShake"])(this.$refs.deleteButton.$el, 1000);
+        return;
+      }
+
+      if (this.content.trim() !== '' || this.imageUrl !== null) {
+        this.showModal = true;
         return;
       }
 

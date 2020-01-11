@@ -50,15 +50,15 @@
         CLEAR_POST: 'postData/CLEAR_POST'
       }),
       checkShowModal() {
-        if (this.content.trim() !== '' || this.imageUrl !== null) {
-          this.showModal = true;
-          return;
-        }
-
         const galleryPostLength = this.getGalleryPostsLength();
 
         if (galleryPostLength <= 1) {
           applyShake(this.$refs.deleteButton.$el, 1000);
+          return;
+        }
+        
+        if (this.content.trim() !== '' || this.imageUrl !== null) {
+          this.showModal = true;
           return;
         }
 
