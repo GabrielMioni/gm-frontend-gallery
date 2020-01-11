@@ -11,9 +11,6 @@
   width: 100%;
   max-width: 100%;
   position: relative;
-  /*.gm-frontend-submit__footer__add-one-button {
-    display: none;
-  }*/
 }
 
 #gm-frontend-submit.gm-frontend-submit--active:after {
