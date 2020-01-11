@@ -89,17 +89,12 @@
   border-radius: 0.2rem;
   padding: 1rem;
   grid-column-gap: 0.5rem;
-  /*&-left,
-  &-right {
-
-    height: 300px;
-  }*/
 }
 
 @media (min-width: 768px) {
   #gm-frontend-submit .gm-frontend-gallery-post-card {
-    grid-template-columns: 1fr 1fr -webkit-min-content;
-    grid-template-columns: 1fr 1fr min-content;
+    grid-template-columns: 2fr 1fr -webkit-min-content;
+    grid-template-columns: 2fr 1fr min-content;
     grid-template-rows: 1fr;
   }
 }
