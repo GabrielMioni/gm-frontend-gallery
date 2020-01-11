@@ -44,6 +44,15 @@ export const postDataModule = {
         state.galleryPosts.push(defaultGalleryPostObject('z'));
       }
     },
+    clearPost(state, index) {
+      const galleryPost = state.galleryPosts[index];
+      galleryPost.content = '';
+      galleryPost.imageUrl = null;
+      galleryPost.file = null;
+      galleryPost.errors.content = '';
+      galleryPost.errors.imageUrl = '';
+      galleryPost.errors.file = '';
+    },
     resetGalleryPostData(state) {
       state.uniqueIds = setUniqueIds();
       state.galleryPosts = [defaultGalleryPostObject('z')];
@@ -64,6 +73,9 @@ export const postDataModule = {
     },
     REMOVE_POST(context, index) {
       context.commit('removePost', index);
+    },
+    CLEAR_POST(context, index) {
+      context.commit('clearPost', index);
     },
     RESET_GALLERY_POST_DATA(context) {
       context.commit('resetGalleryPostData');

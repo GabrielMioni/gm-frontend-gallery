@@ -47,6 +47,7 @@
       }),
       ...mapActions({
         REMOVE_POST: 'postData/REMOVE_POST',
+        CLEAR_POST: 'postData/CLEAR_POST'
       }),
       checkShowModal() {
         const deleteButton = this.$refs.deleteButton.$el;
@@ -59,7 +60,9 @@
 
         const shakeClass = 'gm-frontend-shake';
 
-        if (this.getGalleryPostsLength() <= 1 && !deleteButton.classList.contains(shakeClass)) {
+        const galleryPostLength = this.getGalleryPostsLength();
+
+        if (galleryPostLength <= 1 && !deleteButton.classList.contains(shakeClass)) {
           deleteButton.classList.add(shakeClass);
 
           setTimeout(()=>{
@@ -67,14 +70,17 @@
           }, 1000);
         }
 
-        this.deletePost();
+        this.deletePost(galleryPostLength);
       },
       cancelDelete() {
         this.showModal = false;
       },
-      deletePost() {
+      deletePost(galleryPostLength) {
         new Promise((resolve) => {
-          resolve(this.REMOVE_POST(this.index));
+          if (galleryPostLength < 1) {
+            resolve(this.REMOVE_POST(this.index));
+          }
+          resolve(this.CLEAR_POST(this.index));
         }).then(()=>{
           this.showModal = false;
         });
