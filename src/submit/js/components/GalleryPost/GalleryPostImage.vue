@@ -33,7 +33,7 @@
                         <span class="gm-frontend-gallery-post-image-upload-controls__button-container">
                             <v-btn
                                     class="gm-frontend-gallery-post-image-upload-controls__button"
-                                    fab dark small color="blue darken-4"
+                                    fab dark small color="primary"
                                     @keyup.enter.stop
                                     @click.stop="orientImage('left')">
                                 <v-icon>rotate_left</v-icon>
@@ -42,7 +42,7 @@
                         <span class="gm-frontend-gallery-post-image-upload-controls__button-container">
                             <v-btn
                                     class="gm-frontend-gallery-post-image-upload-controls__button"
-                                    fab dark small color="blue darken-4"
+                                    fab dark small color="primary"
                                     @keyup.enter.stop
                                     @click.stop="orientImage('right')">
                                 <v-icon>rotate_right</v-icon>
@@ -51,7 +51,7 @@
                         <span class="gm-frontend-gallery-post-image-upload-controls__button-container">
                             <v-btn
                                     class="gm-frontend-gallery-post-image-upload-controls__button"
-                                    fab dark small color="blue darken-4"
+                                    fab dark small color="primary"
                                     @keyup.enter.stop
                                     @click.stop="orientImage('vertical')">
                                 <v-icon>flip</v-icon>
@@ -61,7 +61,7 @@
                             <v-btn
                                     class="gm-frontend-gallery-post-image-upload-controls__button"
                                     style="transform: rotate(90deg)"
-                                    fab dark small color="blue darken-4"
+                                    fab dark small color="primary"
                                     @keyup.enter.stop
                                     @click.stop="orientImage('horizontal')">
                                 <v-icon>flip</v-icon>

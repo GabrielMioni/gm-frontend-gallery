@@ -6774,7 +6774,7 @@ var render = function() {
                                   fab: "",
                                   dark: "",
                                   small: "",
-                                  color: "blue darken-4"
+                                  color: "primary"
                                 },
                                 on: {
                                   keyup: function($event) {
@@ -6821,7 +6821,7 @@ var render = function() {
                                   fab: "",
                                   dark: "",
                                   small: "",
-                                  color: "blue darken-4"
+                                  color: "primary"
                                 },
                                 on: {
                                   keyup: function($event) {
@@ -6868,7 +6868,7 @@ var render = function() {
                                   fab: "",
                                   dark: "",
                                   small: "",
-                                  color: "blue darken-4"
+                                  color: "primary"
                                 },
                                 on: {
                                   keyup: function($event) {
@@ -6916,7 +6916,7 @@ var render = function() {
                                   fab: "",
                                   dark: "",
                                   small: "",
-                                  color: "blue darken-4"
+                                  color: "primary"
                                 },
                                 on: {
                                   keyup: function($event) {

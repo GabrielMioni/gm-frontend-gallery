@@ -211,15 +211,6 @@
   -webkit-box-direction: normal;
           flex-direction: column;
   height: 100%;
-  /*&__button {
-    opacity: .5;
-    transition: opacity .25s;
-    z-index: 1;
-
-    &:hover, &:focus {
-      opacity: 1;
-    }
-  }*/
 }
 
 .gm-frontend-gallery-post-image-upload-controls__button-container {
