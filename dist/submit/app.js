@@ -2081,6 +2081,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _utilities_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/utilities/helpers */ "./src/utilities/helpers.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -2097,6 +2098,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "GalleryPostButtonAdd",
@@ -2113,9 +2116,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     getGalleryPostsLength: 'postData/getGalleryPostsLength'
   }), {
     addPost: function addPost() {
-      console.log(this.getGalleryPostsLength());
-
       if (this.getGalleryPostsLength() >= this.maxAttachments) {
+        Object(_utilities_helpers__WEBPACK_IMPORTED_MODULE_1__["applyShake"])(this.$refs['addPostButton'].$el, 1000);
         return;
       }
 
@@ -2598,14 +2600,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return;
       }
 
-      var shakeClass = 'gm-frontend-shake';
       var galleryPostLength = this.getGalleryPostsLength();
 
-      if (galleryPostLength <= 1 && !deleteButton.classList.contains(shakeClass)) {
-        deleteButton.classList.add(shakeClass);
-        setTimeout(function () {
-          deleteButton.classList.remove(shakeClass);
-        }, 1000);
+      if (galleryPostLength <= 1) {
+        Object(_utilities_helpers__WEBPACK_IMPORTED_MODULE_1__["applyShake"])(deleteButton, 1000);
         return;
       }
 
@@ -6572,6 +6570,7 @@ var render = function() {
       _c(
         "v-btn",
         {
+          ref: "addPostButton",
           attrs: { fab: "", dark: "", small: "", color: "primary" },
           on: { click: _vm.addPost }
         },
@@ -62192,7 +62191,7 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
 /*!**********************************!*\
   !*** ./src/utilities/helpers.js ***!
   \**********************************/
-/*! exports provided: defaultGalleryPostObject, setUniqueIds, imageUrlValidator, getOptionsType */
+/*! exports provided: defaultGalleryPostObject, setUniqueIds, imageUrlValidator, getOptionsType, applyShake */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -62201,6 +62200,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setUniqueIds", function() { return setUniqueIds; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "imageUrlValidator", function() { return imageUrlValidator; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getOptionsType", function() { return getOptionsType; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "applyShake", function() { return applyShake; });
 var defaultGalleryPostObject = function defaultGalleryPostObject(uniqueId) {
   return {
     content: '',
@@ -62227,6 +62227,18 @@ var getOptionsType = function getOptionsType(getMainOptions, type) {
   }
 
   return getMainOptions[type];
+};
+var applyShake = function applyShake(elm, time) {
+  var shakeClass = 'gm-frontend-shake';
+
+  if (elm.classList.contains(shakeClass)) {
+    return;
+  }
+
+  elm.classList.add(shakeClass);
+  setTimeout(function () {
+    elm.classList.remove(shakeClass);
+  }, time);
 };
 
 /***/ }),

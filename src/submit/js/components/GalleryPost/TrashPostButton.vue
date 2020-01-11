@@ -17,7 +17,7 @@
 
 <script>
   import ConfirmationModal from "@/utilities/vue/components/ConfirmationModal";
-  import { imageUrlValidator} from "@/utilities/helpers";
+  import { imageUrlValidator, applyShake } from "@/utilities/helpers";
   import { mapGetters, mapActions } from 'vuex';
   export default {
     name: "TrashPostButton",
@@ -58,16 +58,10 @@
           return;
         }
 
-        const shakeClass = 'gm-frontend-shake';
-
         const galleryPostLength = this.getGalleryPostsLength();
 
-        if (galleryPostLength <= 1 && !deleteButton.classList.contains(shakeClass)) {
-          deleteButton.classList.add(shakeClass);
-
-          setTimeout(()=>{
-            deleteButton.classList.remove(shakeClass);
-          }, 1000);
+        if (galleryPostLength <= 1) {
+          applyShake(deleteButton, 1000);
           return;
         }
 

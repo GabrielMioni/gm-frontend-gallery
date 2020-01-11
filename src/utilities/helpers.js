@@ -25,3 +25,17 @@ export const getOptionsType = (getMainOptions, type) => {
   }
   return getMainOptions[type];
 };
+
+export const applyShake = (elm, time) => {
+  const shakeClass = 'gm-frontend-shake';
+
+  if (elm.classList.contains(shakeClass)) {
+    return;
+  }
+
+  elm.classList.add(shakeClass);
+
+  setTimeout(()=>{
+    elm.classList.remove(shakeClass);
+  }, time);
+};

@@ -2,6 +2,7 @@
     <div class="gm-frontend-gallery-add-post-button">
         <v-btn
                 @click="addPost"
+                ref="addPostButton"
                 fab dark small color="primary">
             <v-icon>add</v-icon>
         </v-btn>
@@ -10,6 +11,7 @@
 
 <script>
   import { mapActions, mapGetters } from 'vuex';
+  import { applyShake } from "@/utilities/helpers";
   export default {
     name: "GalleryPostButtonAdd",
     props: {
@@ -28,6 +30,7 @@
       }),
       addPost() {
         if (this.getGalleryPostsLength() >= this.maxAttachments) {
+          applyShake(this.$refs['addPostButton'].$el, 1000);
           return;
         }
 
