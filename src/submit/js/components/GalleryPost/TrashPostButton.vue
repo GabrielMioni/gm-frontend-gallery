@@ -50,9 +50,6 @@
         CLEAR_POST: 'postData/CLEAR_POST'
       }),
       checkShowModal() {
-        const deleteButton = this.$refs.deleteButton.$el;
-        deleteButton.blur();
-
         if (this.content.trim() !== '' || this.imageUrl !== null) {
           this.showModal = true;
           return;
@@ -61,7 +58,7 @@
         const galleryPostLength = this.getGalleryPostsLength();
 
         if (galleryPostLength <= 1) {
-          applyShake(deleteButton, 1000);
+          applyShake(this.$refs.deleteButton.$el, 1000);
           return;
         }
 
