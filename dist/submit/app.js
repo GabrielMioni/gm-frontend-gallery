@@ -1912,11 +1912,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     SubmitPostButton: _components_SubmitPostButton__WEBPACK_IMPORTED_MODULE_1__["default"],
     GalleryPost: _components_GalleryPost_GalleryPost__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  data: function data() {
-    return {
-      things: ['a', 'b', 'c', 'd', 'e', 'f']
-    };
-  },
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapActions"])({
     SET_MAIN_TITLE: 'mainData/SET_MAIN_TITLE',
     SET_MAIN_TITLE_ERROR: 'mainData/SET_MAIN_TITLE_ERROR',

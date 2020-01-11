@@ -39,11 +39,6 @@
   export default {
     name: "gmGallerySubmit",
     components: {SubmitPostButton, GalleryPost},
-    data() {
-      return {
-        things: ['a','b','c','d','e','f'],
-      }
-    },
     methods: {
       ...mapActions({
         SET_MAIN_TITLE: 'mainData/SET_MAIN_TITLE',
