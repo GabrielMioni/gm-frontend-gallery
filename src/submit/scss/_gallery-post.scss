@@ -15,7 +15,7 @@
   .gm-frontend-gallery-post-card {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: min-content 1fr 1fr;
+    grid-template-rows: min-content min-content min-content;
     border: solid 1px $themeColor3;
     border-radius: 0.2rem;
     padding: 1rem;
@@ -50,27 +50,6 @@
         button {
           margin: 0 0 .5rem 0;
         }
-      }
-    }
-
-    &-trash {
-      grid-row: 1;
-      grid-column: 1;
-      display: flex;
-      justify-content: flex-end;
-      z-index: 1;
-      height: 2rem;
-
-      &--full {
-        @media (min-width: $medium) {
-          grid-column: 1 / span 2;
-        }
-      }
-
-      button {
-        background-color: unset;
-        color: $themeColor1;
-        padding: .5rem;
       }
     }
 
