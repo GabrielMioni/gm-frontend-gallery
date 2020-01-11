@@ -6,6 +6,7 @@
             </h5>
             <div>
                 <v-btn
+                        ref="cancelButton"
                         color="primary"
                         @click.stop="confirmNo">
                     <slot name="confirmNo">
@@ -45,6 +46,9 @@
       confirmYes() {
         this.$emit('confirmYes');
       }
+    },
+    mounted() {
+      this.$refs['cancelButton'].$el.focus();
     }
   }
 </script>

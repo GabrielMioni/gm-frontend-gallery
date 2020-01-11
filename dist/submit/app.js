@@ -2861,6 +2861,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ConfirmationModal",
   props: {
@@ -2880,6 +2881,9 @@ __webpack_require__.r(__webpack_exports__);
     confirmYes: function confirmYes() {
       this.$emit('confirmYes');
     }
+  },
+  mounted: function mounted() {
+    this.$refs['cancelButton'].$el.focus();
   }
 });
 
@@ -7189,6 +7193,7 @@ var render = function() {
             _c(
               "v-btn",
               {
+                ref: "cancelButton",
                 attrs: { color: "primary" },
                 on: {
                   click: function($event) {
