@@ -1901,8 +1901,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
 
 
 
@@ -1921,9 +1919,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   }), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapGetters"])({
     getMainTitle: 'mainData/getMainTitle',
     getMainTitleError: 'mainData/getMainTitleError',
-    getGalleryPosts: 'postData/getGalleryPosts',
     getMainSubmitting: 'mainData/getMainSubmitting',
-    getMainOptions: 'mainData/getMainOptions'
+    getMainOptions: 'mainData/getMainOptions',
+    getGalleryPosts: 'postData/getGalleryPosts',
+    getGalleryPostsLength: 'postData/getGalleryPostsLength'
   }), {
     addPost: function addPost() {
       if (this.galleryPosts.length >= this.options['maxAttachments']) {
@@ -1987,6 +1986,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
 
         return errorsPresent === true ? 'Please check the errors above before submitting' : '';
+      }
+    },
+    allowedAttachmentsMessage: {
+      get: function get() {
+        var maxAttachments = this.options.maxAttachments;
+
+        if (maxAttachments <= 1) {
+          return '';
+        }
+
+        return "Gallery attachments: ".concat(this.getGalleryPostsLength(), "/").concat(maxAttachments);
       }
     }
   },
@@ -6419,6 +6429,13 @@ var render = function() {
             "div",
             { staticClass: "gm-frontend-submit__footer" },
             [
+              _vm.allowedAttachmentsMessage.length > 0
+                ? _c("v-input", {
+                    staticClass: "gm-frontend-submit__max-attachment-message",
+                    attrs: { messages: _vm.allowedAttachmentsMessage }
+                  })
+                : _vm._e(),
+              _vm._v(" "),
               _c(
                 "v-btn",
                 {
@@ -6439,16 +6456,6 @@ var render = function() {
                 "submit-post-button",
                 { attrs: { disabled: _vm.errorsPresentMessage.length > 0 } },
                 [_vm._v("\n                Submit\n            ")]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                [
-                  _c("v-input", {
-                    attrs: { "error-messages": _vm.errorsPresentMessage }
-                  })
-                ],
-                1
               )
             ],
             1

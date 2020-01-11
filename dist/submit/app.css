@@ -11,6 +11,9 @@
   width: 100%;
   max-width: 100%;
   position: relative;
+  /*.gm-frontend-submit__footer__add-one-button {
+    display: none;
+  }*/
 }
 
 #gm-frontend-submit.gm-frontend-submit--active:after {
@@ -53,6 +56,10 @@
   display: none;
 }
 
+#gm-frontend-submit .gm-frontend-submit__max-attachment-message {
+  margin: 0.5rem 0;
+}
+
 #gm-frontend-submit {
   background: none;
 }
@@ -62,13 +69,16 @@
   margin: 0 0 1.75rem 0;
 }
 
+#gm-frontend-submit .gm-frontend-gallery-post:last-child {
+  margin: 0;
+}
+
 #gm-frontend-submit .gm-frontend-gallery-post-card {
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr 1fr;
   border: solid 1px #cccccc;
   border-radius: 0.2rem;
-  margin: 1rem 0;
   padding: 1rem;
   grid-column-gap: 0.5rem;
 }

@@ -15,17 +15,15 @@
                 </gallery-post>
             </transition-group>
             <div class="gm-frontend-submit__footer">
+                <v-input v-if="allowedAttachmentsMessage.length > 0" class="gm-frontend-submit__max-attachment-message"
+                         :messages="allowedAttachmentsMessage">
+                </v-input>
                 <v-btn class="gm-frontend-submit__footer__add-one-button" large color="teal" :ref="'addPostButton'" @click.stop="addPost">
                     Add A Post!
                 </v-btn>
                 <submit-post-button :disabled="errorsPresentMessage.length > 0">
                     Submit
                 </submit-post-button>
-                <div>
-                    <v-input
-                            :error-messages="errorsPresentMessage">
-                    </v-input>
-                </div>
             </div>
             <portal-target name="modals" slim></portal-target>
         </v-container>
@@ -50,9 +48,10 @@
       ...mapGetters({
         getMainTitle: 'mainData/getMainTitle',
         getMainTitleError: 'mainData/getMainTitleError',
-        getGalleryPosts: 'postData/getGalleryPosts',
         getMainSubmitting: 'mainData/getMainSubmitting',
-        getMainOptions: 'mainData/getMainOptions'
+        getMainOptions: 'mainData/getMainOptions',
+        getGalleryPosts: 'postData/getGalleryPosts',
+        getGalleryPostsLength: 'postData/getGalleryPostsLength',
       }),
       addPost() {
         if (this.galleryPosts.length >= this.options['maxAttachments']) {
@@ -114,6 +113,15 @@
           }
 
           return errorsPresent === true ? 'Please check the errors above before submitting' : '';
+        }
+      },
+      allowedAttachmentsMessage: {
+        get() {
+          const maxAttachments = this.options.maxAttachments;
+          if (maxAttachments <= 1) {
+            return '';
+          }
+          return `Gallery attachments: ${this.getGalleryPostsLength()}/${maxAttachments}`;
         }
       }
     },
