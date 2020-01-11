@@ -83,7 +83,8 @@
 #gm-frontend-submit .gm-frontend-gallery-post-card {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: -webkit-min-content 1fr 1fr;
+  grid-template-rows: min-content 1fr 1fr;
   border: solid 1px #cccccc;
   border-radius: 0.2rem;
   padding: 1rem;
@@ -99,19 +100,40 @@
 }
 
 #gm-frontend-submit .gm-frontend-gallery-post-card__controls {
+  grid-row: 1;
   display: -webkit-box;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-          flex-direction: column;
-  -webkit-box-pack: center;
-          justify-content: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: reverse;
+          flex-direction: row-reverse;
+  -webkit-box-pack: right;
+          justify-content: right;
   -webkit-box-align: center;
           align-items: center;
+  position: absolute;
+  top: -2.5rem;
+  right: -1.25rem;
 }
 
 #gm-frontend-submit .gm-frontend-gallery-post-card__controls button {
-  margin: 0 0 0.5rem 0;
+  margin: 0 0 0.5rem 0.5rem;
+}
+
+@media (min-width: 768px) {
+  #gm-frontend-submit .gm-frontend-gallery-post-card__controls {
+    position: relative;
+    top: unset;
+    right: unset;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+            flex-direction: column;
+    -webkit-box-pack: center;
+            justify-content: center;
+  }
+
+  #gm-frontend-submit .gm-frontend-gallery-post-card__controls button {
+    margin: 0 0 0.5rem 0;
+  }
 }
 
 #gm-frontend-submit .gm-frontend-gallery-post-card-trash {
@@ -159,7 +181,7 @@
 
 #gm-frontend-submit .gm-frontend-gallery-post-card-right {
   grid-column: 1;
-  grid-row: 1;
+  grid-row: 3;
 }
 
 @media (min-width: 768px) {
