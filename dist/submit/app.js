@@ -2889,7 +2889,7 @@ __webpack_require__.r(__webpack_exports__);
     confirmYes: function confirmYes() {
       this.$emit('confirmYes');
     },
-    handleTab: function handleTab(e) {
+    confirmationModalKeydownHandler: function confirmationModalKeydownHandler(e) {
       var keyCode = e.keyCode;
 
       if (keyCode === 27) {
@@ -2908,10 +2908,10 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
-    document.addEventListener('keydown', this.handleTab, true);
+    document.addEventListener('keydown', this.confirmationModalKeydownHandler, true);
   },
   beforeDestroy: function beforeDestroy() {
-    document.removeEventListener('keydown', this.handleTab, true);
+    document.removeEventListener('keydown', this.confirmationModalKeydownHandler, true);
   }
 });
 

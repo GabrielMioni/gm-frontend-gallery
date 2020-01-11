@@ -52,7 +52,7 @@
       confirmYes() {
         this.$emit('confirmYes');
       },
-      handleTab(e) {
+      confirmationModalKeydownHandler(e) {
         const keyCode = e.keyCode;
         if (keyCode === 27) {
           this.confirmNo();
@@ -70,10 +70,10 @@
       }
     },
     mounted() {
-      document.addEventListener('keydown', this.handleTab, true);
+      document.addEventListener('keydown', this.confirmationModalKeydownHandler, true);
     },
     beforeDestroy() {
-      document.removeEventListener('keydown', this.handleTab, true);
+      document.removeEventListener('keydown', this.confirmationModalKeydownHandler, true);
     }
   }
 </script>
