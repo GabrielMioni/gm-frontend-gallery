@@ -1894,8 +1894,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
 
 
 
@@ -1924,8 +1922,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     getMainOptions: 'mainData/getMainOptions'
   }), {
     addPost: function addPost() {
-      this.$refs.addPostButton.blur();
-
       if (this.galleryPosts.length >= this.options['maxAttachments']) {
         return;
       }
@@ -1992,6 +1988,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _TrashPostButton__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TrashPostButton */ "./src/submit/js/components/GalleryPost/TrashPostButton.vue");
 /* harmony import */ var _GalleryPostImage__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./GalleryPostImage */ "./src/submit/js/components/GalleryPost/GalleryPostImage.vue");
 /* harmony import */ var _GalleryPostContent__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./GalleryPostContent */ "./src/submit/js/components/GalleryPost/GalleryPostContent.vue");
+/* harmony import */ var _GalleryPostButtonAdd__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./GalleryPostButtonAdd */ "./src/submit/js/components/GalleryPost/GalleryPostButtonAdd.vue");
 //
 //
 //
@@ -2020,6 +2017,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+
 
 
 
@@ -2028,7 +2031,8 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     GalleryPostContent: _GalleryPostContent__WEBPACK_IMPORTED_MODULE_2__["default"],
     GalleryPostImage: _GalleryPostImage__WEBPACK_IMPORTED_MODULE_1__["default"],
-    TrashPostButton: _TrashPostButton__WEBPACK_IMPORTED_MODULE_0__["default"]
+    TrashPostButton: _TrashPostButton__WEBPACK_IMPORTED_MODULE_0__["default"],
+    GalleryPostButtonAdd: _GalleryPostButtonAdd__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   props: {
     index: {
@@ -2040,6 +2044,53 @@ __webpack_require__.r(__webpack_exports__);
       required: true
     }
   }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./src/submit/js/components/GalleryPost/GalleryPostButtonAdd.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./src/submit/js/components/GalleryPost/GalleryPostButtonAdd.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "GalleryPostButtonAdd",
+  props: {
+    index: {
+      type: Number,
+      required: true
+    }
+  },
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])({
+    ADD_POST_AT_INDEX: 'postData/ADD_POST_AT_INDEX'
+  }), {
+    addPost: function addPost() {
+      console.log('galleryPostAddIndex', this.index);
+      this.ADD_POST_AT_INDEX(this.index);
+    }
+  })
 });
 
 /***/ }),
@@ -2516,6 +2567,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         setTimeout(function () {
           deleteButton.classList.remove(shakeClass);
         }, 1000);
+        return;
       }
 
       this.deletePost(galleryPostLength);
@@ -2527,11 +2579,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this = this;
 
       new Promise(function (resolve) {
-        if (galleryPostLength < 1) {
-          resolve(_this.REMOVE_POST(_this.index));
+        resolve(_this.REMOVE_POST(_this.index));
+        /*if (galleryPostLength > 1) {
+          resolve(this.REMOVE_POST(this.index));
         }
-
-        resolve(_this.CLEAR_POST(_this.index));
+        resolve(this.CLEAR_POST(this.index));*/
       }).then(function () {
         _this.showModal = false;
       });
@@ -6317,9 +6369,10 @@ var render = function() {
           ),
           _vm._v(" "),
           _c(
-            "button",
+            "v-btn",
             {
               ref: "addPostButton",
+              attrs: { large: "", color: "teal" },
               on: {
                 click: function($event) {
                   $event.stopPropagation()
@@ -6330,7 +6383,7 @@ var render = function() {
             [_vm._v("\n            Add A Post!\n        ")]
           ),
           _vm._v(" "),
-          _c("submit-post-button", [_vm._v("P. Cool")]),
+          _c("submit-post-button", [_vm._v("Submit")]),
           _vm._v(" "),
           _c("portal-target", { attrs: { name: "modals", slim: "" } })
         ],
@@ -6396,16 +6449,64 @@ var render = function() {
             })
           ],
           1
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "gm-frontend-gallery-post-card__controls" },
+          [
+            _c("trash-post-button", {
+              attrs: {
+                index: _vm.index,
+                "image-url": _vm.postState.imageUrl,
+                content: _vm.postState.content
+              }
+            }),
+            _vm._v(" "),
+            _c("gallery-post-button-add", { attrs: { index: _vm.index } })
+          ],
+          1
         )
-      ]),
-      _vm._v(" "),
-      _c("trash-post-button", {
-        attrs: {
-          index: _vm.index,
-          "image-url": _vm.postState.imageUrl,
-          content: _vm.postState.content
-        }
-      })
+      ])
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./src/submit/js/components/GalleryPost/GalleryPostButtonAdd.vue?vue&type=template&id=0cc0d1ca&":
+/*!************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./src/submit/js/components/GalleryPost/GalleryPostButtonAdd.vue?vue&type=template&id=0cc0d1ca& ***!
+  \************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "gm-frontend-gallery-add-post-button" },
+    [
+      _c(
+        "v-btn",
+        {
+          attrs: { fab: "", dark: "", small: "", color: "primary" },
+          on: { click: _vm.addPost }
+        },
+        [_c("v-icon", [_vm._v("add")])],
+        1
+      )
     ],
     1
   )
@@ -61443,6 +61544,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./src/submit/js/components/GalleryPost/GalleryPostButtonAdd.vue":
+/*!***********************************************************************!*\
+  !*** ./src/submit/js/components/GalleryPost/GalleryPostButtonAdd.vue ***!
+  \***********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _GalleryPostButtonAdd_vue_vue_type_template_id_0cc0d1ca___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./GalleryPostButtonAdd.vue?vue&type=template&id=0cc0d1ca& */ "./src/submit/js/components/GalleryPost/GalleryPostButtonAdd.vue?vue&type=template&id=0cc0d1ca&");
+/* harmony import */ var _GalleryPostButtonAdd_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./GalleryPostButtonAdd.vue?vue&type=script&lang=js& */ "./src/submit/js/components/GalleryPost/GalleryPostButtonAdd.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _GalleryPostButtonAdd_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _GalleryPostButtonAdd_vue_vue_type_template_id_0cc0d1ca___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _GalleryPostButtonAdd_vue_vue_type_template_id_0cc0d1ca___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "src/submit/js/components/GalleryPost/GalleryPostButtonAdd.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./src/submit/js/components/GalleryPost/GalleryPostButtonAdd.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************!*\
+  !*** ./src/submit/js/components/GalleryPost/GalleryPostButtonAdd.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_GalleryPostButtonAdd_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./GalleryPostButtonAdd.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./src/submit/js/components/GalleryPost/GalleryPostButtonAdd.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_GalleryPostButtonAdd_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./src/submit/js/components/GalleryPost/GalleryPostButtonAdd.vue?vue&type=template&id=0cc0d1ca&":
+/*!******************************************************************************************************!*\
+  !*** ./src/submit/js/components/GalleryPost/GalleryPostButtonAdd.vue?vue&type=template&id=0cc0d1ca& ***!
+  \******************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_GalleryPostButtonAdd_vue_vue_type_template_id_0cc0d1ca___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./GalleryPostButtonAdd.vue?vue&type=template&id=0cc0d1ca& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./src/submit/js/components/GalleryPost/GalleryPostButtonAdd.vue?vue&type=template&id=0cc0d1ca&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_GalleryPostButtonAdd_vue_vue_type_template_id_0cc0d1ca___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_GalleryPostButtonAdd_vue_vue_type_template_id_0cc0d1ca___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./src/submit/js/components/GalleryPost/GalleryPostContent.vue":
 /*!*********************************************************************!*\
   !*** ./src/submit/js/components/GalleryPost/GalleryPostContent.vue ***!
@@ -61856,6 +62026,12 @@ var postDataModule = {
       state.uniqueIds.pop();
       state.galleryPosts.push(Object(_utilities_helpers__WEBPACK_IMPORTED_MODULE_0__["defaultGalleryPostObject"])(current));
     },
+    addPostAtIndex: function addPostAtIndex(state, index) {
+      console.log('index: ', index);
+      var current = state.uniqueIds[state.uniqueIds.length - 1];
+      state.uniqueIds.pop();
+      state.galleryPosts.splice(index + 1, 0, Object(_utilities_helpers__WEBPACK_IMPORTED_MODULE_0__["defaultGalleryPostObject"])(current));
+    },
     removePost: function removePost(state, index) {
       state.galleryPosts.splice(index, 1);
 
@@ -61891,14 +62067,17 @@ var postDataModule = {
     ADD_POST: function ADD_POST(context) {
       context.commit('addPost');
     },
+    ADD_POST_AT_INDEX: function ADD_POST_AT_INDEX(context, index) {
+      context.commit('addPostAtIndex', index);
+    },
     REMOVE_POST: function REMOVE_POST(context, index) {
       context.commit('removePost', index);
     },
     CLEAR_POST: function CLEAR_POST(context, index) {
       context.commit('clearPost', index);
     },
-    RESET_GALLERY_POST_DATA: function RESET_GALLERY_POST_DATA(context) {
-      context.commit('resetGalleryPostData');
+    RESET_GALLERY_POST_DATA: function RESET_GALLERY_POST_DATA(context, index) {
+      context.commit('resetGalleryPostData', index);
     }
   }
 };

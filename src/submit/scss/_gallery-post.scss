@@ -19,8 +19,19 @@
     grid-column-gap: .5rem;
 
     @media (min-width: $medium) {
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr min-content;
       grid-template-rows: 1fr;
+    }
+
+    &__controls {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      button {
+        margin: 0 0 .5rem 0;
+      }
     }
 
     &-trash {

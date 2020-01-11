@@ -14,11 +14,9 @@
                         :post-state="post">
                 </gallery-post>
             </transition-group>
-            <button
-                    :ref="'addPostButton'"
-                    @click.stop="addPost">
+            <v-btn large color="teal" :ref="'addPostButton'" @click.stop="addPost">
                 Add A Post!
-            </button>
+            </v-btn>
             <submit-post-button>Submit</submit-post-button>
             <portal-target name="modals" slim></portal-target>
         </v-container>
@@ -53,7 +51,6 @@
         getMainOptions: 'mainData/getMainOptions'
       }),
       addPost() {
-        this.$refs.addPostButton.blur();
         if (this.galleryPosts.length >= this.options['maxAttachments']) {
           return;
         }

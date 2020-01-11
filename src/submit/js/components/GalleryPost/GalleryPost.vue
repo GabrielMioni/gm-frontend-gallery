@@ -16,12 +16,17 @@
                         :content-error="postState.errors.content">
                 </gallery-post-content>
             </div>
+            <div class="gm-frontend-gallery-post-card__controls">
+                <trash-post-button
+                        :index="index"
+                        :image-url="postState.imageUrl"
+                        :content="postState.content">
+                </trash-post-button>
+                <gallery-post-button-add
+                        :index="index">
+                </gallery-post-button-add>
+            </div>
         </v-card>
-        <trash-post-button
-                :index="index"
-                :image-url="postState.imageUrl"
-                :content="postState.content">
-        </trash-post-button>
     </div>
 
 </template>
@@ -30,9 +35,10 @@
   import TrashPostButton from "./TrashPostButton";
   import GalleryPostImage from "./GalleryPostImage";
   import GalleryPostContent from "./GalleryPostContent";
+  import GalleryPostButtonAdd from "./GalleryPostButtonAdd";
   export default {
     name: "GalleryPost",
-    components: {GalleryPostContent, GalleryPostImage, TrashPostButton},
+    components: {GalleryPostContent, GalleryPostImage, TrashPostButton, GalleryPostButtonAdd},
     props: {
       index: {
         type: Number,

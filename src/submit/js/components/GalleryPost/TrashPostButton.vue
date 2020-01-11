@@ -68,6 +68,7 @@
           setTimeout(()=>{
             deleteButton.classList.remove(shakeClass);
           }, 1000);
+          return;
         }
 
         this.deletePost(galleryPostLength);
@@ -77,10 +78,11 @@
       },
       deletePost(galleryPostLength) {
         new Promise((resolve) => {
-          if (galleryPostLength < 1) {
+          resolve(this.REMOVE_POST(this.index));
+          /*if (galleryPostLength > 1) {
             resolve(this.REMOVE_POST(this.index));
           }
-          resolve(this.CLEAR_POST(this.index));
+          resolve(this.CLEAR_POST(this.index));*/
         }).then(()=>{
           this.showModal = false;
         });

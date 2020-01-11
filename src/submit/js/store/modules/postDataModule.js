@@ -37,6 +37,11 @@ export const postDataModule = {
       state.uniqueIds.pop();
       state.galleryPosts.push(defaultGalleryPostObject(current));
     },
+    addPostAtIndex(state, index) {
+      const current = state.uniqueIds[state.uniqueIds.length-1];
+      state.uniqueIds.pop();
+      state.galleryPosts.splice(index+1, 0, defaultGalleryPostObject(current))
+    },
     removePost(state, index) {
       state.galleryPosts.splice(index, 1);
       if (state.galleryPosts.length <= 0) {
@@ -71,14 +76,17 @@ export const postDataModule = {
     ADD_POST(context) {
       context.commit('addPost');
     },
+    ADD_POST_AT_INDEX(context, index) {
+      context.commit('addPostAtIndex', index);
+    },
     REMOVE_POST(context, index) {
       context.commit('removePost', index);
     },
     CLEAR_POST(context, index) {
       context.commit('clearPost', index);
     },
-    RESET_GALLERY_POST_DATA(context) {
-      context.commit('resetGalleryPostData');
+    RESET_GALLERY_POST_DATA(context, index) {
+      context.commit('resetGalleryPostData', index);
     }
   }
 };

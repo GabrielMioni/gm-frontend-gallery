@@ -71,9 +71,26 @@
 
 @media (min-width: 768px) {
   #gm-frontend-submit .gm-frontend-gallery-post-card {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr -webkit-min-content;
+    grid-template-columns: 1fr 1fr min-content;
     grid-template-rows: 1fr;
   }
+}
+
+#gm-frontend-submit .gm-frontend-gallery-post-card__controls {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+          flex-direction: column;
+  -webkit-box-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+          align-items: center;
+}
+
+#gm-frontend-submit .gm-frontend-gallery-post-card__controls button {
+  margin: 0 0 0.5rem 0;
 }
 
 #gm-frontend-submit .gm-frontend-gallery-post-card-trash {
@@ -258,12 +275,6 @@
 
 .gm-frontend-gallery-post-content .v-textarea {
   height: 100%;
-}
-
-.gm-frontend-gallery-post-trash-button {
-  position: absolute;
-  right: -1.25rem;
-  top: -1.25rem;
 }
 
 .fade-enter-active {
