@@ -2339,6 +2339,9 @@ __webpack_require__(/*! blueimp-canvas-to-blob */ "./node_modules/blueimp-canvas
           });
         }, imageFile.type);
       }, {
+        maxWidth: 1024,
+        maxHeight: 1024,
+        crop: true,
         orientation: orientationValue,
         canvas: true
       });
@@ -2493,7 +2496,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapGetters"])({
     getGalleryPostsLength: 'postData/getGalleryPostsLength'
   }), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapActions"])({
-    REMOVE_POST: 'postData/REMOVE_POST'
+    REMOVE_POST: 'postData/REMOVE_POST',
+    CLEAR_POST: 'postData/CLEAR_POST'
   }), {
     checkShowModal: function checkShowModal() {
       var deleteButton = this.$refs.deleteButton.$el;
@@ -2505,24 +2509,29 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       var shakeClass = 'gm-frontend-shake';
+      var galleryPostLength = this.getGalleryPostsLength();
 
-      if (this.getGalleryPostsLength() <= 1 && !deleteButton.classList.contains(shakeClass)) {
+      if (galleryPostLength <= 1 && !deleteButton.classList.contains(shakeClass)) {
         deleteButton.classList.add(shakeClass);
         setTimeout(function () {
           deleteButton.classList.remove(shakeClass);
         }, 1000);
       }
 
-      this.deletePost();
+      this.deletePost(galleryPostLength);
     },
     cancelDelete: function cancelDelete() {
       this.showModal = false;
     },
-    deletePost: function deletePost() {
+    deletePost: function deletePost(galleryPostLength) {
       var _this = this;
 
       new Promise(function (resolve) {
-        resolve(_this.REMOVE_POST(_this.index));
+        if (galleryPostLength < 1) {
+          resolve(_this.REMOVE_POST(_this.index));
+        }
+
+        resolve(_this.CLEAR_POST(_this.index));
       }).then(function () {
         _this.showModal = false;
       });
@@ -61980,6 +61989,15 @@ var postDataModule = {
         state.galleryPosts.push(Object(_utilities_helpers__WEBPACK_IMPORTED_MODULE_0__["defaultGalleryPostObject"])('z'));
       }
     },
+    clearPost: function clearPost(state, index) {
+      var galleryPost = state.galleryPosts[index];
+      galleryPost.content = '';
+      galleryPost.imageUrl = null;
+      galleryPost.file = null;
+      galleryPost.errors.content = '';
+      galleryPost.errors.imageUrl = '';
+      galleryPost.errors.file = '';
+    },
     resetGalleryPostData: function resetGalleryPostData(state) {
       state.uniqueIds = Object(_utilities_helpers__WEBPACK_IMPORTED_MODULE_0__["setUniqueIds"])();
       state.galleryPosts = [Object(_utilities_helpers__WEBPACK_IMPORTED_MODULE_0__["defaultGalleryPostObject"])('z')];
@@ -62000,6 +62018,9 @@ var postDataModule = {
     },
     REMOVE_POST: function REMOVE_POST(context, index) {
       context.commit('removePost', index);
+    },
+    CLEAR_POST: function CLEAR_POST(context, index) {
+      context.commit('clearPost', index);
     },
     RESET_GALLERY_POST_DATA: function RESET_GALLERY_POST_DATA(context) {
       context.commit('resetGalleryPostData');
