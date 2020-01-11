@@ -2108,12 +2108,28 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])({
     ADD_POST_AT_INDEX: 'postData/ADD_POST_AT_INDEX'
+  }), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])({
+    getMainOptions: 'mainData/getMainOptions',
+    getGalleryPostsLength: 'postData/getGalleryPostsLength'
   }), {
     addPost: function addPost() {
-      console.log('galleryPostAddIndex', this.index);
+      console.log(this.getGalleryPostsLength());
+
+      if (this.getGalleryPostsLength() >= this.maxAttachments) {
+        return;
+      }
+
       this.ADD_POST_AT_INDEX(this.index);
     }
-  })
+  }),
+  computed: {
+    maxAttachments: {
+      get: function get() {
+        var options = this.getMainOptions();
+        return options['maxAttachments'];
+      }
+    }
+  }
 });
 
 /***/ }),

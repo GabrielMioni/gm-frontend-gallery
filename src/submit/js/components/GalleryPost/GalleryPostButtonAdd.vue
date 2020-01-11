@@ -9,7 +9,7 @@
 </template>
 
 <script>
-  import { mapActions } from 'vuex';
+  import { mapActions, mapGetters } from 'vuex';
   export default {
     name: "GalleryPostButtonAdd",
     props: {
@@ -22,10 +22,25 @@
       ...mapActions({
         ADD_POST_AT_INDEX: 'postData/ADD_POST_AT_INDEX',
       }),
+      ...mapGetters({
+        getMainOptions: 'mainData/getMainOptions',
+        getGalleryPostsLength: 'postData/getGalleryPostsLength'
+      }),
       addPost() {
-        console.log('galleryPostAddIndex', this.index);
+        if (this.getGalleryPostsLength() >= this.maxAttachments) {
+          return;
+        }
+
         this.ADD_POST_AT_INDEX(this.index);
       },
+    },
+    computed: {
+      maxAttachments: {
+        get() {
+          const options = this.getMainOptions();
+          return options['maxAttachments'];
+        }
+      }
     }
   }
 </script>
