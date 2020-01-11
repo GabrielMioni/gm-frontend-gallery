@@ -52,12 +52,22 @@
   height: 2rem;
 }
 
-#gm-frontend-submit .gm-frontend-submit__footer__add-one-button {
-  display: none;
+#gm-frontend-submit .gm-frontend-submit__header {
+  margin: 0.5rem 0;
 }
 
-#gm-frontend-submit .gm-frontend-submit__max-attachment-message {
+#gm-frontend-submit .gm-frontend-submit__footer__messages {
+  display: -webkit-box;
+  display: flex;
   margin: 0.5rem 0;
+}
+
+#gm-frontend-submit .gm-frontend-submit__footer__messages__max-attachment .v-messages__message {
+  text-align: end;
+}
+
+#gm-frontend-submit .gm-frontend-submit__footer__add-one-button {
+  display: none;
 }
 
 #gm-frontend-submit {

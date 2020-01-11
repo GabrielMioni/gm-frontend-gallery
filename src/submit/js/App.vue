@@ -1,11 +1,13 @@
 <template>
     <v-app id="gm-frontend-submit">
         <v-container fluid>
-            <v-text-field
-                    v-model="mainTitle"
-                    :error-messages="mainTitleError"
-                    :label="'Title'">
-            </v-text-field>
+            <div class="gm-frontend-submit__header">
+                <v-text-field
+                        v-model="mainTitle"
+                        :error-messages="mainTitleError"
+                        :label="'Title'">
+                </v-text-field>
+            </div>
             <transition-group name="fade">
                 <gallery-post
                         v-for="(post, index) in galleryPosts"
@@ -15,9 +17,14 @@
                 </gallery-post>
             </transition-group>
             <div class="gm-frontend-submit__footer">
-                <v-input v-if="allowedAttachmentsMessage.length > 0" class="gm-frontend-submit__max-attachment-message"
-                         :messages="allowedAttachmentsMessage">
-                </v-input>
+                <div class="gm-frontend-submit__footer__messages">
+                    <v-input
+                            :error-messages="errorsPresentMessage">
+                    </v-input>
+                    <v-input class="gm-frontend-submit__footer__messages__max-attachment"
+                             :messages="allowedAttachmentsMessage">
+                    </v-input>
+                </div>
                 <v-btn class="gm-frontend-submit__footer__add-one-button" large color="teal" :ref="'addPostButton'" @click.stop="addPost">
                     Add A Post!
                 </v-btn>

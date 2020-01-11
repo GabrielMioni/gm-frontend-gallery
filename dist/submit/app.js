@@ -1901,6 +1901,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -6399,16 +6406,23 @@ var render = function() {
         "v-container",
         { attrs: { fluid: "" } },
         [
-          _c("v-text-field", {
-            attrs: { "error-messages": _vm.mainTitleError, label: "Title" },
-            model: {
-              value: _vm.mainTitle,
-              callback: function($$v) {
-                _vm.mainTitle = $$v
-              },
-              expression: "mainTitle"
-            }
-          }),
+          _c(
+            "div",
+            { staticClass: "gm-frontend-submit__header" },
+            [
+              _c("v-text-field", {
+                attrs: { "error-messages": _vm.mainTitleError, label: "Title" },
+                model: {
+                  value: _vm.mainTitle,
+                  callback: function($$v) {
+                    _vm.mainTitle = $$v
+                  },
+                  expression: "mainTitle"
+                }
+              })
+            ],
+            1
+          ),
           _vm._v(" "),
           _c(
             "transition-group",
@@ -6426,12 +6440,22 @@ var render = function() {
             "div",
             { staticClass: "gm-frontend-submit__footer" },
             [
-              _vm.allowedAttachmentsMessage.length > 0
-                ? _c("v-input", {
-                    staticClass: "gm-frontend-submit__max-attachment-message",
+              _c(
+                "div",
+                { staticClass: "gm-frontend-submit__footer__messages" },
+                [
+                  _c("v-input", {
+                    attrs: { "error-messages": _vm.errorsPresentMessage }
+                  }),
+                  _vm._v(" "),
+                  _c("v-input", {
+                    staticClass:
+                      "gm-frontend-submit__footer__messages__max-attachment",
                     attrs: { messages: _vm.allowedAttachmentsMessage }
                   })
-                : _vm._e(),
+                ],
+                1
+              ),
               _vm._v(" "),
               _c(
                 "v-btn",
