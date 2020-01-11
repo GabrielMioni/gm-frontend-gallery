@@ -182,12 +182,14 @@
 #gm-frontend-submit .gm-frontend-gallery-post-card-right {
   grid-column: 1;
   grid-row: 3;
+  margin: 0.5rem 0 0 0;
 }
 
 @media (min-width: 768px) {
   #gm-frontend-submit .gm-frontend-gallery-post-card-right {
     grid-column: 2;
     grid-row: 1/span 2;
+    margin: 0;
   }
 }
 
