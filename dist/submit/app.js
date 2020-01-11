@@ -1896,6 +1896,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -1966,6 +1973,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     options: {
       get: function get() {
         return this.getMainOptions();
+      }
+    },
+    errorsPresentMessage: {
+      get: function get() {
+        var errorsPresent = false;
+        this.galleryPosts.map(function (galleryPost) {
+          var errors = Object.values(galleryPost.errors);
+          errors.map(function (error) {
+            if (!errorsPresent && error.trim() !== '') {
+              errorsPresent = true;
+            }
+          });
+        });
+
+        if (this.getMainTitleError() !== '' && !errorsPresent) {
+          errorsPresent = true;
+        }
+
+        return errorsPresent === true ? 'Please check the errors above before submitting' : '';
       }
     }
   },
@@ -2635,6 +2661,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -2648,6 +2678,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     return {
       showModal: false
     };
+  },
+  props: {
+    disabled: {
+      type: Boolean,
+      required: true
+    }
   },
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])({
     SET_MAIN_TITLE_ERROR: 'mainData/SET_MAIN_TITLE_ERROR',
@@ -6390,7 +6426,21 @@ var render = function() {
                 [_vm._v("\n                Add A Post!\n            ")]
               ),
               _vm._v(" "),
-              _c("submit-post-button", [_vm._v("Submit")])
+              _c(
+                "submit-post-button",
+                { attrs: { disabled: _vm.errorsPresentMessage.length > 0 } },
+                [_vm._v("\n                Submit\n            ")]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                [
+                  _c("v-input", {
+                    attrs: { "error-messages": _vm.errorsPresentMessage }
+                  })
+                ],
+                1
+              )
             ],
             1
           ),
@@ -7025,7 +7075,12 @@ var render = function() {
       _c(
         "v-btn",
         {
-          attrs: { large: "", color: "primary", loading: _vm.submitting },
+          attrs: {
+            loading: _vm.submitting,
+            disabled: _vm.disabled,
+            large: "",
+            color: "primary"
+          },
           on: { click: _vm.submitPosts }
         },
         [_vm._t("default", [_vm._v("Do Thing")])],

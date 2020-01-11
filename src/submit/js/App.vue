@@ -18,7 +18,14 @@
                 <v-btn class="gm-frontend-submit__footer__add-one-button" large color="teal" :ref="'addPostButton'" @click.stop="addPost">
                     Add A Post!
                 </v-btn>
-                <submit-post-button>Submit</submit-post-button>
+                <submit-post-button :disabled="errorsPresentMessage.length > 0">
+                    Submit
+                </submit-post-button>
+                <div>
+                    <v-input
+                            :error-messages="errorsPresentMessage">
+                    </v-input>
+                </div>
             </div>
             <portal-target name="modals" slim></portal-target>
         </v-container>
@@ -93,6 +100,25 @@
       options: {
         get() {
           return this.getMainOptions();
+        }
+      },
+      errorsPresentMessage: {
+        get() {
+          let errorsPresent = false;
+          this.galleryPosts.map((galleryPost) => {
+            const errors = Object.values(galleryPost.errors);
+            errors.map((error)=>{
+              if (!errorsPresent && error.trim() !== '') {
+                errorsPresent = true;
+              }
+            })
+          });
+
+          if (this.getMainTitleError() !== '' && !errorsPresent) {
+            errorsPresent = true;
+          }
+
+          return errorsPresent === true ? 'Please check the errors above before submitting' : '';
         }
       }
     },

@@ -1,6 +1,10 @@
 <template>
     <div class="gm-frontend-gallery-submit-button">
-        <v-btn large color="primary" @click="submitPosts" :loading="submitting">
+        <v-btn
+                @click="submitPosts"
+                :loading="submitting"
+                :disabled="disabled"
+                large color="primary">
             <slot>Do Thing</slot>
         </v-btn>
         <confirmation-modal
@@ -29,6 +33,12 @@
     data() {
       return {
         showModal: false,
+      }
+    },
+    props: {
+      disabled:  {
+        type: Boolean,
+        required: true
       }
     },
     methods: {
