@@ -1,24 +1,27 @@
 <template>
     <div class="gm-frontend-confirmation">
-        <div class="gm-frontend-confirmation-modal">
+        <v-card class="gm-frontend-confirmation-modal">
             <h5>
                 <slot>Please confirm</slot>
             </h5>
             <div>
-                <button @click.stop="confirmNo">
+                <v-btn
+                        color="primary"
+                        @click.stop="confirmNo">
                     <slot name="confirmNo">
                         Cancel
                     </slot>
-                </button>
-                <button v-if="!singleButton"
-                        @click.stop="confirmYes"
-                        v-bind:class="{ 'gm-frontend-confirmation-modal-button--danger': confirmIsDangerous } ">
+                </v-btn>
+                <v-btn
+                        color="red darken-4"
+                        v-if="!singleButton"
+                        @click.stop="confirmYes">
                     <slot name="confirmYes">
                         Ok
                     </slot>
-                </button>
+                </v-btn>
             </div>
-        </div>
+        </v-card>
     </div>
 </template>
 

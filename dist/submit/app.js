@@ -2858,6 +2858,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ConfirmationModal",
   props: {
@@ -7173,55 +7176,62 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "gm-frontend-confirmation" }, [
-    _c("div", { staticClass: "gm-frontend-confirmation-modal" }, [
-      _c("h5", [_vm._t("default", [_vm._v("Please confirm")])], 2),
-      _vm._v(" "),
-      _c("div", [
-        _c(
-          "button",
-          {
-            on: {
-              click: function($event) {
-                $event.stopPropagation()
-                return _vm.confirmNo($event)
-              }
-            }
-          },
-          [
-            _vm._t("confirmNo", [
-              _vm._v("\n                    Cancel\n                ")
-            ])
-          ],
-          2
-        ),
+  return _c(
+    "div",
+    { staticClass: "gm-frontend-confirmation" },
+    [
+      _c("v-card", { staticClass: "gm-frontend-confirmation-modal" }, [
+        _c("h5", [_vm._t("default", [_vm._v("Please confirm")])], 2),
         _vm._v(" "),
-        !_vm.singleButton
-          ? _c(
-              "button",
+        _c(
+          "div",
+          [
+            _c(
+              "v-btn",
               {
-                class: {
-                  "gm-frontend-confirmation-modal-button--danger":
-                    _vm.confirmIsDangerous
-                },
+                attrs: { color: "primary" },
                 on: {
                   click: function($event) {
                     $event.stopPropagation()
-                    return _vm.confirmYes($event)
+                    return _vm.confirmNo($event)
                   }
                 }
               },
               [
-                _vm._t("confirmYes", [
-                  _vm._v("\n                    Ok\n                ")
+                _vm._t("confirmNo", [
+                  _vm._v("\n                    Cancel\n                ")
                 ])
               ],
               2
-            )
-          : _vm._e()
+            ),
+            _vm._v(" "),
+            !_vm.singleButton
+              ? _c(
+                  "v-btn",
+                  {
+                    attrs: { color: "red darken-4" },
+                    on: {
+                      click: function($event) {
+                        $event.stopPropagation()
+                        return _vm.confirmYes($event)
+                      }
+                    }
+                  },
+                  [
+                    _vm._t("confirmYes", [
+                      _vm._v("\n                    Ok\n                ")
+                    ])
+                  ],
+                  2
+                )
+              : _vm._e()
+          ],
+          1
+        )
       ])
-    ])
-  ])
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

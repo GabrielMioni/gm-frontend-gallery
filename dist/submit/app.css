@@ -379,8 +379,6 @@
 }
 
 #gm-frontend-submit .gm-frontend-confirmation-modal {
-  background-color: #FFFFFF;
-  color: #000000;
   padding: 2rem;
   display: -webkit-box;
   display: flex;
@@ -391,10 +389,6 @@
           justify-content: center;
   -webkit-box-align: center;
           align-items: center;
-}
-
-#gm-frontend-submit .gm-frontend-confirmation-modal-button--danger {
-  background-color: #8B0000;
 }
 
 button.gm-frontend-loading-button .gm-frontend-loading-button-main {
