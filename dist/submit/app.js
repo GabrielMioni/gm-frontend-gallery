@@ -2740,6 +2740,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             'type': 'content',
             'error': contentError
           });
+
+          hasErrors = true;
         } else {
           attachmentContents.push(postContent);
         }

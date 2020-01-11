@@ -78,6 +78,7 @@
               'type': 'content',
               'error': contentError,
             });
+            hasErrors = true;
           } else {
             attachmentContents.push(postContent);
           }
