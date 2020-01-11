@@ -2864,8 +2864,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ConfirmationModal",
+  data: function data() {
+    return {
+      cancelButtonIsFocused: true
+    };
+  },
   props: {
     'singleButton': {
       "default": false,
@@ -2882,10 +2888,30 @@ __webpack_require__.r(__webpack_exports__);
     },
     confirmYes: function confirmYes() {
       this.$emit('confirmYes');
+    },
+    handleTab: function handleTab(e) {
+      var keyCode = e.keyCode;
+
+      if (keyCode === 27) {
+        this.confirmNo();
+        return;
+      }
+
+      if (keyCode !== 9) {
+        return;
+      }
+
+      e.preventDefault();
+      var targetButtonRef = this.cancelButtonIsFocused ? 'cancelButton' : 'confirmButton';
+      this.$refs[targetButtonRef].$el.focus();
+      this.cancelButtonIsFocused = !this.cancelButtonIsFocused;
     }
   },
   mounted: function mounted() {
-    this.$refs['cancelButton'].$el.focus();
+    document.addEventListener('keydown', this.handleTab, true);
+  },
+  beforeDestroy: function beforeDestroy() {
+    document.removeEventListener('keydown', this.handleTab, true);
   }
 });
 
@@ -7216,6 +7242,7 @@ var render = function() {
               ? _c(
                   "v-btn",
                   {
+                    ref: "confirmButton",
                     attrs: { color: "red darken-4" },
                     on: {
                       click: function($event) {

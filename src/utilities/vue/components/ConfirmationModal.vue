@@ -14,6 +14,7 @@
                     </slot>
                 </v-btn>
                 <v-btn
+                        ref="confirmButton"
                         color="red darken-4"
                         v-if="!singleButton"
                         @click.stop="confirmYes">
@@ -29,6 +30,11 @@
 <script>
   export default {
     name: "ConfirmationModal",
+    data() {
+      return {
+        cancelButtonIsFocused: true
+      }
+    },
     props: {
       'singleButton' : {
         default: false,
@@ -45,10 +51,29 @@
       },
       confirmYes() {
         this.$emit('confirmYes');
+      },
+      handleTab(e) {
+        const keyCode = e.keyCode;
+        if (keyCode === 27) {
+          this.confirmNo();
+          return;
+        }
+        if (keyCode !== 9) {
+          return;
+        }
+        e.preventDefault();
+
+        const targetButtonRef = this.cancelButtonIsFocused ? 'cancelButton' : 'confirmButton';
+        this.$refs[targetButtonRef].$el.focus();
+
+        this.cancelButtonIsFocused = !this.cancelButtonIsFocused;
       }
     },
     mounted() {
-      this.$refs['cancelButton'].$el.focus();
+      document.addEventListener('keydown', this.handleTab, true);
+    },
+    beforeDestroy() {
+      document.removeEventListener('keydown', this.handleTab, true);
     }
   }
 </script>
