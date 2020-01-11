@@ -14,10 +14,12 @@
                         :post-state="post">
                 </gallery-post>
             </transition-group>
-            <v-btn large color="teal" :ref="'addPostButton'" @click.stop="addPost">
-                Add A Post!
-            </v-btn>
-            <submit-post-button>Submit</submit-post-button>
+            <div class="gm-frontend-submit__footer">
+                <v-btn class="gm-frontend-submit__footer__add-one-button" large color="teal" :ref="'addPostButton'" @click.stop="addPost">
+                    Add A Post!
+                </v-btn>
+                <submit-post-button>Submit</submit-post-button>
+            </div>
             <portal-target name="modals" slim></portal-target>
         </v-container>
     </v-app>

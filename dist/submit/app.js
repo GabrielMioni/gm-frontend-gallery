@@ -1894,6 +1894,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 
 
@@ -6369,21 +6371,29 @@ var render = function() {
           ),
           _vm._v(" "),
           _c(
-            "v-btn",
-            {
-              ref: "addPostButton",
-              attrs: { large: "", color: "teal" },
-              on: {
-                click: function($event) {
-                  $event.stopPropagation()
-                  return _vm.addPost($event)
-                }
-              }
-            },
-            [_vm._v("\n            Add A Post!\n        ")]
+            "div",
+            { staticClass: "gm-frontend-submit__footer" },
+            [
+              _c(
+                "v-btn",
+                {
+                  ref: "addPostButton",
+                  staticClass: "gm-frontend-submit__footer__add-one-button",
+                  attrs: { large: "", color: "teal" },
+                  on: {
+                    click: function($event) {
+                      $event.stopPropagation()
+                      return _vm.addPost($event)
+                    }
+                  }
+                },
+                [_vm._v("\n                Add A Post!\n            ")]
+              ),
+              _vm._v(" "),
+              _c("submit-post-button", [_vm._v("Submit")])
+            ],
+            1
           ),
-          _vm._v(" "),
-          _c("submit-post-button", [_vm._v("Submit")]),
           _vm._v(" "),
           _c("portal-target", { attrs: { name: "modals", slim: "" } })
         ],
@@ -62027,7 +62037,6 @@ var postDataModule = {
       state.galleryPosts.push(Object(_utilities_helpers__WEBPACK_IMPORTED_MODULE_0__["defaultGalleryPostObject"])(current));
     },
     addPostAtIndex: function addPostAtIndex(state, index) {
-      console.log('index: ', index);
       var current = state.uniqueIds[state.uniqueIds.length - 1];
       state.uniqueIds.pop();
       state.galleryPosts.splice(index + 1, 0, Object(_utilities_helpers__WEBPACK_IMPORTED_MODULE_0__["defaultGalleryPostObject"])(current));
