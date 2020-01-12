@@ -32,13 +32,15 @@
                 </GalleryLightBox>
             </transition>
         </div>
+        <portal-target name="modals" slim></portal-target>
     </div>
 </template>
 
 <script>
   import GalleryPost from "./components/GalleryPost";
   import GalleryLightBox from "./components/GalleryLightBox";
-  import LoadingButton from "../../utilities/vue/components/LoadingButton";
+  import LoadingButton from "@/utilities/vue/components/LoadingButton";
+  import { mapGetters, mapActions } from 'vuex';
   export default {
     name: 'gmGallery',
     components: {LoadingButton, GalleryLightBox, GalleryPost},
@@ -54,7 +56,15 @@
       }
     },
     methods: {
+      ...mapGetters({
+        getGalleryPosts: 'galleryData/getGalleryPosts'
+      }),
+      ...mapActions({
+        SET_GALLERY_POSTS: 'galleryData/SET_GALLERY_POSTS'
+      }),
       setGalleryItems() {
+        this.SET_GALLERY_POSTS();
+
         const self = this;
         self.galleryLoading = true;
         let xhr = new XMLHttpRequest();
