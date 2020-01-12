@@ -12,7 +12,7 @@
             </div>
             <div class="gm-frontend-gallery-loading">
                 <loading-button
-                        v-if="galleryPosts.length < galleryCount"
+                        v-if="galleryPosts.length < getGalleryCount"
                         :loading="galleryLoading"
                         :click-action="setGalleryItems">
                     <template slot="defaultText">
@@ -44,7 +44,7 @@
   export default {
     name: 'gmGallery',
     components: {LoadingButton, GalleryLightBox, GalleryPost},
-    data() {
+    /*data() {
       return {
         galleryPosts: [],
         openedPostIndex: null,
@@ -54,17 +54,16 @@
         postsPerPage: 10,
         galleryCount: 0,
       }
-    },
+    },*/
     methods: {
       ...mapGetters({
+        getGalleryCount: 'galleryData/getGalleryCount',
         getGalleryPosts: 'galleryData/getGalleryPosts'
       }),
       ...mapActions({
         SET_GALLERY_POSTS: 'galleryData/SET_GALLERY_POSTS'
       }),
       setGalleryItems() {
-        this.SET_GALLERY_POSTS();
-
         const self = this;
         self.galleryLoading = true;
         let xhr = new XMLHttpRequest();
@@ -149,9 +148,17 @@
         });
       }
     },
+    computed: {
+      galleryPosts: {
+        get() {
+          return this.getGalleryPosts();
+        }
+      }
+    },
     mounted() {
-      console.log('mounted');
-      this.setGalleryItems(false);
+      // console.log('mounted');
+      this.SET_GALLERY_POSTS();
+      // this.setGalleryItems(false);
     }
   }
 </script>

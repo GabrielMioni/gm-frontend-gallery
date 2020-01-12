@@ -12,6 +12,7 @@ export const galleryDataModule = {
   },
   getters: {
     getGalleryPosts: state => state.galleryPosts,
+    getGalleryCount: state => state.galleryCount,
     getRouteNameSpace: state => state.routeNameSpace,
     getPageLoaded: state => state.pageLoaded,
     getPostsPerPage: state => state.postsPerPage,
@@ -21,14 +22,14 @@ export const galleryDataModule = {
       state.galleryCount = count;
     },
     updateGalleryPosts(state, posts) {
-      state.galleryPosts = posts;
+      state.galleryPosts = state.galleryPosts.concat(posts);
     },
     updatePageLoaded(state, pageLoaded) {
       state.pageLoaded = pageLoaded;
     }
   },
   actions: {
-    SET_GALLERY_POSTS({ dispatch, commit, getters }) {
+    SET_GALLERY_POSTS({ commit, getters }) {
       const namespace = getters.getRouteNameSpace;
       const pageLoaded = getters.getPageLoaded;
       const postsPerPage = getters.getPostsPerPage;
@@ -39,6 +40,7 @@ export const galleryDataModule = {
         const responseData = JSON.parse(xhr.responseText);
         commit('updateGalleryPosts', responseData.posts);
         commit('updateGalleryCount', responseData['gallery_count']);
+        commit('updatePageLoaded', pageLoaded + 1);
       };
       xhr.send();
     },

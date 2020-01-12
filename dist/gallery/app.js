@@ -154,7 +154,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     GalleryLightBox: _components_GalleryLightBox__WEBPACK_IMPORTED_MODULE_1__["default"],
     GalleryPost: _components_GalleryPost__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  data: function data() {
+
+  /*data() {
     return {
       galleryPosts: [],
       openedPostIndex: null,
@@ -162,16 +163,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       lightBoxLoading: false,
       pageLoaded: 1,
       postsPerPage: 10,
-      galleryCount: 0
-    };
-  },
+      galleryCount: 0,
+    }
+  },*/
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_3__["mapGetters"])({
+    getGalleryCount: 'galleryData/getGalleryCount',
     getGalleryPosts: 'galleryData/getGalleryPosts'
   }), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_3__["mapActions"])({
     SET_GALLERY_POSTS: 'galleryData/SET_GALLERY_POSTS'
   }), {
     setGalleryItems: function setGalleryItems() {
-      this.SET_GALLERY_POSTS();
       var self = this;
       self.galleryLoading = true;
       var xhr = new XMLHttpRequest();
@@ -254,9 +255,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     }
   }),
+  computed: {
+    galleryPosts: {
+      get: function get() {
+        return this.getGalleryPosts();
+      }
+    }
+  },
   mounted: function mounted() {
-    console.log('mounted');
-    this.setGalleryItems(false);
+    // console.log('mounted');
+    this.SET_GALLERY_POSTS(); // this.setGalleryItems(false);
   }
 });
 
@@ -1586,7 +1594,7 @@ var render = function() {
             "div",
             { staticClass: "gm-frontend-gallery-loading" },
             [
-              _vm.galleryPosts.length < _vm.galleryCount
+              _vm.galleryPosts.length < _vm.getGalleryCount
                 ? _c(
                     "loading-button",
                     {
@@ -56446,6 +56454,9 @@ var galleryDataModule = {
     getGalleryPosts: function getGalleryPosts(state) {
       return state.galleryPosts;
     },
+    getGalleryCount: function getGalleryCount(state) {
+      return state.galleryCount;
+    },
     getRouteNameSpace: function getRouteNameSpace(state) {
       return state.routeNameSpace;
     },
@@ -56457,14 +56468,11 @@ var galleryDataModule = {
     }
   },
   mutations: {
-    /*setGalleryPosts(state, payload) {
-      console.log('SetGalleryPosts executed');
-    },*/
     updateGalleryCount: function updateGalleryCount(state, count) {
       state.galleryCount = count;
     },
     updateGalleryPosts: function updateGalleryPosts(state, posts) {
-      state.galleryPosts = posts;
+      state.galleryPosts = state.galleryPosts.concat(posts);
     },
     updatePageLoaded: function updatePageLoaded(state, pageLoaded) {
       state.pageLoaded = pageLoaded;
@@ -56472,38 +56480,22 @@ var galleryDataModule = {
   },
   actions: {
     SET_GALLERY_POSTS: function SET_GALLERY_POSTS(_ref) {
-      var dispatch = _ref.dispatch,
-          commit = _ref.commit,
+      var commit = _ref.commit,
           getters = _ref.getters;
       var namespace = getters.getRouteNameSpace;
       var pageLoaded = getters.getPageLoaded;
       var postsPerPage = getters.getPostsPerPage;
-      var path = "".concat(namespace, "/get/").concat(pageLoaded, "/").concat(postsPerPage);
       var xhr = new XMLHttpRequest();
-      xhr.open('GET', path);
+      xhr.open('GET', "".concat(namespace, "/get/").concat(pageLoaded, "/").concat(postsPerPage));
 
       xhr.onload = function () {
         var responseData = JSON.parse(xhr.responseText);
         commit('updateGalleryPosts', responseData.posts);
         commit('updateGalleryCount', responseData['gallery_count']);
+        commit('updatePageLoaded', pageLoaded + 1);
       };
 
       xhr.send();
-      /*const self = this;
-      const namespace = rootGetters.someGetter;
-      console.log(namespace);
-      // const namespace = rootGetters.getRouteNameSpace;
-      // const pageLoaded = rootGetters.getPageLoaded;
-      //const postsPerPage = rootGetters.postsPerPage;
-       let xhr = new XMLHttpRequest();
-      xhr.open('GET', `${namespace}/get/${pageLoaded}/${postsPerPage}`);
-      xhr.onload = () => {
-        const responseData = JSON.parse(xhr.responseText);
-        context.commit('updateGalleryPosts', responseData.posts);
-        context.commit('updateGalleryCount', responseData['gallery_count']);
-      };
-      xhr.send();
-       context.commit('setGalleryPosts', payload);*/
     }
   }
 };
