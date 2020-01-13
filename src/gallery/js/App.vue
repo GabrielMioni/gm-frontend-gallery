@@ -1,49 +1,28 @@
 <template>
-    <div id="gm-frontend-main">
-        <div class="gm-frontend-gallery">
-            <div class="gm-frontend-gallopenPostHandlerery-posts">
-                <template v-for="(galleryPost, index) in galleryPosts">
-                    <GalleryPost
-                            @open-post="openPostHandler"
-                            :post="galleryPost"
-                            :index="index">
-                    </GalleryPost>
-                </template>
+    <v-app id="gm-frontend-gallery">
+        <v-container fluid>
+            <div class="gm-frontend-gallery">
+                <gallery-post-image
+                        v-for="(galleryPost, index) in galleryPosts"
+                        :gallery-post="galleryPost"
+                        :index="index"
+                        :key="index"
+                >
+                </gallery-post-image>
             </div>
-            <div class="gm-frontend-gallery-loading">
-                <loading-button
-                        v-if="galleryPosts.length < getGalleryCount"
-                        :loading="galleryLoading"
-                        :click-action="setGalleryItems">
-                    <template slot="defaultText">
-                        Load More
-                    </template>
-                    <template slot="loadingText">
-                        Loading!
-                    </template>
-                </loading-button>
-            </div>
-            <transition name="fade">
-                <GalleryLightBox v-if="openedPostIndex !== null"
-                                 @closePost="closePostHandler"
-                                 @galleryNavigate="galleryNavigateHandler"
-                                 :post="galleryPosts[openedPostIndex]"
-                                 :loading="lightBoxLoading">
-                </GalleryLightBox>
-            </transition>
-        </div>
-        <portal-target name="modals" slim></portal-target>
-    </div>
+        </v-container>
+    </v-app>
 </template>
 
 <script>
   import GalleryPost from "./components/GalleryPost";
+  import GalleryPostImage from "./components/galleryPostImage"
   import GalleryLightBox from "./components/GalleryLightBox";
   import LoadingButton from "@/utilities/vue/components/LoadingButton";
   import { mapGetters, mapActions } from 'vuex';
   export default {
     name: 'gmGallery',
-    components: {LoadingButton, GalleryLightBox, GalleryPost},
+    components: {LoadingButton, GalleryLightBox, GalleryPost, GalleryPostImage},
     data() {
       return {
         // galleryPosts: [],
