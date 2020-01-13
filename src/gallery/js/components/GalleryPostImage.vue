@@ -68,7 +68,7 @@
         if (this.imageLoading) {
           return this.getSizedImage('thumbnail');
         }
-        return this.getSizedImage('full');
+        return this.getSizedImage('medium');
       }
     },
     mounted() {

@@ -469,22 +469,12 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   computed: {
-    /*loadingImage: {
-      get() {
-        return this.getSizedImage('thumbnail');
-      }
-    },
-    mainImage: {
-      get() {
-        return this.getSizedImage('full');
-      }
-    },*/
     mainImage: function mainImage() {
       if (this.imageLoading) {
         return this.getSizedImage('thumbnail');
       }
 
-      return this.getSizedImage('full');
+      return this.getSizedImage('medium');
     }
   },
   mounted: function mounted() {
