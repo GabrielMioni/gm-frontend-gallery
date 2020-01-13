@@ -3,7 +3,9 @@
         <template v-slot:default="{ hover }">
             <v-card class="gm-frontend-gallery-image">
                 <v-img
-                        :src="mainImage"
+                        :src="loadingImage"
+                        v-bind:class="{ 'gm-frontend-gallery-image__main-image--loading' : imageLoading }"
+                        ref="image"
                         class="grey darken-4"
                         height="100%"
                         width="100%">
@@ -25,6 +27,11 @@
 <script>
   export default {
     name: "GalleryPostImage",
+    data() {
+      return {
+        imageLoading: true
+      }
+    },
     props: {
       galleryPost: {
         type: Object,
@@ -35,12 +42,32 @@
         required: true
       }
     },
+    methods: {
+      loadMainImage() {
+        const image = new Image();
+        image.src = this.mainImage;
+        image.onload = () => {
+          setTimeout(()=>{
+            this.imageLoading = false;
+            this.$refs['image'].src = this.mainImage;
+          }, 500);
+        }
+      }
+    },
     computed: {
+      loadingImage: {
+        get() {
+          return this.galleryPost.images[0]['sized_images'].thumbnail;
+        }
+      },
       mainImage: {
         get() {
           return this.galleryPost.images[0]['sized_images'].full;
         }
       }
+    },
+    mounted() {
+      this.loadMainImage();
     }
   }
 </script>
