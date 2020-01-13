@@ -1,0 +1,13 @@
+.gm-frontend-gallery-image {
+  display: inline-block;
+  height: 300px;
+  width: 300px;
+  margin: 0 0 1rem 0;
+  overflow: hidden;
+
+  &__main-image {
+    &--loading {
+      filter: blur(5px);
+    }
+  }
+}
