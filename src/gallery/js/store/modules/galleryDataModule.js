@@ -16,6 +16,7 @@ export const galleryDataModule = {
     getRouteNameSpace: state => state.routeNameSpace,
     getPageLoaded: state => state.pageLoaded,
     getPostsPerPage: state => state.postsPerPage,
+    getOpenedPostIndex: state => state.openedPostIndex
   },
   mutations: {
     updateGalleryCount(state, count) {
@@ -26,6 +27,9 @@ export const galleryDataModule = {
     },
     updatePageLoaded(state, pageLoaded) {
       state.pageLoaded = pageLoaded;
+    },
+    setOpenedPostIndex(state, index) {
+      state.openedPostIndex = index;
     }
   },
   actions: {
@@ -44,5 +48,8 @@ export const galleryDataModule = {
       };
       xhr.send();
     },
+    SET_OPENED_POST_INDEX({commit, index}) {
+      commit('setOpenedPostIndex', index);
+    }
   }
 };

@@ -154,23 +154,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     GalleryLightBox: _components_GalleryLightBox__WEBPACK_IMPORTED_MODULE_1__["default"],
     GalleryPost: _components_GalleryPost__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-
-  /*data() {
+  data: function data() {
     return {
-      galleryPosts: [],
-      openedPostIndex: null,
+      // galleryPosts: [],
+      //openedPostIndex: null,
       galleryLoading: true,
-      lightBoxLoading: false,
-      pageLoaded: 1,
-      postsPerPage: 10,
-      galleryCount: 0,
-    }
-  },*/
+      lightBoxLoading: false // pageLoaded: 1,
+      // postsPerPage: 10,
+      // galleryCount: 0,
+
+    };
+  },
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_3__["mapGetters"])({
     getGalleryCount: 'galleryData/getGalleryCount',
-    getGalleryPosts: 'galleryData/getGalleryPosts'
+    getGalleryPosts: 'galleryData/getGalleryPosts',
+    getOpenedPostIndex: 'galleryData/getOpenedPostIndex'
   }), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_3__["mapActions"])({
-    SET_GALLERY_POSTS: 'galleryData/SET_GALLERY_POSTS'
+    SET_GALLERY_POSTS: 'galleryData/SET_GALLERY_POSTS',
+    SET_OPENED_POST_INDEX: 'galleryData/SET_OPENED_POST_INDEX'
   }), {
     setGalleryItems: function setGalleryItems() {
       var self = this;
@@ -213,6 +214,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     openPostHandler: function openPostHandler(postIndex) {
+      console.log(postIndex);
       this.loadPost(postIndex);
       this.openedPostIndex = postIndex;
     },
@@ -259,6 +261,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     galleryPosts: {
       get: function get() {
         return this.getGalleryPosts();
+      }
+    },
+    openedPostIndex: {
+      get: function get() {
+        return this.getOpenedPostIndex();
+      },
+      set: function set(index) {
+        return this.SET_OPENED_POST_INDEX(index);
       }
     }
   },
@@ -1576,7 +1586,7 @@ var render = function() {
         [
           _c(
             "div",
-            { staticClass: "gm-frontend-gallery-posts" },
+            { staticClass: "gm-frontend-gallopenPostHandlerery-posts" },
             [
               _vm._l(_vm.galleryPosts, function(galleryPost, index) {
                 return [
@@ -56465,6 +56475,9 @@ var galleryDataModule = {
     },
     getPostsPerPage: function getPostsPerPage(state) {
       return state.postsPerPage;
+    },
+    getOpenedPostIndex: function getOpenedPostIndex(state) {
+      return state.openedPostIndex;
     }
   },
   mutations: {
@@ -56476,6 +56489,9 @@ var galleryDataModule = {
     },
     updatePageLoaded: function updatePageLoaded(state, pageLoaded) {
       state.pageLoaded = pageLoaded;
+    },
+    setOpenedPostIndex: function setOpenedPostIndex(state, index) {
+      state.openedPostIndex = index;
     }
   },
   actions: {
@@ -56496,6 +56512,11 @@ var galleryDataModule = {
       };
 
       xhr.send();
+    },
+    SET_OPENED_POST_INDEX: function SET_OPENED_POST_INDEX(_ref2) {
+      var commit = _ref2.commit,
+          index = _ref2.index;
+      commit('setOpenedPostIndex', index);
     }
   }
 };

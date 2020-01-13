@@ -1,7 +1,7 @@
 <template>
     <div id="gm-frontend-main">
         <div class="gm-frontend-gallery">
-            <div class="gm-frontend-gallery-posts">
+            <div class="gm-frontend-gallopenPostHandlerery-posts">
                 <template v-for="(galleryPost, index) in galleryPosts">
                     <GalleryPost
                             @open-post="openPostHandler"
@@ -44,24 +44,26 @@
   export default {
     name: 'gmGallery',
     components: {LoadingButton, GalleryLightBox, GalleryPost},
-    /*data() {
+    data() {
       return {
-        galleryPosts: [],
-        openedPostIndex: null,
+        // galleryPosts: [],
+        //openedPostIndex: null,
         galleryLoading: true,
         lightBoxLoading: false,
-        pageLoaded: 1,
-        postsPerPage: 10,
-        galleryCount: 0,
+        // pageLoaded: 1,
+        // postsPerPage: 10,
+        // galleryCount: 0,
       }
-    },*/
+    },
     methods: {
       ...mapGetters({
         getGalleryCount: 'galleryData/getGalleryCount',
-        getGalleryPosts: 'galleryData/getGalleryPosts'
+        getGalleryPosts: 'galleryData/getGalleryPosts',
+        getOpenedPostIndex: 'galleryData/getOpenedPostIndex'
       }),
       ...mapActions({
-        SET_GALLERY_POSTS: 'galleryData/SET_GALLERY_POSTS'
+        SET_GALLERY_POSTS: 'galleryData/SET_GALLERY_POSTS',
+        SET_OPENED_POST_INDEX: 'galleryData/SET_OPENED_POST_INDEX'
       }),
       setGalleryItems() {
         const self = this;
@@ -152,6 +154,14 @@
       galleryPosts: {
         get() {
           return this.getGalleryPosts();
+        }
+      },
+      openedPostIndex: {
+        get() {
+          return this.getOpenedPostIndex();
+        },
+        set(index) {
+          return this.SET_OPENED_POST_INDEX(index)
         }
       }
     },
