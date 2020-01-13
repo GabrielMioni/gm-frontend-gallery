@@ -434,14 +434,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "GalleryPostImage",
   data: function data() {
@@ -477,15 +469,22 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   computed: {
-    loadingImage: {
-      get: function get() {
+    /*loadingImage: {
+      get() {
         return this.getSizedImage('thumbnail');
       }
     },
     mainImage: {
-      get: function get() {
+      get() {
         return this.getSizedImage('full');
       }
+    },*/
+    mainImage: function mainImage() {
+      if (this.imageLoading) {
+        return this.getSizedImage('thumbnail');
+      }
+
+      return this.getSizedImage('full');
     }
   },
   mounted: function mounted() {
@@ -1931,29 +1930,19 @@ var render = function() {
                 staticClass: "gm-frontend-gallery-image"
               },
               [
-                _vm.imageLoading
-                  ? _c("v-img", {
-                      staticClass:
-                        "grey darken-4 gm-frontend-gallery-image__main-image--loading",
-                      attrs: {
-                        src: _vm.loadingImage,
-                        contain: "",
-                        height: "100%",
-                        width: "100%"
-                      }
-                    })
-                  : _vm._e(),
-                _vm._v(" "),
-                !_vm.imageLoading
-                  ? _c("v-img", {
-                      staticClass: "grey darken-4",
-                      attrs: {
-                        src: _vm.mainImage,
-                        height: "100%",
-                        width: "100%"
-                      }
-                    })
-                  : _vm._e(),
+                _c("v-img", {
+                  staticClass: "grey darken-4",
+                  class: {
+                    "gm-frontend-gallery-image__main-image--loading":
+                      _vm.imageLoading
+                  },
+                  attrs: {
+                    src: _vm.mainImage,
+                    contain: "",
+                    height: "100%",
+                    width: "100%"
+                  }
+                }),
                 _vm._v(" "),
                 _c(
                   "v-fade-transition",

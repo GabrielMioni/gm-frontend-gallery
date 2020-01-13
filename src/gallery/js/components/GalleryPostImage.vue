@@ -6,17 +6,9 @@
                     class="gm-frontend-gallery-image"
             >
                 <v-img
-                        v-if="imageLoading"
-                        :src="loadingImage"
-                        contain
-                        class="grey darken-4 gm-frontend-gallery-image__main-image--loading"
-                        height="100%"
-                        width="100%"
-                >
-                </v-img>
-                <v-img
-                        v-if="!imageLoading"
                         :src="mainImage"
+                        contain
+                        v-bind:class="{'gm-frontend-gallery-image__main-image--loading': imageLoading}"
                         class="grey darken-4"
                         height="100%"
                         width="100%"
@@ -72,15 +64,11 @@
       },
     },
     computed: {
-      loadingImage: {
-        get() {
+      mainImage() {
+        if (this.imageLoading) {
           return this.getSizedImage('thumbnail');
         }
-      },
-      mainImage: {
-        get() {
-          return this.getSizedImage('full');
-        }
+        return this.getSizedImage('full');
       }
     },
     mounted() {
