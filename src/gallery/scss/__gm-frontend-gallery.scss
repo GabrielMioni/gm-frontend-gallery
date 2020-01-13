@@ -1,10 +1,23 @@
 @import "../../utilities/variables";
 
+#gm-frontend-gallery {
+  max-width: 100%;
+  background: none;
+
+  .gm-frontend-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+  }
+}
+
+/*
 #gm-frontend-main {
   margin: 0;
   padding: 0;
   width: 100%;
   max-width: 100%;
+  background: none;
 
   .gm-frontend-gallery {
     display: flex;
@@ -40,4 +53,4 @@
       justify-content: center;
     }
   }
-}
+}*/
