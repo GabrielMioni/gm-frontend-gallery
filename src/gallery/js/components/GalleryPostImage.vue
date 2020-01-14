@@ -52,7 +52,7 @@
     methods: {
       loadMainImage() {
         const image = new Image();
-        image.src = this.mainImage;
+        image.src = this.getSizedImage('medium');
         image.onload = () => {
           setTimeout(()=>{
             this.imageLoading = false;
