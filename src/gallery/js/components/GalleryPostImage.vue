@@ -52,12 +52,12 @@
     methods: {
       loadMainImage() {
         const image = new Image();
-        image.src = this.getSizedImage('medium');
         image.onload = () => {
           setTimeout(()=>{
             this.imageLoading = false;
           }, 500);
-        }
+        };
+        image.src = this.getSizedImage('medium');
       },
       getSizedImage(size) {
         return this.galleryPost.images[0]['sized_images'][size];
