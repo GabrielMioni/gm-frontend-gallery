@@ -2,13 +2,28 @@
     <v-app id="gm-frontend-gallery">
         <v-container fluid>
             <div class="gm-frontend-gallery">
-                <gallery-post-image
-                        v-for="(galleryPost, index) in galleryPosts"
-                        :gallery-post="galleryPost"
-                        :index="index"
-                        :key="index"
+                <v-fade-transition
+                        class="gm-frontend-gallery__main"
+                        group>
+                    <gallery-post-image
+                            v-for="(galleryPost, index) in galleryPosts"
+                            v-if="galleryPost.images.length > 0"
+                            :gallery-post="galleryPost"
+                            :index="index"
+                            :key="index"
+                    >
+                    </gallery-post-image>
+                </v-fade-transition>
+            </div>
+            <div class="gm-frontend-gallery__footer">
+                <v-btn
+                        v-if="galleryPosts.length < getGalleryCount()"
+                        color="primary"
+                        :loading="getGalleryLoading()"
+                        @click="SET_GALLERY_POSTS(1000)"
                 >
-                </gallery-post-image>
+                    Load More
+                </v-btn>
             </div>
         </v-container>
     </v-app>
@@ -27,7 +42,7 @@
       return {
         // galleryPosts: [],
         //openedPostIndex: null,
-        galleryLoading: true,
+        //galleryLoading: true,
         lightBoxLoading: false,
         // pageLoaded: 1,
         // postsPerPage: 10,
@@ -38,7 +53,8 @@
       ...mapGetters({
         getGalleryCount: 'galleryData/getGalleryCount',
         getGalleryPosts: 'galleryData/getGalleryPosts',
-        getOpenedPostIndex: 'galleryData/getOpenedPostIndex'
+        getOpenedPostIndex: 'galleryData/getOpenedPostIndex',
+        getGalleryLoading: 'galleryData/getGalleryLoading'
       }),
       ...mapActions({
         SET_GALLERY_POSTS: 'galleryData/SET_GALLERY_POSTS',
@@ -130,10 +146,8 @@
       }
     },
     computed: {
-      galleryPosts: {
-        get() {
-          return this.getGalleryPosts();
-        }
+      galleryPosts() {
+        return this.getGalleryPosts();
       },
       openedPostIndex: {
         get() {
@@ -146,7 +160,7 @@
     },
     mounted() {
       // console.log('mounted');
-      this.SET_GALLERY_POSTS();
+      this.SET_GALLERY_POSTS(1000);
       // this.setGalleryItems(false);
     }
   }
