@@ -50,6 +50,12 @@
       }
     },
     methods: {
+      isGif() {
+        const fullImage = this.getSizedImage('full');
+        const reg = fullImage.match(/\.(gif)$/) != null;
+        console.log(reg);
+        return reg;
+      },
       loadMainImage() {
         const image = new Image();
         image.onload = () => {
@@ -57,7 +63,8 @@
             this.imageLoading = false;
           }, 500);
         };
-        image.src = this.getSizedImage('medium');
+        const size = this.isGif() === true ? 'full' : 'medium';
+        image.src = this.getSizedImage(size);
       },
       getSizedImage(size) {
         return this.galleryPost.images[0]['sized_images'][size];
@@ -67,6 +74,9 @@
       mainImage() {
         if (this.imageLoading) {
           return this.getSizedImage('thumbnail');
+        }
+        if (this.isGif()) {
+          return this.getSizedImage('full');
         }
         return this.getSizedImage('medium');
       }

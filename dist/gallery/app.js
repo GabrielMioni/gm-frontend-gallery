@@ -466,6 +466,12 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
+    isGif: function isGif() {
+      var fullImage = this.getSizedImage('full');
+      var reg = fullImage.match(/\.(gif)$/) != null;
+      console.log(reg);
+      return reg;
+    },
     loadMainImage: function loadMainImage() {
       var _this = this;
 
@@ -477,7 +483,8 @@ __webpack_require__.r(__webpack_exports__);
         }, 500);
       };
 
-      image.src = this.getSizedImage('medium');
+      var size = this.isGif() === true ? 'full' : 'medium';
+      image.src = this.getSizedImage(size);
     },
     getSizedImage: function getSizedImage(size) {
       return this.galleryPost.images[0]['sized_images'][size];
@@ -487,6 +494,10 @@ __webpack_require__.r(__webpack_exports__);
     mainImage: function mainImage() {
       if (this.imageLoading) {
         return this.getSizedImage('thumbnail');
+      }
+
+      if (this.isGif()) {
+        return this.getSizedImage('full');
       }
 
       return this.getSizedImage('medium');
