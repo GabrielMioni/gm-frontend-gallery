@@ -122,6 +122,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -139,7 +154,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     return {
       // galleryPosts: [],
       //openedPostIndex: null,
-      galleryLoading: true,
+      //galleryLoading: true,
       lightBoxLoading: false // pageLoaded: 1,
       // postsPerPage: 10,
       // galleryCount: 0,
@@ -149,7 +164,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_4__["mapGetters"])({
     getGalleryCount: 'galleryData/getGalleryCount',
     getGalleryPosts: 'galleryData/getGalleryPosts',
-    getOpenedPostIndex: 'galleryData/getOpenedPostIndex'
+    getOpenedPostIndex: 'galleryData/getOpenedPostIndex',
+    getGalleryLoading: 'galleryData/getGalleryLoading'
   }), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_4__["mapActions"])({
     SET_GALLERY_POSTS: 'galleryData/SET_GALLERY_POSTS',
     SET_OPENED_POST_INDEX: 'galleryData/SET_OPENED_POST_INDEX'
@@ -238,10 +254,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   }),
   computed: {
-    galleryPosts: {
-      get: function get() {
-        return this.getGalleryPosts();
-      }
+    galleryPosts: function galleryPosts() {
+      return this.getGalleryPosts();
     },
     openedPostIndex: {
       get: function get() {
@@ -254,7 +268,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   mounted: function mounted() {
     // console.log('mounted');
-    this.SET_GALLERY_POSTS(); // this.setGalleryItems(false);
+    this.SET_GALLERY_POSTS(1000); // this.setGalleryItems(false);
   }
 });
 
@@ -456,13 +470,14 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       var image = new Image();
-      image.src = this.mainImage;
 
       image.onload = function () {
         setTimeout(function () {
           _this.imageLoading = false;
         }, 500);
       };
+
+      image.src = this.getSizedImage('medium');
     },
     getSizedImage: function getSizedImage(size) {
       return this.galleryPost.images[0]['sized_images'][size];
@@ -1656,12 +1671,49 @@ var render = function() {
         _c(
           "div",
           { staticClass: "gm-frontend-gallery" },
-          _vm._l(_vm.galleryPosts, function(galleryPost, index) {
-            return _c("gallery-post-image", {
-              key: index,
-              attrs: { "gallery-post": galleryPost, index: index }
-            })
-          }),
+          [
+            _c(
+              "v-fade-transition",
+              {
+                staticClass: "gm-frontend-gallery__main",
+                attrs: { group: "" }
+              },
+              _vm._l(_vm.galleryPosts, function(galleryPost, index) {
+                return galleryPost.images.length > 0
+                  ? _c("gallery-post-image", {
+                      key: index,
+                      attrs: { "gallery-post": galleryPost, index: index }
+                    })
+                  : _vm._e()
+              }),
+              1
+            )
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "gm-frontend-gallery__footer" },
+          [
+            _vm.galleryPosts.length < _vm.getGalleryCount()
+              ? _c(
+                  "v-btn",
+                  {
+                    attrs: {
+                      color: "primary",
+                      loading: _vm.getGalleryLoading()
+                    },
+                    on: {
+                      click: function($event) {
+                        return _vm.SET_GALLERY_POSTS(1000)
+                      }
+                    }
+                  },
+                  [_vm._v("\n                Load More\n            ")]
+                )
+              : _vm._e()
+          ],
           1
         )
       ])
@@ -56630,6 +56682,9 @@ var galleryDataModule = {
     getGalleryCount: function getGalleryCount(state) {
       return state.galleryCount;
     },
+    getGalleryLoading: function getGalleryLoading(state) {
+      return state.galleryLoading;
+    },
     getRouteNameSpace: function getRouteNameSpace(state) {
       return state.routeNameSpace;
     },
@@ -56650,6 +56705,9 @@ var galleryDataModule = {
     updateGalleryPosts: function updateGalleryPosts(state, posts) {
       state.galleryPosts = state.galleryPosts.concat(posts);
     },
+    updateGalleryLoading: function updateGalleryLoading(state, value) {
+      state.galleryLoading = value;
+    },
     updatePageLoaded: function updatePageLoaded(state, pageLoaded) {
       state.pageLoaded = pageLoaded;
     },
@@ -56658,20 +56716,24 @@ var galleryDataModule = {
     }
   },
   actions: {
-    SET_GALLERY_POSTS: function SET_GALLERY_POSTS(_ref) {
+    SET_GALLERY_POSTS: function SET_GALLERY_POSTS(_ref, time) {
       var commit = _ref.commit,
           getters = _ref.getters;
       var namespace = getters.getRouteNameSpace;
       var pageLoaded = getters.getPageLoaded;
       var postsPerPage = getters.getPostsPerPage;
+      commit('updateGalleryLoading', true);
       var xhr = new XMLHttpRequest();
       xhr.open('GET', "".concat(namespace, "/get/").concat(pageLoaded, "/").concat(postsPerPage));
 
       xhr.onload = function () {
         var responseData = JSON.parse(xhr.responseText);
-        commit('updateGalleryPosts', responseData.posts);
-        commit('updateGalleryCount', responseData['gallery_count']);
-        commit('updatePageLoaded', pageLoaded + 1);
+        setTimeout(function () {
+          commit('updateGalleryPosts', responseData.posts);
+          commit('updateGalleryCount', responseData['gallery_count']);
+          commit('updatePageLoaded', pageLoaded + 1);
+          commit('updateGalleryLoading', false);
+        }, time);
       };
 
       xhr.send();
