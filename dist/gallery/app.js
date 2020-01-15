@@ -448,6 +448,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "GalleryPostImage",
   data: function data() {
@@ -466,45 +467,34 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    isGif: function isGif() {
-      var fullImage = this.getSizedImage('full');
-      var reg = fullImage.match(/\.(gif)$/) != null;
-      console.log(reg);
-      return reg;
-    },
-    loadMainImage: function loadMainImage() {
-      var _this = this;
-
-      var image = new Image();
-
-      image.onload = function () {
-        setTimeout(function () {
-          _this.imageLoading = false;
-        }, 500);
-      };
-
-      var size = this.isGif() === true ? 'full' : 'medium';
-      image.src = this.getSizedImage(size);
+    isGif: function isGif(image) {
+      return image.match(/\.(gif)$/) != null;
     },
     getSizedImage: function getSizedImage(size) {
       return this.galleryPost.images[0]['sized_images'][size];
+    },
+    loadingComplete: function loadingComplete() {
+      var _this = this;
+
+      console.log('complete!');
+      setTimeout(function () {
+        _this.imageLoading = false;
+      }, 1000);
     }
   },
   computed: {
+    thumbImage: function thumbImage() {
+      return this.getSizedImage('thumbnail');
+    },
     mainImage: function mainImage() {
-      if (this.imageLoading) {
-        return this.getSizedImage('thumbnail');
-      }
+      var fullImage = this.getSizedImage('full');
 
-      if (this.isGif()) {
-        return this.getSizedImage('full');
+      if (this.isGif(fullImage)) {
+        return fullImage;
       }
 
       return this.getSizedImage('medium');
     }
-  },
-  mounted: function mounted() {
-    this.loadMainImage();
   }
 });
 
@@ -1984,17 +1974,18 @@ var render = function() {
               },
               [
                 _c("v-img", {
-                  staticClass: "grey darken-4",
                   class: {
                     "gm-frontend-gallery-image__main-image--loading":
                       _vm.imageLoading
                   },
                   attrs: {
                     src: _vm.mainImage,
+                    "lazy-src": _vm.thumbImage,
                     contain: "",
                     height: "100%",
                     width: "100%"
-                  }
+                  },
+                  on: { load: _vm.loadingComplete }
                 }),
                 _vm._v(" "),
                 _c(
@@ -2015,7 +2006,10 @@ var render = function() {
                           { attrs: { absolute: "" } },
                           [
                             _c("v-progress-circular", {
-                              attrs: { indeterminate: "", size: "64" }
+                              attrs: {
+                                indeterminate: "",
+                                color: "grey lighten-5"
+                              }
                             })
                           ],
                           1
