@@ -7,9 +7,10 @@
             >
                 <v-img
                         :src="mainImage"
+                        :lazy-src="thumbImage"
+                        @load="loadingComplete"
                         contain
                         v-bind:class="{'gm-frontend-gallery-image__main-image--loading': imageLoading}"
-                        class="grey darken-4"
                         height="100%"
                         width="100%"
                 >
@@ -23,7 +24,7 @@
                         <v-btn>See more info</v-btn>
                     </v-overlay>
                     <v-overlay v-if="imageLoading" absolute>
-                        <v-progress-circular indeterminate size="64"></v-progress-circular>
+                        <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
                     </v-overlay>
                 </v-fade-transition>
             </v-card>
@@ -50,39 +51,29 @@
       }
     },
     methods: {
-      isGif() {
-        const fullImage = this.getSizedImage('full');
-        const reg = fullImage.match(/\.(gif)$/) != null;
-        console.log(reg);
-        return reg;
-      },
-      loadMainImage() {
-        const image = new Image();
-        image.onload = () => {
-          setTimeout(()=>{
-            this.imageLoading = false;
-          }, 500);
-        };
-        const size = this.isGif() === true ? 'full' : 'medium';
-        image.src = this.getSizedImage(size);
+      isGif(image) {
+        return image.match(/\.(gif)$/) != null;
       },
       getSizedImage(size) {
         return this.galleryPost.images[0]['sized_images'][size];
       },
-    },
-    computed: {
-      mainImage() {
-        if (this.imageLoading) {
-          return this.getSizedImage('thumbnail');
-        }
-        if (this.isGif()) {
-          return this.getSizedImage('full');
-        }
-        return this.getSizedImage('medium');
+      loadingComplete() {
+        setTimeout(()=>{
+          this.imageLoading = false;
+        }, 1000);
       }
     },
-    mounted() {
-      this.loadMainImage();
+    computed: {
+      thumbImage() {
+        return this.getSizedImage('thumbnail');
+      },
+      mainImage() {
+        const fullImage = this.getSizedImage('full');
+        if (this.isGif(fullImage)) {
+          return fullImage;
+        }
+        return this.getSizedImage('medium');
+      },
     }
   }
 </script>
