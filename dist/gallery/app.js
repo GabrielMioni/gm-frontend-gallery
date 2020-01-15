@@ -144,17 +144,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     GalleryLightBox: _components_GalleryLightBox__WEBPACK_IMPORTED_MODULE_1__["default"],
     GalleryPostImage: _components_galleryPostImage__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  data: function data() {
-    return {
-      // galleryPosts: [],
-      //openedPostIndex: null,
-      //galleryLoading: true,
-      lightBoxLoading: false // pageLoaded: 1,
-      // postsPerPage: 10,
-      // galleryCount: 0,
-
-    };
-  },
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapGetters"])({
     getGalleryCount: 'galleryData/getGalleryCount',
     getGalleryPosts: 'galleryData/getGalleryPosts',
@@ -163,90 +152,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   }), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapActions"])({
     SET_GALLERY_POSTS: 'galleryData/SET_GALLERY_POSTS',
     SET_OPENED_POST_INDEX: 'galleryData/SET_OPENED_POST_INDEX'
-  }), {
-    setGalleryItems: function setGalleryItems() {
-      var self = this;
-      self.galleryLoading = true;
-      var xhr = new XMLHttpRequest();
-      xhr.open('GET', "/wp-json/gm-frontend-gallery/v1/get/".concat(self.pageLoaded, "/").concat(self.postsPerPage));
-
-      xhr.onload = function () {
-        var responseData = JSON.parse(xhr.responseText);
-        var galleryPosts = responseData.posts;
-        self.galleryCount = parseInt(responseData['gallery_count']);
-        self.preloadImages(galleryPosts, function () {
-          setTimeout(function () {
-            self.galleryLoading = false;
-            self.galleryPosts = self.galleryPosts.concat(galleryPosts);
-          }, 1000);
-          ++self.pageLoaded;
-        });
-      };
-
-      xhr.send();
-    },
-    preloadImages: function preloadImages(galleryPosts, callback) {
-      var loadedImageCount = 0;
-      galleryPosts.forEach(function (post) {
-        var images = post['images'];
-        images.forEach(function (image) {
-          var medium = image['sized_images'].medium;
-          var currentImage = new Image();
-          currentImage.src = medium;
-
-          currentImage.onload = function () {
-            ++loadedImageCount;
-
-            if (loadedImageCount === galleryPosts.length) {
-              callback();
-            }
-          };
-        });
-      });
-    },
-    openPostHandler: function openPostHandler(postIndex) {
-      this.loadPost(postIndex);
-      this.openedPostIndex = postIndex;
-    },
-    closePostHandler: function closePostHandler() {
-      this.openedPostIndex = null;
-    },
-    galleryNavigateHandler: function galleryNavigateHandler(data) {
-      var newIndex = data === 'left' ? this.openedPostIndex - 1 : this.openedPostIndex + 1;
-
-      if (newIndex < 0) {
-        newIndex = this.galleryPosts.length - 1;
-      }
-
-      if (newIndex > this.galleryPosts.length - 1) {
-        newIndex = 0;
-      }
-
-      this.loadPost(newIndex);
-      this.openedPostIndex = newIndex;
-    },
-    loadPost: function loadPost(postIndex) {
-      var self = this;
-      var postImages = self.galleryPosts[postIndex].images;
-      var loadedImageCount = 0;
-      self.lightBoxLoading = true;
-      postImages.forEach(function (image) {
-        var sizedImages = image['sized_images'];
-        var currentImage = new Image();
-        currentImage.src = sizedImages.full;
-
-        currentImage.onload = function () {
-          ++loadedImageCount;
-
-          if (loadedImageCount === postImages.length) {
-            setTimeout(function () {
-              self.lightBoxLoading = false;
-            }, 1000);
-          }
-        };
-      });
-    }
-  }),
+  })),
   computed: {
     galleryPosts: function galleryPosts() {
       return this.getGalleryPosts();
@@ -261,8 +167,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   mounted: function mounted() {
-    // console.log('mounted');
-    this.SET_GALLERY_POSTS(1000); // this.setGalleryItems(false);
+    this.SET_GALLERY_POSTS(1000);
   }
 });
 
