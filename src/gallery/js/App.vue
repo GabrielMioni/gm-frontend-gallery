@@ -30,14 +30,12 @@
 </template>
 
 <script>
-  import GalleryPost from "./components/GalleryPost";
   import GalleryPostImage from "./components/galleryPostImage"
   import GalleryLightBox from "./components/GalleryLightBox";
-  import LoadingButton from "@/utilities/vue/components/LoadingButton";
   import { mapGetters, mapActions } from 'vuex';
   export default {
     name: 'gmGallery',
-    components: {LoadingButton, GalleryLightBox, GalleryPost, GalleryPostImage},
+    components: {GalleryLightBox, GalleryPostImage},
     data() {
       return {
         // galleryPosts: [],
