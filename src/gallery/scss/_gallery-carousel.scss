@@ -1,0 +1,14 @@
+@import "../../utilities/variables";
+
+.gm-frontend-gallery {
+  &__carousel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba($themeColor1, .5);
+    //height: 100%;
+    //display: flex;
+    //align-items: center;
+    //justify-content: center;
+  }
+}

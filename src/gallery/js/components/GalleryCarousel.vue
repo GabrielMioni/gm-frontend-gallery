@@ -1,0 +1,50 @@
+<template>
+    <v-carousel
+            height="100%"
+            width="100%"
+            hide-delimiter-background
+            show-arrows-on-hover
+            prev-icon="chevron_left"
+            next-icon="chevron_right"
+            :dark="false"
+    >
+        <v-carousel-item
+                height="100%"
+                width="100%"
+                v-for="(post, i) in galleryPosts"
+                :key="i">
+            <gallery-detail
+                    :gallery-post="post">
+            </gallery-detail>
+        </v-carousel-item>
+    </v-carousel>
+</template>
+
+<script>
+  import { mapGetters, mapActions } from 'vuex';
+  import GalleryDetail from "@/gallery/js/components/GalleryDetail";
+  export default {
+    name: "GalleryCarousel",
+    components: {GalleryDetail},
+    methods: {
+      ...mapGetters({
+        getGalleryCount: 'galleryData/getGalleryCount',
+        getGalleryPosts: 'galleryData/getGalleryPosts',
+        getOpenedPostIndex: 'galleryData/getOpenedPostIndex',
+        getGalleryLoading: 'galleryData/getGalleryLoading'
+      }),
+      ...mapActions({
+        SET_OPENED_POST_INDEX: 'galleryData/SET_OPENED_POST_INDEX'
+      })
+    },
+    computed: {
+      galleryPosts() {
+        return this.getGalleryPosts();
+      }
+    },
+  }
+</script>
+
+<style scoped>
+
+</style>

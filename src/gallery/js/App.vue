@@ -1,5 +1,7 @@
 <template>
-    <v-app id="gm-frontend-gallery">
+    <v-app
+            :dark="false"
+            id="gm-frontend-gallery">
         <v-container fluid>
             <div class="gm-frontend-gallery">
                 <v-fade-transition
@@ -25,6 +27,11 @@
                     Load More
                 </v-btn>
             </div>
+            <gallery-carousel
+                    class="gm-frontend-gallery__carousel"
+                    v-if="showCarousel"
+            >
+            </gallery-carousel>
         </v-container>
     </v-app>
 </template>
@@ -32,10 +39,16 @@
 <script>
   import GalleryPostImage from "./components/galleryPostImage"
   import GalleryLightBox from "./components/GalleryLightBox";
+  import GalleryCarousel from "./components/GalleryCarousel";
   import { mapGetters, mapActions } from 'vuex';
   export default {
     name: 'gmGallery',
-    components: {GalleryLightBox, GalleryPostImage},
+    components: {GalleryCarousel, GalleryLightBox, GalleryPostImage},
+    data() {
+      return {
+        showCarousel: true,
+      }
+    },
     methods: {
       ...mapGetters({
         getGalleryCount: 'galleryData/getGalleryCount',
