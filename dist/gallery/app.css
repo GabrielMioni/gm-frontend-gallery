@@ -317,6 +317,31 @@
   margin-left: auto;
 }
 
+.gm-frontend-gallery__carousel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.gm-frontend-gallery__detail {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+          align-items: center;
+  height: 100%;
+}
+
+.gm-frontend-gallery__detail__main {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  height: 90%;
+  width: 80%;
+  background: white;
+}
+
 .fade-enter-active {
   -webkit-transition: opacity 0.2s;
   transition: opacity 0.2s;
