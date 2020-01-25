@@ -4,6 +4,7 @@
             <v-card
                     v-ripple
                     class="gm-frontend-gallery-image"
+                    @click.stop="openCarousel(index)"
             >
                 <v-img
                         :src="mainImage"
@@ -33,6 +34,8 @@
 </template>
 
 <script>
+  import { mapGetters, mapActions } from 'vuex';
+
   export default {
     name: "GalleryPostImage",
     data() {
@@ -51,6 +54,10 @@
       }
     },
     methods: {
+      ...mapActions({
+        SET_GALLERY_POSTS: 'galleryData/SET_GALLERY_POSTS',
+        SET_OPENED_POST_INDEX: 'galleryData/SET_OPENED_POST_INDEX'
+      }),
       isGif(image) {
         return image.match(/\.(gif)$/) != null;
       },
@@ -61,6 +68,10 @@
         setTimeout(()=>{
           this.imageLoading = false;
         }, 1000);
+      },
+      openCarousel(index) {
+        console.log('clicko', index);
+        this.SET_OPENED_POST_INDEX(index);
       }
     },
     computed: {
