@@ -57,7 +57,7 @@ export const galleryDataModule = {
       };
       xhr.send();
     },
-    SET_OPENED_POST_INDEX({commit, index}) {
+    SET_OPENED_POST_INDEX({commit}, index) {
       commit('setOpenedPostIndex', index);
     }
   }
