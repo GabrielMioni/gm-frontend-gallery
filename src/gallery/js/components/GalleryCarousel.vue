@@ -1,6 +1,6 @@
 <template>
     <v-carousel
-            v-model="currentIndex"
+            v-bind:value="currentIndex"
             class="gm-frontend-gallery__carousel"
             height="100%"
             width="100%"

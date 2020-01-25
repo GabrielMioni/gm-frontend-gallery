@@ -142,7 +142,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
 
 
 
@@ -269,7 +268,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     checkBodyClass: function checkBodyClass() {
       return this.bodyElm.classList.contains(this.noScrollClass);
     },
-    close: function close() {
+    closeCarousel: function closeCarousel() {
       this.SET_OPENED_POST_INDEX(null);
     }
   }),
@@ -1758,6 +1757,7 @@ var render = function() {
     {
       staticClass: "gm-frontend-gallery__carousel",
       attrs: {
+        value: _vm.currentIndex,
         height: "100%",
         width: "100%",
         "hide-delimiter-background": "",
@@ -1766,13 +1766,6 @@ var render = function() {
         "next-icon": "chevron_right",
         dark: _vm.$vuetify.theme.dark,
         light: !_vm.$vuetify.theme.dark
-      },
-      model: {
-        value: _vm.currentIndex,
-        callback: function($$v) {
-          _vm.currentIndex = $$v
-        },
-        expression: "currentIndex"
       }
     },
     [
@@ -1781,7 +1774,7 @@ var render = function() {
         {
           staticClass: "gm-frontend-gallery__carousel__close-button",
           attrs: { color: "white", icon: "", large: "" },
-          on: { click: _vm.close }
+          on: { click: _vm.closeCarousel }
         },
         [_c("v-icon", [_vm._v("close")])],
         1
