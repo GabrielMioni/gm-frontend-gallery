@@ -324,6 +324,11 @@
   background-color: rgba(0, 0, 0, 0.5);
 }
 
+.gm-frontend-gallery__carousel .v-window__prev button.theme--light.v-btn.v-btn--icon,
+.gm-frontend-gallery__carousel .v-window__next button.theme--light.v-btn.v-btn--icon {
+  color: #FFFFFF;
+}
+
 .gm-frontend-gallery__detail {
   display: -webkit-box;
   display: flex;
