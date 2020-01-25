@@ -6,7 +6,8 @@
             show-arrows-on-hover
             prev-icon="chevron_left"
             next-icon="chevron_right"
-            :dark="false"
+            :dark="$vuetify.theme.dark"
+            :light="!$vuetify.theme.dark"
     >
         <v-carousel-item
                 height="100%"

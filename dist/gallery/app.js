@@ -227,6 +227,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1699,7 +1700,8 @@ var render = function() {
         "show-arrows-on-hover": "",
         "prev-icon": "chevron_left",
         "next-icon": "chevron_right",
-        dark: false
+        dark: _vm.$vuetify.theme.dark,
+        light: !_vm.$vuetify.theme.dark
       }
     },
     _vm._l(_vm.galleryPosts, function(post, i) {
