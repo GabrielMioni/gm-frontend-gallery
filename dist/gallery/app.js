@@ -307,6 +307,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "GalleryDetail",
   data: function data() {
@@ -1780,11 +1781,12 @@ var render = function() {
             { staticClass: "gm-frontend-gallery__detail__col-1" },
             [
               _c("v-img", {
+                staticClass: "grey darken-4",
                 attrs: {
                   src: _vm.selectedImage,
                   contain: "",
-                  height: "100%",
-                  width: "100%"
+                  height: "90%",
+                  width: "90%"
                 }
               })
             ],

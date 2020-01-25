@@ -347,9 +347,21 @@
 .gm-frontend-gallery__detail__main {
   display: grid;
   grid-template-columns: 50% 50%;
-  height: 90%;
+  min-height: 35rem;
+  max-height: 90%;
+  overflow-y: scroll;
   width: 80%;
   background: white;
+}
+
+.gm-frontend-gallery__detail__col-1,
+.gm-frontend-gallery__detail__col-2 {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+          flex-direction: column;
+  padding: 1rem;
 }
 
 .fade-enter-active {
