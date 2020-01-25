@@ -7,8 +7,9 @@
                 <v-img
                         :src="selectedImage"
                         contain
-                        height="100%"
-                        width="100%"
+                        height="90%"
+                        width="90%"
+                        class="grey darken-4"
                 ></v-img>
             </div>
             <div class="gm-frontend-gallery__detail__col-2">
