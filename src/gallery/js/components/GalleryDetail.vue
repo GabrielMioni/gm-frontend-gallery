@@ -34,6 +34,7 @@
     },
     computed: {
       selectedImage() {
+        console.log('GalleryDetail.vue');
         console.log(this.galleryPost);
         return this.galleryPost.images[0]['sized_images'].full;
       }
