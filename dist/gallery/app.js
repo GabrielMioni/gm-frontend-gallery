@@ -183,6 +183,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       set: function set(index) {
         return this.SET_OPENED_POST_INDEX(index);
       }
+    },
+    carouselIsOpen: function carouselIsOpen() {
+      return this.getOpenedPostIndex() !== null;
     }
   },
   mounted: function mounted() {
@@ -240,6 +243,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -265,12 +270,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return this.bodyElm.classList.contains(this.noScrollClass);
     },
     close: function close() {
-      this.$emit('close');
+      this.SET_OPENED_POST_INDEX(null);
     }
   }),
   computed: {
     galleryPosts: function galleryPosts() {
       return this.getGalleryPosts();
+    },
+    currentIndex: function currentIndex() {
+      return this.getOpenedPostIndex();
     }
   },
   mounted: function mounted() {
@@ -447,6 +455,13 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -481,6 +496,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "GalleryPostImage",
   data: function data() {
@@ -498,7 +515,10 @@ __webpack_require__.r(__webpack_exports__);
       required: true
     }
   },
-  methods: {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])({
+    SET_GALLERY_POSTS: 'galleryData/SET_GALLERY_POSTS',
+    SET_OPENED_POST_INDEX: 'galleryData/SET_OPENED_POST_INDEX'
+  }), {
     isGif: function isGif(image) {
       return image.match(/\.(gif)$/) != null;
     },
@@ -511,8 +531,12 @@ __webpack_require__.r(__webpack_exports__);
       setTimeout(function () {
         _this.imageLoading = false;
       }, 1000);
+    },
+    openCarousel: function openCarousel(index) {
+      console.log('clicko', index);
+      this.SET_OPENED_POST_INDEX(index);
     }
-  },
+  }),
   computed: {
     thumbImage: function thumbImage() {
       return this.getSizedImage('thumbnail');
@@ -1699,9 +1723,7 @@ var render = function() {
             1
           ),
           _vm._v(" "),
-          _vm.showCarousel
-            ? _c("gallery-carousel", { on: { close: _vm.close } })
-            : _vm._e()
+          _vm.carouselIsOpen ? _c("gallery-carousel") : _vm._e()
         ],
         1
       )
@@ -1744,6 +1766,13 @@ var render = function() {
         "next-icon": "chevron_right",
         dark: _vm.$vuetify.theme.dark,
         light: !_vm.$vuetify.theme.dark
+      },
+      model: {
+        value: _vm.currentIndex,
+        callback: function($$v) {
+          _vm.currentIndex = $$v
+        },
+        expression: "currentIndex"
       }
     },
     [
@@ -1751,9 +1780,10 @@ var render = function() {
         "v-btn",
         {
           staticClass: "gm-frontend-gallery__carousel__close-button",
-          attrs: { color: "white", icon: "", large: "" }
+          attrs: { color: "white", icon: "", large: "" },
+          on: { click: _vm.close }
         },
-        [_c("v-icon", { on: { click: _vm.close } }, [_vm._v("close")])],
+        [_c("v-icon", [_vm._v("close")])],
         1
       ),
       _vm._v(" "),
@@ -2022,7 +2052,13 @@ var render = function() {
               "v-card",
               {
                 directives: [{ name: "ripple", rawName: "v-ripple" }],
-                staticClass: "gm-frontend-gallery-image"
+                staticClass: "gm-frontend-gallery-image",
+                on: {
+                  click: function($event) {
+                    $event.stopPropagation()
+                    return _vm.openCarousel(_vm.index)
+                  }
+                }
               },
               [
                 _c("v-img", {
@@ -56795,9 +56831,8 @@ var galleryDataModule = {
 
       xhr.send();
     },
-    SET_OPENED_POST_INDEX: function SET_OPENED_POST_INDEX(_ref2) {
-      var commit = _ref2.commit,
-          index = _ref2.index;
+    SET_OPENED_POST_INDEX: function SET_OPENED_POST_INDEX(_ref2, index) {
+      var commit = _ref2.commit;
       commit('setOpenedPostIndex', index);
     }
   }
