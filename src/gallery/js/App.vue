@@ -28,8 +28,7 @@
                 </v-btn>
             </div>
             <gallery-carousel
-                    v-if="showCarousel"
-                    v-on:close="close"
+                    v-if="carouselIsOpen"
             >
             </gallery-carousel>
         </v-container>
@@ -75,6 +74,9 @@
         set(index) {
           return this.SET_OPENED_POST_INDEX(index)
         }
+      },
+      carouselIsOpen() {
+        return this.getOpenedPostIndex() !== null;
       }
     },
     mounted() {
