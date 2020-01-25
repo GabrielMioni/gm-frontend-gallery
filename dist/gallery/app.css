@@ -29,6 +29,11 @@
   }
 }
 
+.gm-frontend-gallery-body--no-scroll {
+  height: 100vh;
+  overflow: hidden;
+}
+
 .gm-frontend-gallery .gm-gallery-post {
   display: -webkit-inline-box;
   display: inline-flex;
