@@ -28,8 +28,8 @@
                 </v-btn>
             </div>
             <gallery-carousel
-                    class="gm-frontend-gallery__carousel"
                     v-if="showCarousel"
+                    v-on:close="close"
             >
             </gallery-carousel>
         </v-container>
@@ -59,7 +59,10 @@
       ...mapActions({
         SET_GALLERY_POSTS: 'galleryData/SET_GALLERY_POSTS',
         SET_OPENED_POST_INDEX: 'galleryData/SET_OPENED_POST_INDEX'
-      })
+      }),
+      close() {
+        this.showCarousel = false;
+      }
     },
     computed: {
       galleryPosts() {

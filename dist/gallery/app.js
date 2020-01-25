@@ -167,7 +167,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   }), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_3__["mapActions"])({
     SET_GALLERY_POSTS: 'galleryData/SET_GALLERY_POSTS',
     SET_OPENED_POST_INDEX: 'galleryData/SET_OPENED_POST_INDEX'
-  })),
+  }), {
+    close: function close() {
+      this.showCarousel = false;
+    }
+  }),
   computed: {
     galleryPosts: function galleryPosts() {
       return this.getGalleryPosts();
@@ -228,6 +232,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -251,6 +263,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   }), {
     checkBodyClass: function checkBodyClass() {
       return this.bodyElm.classList.contains(this.noScrollClass);
+    },
+    close: function close() {
+      this.$emit('close');
     }
   }),
   computed: {
@@ -1685,9 +1700,7 @@ var render = function() {
           ),
           _vm._v(" "),
           _vm.showCarousel
-            ? _c("gallery-carousel", {
-                staticClass: "gm-frontend-gallery__carousel"
-              })
+            ? _c("gallery-carousel", { on: { close: _vm.close } })
             : _vm._e()
         ],
         1
@@ -1721,6 +1734,7 @@ var render = function() {
   return _c(
     "v-carousel",
     {
+      staticClass: "gm-frontend-gallery__carousel",
       attrs: {
         height: "100%",
         width: "100%",
@@ -1732,15 +1746,27 @@ var render = function() {
         light: !_vm.$vuetify.theme.dark
       }
     },
-    _vm._l(_vm.galleryPosts, function(post, i) {
-      return _c(
-        "v-carousel-item",
-        { key: i, attrs: { height: "100%", width: "100%" } },
-        [_c("gallery-detail", { attrs: { "gallery-post": post } })],
+    [
+      _c(
+        "v-btn",
+        {
+          staticClass: "gm-frontend-gallery__carousel__close-button",
+          attrs: { color: "white", icon: "", large: "" }
+        },
+        [_c("v-icon", { on: { click: _vm.close } }, [_vm._v("close")])],
         1
-      )
-    }),
-    1
+      ),
+      _vm._v(" "),
+      _vm._l(_vm.galleryPosts, function(post, i) {
+        return _c(
+          "v-carousel-item",
+          { key: i, attrs: { height: "100%", width: "100%" } },
+          [_c("gallery-detail", { attrs: { "gallery-post": post } })],
+          1
+        )
+      })
+    ],
+    2
   )
 }
 var staticRenderFns = []

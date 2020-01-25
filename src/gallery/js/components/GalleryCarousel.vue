@@ -1,5 +1,6 @@
 <template>
     <v-carousel
+            class="gm-frontend-gallery__carousel"
             height="100%"
             width="100%"
             hide-delimiter-background
@@ -9,13 +10,20 @@
             :dark="$vuetify.theme.dark"
             :light="!$vuetify.theme.dark"
     >
+        <v-btn
+                class="gm-frontend-gallery__carousel__close-button"
+                color="white"
+                icon large
+        >
+            <v-icon @click="close">close</v-icon>
+        </v-btn>
         <v-carousel-item
                 height="100%"
                 width="100%"
                 v-for="(post, i) in galleryPosts"
-                :key="i">
-            <gallery-detail
-                    :gallery-post="post">
+                :key="i"
+        >
+            <gallery-detail :gallery-post="post">
             </gallery-detail>
         </v-carousel-item>
     </v-carousel>
@@ -45,6 +53,9 @@
       }),
       checkBodyClass() {
         return this.bodyElm.classList.contains(this.noScrollClass);
+      },
+      close() {
+        this.$emit('close');
       }
     },
     computed: {
