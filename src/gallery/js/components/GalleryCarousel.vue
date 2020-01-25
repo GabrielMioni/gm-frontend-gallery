@@ -1,5 +1,6 @@
 <template>
     <v-carousel
+            v-model="currentIndex"
             class="gm-frontend-gallery__carousel"
             height="100%"
             width="100%"
@@ -14,8 +15,9 @@
                 class="gm-frontend-gallery__carousel__close-button"
                 color="white"
                 icon large
+                @click="closeCarousel"
         >
-            <v-icon @click="close">close</v-icon>
+            <v-icon>close</v-icon>
         </v-btn>
         <v-carousel-item
                 height="100%"
@@ -54,13 +56,16 @@
       checkBodyClass() {
         return this.bodyElm.classList.contains(this.noScrollClass);
       },
-      close() {
-        this.$emit('close');
+      closeCarousel() {
+        this.SET_OPENED_POST_INDEX(null);
       }
     },
     computed: {
       galleryPosts() {
         return this.getGalleryPosts();
+      },
+      currentIndex() {
+        return this.getOpenedPostIndex();
       }
     },
     mounted() {
