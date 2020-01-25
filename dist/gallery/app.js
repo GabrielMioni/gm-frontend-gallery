@@ -235,6 +235,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   components: {
     GalleryDetail: _gallery_js_components_GalleryDetail__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
+  data: function data() {
+    return {
+      bodyElm: null,
+      noScrollClass: 'gm-frontend-gallery-body--no-scroll'
+    };
+  },
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])({
     getGalleryCount: 'galleryData/getGalleryCount',
     getGalleryPosts: 'galleryData/getGalleryPosts',
@@ -242,10 +248,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     getGalleryLoading: 'galleryData/getGalleryLoading'
   }), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])({
     SET_OPENED_POST_INDEX: 'galleryData/SET_OPENED_POST_INDEX'
-  })),
+  }), {
+    checkBodyClass: function checkBodyClass() {
+      return this.bodyElm.classList.contains(this.noScrollClass);
+    }
+  }),
   computed: {
     galleryPosts: function galleryPosts() {
       return this.getGalleryPosts();
+    }
+  },
+  mounted: function mounted() {
+    var bodyCollection = document.getElementsByTagName('body');
+
+    if (bodyCollection.length > 0) {
+      this.bodyElm = bodyCollection[0];
+    }
+
+    if (!this.checkBodyClass()) {
+      this.bodyElm.classList.add(this.noScrollClass);
+    }
+  },
+  beforeDestroy: function beforeDestroy() {
+    if (this.checkBodyClass()) {
+      this.bodyElm.classList.remove(this.noScrollClass);
     }
   }
 });
@@ -296,6 +322,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     selectedImage: function selectedImage() {
+      console.log('GalleryDetail.vue');
       console.log(this.galleryPost);
       return this.galleryPost.images[0]['sized_images'].full;
     }

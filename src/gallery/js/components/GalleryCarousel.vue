@@ -27,6 +27,12 @@
   export default {
     name: "GalleryCarousel",
     components: {GalleryDetail},
+    data() {
+      return {
+        bodyElm: null,
+        noScrollClass: 'gm-frontend-gallery-body--no-scroll'
+      }
+    },
     methods: {
       ...mapGetters({
         getGalleryCount: 'galleryData/getGalleryCount',
@@ -36,13 +42,30 @@
       }),
       ...mapActions({
         SET_OPENED_POST_INDEX: 'galleryData/SET_OPENED_POST_INDEX'
-      })
+      }),
+      checkBodyClass() {
+        return this.bodyElm.classList.contains(this.noScrollClass);
+      }
     },
     computed: {
       galleryPosts() {
         return this.getGalleryPosts();
       }
     },
+    mounted() {
+      const bodyCollection = document.getElementsByTagName('body');
+      if (bodyCollection.length > 0) {
+        this.bodyElm = bodyCollection[0];
+      }
+      if (!this.checkBodyClass()) {
+        this.bodyElm.classList.add(this.noScrollClass);
+      }
+    },
+    beforeDestroy() {
+      if (this.checkBodyClass()) {
+        this.bodyElm.classList.remove(this.noScrollClass);
+      }
+    }
   }
 </script>
 
