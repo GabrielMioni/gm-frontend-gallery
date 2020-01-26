@@ -1,16 +1,8 @@
 <template>
     <div class="gm-frontend-gallery__detail">
         <v-card
-                :dark="false"
                 class="gm-frontend-gallery__detail__main"
         >
-            <v-btn
-                    class="gm-frontend-gallery__detail__close-button"
-                    icon
-                    @click="closeCarousel"
-            >
-                <v-icon>close</v-icon>
-            </v-btn>
             <div class="gm-frontend-gallery__detail__col-1">
                 <v-img
                         :src="selectedImage"

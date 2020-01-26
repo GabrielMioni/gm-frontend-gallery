@@ -235,6 +235,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1674,15 +1681,28 @@ var render = function() {
         light: !_vm.$vuetify.theme.dark
       }
     },
-    _vm._l(_vm.galleryPosts, function(post, i) {
-      return _c(
-        "v-carousel-item",
-        { key: i, attrs: { height: "100%", width: "100%" } },
-        [_c("gallery-post-detail", { attrs: { "gallery-post": post } })],
+    [
+      _c(
+        "v-btn",
+        {
+          staticClass: "gm-frontend-gallery__carousel__close-button",
+          attrs: { icon: "" },
+          on: { click: _vm.closeCarousel }
+        },
+        [_c("v-icon", [_vm._v("close")])],
         1
-      )
-    }),
-    1
+      ),
+      _vm._v(" "),
+      _vm._l(_vm.galleryPosts, function(post, i) {
+        return _c(
+          "v-carousel-item",
+          { key: i, attrs: { height: "100%", width: "100%" } },
+          [_c("gallery-post-detail", { attrs: { "gallery-post": post } })],
+          1
+        )
+      })
+    ],
+    2
   )
 }
 var staticRenderFns = []
@@ -1715,20 +1735,9 @@ var render = function() {
         "v-card",
         {
           staticClass: "gm-frontend-gallery__detail__main",
-          attrs: { dark: false }
+          attrs: { outlined: false }
         },
         [
-          _c(
-            "v-btn",
-            {
-              staticClass: "gm-frontend-gallery__detail__close-button",
-              attrs: { icon: "" },
-              on: { click: _vm.closeCarousel }
-            },
-            [_c("v-icon", [_vm._v("close")])],
-            1
-          ),
-          _vm._v(" "),
           _c(
             "div",
             { staticClass: "gm-frontend-gallery__detail__col-1" },
@@ -1747,8 +1756,7 @@ var render = function() {
           ),
           _vm._v(" "),
           _c("div", { staticClass: "gm-frontend-gallery__detail__col-2" })
-        ],
-        1
+        ]
       )
     ],
     1

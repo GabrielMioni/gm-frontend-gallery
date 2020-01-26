@@ -5,8 +5,14 @@
     position: fixed;
     top: 0;
     left: 0;
-    background-color: rgba($themeColor1, .5);
+    background-color: $themeColor2;
     z-index: 6;
+    &__close-button {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      z-index: 1;
+    }
     .v-window__prev,
     .v-window__next {
       button {

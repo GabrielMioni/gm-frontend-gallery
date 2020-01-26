@@ -333,8 +333,15 @@ button:hover {
   position: fixed;
   top: 0;
   left: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: #FFFFFF;
   z-index: 6;
+}
+
+.gm-frontend-gallery__carousel__close-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1;
 }
 
 .gm-frontend-gallery__carousel .v-window__prev button.theme--light.v-btn.v-btn--icon,
@@ -356,10 +363,10 @@ button:hover {
   display: grid;
   grid-template-columns: 50% 50%;
   grid-template-areas: "col-1 col-2";
-  height: 100%;
-  width: 100%;
+  height: inherit;
+  width: 90%;
   overflow-y: scroll;
-  background: #FFFFFF;
+  box-shadow: none;
 }
 
 .gm-frontend-gallery__detail__col-1 {

@@ -9,10 +9,10 @@
     display: grid;
     grid-template-columns: 50% 50%;
     grid-template-areas: 'col-1 col-2';
-    height: 100%;
-    width: 100%;
+    height: inherit;
+    width: 90%;
     overflow-y: scroll;
-    background: $themeColor2;
+    box-shadow: none;
   }
   &__col-1 {
     grid-area: col-1;
