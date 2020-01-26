@@ -70,7 +70,6 @@
         }, 1000);
       },
       openCarousel(index) {
-        console.log('clicko', index);
         this.SET_OPENED_POST_INDEX(index);
       }
     },
