@@ -10,6 +10,8 @@
             next-icon="chevron_right"
             :dark="$vuetify.theme.dark"
             :light="!$vuetify.theme.dark"
+            :continuous="false"
+            :hide-delimiters="true"
     >
         <v-btn
                 class="gm-frontend-gallery__carousel__close-button"

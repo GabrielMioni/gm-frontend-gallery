@@ -242,6 +242,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -300,14 +302,6 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -1678,7 +1672,9 @@ var render = function() {
         "prev-icon": "chevron_left",
         "next-icon": "chevron_right",
         dark: _vm.$vuetify.theme.dark,
-        light: !_vm.$vuetify.theme.dark
+        light: !_vm.$vuetify.theme.dark,
+        continuous: false,
+        "hide-delimiters": true
       }
     },
     [
@@ -1731,33 +1727,26 @@ var render = function() {
     "div",
     { staticClass: "gm-frontend-gallery__detail" },
     [
-      _c(
-        "v-card",
-        {
-          staticClass: "gm-frontend-gallery__detail__main",
-          attrs: { outlined: false }
-        },
-        [
-          _c(
-            "div",
-            { staticClass: "gm-frontend-gallery__detail__col-1" },
-            [
-              _c("v-img", {
-                staticClass: "grey darken-4",
-                attrs: {
-                  src: _vm.selectedImage,
-                  contain: "",
-                  height: "90%",
-                  width: "90%"
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "gm-frontend-gallery__detail__col-2" })
-        ]
-      )
+      _c("v-card", { staticClass: "gm-frontend-gallery__detail__main" }, [
+        _c(
+          "div",
+          { staticClass: "gm-frontend-gallery__detail__col-1" },
+          [
+            _c("v-img", {
+              staticClass: "grey darken-4",
+              attrs: {
+                src: _vm.selectedImage,
+                contain: "",
+                height: "90%",
+                width: "90%"
+              }
+            })
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "gm-frontend-gallery__detail__col-2" })
+      ])
     ],
     1
   )
