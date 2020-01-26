@@ -37,12 +37,11 @@
 
 <script>
   import GalleryPostImage from "./components/galleryPostImage"
-  import GalleryLightBox from "./components/GalleryLightBox";
   import GalleryCarousel from "./components/GalleryCarousel";
   import { mapGetters, mapActions } from 'vuex';
   export default {
     name: 'gmGallery',
-    components: {GalleryCarousel, GalleryLightBox, GalleryPostImage},
+    components: {GalleryCarousel, GalleryPostImage},
     data() {
       return {
         showCarousel: true,
