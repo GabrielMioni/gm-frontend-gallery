@@ -8,15 +8,28 @@
   &__main {
     display: grid;
     grid-template-columns: 50% 50%;
+    grid-template-areas: 'col-1 col-2';
     height: 100%;
     width: 100%;
     overflow-y: scroll;
     background: $themeColor2;
+  }
+  &__col-1 {
+    grid-area: col-1;
+  }
+  &__col-2 {
+    grid-area: col-2;
   }
   &__col-1,
   &__col-2 {
     display: flex;
     flex-direction: column;
     padding: 1rem;
+  }
+  &__close-button {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 1;
   }
 }
