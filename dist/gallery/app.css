@@ -356,10 +356,9 @@
 .gm-frontend-gallery__detail__main {
   display: grid;
   grid-template-columns: 50% 50%;
-  min-height: 35rem;
-  max-height: 90%;
+  height: 100%;
+  width: 100%;
   overflow-y: scroll;
-  width: 80%;
   background: white;
 }
 
