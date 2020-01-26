@@ -1,6 +1,16 @@
 .gm-frontend-gallery-body {
   &--no-scroll {
-    height: 100vh;
+    //height: 100vh;
     overflow: hidden;
+  }
+}
+
+button {
+  background: unset;
+  &:focus {
+    outline: 0;
+  }
+  &:hover {
+    background: unset;
   }
 }
