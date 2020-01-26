@@ -346,14 +346,6 @@ button:hover {
   color: #FFFFFF;
 }
 
-.gm-frontend-gallery__carousel__close-button {
-  color: #FFFFFF;
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  z-index: 1;
-}
-
 .gm-frontend-gallery__detail {
   display: -webkit-box;
   display: flex;
