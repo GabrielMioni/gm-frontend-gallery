@@ -11,14 +11,14 @@
             :dark="$vuetify.theme.dark"
             :light="!$vuetify.theme.dark"
     >
-        <v-btn
+        <!--<v-btn
                 class="gm-frontend-gallery__carousel__close-button"
                 color="white"
                 icon large
                 @click="closeCarousel"
         >
             <v-icon>close</v-icon>
-        </v-btn>
+        </v-btn>-->
         <v-carousel-item
                 height="100%"
                 width="100%"
@@ -84,7 +84,3 @@
     }
   }
 </script>
-
-<style scoped>
-
-</style>

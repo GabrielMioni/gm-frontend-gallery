@@ -2,7 +2,15 @@
     <div class="gm-frontend-gallery__detail">
         <v-card
                 :dark="false"
-                class="gm-frontend-gallery__detail__main">
+                class="gm-frontend-gallery__detail__main"
+        >
+            <v-btn
+                    class="gm-frontend-gallery__detail__close-button"
+                    icon
+                    @click="closeCarousel"
+            >
+                <v-icon>close</v-icon>
+            </v-btn>
             <div class="gm-frontend-gallery__detail__col-1">
                 <v-img
                         :src="selectedImage"
@@ -20,6 +28,7 @@
 </template>
 
 <script>
+  import { mapActions } from 'vuex';
   export default {
     name: "GalleryDetail",
     data() {
@@ -33,10 +42,16 @@
         required: true
       }
     },
+    methods: {
+      ...mapActions({
+        SET_OPENED_POST_INDEX: 'galleryData/SET_OPENED_POST_INDEX'
+      }),
+      closeCarousel() {
+        this.SET_OPENED_POST_INDEX(null);
+      }
+    },
     computed: {
       selectedImage() {
-        console.log('GalleryDetail.vue');
-        console.log(this.galleryPost);
         return this.galleryPost.images[0]['sized_images'].full;
       }
     }
