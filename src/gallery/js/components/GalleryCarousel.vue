@@ -25,18 +25,20 @@
                 v-for="(post, i) in galleryPosts"
                 :key="i"
         >
-            <gallery-detail :gallery-post="post">
-            </gallery-detail>
+            <gallery-post-detail
+                    :gallery-post="post"
+            >
+            </gallery-post-detail>
         </v-carousel-item>
     </v-carousel>
 </template>
 
 <script>
   import { mapGetters, mapActions } from 'vuex';
-  import GalleryDetail from "@/gallery/js/components/GalleryDetail";
+  import GalleryPostDetail from "@/gallery/js/components/GalleryPostDetail";
   export default {
     name: "GalleryCarousel",
-    components: {GalleryDetail},
+    components: {GalleryPostDetail},
     data() {
       return {
         bodyElm: null,

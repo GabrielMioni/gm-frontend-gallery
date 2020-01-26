@@ -30,7 +30,7 @@
 <script>
   import { mapActions } from 'vuex';
   export default {
-    name: "GalleryDetail",
+    name: "GalleryPostDetail",
     data() {
       return {
         selectedImageIndex: 0
