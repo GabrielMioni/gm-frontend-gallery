@@ -235,26 +235,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "GalleryCarousel",
   components: {
     GalleryPostDetail: _gallery_js_components_GalleryPostDetail__WEBPACK_IMPORTED_MODULE_1__["default"]
-  },
-  data: function data() {
-    return {
-      bodyElm: null,
-      noScrollClass: 'gm-frontend-gallery-body--no-scroll'
-    };
   },
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])({
     getGalleryCount: 'galleryData/getGalleryCount',
@@ -264,9 +250,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   }), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])({
     SET_OPENED_POST_INDEX: 'galleryData/SET_OPENED_POST_INDEX'
   }), {
-    checkBodyClass: function checkBodyClass() {
-      return this.bodyElm.classList.contains(this.noScrollClass);
-    },
     closeCarousel: function closeCarousel() {
       this.SET_OPENED_POST_INDEX(null);
     }
@@ -280,20 +263,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   mounted: function mounted() {
-    var bodyCollection = document.getElementsByTagName('body');
-
-    if (bodyCollection.length > 0) {
-      this.bodyElm = bodyCollection[0];
-    }
-
-    if (!this.checkBodyClass()) {
-      this.bodyElm.classList.add(this.noScrollClass);
-    }
+    var scrollY = document.getElementsByTagName('html')[0].scrollTop;
+    document.body.style.top = "-".concat(scrollY, "px");
+    document.body.style.position = 'fixed';
   },
   beforeDestroy: function beforeDestroy() {
-    if (this.checkBodyClass()) {
-      this.bodyElm.classList.remove(this.noScrollClass);
-    }
+    var scrollY = document.body.style.top;
+    document.body.style.position = '';
+    document.body.style.top = '';
+    window.scrollTo(0, parseInt(scrollY || '0') * -1);
   }
 });
 
@@ -461,7 +439,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }, 1000);
     },
     openCarousel: function openCarousel(index) {
-      console.log('clicko', index);
       this.SET_OPENED_POST_INDEX(index);
     }
   }),

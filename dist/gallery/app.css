@@ -29,10 +29,6 @@
   }
 }
 
-.gm-frontend-gallery-body--no-scroll {
-  overflow: hidden;
-}
-
 button {
   background: unset;
 }

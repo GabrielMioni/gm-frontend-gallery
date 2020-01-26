@@ -11,14 +11,6 @@
             :dark="$vuetify.theme.dark"
             :light="!$vuetify.theme.dark"
     >
-        <!--<v-btn
-                class="gm-frontend-gallery__carousel__close-button"
-                color="white"
-                icon large
-                @click="closeCarousel"
-        >
-            <v-icon>close</v-icon>
-        </v-btn>-->
         <v-carousel-item
                 height="100%"
                 width="100%"
@@ -39,12 +31,6 @@
   export default {
     name: "GalleryCarousel",
     components: {GalleryPostDetail},
-    data() {
-      return {
-        bodyElm: null,
-        noScrollClass: 'gm-frontend-gallery-body--no-scroll'
-      }
-    },
     methods: {
       ...mapGetters({
         getGalleryCount: 'galleryData/getGalleryCount',
@@ -55,9 +41,6 @@
       ...mapActions({
         SET_OPENED_POST_INDEX: 'galleryData/SET_OPENED_POST_INDEX'
       }),
-      checkBodyClass() {
-        return this.bodyElm.classList.contains(this.noScrollClass);
-      },
       closeCarousel() {
         this.SET_OPENED_POST_INDEX(null);
       }
@@ -71,18 +54,15 @@
       }
     },
     mounted() {
-      const bodyCollection = document.getElementsByTagName('body');
-      if (bodyCollection.length > 0) {
-        this.bodyElm = bodyCollection[0];
-      }
-      if (!this.checkBodyClass()) {
-        this.bodyElm.classList.add(this.noScrollClass);
-      }
+      const scrollY = document.getElementsByTagName('html')[0].scrollTop;
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.position = 'fixed';
     },
     beforeDestroy() {
-      if (this.checkBodyClass()) {
-        this.bodyElm.classList.remove(this.noScrollClass);
-      }
+      const scrollY = document.body.style.top;
+      document.body.style.position = '';
+      document.body.style.top = '';
+      window.scrollTo(0, parseInt(scrollY || '0') * -1);
     }
   }
 </script>
