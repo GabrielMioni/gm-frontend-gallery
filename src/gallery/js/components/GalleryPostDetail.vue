@@ -4,13 +4,32 @@
                 class="gm-frontend-gallery__detail__main"
         >
             <div class="gm-frontend-gallery__detail__col-1">
-                <v-img
-                        :src="selectedImage"
-                        contain
-                        height="90%"
-                        width="90%"
-                        class="grey darken-4"
-                ></v-img>
+                <div class="gm-frontend-gallery__detail__col-1__selected-image">
+                    <v-img
+                            :src="selectedImage"
+                            contain
+                            height="90%"
+                            width="90%"
+                            class="grey darken-4"
+                    ></v-img>
+                </div>
+                <div
+                        v-if="galleryPost.images.length > 1"
+                        class="gm-frontend-gallery__detail__col-1__attached-images"
+                >
+                    <!--<v-img
+                            v-for="(image, index) in galleryPost.images"
+                            :src="image['sized_images'].medium"
+                            :key="index"
+                            height="100%"
+                            contain
+                    ></v-img>-->
+                    <img
+                            v-for="(image, index) in galleryPost.images"
+                            :src="image['sized_images'].medium"
+                            :key="index"
+                    >
+                </div>
             </div>
             <div class="gm-frontend-gallery__detail__col-2">
 
@@ -44,7 +63,7 @@
     },
     computed: {
       selectedImage() {
-        return this.galleryPost.images[0]['sized_images'].full;
+        return this.galleryPost.images[this.selectedImageIndex]['sized_images'].full;
       }
     }
   }
