@@ -323,6 +323,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "GalleryPostDetail",
@@ -346,7 +365,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   }),
   computed: {
     selectedImage: function selectedImage() {
-      return this.galleryPost.images[0]['sized_images'].full;
+      return this.galleryPost.images[this.selectedImageIndex]['sized_images'].full;
     }
   }
 });
@@ -1728,22 +1747,43 @@ var render = function() {
     { staticClass: "gm-frontend-gallery__detail" },
     [
       _c("v-card", { staticClass: "gm-frontend-gallery__detail__main" }, [
-        _c(
-          "div",
-          { staticClass: "gm-frontend-gallery__detail__col-1" },
-          [
-            _c("v-img", {
-              staticClass: "grey darken-4",
-              attrs: {
-                src: _vm.selectedImage,
-                contain: "",
-                height: "90%",
-                width: "90%"
-              }
-            })
-          ],
-          1
-        ),
+        _c("div", { staticClass: "gm-frontend-gallery__detail__col-1" }, [
+          _c(
+            "div",
+            {
+              staticClass: "gm-frontend-gallery__detail__col-1__selected-image"
+            },
+            [
+              _c("v-img", {
+                staticClass: "grey darken-4",
+                attrs: {
+                  src: _vm.selectedImage,
+                  contain: "",
+                  height: "90%",
+                  width: "90%"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _vm.galleryPost.images.length > 1
+            ? _c(
+                "div",
+                {
+                  staticClass:
+                    "gm-frontend-gallery__detail__col-1__attached-images"
+                },
+                _vm._l(_vm.galleryPost.images, function(image, index) {
+                  return _c("img", {
+                    key: index,
+                    attrs: { src: image["sized_images"].medium }
+                  })
+                }),
+                0
+              )
+            : _vm._e()
+        ]),
         _vm._v(" "),
         _c("div", { staticClass: "gm-frontend-gallery__detail__col-2" })
       ])

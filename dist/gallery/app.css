@@ -354,9 +354,6 @@ button:hover {
   display: flex;
   -webkit-box-pack: center;
           justify-content: center;
-  -webkit-box-align: center;
-          align-items: center;
-  height: 100%;
 }
 
 .gm-frontend-gallery__detail__main {
@@ -371,6 +368,34 @@ button:hover {
 
 .gm-frontend-gallery__detail__col-1 {
   grid-area: col-1;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr -webkit-min-content;
+  grid-template-rows: 1fr min-content;
+  grid-template-areas: "selected-image attached-images";
+}
+
+.gm-frontend-gallery__detail__col-1__selected-image {
+  grid-area: selected-image;
+}
+
+.gm-frontend-gallery__detail__col-1__attached-images {
+  grid-area: attached-images;
+  height: 10rem;
+}
+
+.gm-frontend-gallery__detail__col-1__attached-images img {
+  max-height: 100%;
+  max-width: 20%;
+  padding: 0.5rem;
+}
+
+.gm-frontend-gallery__detail__col-1__attached-images img:first-child {
+  padding: 0.5rem 0.5rem 0.5rem 0;
+}
+
+.gm-frontend-gallery__detail__col-1__attached-images img:last-child {
+  padding: 0.5rem 0 0.5rem 0.5rem;
 }
 
 .gm-frontend-gallery__detail__col-2 {
