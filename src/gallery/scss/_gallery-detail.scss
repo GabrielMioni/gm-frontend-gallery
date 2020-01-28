@@ -3,8 +3,7 @@
 .gm-frontend-gallery__detail {
   display: flex;
   justify-content: center;
-  align-items: center;
-  height: 100%;
+  //align-items: center;
   &__main {
     display: grid;
     grid-template-columns: 50% 50%;
@@ -16,6 +15,29 @@
   }
   &__col-1 {
     grid-area: col-1;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr min-content;
+    grid-template-areas: 'selected-image attached-images';
+    &__selected-image {
+      grid-area: selected-image;
+    }
+    &__attached-images {
+      grid-area: attached-images;
+      height: 10rem;
+      img {
+        max-height: 100%;
+        max-width: 20%;
+        padding: .5rem;
+
+        &:first-child {
+          padding: .5rem .5rem .5rem 0;
+        }
+        &:last-child {
+          padding: .5rem 0 .5rem .5rem;
+        }
+      }
+    }
   }
   &__col-2 {
     grid-area: col-2;
