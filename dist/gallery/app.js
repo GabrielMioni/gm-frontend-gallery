@@ -346,18 +346,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "GalleryPostDetail",
@@ -1830,34 +1818,17 @@ var render = function() {
             "div",
             { staticClass: "gm-frontend-gallery__detail__col-2__content" },
             [
-              _c(
-                "v-fade-transition",
-                { attrs: { group: "", origin: "none" } },
-                _vm._l(_vm.galleryPost.images, function(image, index) {
-                  return _c(
-                    "div",
-                    {
-                      directives: [
-                        {
-                          name: "show",
-                          rawName: "v-show",
-                          value: _vm.selectedImageIndex === index,
-                          expression: "selectedImageIndex === index"
-                        }
-                      ],
-                      key: index
-                    },
-                    [
-                      _vm._v(
-                        "\n                        " +
-                          _vm._s(image.content) +
-                          "\n                    "
-                      )
-                    ]
+              _c("transition", { attrs: { name: "fade", mode: "out-in" } }, [
+                _c("p", { key: _vm.selectedImageIndex }, [
+                  _vm._v(
+                    "\n                        " +
+                      _vm._s(
+                        _vm.galleryPost.images[_vm.selectedImageIndex].content
+                      ) +
+                      "\n                    "
                   )
-                }),
-                0
-              )
+                ])
+              ])
             ],
             1
           )

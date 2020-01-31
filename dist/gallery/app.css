@@ -414,7 +414,7 @@ button:hover {
 }
 
 .gm-frontend-gallery__detail__col-1__attached-images__image--active img {
-  outline: 0.25rem solid green;
+  outline: 0.25rem solid #5bc0de;
 }
 
 .gm-frontend-gallery__detail__col-1__attached-images__image img {
