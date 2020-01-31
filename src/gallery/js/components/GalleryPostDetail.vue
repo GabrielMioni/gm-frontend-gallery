@@ -4,15 +4,15 @@
                 class="gm-frontend-gallery__detail__main"
         >
             <div class="gm-frontend-gallery__detail__col-1">
-                <div class="gm-frontend-gallery__detail__col-1__selected-image">
+                <v-card class="gm-frontend-gallery__detail__col-1__selected-image">
                     <v-img
                             :src="selectedImage"
                             contain
-                            height="90%"
-                            width="90%"
-                            class="gm-frontend-gallery__detail__col-1__selected-image__main grey darken-4"
+                            height="100%"
+                            width="100%"
+                            class="grey darken-4"
                     />
-                </div>
+                </v-card>
                 <div
                         v-if="galleryPost.images.length > 1"
                         class="gm-frontend-gallery__detail__col-1__attached-images"
