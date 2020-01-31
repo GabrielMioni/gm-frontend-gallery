@@ -10,7 +10,7 @@
                             contain
                             height="90%"
                             width="90%"
-                            class="grey darken-4"
+                            class="gm-frontend-gallery__detail__col-1__selected-image__main grey darken-4"
                     ></v-img>
                 </div>
                 <div
@@ -24,11 +24,16 @@
                             height="100%"
                             contain
                     ></v-img>-->
-                    <img
+                    <div
+                            class="gm-frontend-gallery__detail__col-1__attached-images__container"
                             v-for="(image, index) in galleryPost.images"
-                            :src="image['sized_images'].medium"
                             :key="index"
                     >
+                        <img
+                                class="gm-frontend-gallery__detail__col-1__attached-images__image"
+                                :src="image['sized_images'].medium"
+                        >
+                    </div>
                 </div>
             </div>
             <div class="gm-frontend-gallery__detail__col-2">

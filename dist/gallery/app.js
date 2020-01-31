@@ -342,6 +342,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "GalleryPostDetail",
@@ -1755,7 +1760,8 @@ var render = function() {
             },
             [
               _c("v-img", {
-                staticClass: "grey darken-4",
+                staticClass:
+                  "gm-frontend-gallery__detail__col-1__selected-image__main grey darken-4",
                 attrs: {
                   src: _vm.selectedImage,
                   contain: "",
@@ -1775,10 +1781,21 @@ var render = function() {
                     "gm-frontend-gallery__detail__col-1__attached-images"
                 },
                 _vm._l(_vm.galleryPost.images, function(image, index) {
-                  return _c("img", {
-                    key: index,
-                    attrs: { src: image["sized_images"].medium }
-                  })
+                  return _c(
+                    "div",
+                    {
+                      key: index,
+                      staticClass:
+                        "gm-frontend-gallery__detail__col-1__attached-images__container"
+                    },
+                    [
+                      _c("img", {
+                        staticClass:
+                          "gm-frontend-gallery__detail__col-1__attached-images__image",
+                        attrs: { src: image["sized_images"].medium }
+                      })
+                    ]
+                  )
                 }),
                 0
               )
