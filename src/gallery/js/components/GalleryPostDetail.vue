@@ -11,28 +11,20 @@
                             height="90%"
                             width="90%"
                             class="gm-frontend-gallery__detail__col-1__selected-image__main grey darken-4"
-                    ></v-img>
+                    />
                 </div>
                 <div
                         v-if="galleryPost.images.length > 1"
                         class="gm-frontend-gallery__detail__col-1__attached-images"
                 >
-                    <!--<v-img
-                            v-for="(image, index) in galleryPost.images"
-                            :src="image['sized_images'].medium"
-                            :key="index"
-                            height="100%"
-                            contain
-                    ></v-img>-->
                     <div
-                            class="gm-frontend-gallery__detail__col-1__attached-images__container"
+                            class="gm-frontend-gallery__detail__col-1__attached-images__image"
                             v-for="(image, index) in galleryPost.images"
                             :key="index"
+                            @click="chooseAttachedImage(index)"
+                            v-bind:class="{'gm-frontend-gallery__detail__col-1__attached-images__image--active': selectedImageIndex === index}"
                     >
-                        <img
-                                class="gm-frontend-gallery__detail__col-1__attached-images__image"
-                                :src="image['sized_images'].medium"
-                        >
+                        <img :src="image['sized_images'].medium">
                     </div>
                 </div>
             </div>
@@ -64,6 +56,9 @@
       }),
       closeCarousel() {
         this.SET_OPENED_POST_INDEX(null);
+      },
+      chooseAttachedImage(index) {
+        this.selectedImageIndex = index;
       }
     },
     computed: {

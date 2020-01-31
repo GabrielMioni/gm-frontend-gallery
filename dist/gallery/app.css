@@ -399,21 +399,9 @@ button:hover {
   grid-column-gap: 0.5rem;
   width: calc(100% - .5rem);
   margin: 1rem 0.25rem;
-  /*img {
-    max-height: 100%;
-    max-width: 20%;
-    padding: .5rem;
-
-    &:first-child {
-      padding: .5rem .5rem .5rem 0;
-    }
-    &:last-child {
-      padding: .5rem 0 .5rem .5rem;
-    }
-  }*/
 }
 
-.gm-frontend-gallery__detail__col-1__attached-images__container {
+.gm-frontend-gallery__detail__col-1__attached-images__image {
   display: -webkit-box;
   display: flex;
   -webkit-box-orient: vertical;
@@ -425,7 +413,11 @@ button:hover {
           align-items: center;
 }
 
-.gm-frontend-gallery__detail__col-1__attached-images__container img {
+.gm-frontend-gallery__detail__col-1__attached-images__image--active img {
+  outline: 0.25rem solid green;
+}
+
+.gm-frontend-gallery__detail__col-1__attached-images__image img {
   -o-object-fit: cover;
      object-fit: cover;
   max-width: 100%;

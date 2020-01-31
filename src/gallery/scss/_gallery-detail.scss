@@ -37,11 +37,17 @@
       grid-column-gap: .5rem;
       width: calc(100% - .5rem);
       margin: 1rem .25rem;
-      &__container {
+      &__image {
+        $self: &;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        &--active {
+          img {
+            outline: .25rem solid green;
+          }
+        }
         img {
           object-fit: cover;
           max-width: 100%;

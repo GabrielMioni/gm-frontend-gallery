@@ -339,14 +339,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "GalleryPostDetail",
@@ -366,6 +358,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   }), {
     closeCarousel: function closeCarousel() {
       this.SET_OPENED_POST_INDEX(null);
+    },
+    chooseAttachedImage: function chooseAttachedImage(index) {
+      this.selectedImageIndex = index;
     }
   }),
   computed: {
@@ -1786,12 +1781,19 @@ var render = function() {
                     {
                       key: index,
                       staticClass:
-                        "gm-frontend-gallery__detail__col-1__attached-images__container"
+                        "gm-frontend-gallery__detail__col-1__attached-images__image",
+                      class: {
+                        "gm-frontend-gallery__detail__col-1__attached-images__image--active":
+                          _vm.selectedImageIndex === index
+                      },
+                      on: {
+                        click: function($event) {
+                          return _vm.chooseAttachedImage(index)
+                        }
+                      }
                     },
                     [
                       _c("img", {
-                        staticClass:
-                          "gm-frontend-gallery__detail__col-1__attached-images__image",
                         attrs: { src: image["sized_images"].medium }
                       })
                     ]
