@@ -29,7 +29,26 @@
                 </div>
             </div>
             <div class="gm-frontend-gallery__detail__col-2">
-
+                <h3>{{galleryPost.post_title}}</h3>
+                <div class="gm-frontend-gallery__detail__col-2__content">
+                    <v-fade-transition
+                            group
+                            origin="0 0"
+                    >
+                        <div
+                                v-for="(image, index) in galleryPost.images"
+                                v-show="selectedImageIndex === index"
+                                :key="index"
+                        >
+                            {{image.content}}
+                        </div>
+                    </v-fade-transition>
+                </div>
+                <!--<v-fade-transition>
+                    <div>
+                        {{galleryPost.images[selectedImageIndex].content}}
+                    </div>
+                </v-fade-transition>-->
             </div>
         </v-card>
     </div>
