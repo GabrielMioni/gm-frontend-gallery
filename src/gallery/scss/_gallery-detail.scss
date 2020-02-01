@@ -9,7 +9,7 @@
   overflow-y: scroll;
   box-shadow: none;
   margin: 0 auto;
-  &__col-1 {
+  &__image-area {
     &__selected-image {
       height: 35rem;
       width: 100%;
@@ -41,6 +41,9 @@
         }
       }
     }
+  }
+  &__col-1 {
+    grid-area: col-1;
   }
   &__col-2 {
     grid-area: col-2;

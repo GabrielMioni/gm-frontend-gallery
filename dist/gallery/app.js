@@ -342,6 +342,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "GalleryPostDetail",
@@ -1746,60 +1748,69 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("v-card", { staticClass: "gm-frontend-gallery__detail" }, [
-    _c(
-      "div",
-      { staticClass: "gm-frontend-gallery__detail__col-1" },
-      [
-        _c(
-          "v-card",
-          { staticClass: "gm-frontend-gallery__detail__col-1__selected-image" },
-          [
-            _c("v-img", {
-              staticClass: "grey darken-4",
-              attrs: {
-                src: _vm.selectedImage,
-                contain: "",
-                height: "100%",
-                width: "100%"
-              }
-            })
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _vm.galleryPost.images.length > 1
-          ? _c(
-              "div",
-              {
-                staticClass:
-                  "gm-frontend-gallery__detail__col-1__attached-images"
-              },
-              _vm._l(_vm.galleryPost.images, function(image, index) {
-                return _c(
-                  "div",
-                  {
-                    key: index,
-                    staticClass:
-                      "gm-frontend-gallery__detail__col-1__attached-images__image",
-                    class: {
-                      "gm-frontend-gallery__detail__col-1__attached-images__image--active":
-                        _vm.selectedImageIndex === index
-                    },
-                    on: {
-                      click: function($event) {
-                        return _vm.chooseAttachedImage(index)
+    _c("div", { staticClass: "gm-frontend-gallery__detail__col-1" }, [
+      _c(
+        "div",
+        { staticClass: "gm-frontend-gallery__detail__image-area" },
+        [
+          _c(
+            "v-card",
+            {
+              staticClass:
+                "gm-frontend-gallery__detail__image-area__selected-image"
+            },
+            [
+              _c("v-img", {
+                staticClass: "grey darken-4",
+                attrs: {
+                  src: _vm.selectedImage,
+                  contain: "",
+                  height: "100%",
+                  width: "100%"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _vm.galleryPost.images.length > 1
+            ? _c(
+                "div",
+                {
+                  staticClass:
+                    "gm-frontend-gallery__detail__image-area__attached-images"
+                },
+                _vm._l(_vm.galleryPost.images, function(image, index) {
+                  return _c(
+                    "div",
+                    {
+                      key: index,
+                      staticClass:
+                        "gm-frontend-gallery__detail__image-area__attached-images__image",
+                      class: {
+                        "gm-frontend-gallery__detail__col-1__attached-images__image--active":
+                          _vm.selectedImageIndex === index
+                      },
+                      on: {
+                        click: function($event) {
+                          return _vm.chooseAttachedImage(index)
+                        }
                       }
-                    }
-                  },
-                  [_c("img", { attrs: { src: image["sized_images"].medium } })]
-                )
-              }),
-              0
-            )
-          : _vm._e()
-      ],
-      1
-    ),
+                    },
+                    [
+                      _c("img", {
+                        attrs: { src: image["sized_images"].medium }
+                      })
+                    ]
+                  )
+                }),
+                0
+              )
+            : _vm._e()
+        ],
+        1
+      )
+    ]),
     _vm._v(" "),
     _c("div", { staticClass: "gm-frontend-gallery__detail__col-2" }, [
       _c("h3", [_vm._v(_vm._s(_vm.galleryPost.post_title))]),
