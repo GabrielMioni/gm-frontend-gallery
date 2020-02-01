@@ -299,11 +299,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.SET_OPENED_POST_INDEX(newOpenedPostIndex);
     },
     navigateTabIndexes: function navigateTabIndexes(e) {
-      e.preventDefault();
-      var carouselElm = this.$refs.carousel.$el;
-      var buttons = this.findCarouselButtons(carouselElm);
-      var attached = this.findOpenGalleryAttachments(carouselElm);
-      var focusable = buttons.concat(attached);
+      e.preventDefault(); // const carouselElm = this.$refs.carousel.$el;
+      // const buttons = this.findCarouselButtons(carouselElm);
+      // const attached = this.findOpenGalleryAttachments(carouselElm);
+      // const focusable = buttons.concat(attached);
+
+      var focusable = this.findFocusableElms();
       var reverse = e.shiftKey === true;
       var tabIndexIsNull = this.tabIndex === null;
       var newTabIndex = null;
@@ -330,6 +331,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.tabIndex = newTabIndex;
       var focusedElm = focusable[newTabIndex];
+      console.log('focusedElm', focusedElm);
       focusedElm.focus();
     },
     findCarouselButtons: function findCarouselButtons(carouselElm) {
@@ -344,6 +346,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     nodeListToArray: function nodeListToArray(nodeList) {
       return [].slice.call(nodeList);
+    },
+    findFocusableElms: function findFocusableElms() {
+      var carouselElm = this.$refs.carousel.$el;
+      var buttons = this.findCarouselButtons(carouselElm);
+      var attached = this.findOpenGalleryAttachments(carouselElm);
+      return buttons.concat(attached);
     }
   }),
   computed: {

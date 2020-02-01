@@ -87,11 +87,7 @@
       },
       navigateTabIndexes(e) {
         e.preventDefault();
-
-        const carouselElm = this.$refs.carousel.$el;
-        const buttons = this.findCarouselButtons(carouselElm);
-        const attached = this.findOpenGalleryAttachments(carouselElm);
-        const focusable = buttons.concat(attached);
+        const focusable = this.findFocusableElms();
 
         const reverse = e.shiftKey === true;
         const tabIndexIsNull = this.tabIndex === null;
@@ -114,6 +110,7 @@
         }
         this.tabIndex = newTabIndex;
         const focusedElm = focusable[newTabIndex];
+        console.log('focusedElm', focusedElm);
         focusedElm.focus();
       },
       findCarouselButtons(carouselElm) {
@@ -128,6 +125,12 @@
       },
       nodeListToArray(nodeList) {
         return [].slice.call(nodeList);
+      },
+      findFocusableElms() {
+        const carouselElm = this.$refs.carousel.$el;
+        const buttons = this.findCarouselButtons(carouselElm);
+        const attached = this.findOpenGalleryAttachments(carouselElm);
+        return buttons.concat(attached);
       }
     },
     computed: {
