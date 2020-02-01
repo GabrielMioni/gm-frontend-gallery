@@ -13,6 +13,7 @@
             :continuous="false"
             :hide-delimiters="true"
             ref="carousel"
+            v-on:change="carouselChangeHandler"
     >
         <v-btn
                 class="gm-frontend-gallery__carousel__close-button"
@@ -56,6 +57,9 @@
       ...mapActions({
         SET_OPENED_POST_INDEX: 'galleryData/SET_OPENED_POST_INDEX'
       }),
+      carouselChangeHandler(data) {
+        this.SET_OPENED_POST_INDEX(data);
+      },
       closeCarousel() {
         this.SET_OPENED_POST_INDEX(null);
       },

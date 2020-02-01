@@ -245,6 +245,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -265,6 +266,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   }), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])({
     SET_OPENED_POST_INDEX: 'galleryData/SET_OPENED_POST_INDEX'
   }), {
+    carouselChangeHandler: function carouselChangeHandler(data) {
+      this.SET_OPENED_POST_INDEX(data);
+    },
     closeCarousel: function closeCarousel() {
       this.SET_OPENED_POST_INDEX(null);
     },
@@ -1822,7 +1826,8 @@ var render = function() {
         light: !_vm.$vuetify.theme.dark,
         continuous: false,
         "hide-delimiters": true
-      }
+      },
+      on: { change: _vm.carouselChangeHandler }
     },
     [
       _c(
