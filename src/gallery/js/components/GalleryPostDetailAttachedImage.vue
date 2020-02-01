@@ -2,6 +2,7 @@
     <v-card
             class="gm-frontend-gallery__detail__image-area__attached-images__image"
             @click="updateSelectedImageIndex"
+            @keypress.enter="updateSelectedImageIndex"
     >
         <v-img
                 cover

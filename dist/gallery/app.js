@@ -414,6 +414,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "GalleryPostDetailAttachedImage",
   props: {
@@ -1912,7 +1913,18 @@ var render = function() {
     {
       staticClass:
         "gm-frontend-gallery__detail__image-area__attached-images__image",
-      on: { click: _vm.updateSelectedImageIndex }
+      on: {
+        click: _vm.updateSelectedImageIndex,
+        keypress: function($event) {
+          if (
+            !$event.type.indexOf("key") &&
+            _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+          ) {
+            return null
+          }
+          return _vm.updateSelectedImageIndex($event)
+        }
+      }
     },
     [
       _c("v-img", {
