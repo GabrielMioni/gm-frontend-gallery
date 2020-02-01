@@ -37,7 +37,8 @@ button:focus {
   outline: 0;
 }
 
-button:hover {
+button:hover,
+button:focus {
   background: unset;
 }
 

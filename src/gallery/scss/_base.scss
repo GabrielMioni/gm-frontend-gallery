@@ -3,7 +3,8 @@ button {
   &:focus {
     outline: 0;
   }
-  &:hover {
+  &:hover,
+  &:focus {
     background: unset;
   }
 }
