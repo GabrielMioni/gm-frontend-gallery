@@ -307,28 +307,32 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var tabIndexIsNull = this.tabIndex === null;
       var maxFocusableIndex = focusable.length - 1;
       var newTabIndex = null;
+      var navNext = !reverse && !tabIndexIsNull;
+      var navPrev = reverse && !tabIndexIsNull;
+      var nextIsValid = this.tabIndex + 1 <= maxFocusableIndex;
+      var prevIsValid = this.tabIndex - 1 >= 0;
 
-      if (!reverse && tabIndexIsNull) {
+      if (tabIndexIsNull) {
         newTabIndex = 0;
       } // Forward is valid
 
 
-      if (!reverse && !tabIndexIsNull && this.tabIndex + 1 <= maxFocusableIndex) {
+      if (navNext && nextIsValid) {
         newTabIndex = this.tabIndex + 1;
       } // Reverse is valid
 
 
-      if (reverse && !tabIndexIsNull && this.tabIndex - 1 >= 0) {
+      if (navPrev && prevIsValid) {
         newTabIndex = this.tabIndex - 1;
       } // Forward is invalid
 
 
-      if (!reverse && !tabIndexIsNull && this.tabIndex + 1 > maxFocusableIndex) {
+      if (navNext && !nextIsValid) {
         newTabIndex = 0;
       } // Reverse is invalid
 
 
-      if (reverse && !tabIndexIsNull && this.tabIndex - 1 < 0) {
+      if (navPrev && !prevIsValid) {
         newTabIndex = maxFocusableIndex;
       }
 

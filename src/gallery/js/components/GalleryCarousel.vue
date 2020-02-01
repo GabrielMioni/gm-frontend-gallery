@@ -95,23 +95,28 @@
         const maxFocusableIndex = focusable.length -1;
         let newTabIndex = null;
 
-        if (!reverse && tabIndexIsNull) {
+        const navNext = !reverse && !tabIndexIsNull;
+        const navPrev = reverse && !tabIndexIsNull;
+        const nextIsValid = this.tabIndex + 1 <= maxFocusableIndex;
+        const prevIsValid = this.tabIndex - 1 >= 0;
+
+        if (tabIndexIsNull) {
           newTabIndex = 0;
         }
         // Forward is valid
-        if ((!reverse && !tabIndexIsNull) && (this.tabIndex +1 <= maxFocusableIndex)) {
+        if (navNext && nextIsValid) {
           newTabIndex = this.tabIndex + 1;
         }
         // Reverse is valid
-        if ((reverse && !tabIndexIsNull) && (this.tabIndex -1 >= 0)) {
+        if (navPrev && prevIsValid) {
           newTabIndex = this.tabIndex - 1;
         }
         // Forward is invalid
-        if ((!reverse && !tabIndexIsNull) && (this.tabIndex +1 > maxFocusableIndex)) {
+        if (navNext && !nextIsValid) {
           newTabIndex = 0;
         }
         // Reverse is invalid
-        if ((reverse && !tabIndexIsNull) && (this.tabIndex -1 < 0)) {
+        if (navPrev && !prevIsValid) {
           newTabIndex = maxFocusableIndex;
         }
         this.tabIndex = newTabIndex;
