@@ -277,7 +277,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       var newOpenedPostIndex = key === 'ArrowLeft' ? this.currentIndex - 1 : this.currentIndex + 1;
 
-      if (newOpenedPostIndex < 0 || newOpenedPostIndex > this.galleryPosts.length - 1) {
+      if (newOpenedPostIndex < 0 || newOpenedPostIndex > this.galleryPosts.length - 1 || newOpenedPostIndex === this.currentIndex) {
         return;
       }
 

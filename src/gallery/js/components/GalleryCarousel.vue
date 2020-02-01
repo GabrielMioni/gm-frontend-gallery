@@ -64,7 +64,9 @@
           return;
         }
         let newOpenedPostIndex = key === 'ArrowLeft' ? this.currentIndex - 1 : this.currentIndex + 1;
-        if (newOpenedPostIndex < 0 || newOpenedPostIndex > this.galleryPosts.length -1) {
+        if (newOpenedPostIndex < 0 ||
+            newOpenedPostIndex > this.galleryPosts.length -1 ||
+            newOpenedPostIndex === this.currentIndex) {
           return;
         }
         this.SET_OPENED_POST_INDEX(newOpenedPostIndex);
