@@ -2,16 +2,13 @@
 
 .gm-frontend-gallery__detail {
   height: 100%;
-  &__main {
-    display: grid;
-    grid-template-columns: 50% 50%;
-    grid-template-areas: 'col-1 col-2';
-    height: inherit;
-    width: 90%;
-    overflow-y: scroll;
-    box-shadow: none;
-    margin: 0 auto;
-  }
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-areas: 'col-1 col-2';
+  width: 90%;
+  overflow-y: scroll;
+  box-shadow: none;
+  margin: 0 auto;
   &__col-1 {
     &__selected-image {
       height: 35rem;

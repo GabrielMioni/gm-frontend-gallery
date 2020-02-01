@@ -351,13 +351,9 @@ button:hover {
 
 .gm-frontend-gallery__detail {
   height: 100%;
-}
-
-.gm-frontend-gallery__detail__main {
   display: grid;
   grid-template-columns: 50% 50%;
   grid-template-areas: "col-1 col-2";
-  height: inherit;
   width: 90%;
   overflow-y: scroll;
   box-shadow: none;
@@ -367,10 +363,6 @@ button:hover {
 .gm-frontend-gallery__detail__col-1__selected-image {
   height: 35rem;
   width: 100%;
-  /*&__main {
-    height: inherit;
-    width: inherit;
-  }*/
 }
 
 .gm-frontend-gallery__detail__col-1__attached-images {
