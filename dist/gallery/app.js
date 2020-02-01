@@ -360,20 +360,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "GalleryPostDetail",
@@ -393,7 +379,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     chooseAttachedImage: function chooseAttachedImage(index) {
-      console.log(index);
       this.selectedImageIndex = index;
     }
   },
