@@ -15,20 +15,14 @@
                         v-if="galleryPost.images.length > 1"
                         class="gm-frontend-gallery__detail__image-area__attached-images"
                 >
-                    <v-card
-                            class="gm-frontend-gallery__detail__image-area__attached-images__image"
+                    <gallery-post-detail-attached-image
                             v-for="(image, index) in galleryPost.images"
+                            :image="image"
+                            :index="index"
                             :key="index"
-                            @click="chooseAttachedImage(index)"
+                            @updateSelectedImageIndex="chooseAttachedImage(index)"
                             v-bind:class="{'gm-frontend-gallery__detail__image-area__attached-images__image--active': selectedImageIndex === index}"
-                    >
-                        <v-img
-                                cover
-                                height="100%"
-                                width="100%"
-                                :src="image['sized_images'].medium"
-                        />
-                    </v-card>
+                    />
                 </div>
             </div>
         </div>
@@ -46,8 +40,10 @@
 </template>
 
 <script>
+  import GalleryPostDetailAttachedImage from "@/gallery/js/components/GalleryPostDetailAttachedImage";
   export default {
     name: "GalleryPostDetail",
+    components: {GalleryPostDetailAttachedImage},
     data() {
       return {
         selectedImageIndex: 0
