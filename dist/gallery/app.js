@@ -1707,7 +1707,7 @@ var render = function() {
         height: "100%",
         width: "100%",
         "hide-delimiter-background": "",
-        "show-arrows-on-hover": "",
+        "show-arrows": "",
         "prev-icon": "chevron_left",
         "next-icon": "chevron_right",
         dark: _vm.$vuetify.theme.dark,
