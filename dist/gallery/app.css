@@ -377,26 +377,12 @@ button:hover {
 }
 
 .gm-frontend-gallery__detail__image-area__attached-images__image {
-  display: -webkit-box;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-          flex-direction: column;
-  -webkit-box-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-          align-items: center;
+  height: inherit;
+  width: 7rem;
 }
 
-.gm-frontend-gallery__detail__image-area__attached-images__image--active img {
-  outline: 0.25rem solid #5bc0de;
-}
-
-.gm-frontend-gallery__detail__image-area__attached-images__image img {
-  -o-object-fit: cover;
-     object-fit: cover;
-  max-width: 100%;
-  max-height: 100%;
+.gm-frontend-gallery__detail__image-area__attached-images__image--active {
+  box-shadow: 0 0 0 0.25rem #5bc0de;
 }
 
 .gm-frontend-gallery__detail__col-1 {

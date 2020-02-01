@@ -344,6 +344,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "GalleryPostDetail",
@@ -1782,13 +1796,13 @@ var render = function() {
                 },
                 _vm._l(_vm.galleryPost.images, function(image, index) {
                   return _c(
-                    "div",
+                    "v-card",
                     {
                       key: index,
                       staticClass:
                         "gm-frontend-gallery__detail__image-area__attached-images__image",
                       class: {
-                        "gm-frontend-gallery__detail__col-1__attached-images__image--active":
+                        "gm-frontend-gallery__detail__image-area__attached-images__image--active":
                           _vm.selectedImageIndex === index
                       },
                       on: {
@@ -1798,13 +1812,19 @@ var render = function() {
                       }
                     },
                     [
-                      _c("img", {
-                        attrs: { src: image["sized_images"].medium }
+                      _c("v-img", {
+                        attrs: {
+                          cover: "",
+                          height: "100%",
+                          width: "100%",
+                          src: image["sized_images"].medium
+                        }
                       })
-                    ]
+                    ],
+                    1
                   )
                 }),
-                0
+                1
               )
             : _vm._e()
         ],

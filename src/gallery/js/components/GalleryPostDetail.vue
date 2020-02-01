@@ -15,15 +15,20 @@
                         v-if="galleryPost.images.length > 1"
                         class="gm-frontend-gallery__detail__image-area__attached-images"
                 >
-                    <div
+                    <v-card
                             class="gm-frontend-gallery__detail__image-area__attached-images__image"
                             v-for="(image, index) in galleryPost.images"
                             :key="index"
                             @click="chooseAttachedImage(index)"
-                            v-bind:class="{'gm-frontend-gallery__detail__col-1__attached-images__image--active': selectedImageIndex === index}"
+                            v-bind:class="{'gm-frontend-gallery__detail__image-area__attached-images__image--active': selectedImageIndex === index}"
                     >
-                        <img :src="image['sized_images'].medium">
-                    </div>
+                        <v-img
+                                cover
+                                height="100%"
+                                width="100%"
+                                :src="image['sized_images'].medium"
+                        />
+                    </v-card>
                 </div>
             </div>
         </div>
