@@ -267,6 +267,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     SET_OPENED_POST_INDEX: 'galleryData/SET_OPENED_POST_INDEX'
   }), {
     carouselChangeHandler: function carouselChangeHandler(data) {
+      this.tabIndex = null;
       this.SET_OPENED_POST_INDEX(data);
     },
     closeCarousel: function closeCarousel() {
@@ -279,6 +280,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       if (allowedKeys.indexOf(key) < 0) {
         return;
       }
+
+      e.preventDefault();
 
       if (key === 'Tab') {
         this.navigateTabIndexes(e);
@@ -299,39 +302,38 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.SET_OPENED_POST_INDEX(newOpenedPostIndex);
     },
     navigateTabIndexes: function navigateTabIndexes(e) {
-      e.preventDefault(); // const carouselElm = this.$refs.carousel.$el;
-      // const buttons = this.findCarouselButtons(carouselElm);
-      // const attached = this.findOpenGalleryAttachments(carouselElm);
-      // const focusable = buttons.concat(attached);
-
       var focusable = this.findFocusableElms();
       var reverse = e.shiftKey === true;
       var tabIndexIsNull = this.tabIndex === null;
+      var maxFocusableIndex = focusable.length - 1;
       var newTabIndex = null;
 
       if (!reverse && tabIndexIsNull) {
         newTabIndex = 0;
-      }
+      } // Forward is valid
 
-      if (!reverse && !tabIndexIsNull) {
+
+      if (!reverse && !tabIndexIsNull && this.tabIndex + 1 <= maxFocusableIndex) {
         newTabIndex = this.tabIndex + 1;
-      }
+      } // Reverse is valid
 
-      if (reverse && !tabIndexIsNull) {
+
+      if (reverse && !tabIndexIsNull && this.tabIndex - 1 >= 0) {
         newTabIndex = this.tabIndex - 1;
-      }
+      } // Forward is invalid
 
-      if (newTabIndex < 0) {
-        newTabIndex = focusable.length - 1;
-      }
 
-      if (newTabIndex > focusable.length - 1) {
+      if (!reverse && !tabIndexIsNull && this.tabIndex + 1 > maxFocusableIndex) {
         newTabIndex = 0;
+      } // Reverse is invalid
+
+
+      if (reverse && !tabIndexIsNull && this.tabIndex - 1 < 0) {
+        newTabIndex = maxFocusableIndex;
       }
 
       this.tabIndex = newTabIndex;
       var focusedElm = focusable[newTabIndex];
-      console.log('focusedElm', focusedElm);
       focusedElm.focus();
     },
     findCarouselButtons: function findCarouselButtons(carouselElm) {

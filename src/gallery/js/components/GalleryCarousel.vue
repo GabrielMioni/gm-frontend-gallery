@@ -58,6 +58,7 @@
         SET_OPENED_POST_INDEX: 'galleryData/SET_OPENED_POST_INDEX'
       }),
       carouselChangeHandler(data) {
+        this.tabIndex = null;
         this.SET_OPENED_POST_INDEX(data);
       },
       closeCarousel() {
@@ -69,6 +70,7 @@
         if (allowedKeys.indexOf(key) < 0) {
           return;
         }
+        e.preventDefault();
         if (key === 'Tab') {
           this.navigateTabIndexes(e);
           return;
@@ -86,31 +88,34 @@
         this.SET_OPENED_POST_INDEX(newOpenedPostIndex);
       },
       navigateTabIndexes(e) {
-        e.preventDefault();
         const focusable = this.findFocusableElms();
 
         const reverse = e.shiftKey === true;
         const tabIndexIsNull = this.tabIndex === null;
+        const maxFocusableIndex = focusable.length -1;
         let newTabIndex = null;
 
         if (!reverse && tabIndexIsNull) {
           newTabIndex = 0;
         }
-        if (!reverse && !tabIndexIsNull) {
+        // Forward is valid
+        if ((!reverse && !tabIndexIsNull) && (this.tabIndex +1 <= maxFocusableIndex)) {
           newTabIndex = this.tabIndex + 1;
         }
-        if (reverse && !tabIndexIsNull) {
+        // Reverse is valid
+        if ((reverse && !tabIndexIsNull) && (this.tabIndex -1 >= 0)) {
           newTabIndex = this.tabIndex - 1;
         }
-        if (newTabIndex < 0) {
-          newTabIndex = focusable.length -1;
-        }
-        if (newTabIndex > focusable.length -1) {
+        // Forward is invalid
+        if ((!reverse && !tabIndexIsNull) && (this.tabIndex +1 > maxFocusableIndex)) {
           newTabIndex = 0;
+        }
+        // Reverse is invalid
+        if ((reverse && !tabIndexIsNull) && (this.tabIndex -1 < 0)) {
+          newTabIndex = maxFocusableIndex;
         }
         this.tabIndex = newTabIndex;
         const focusedElm = focusable[newTabIndex];
-        console.log('focusedElm', focusedElm);
         focusedElm.focus();
       },
       findCarouselButtons(carouselElm) {
