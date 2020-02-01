@@ -46,7 +46,6 @@
 </template>
 
 <script>
-  import { mapActions } from 'vuex';
   export default {
     name: "GalleryPostDetail",
     data() {
@@ -61,12 +60,6 @@
       }
     },
     methods: {
-      ...mapActions({
-        SET_OPENED_POST_INDEX: 'galleryData/SET_OPENED_POST_INDEX'
-      }),
-      closeCarousel() {
-        this.SET_OPENED_POST_INDEX(null);
-      },
       chooseAttachedImage(index) {
         this.selectedImageIndex = index;
       }

@@ -52,6 +52,22 @@
       }),
       closeCarousel() {
         this.SET_OPENED_POST_INDEX(null);
+      },
+      navigateGalleryHandler(e) {
+        const key = e.key;
+        const allowedKeys = ['ArrowLeft', 'ArrowRight', 'Escape'];
+        if (allowedKeys.indexOf(key) < 0) {
+          return;
+        }
+        if (key === 'Escape') {
+          this.closeCarousel();
+          return;
+        }
+        let newOpenedPostIndex = key === 'ArrowLeft' ? this.currentIndex - 1 : this.currentIndex + 1;
+        if (newOpenedPostIndex < 0 || newOpenedPostIndex > this.galleryPosts.length -1) {
+          return;
+        }
+        this.SET_OPENED_POST_INDEX(newOpenedPostIndex);
       }
     },
     computed: {
@@ -66,12 +82,14 @@
       const scrollY = document.getElementsByTagName('html')[0].scrollTop;
       document.body.style.top = `-${scrollY}px`;
       document.body.style.position = 'fixed';
+      document.addEventListener('keyup', this.navigateGalleryHandler, true);
     },
     beforeDestroy() {
       const scrollY = document.body.style.top;
       document.body.style.position = '';
       document.body.style.top = '';
       window.scrollTo(0, parseInt(scrollY || '0') * -1);
+      document.removeEventListener('keyup', this.navigateGalleryHandler, true);
     }
   }
 </script>
