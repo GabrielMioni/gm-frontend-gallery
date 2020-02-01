@@ -12,6 +12,7 @@
             :light="!$vuetify.theme.dark"
             :continuous="false"
             :hide-delimiters="true"
+            ref="carousel"
     >
         <v-btn
                 class="gm-frontend-gallery__carousel__close-button"
@@ -40,6 +41,11 @@
   export default {
     name: "GalleryCarousel",
     components: {GalleryPostDetail},
+    data() {
+      return {
+        tabIndex: null
+      }
+    },
     methods: {
       ...mapGetters({
         getGalleryCount: 'galleryData/getGalleryCount',
@@ -55,8 +61,12 @@
       },
       navigateGalleryHandler(e) {
         const key = e.key;
-        const allowedKeys = ['ArrowLeft', 'ArrowRight', 'Escape'];
+        const allowedKeys = ['ArrowLeft', 'ArrowRight', 'Escape', 'Tab'];
         if (allowedKeys.indexOf(key) < 0) {
+          return;
+        }
+        if (key === 'Tab') {
+          this.navigateTabIndexes(e);
           return;
         }
         if (key === 'Escape') {
@@ -70,6 +80,50 @@
           return;
         }
         this.SET_OPENED_POST_INDEX(newOpenedPostIndex);
+      },
+      navigateTabIndexes(e) {
+        e.preventDefault();
+
+        const carouselElm = this.$refs.carousel.$el;
+        const buttons = this.findCarouselButtons(carouselElm);
+        const attached = this.findOpenGalleryAttachments(carouselElm);
+        const focusable = buttons.concat(attached);
+
+        const reverse = e.shiftKey === true;
+        const tabIndexIsNull = this.tabIndex === null;
+        let newTabIndex = null;
+
+        if (!reverse && tabIndexIsNull) {
+          newTabIndex = 0;
+        }
+        if (!reverse && !tabIndexIsNull) {
+          newTabIndex = this.tabIndex + 1;
+        }
+        if (reverse && !tabIndexIsNull) {
+          newTabIndex = this.tabIndex - 1;
+        }
+        if (newTabIndex < 0) {
+          newTabIndex = focusable.length -1;
+        }
+        if (newTabIndex > focusable.length -1) {
+          newTabIndex = 0;
+        }
+        this.tabIndex = newTabIndex;
+        const focusedElm = focusable[newTabIndex];
+        focusedElm.focus();
+      },
+      findCarouselButtons(carouselElm) {
+        const buttonNodes = carouselElm.querySelectorAll('button');
+        return this.nodeListToArray(buttonNodes)
+      },
+      findOpenGalleryAttachments(carouselElm) {
+        const items = carouselElm.querySelectorAll('.v-window-item');
+        const openItem = items[this.currentIndex];
+        const attachedImages = openItem.querySelectorAll('.gm-frontend-gallery__detail__image-area__attached-images__image');
+        return this.nodeListToArray(attachedImages);
+      },
+      nodeListToArray(nodeList) {
+        return [].slice.call(nodeList);
       }
     },
     computed: {
@@ -92,6 +146,11 @@
       document.body.style.top = '';
       window.scrollTo(0, parseInt(scrollY || '0') * -1);
       document.removeEventListener('keyup', this.navigateGalleryHandler, true);
+    },
+    watch: {
+      currentIndex() {
+        this.tabIndex = null;
+      }
     }
   }
 </script>

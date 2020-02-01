@@ -244,12 +244,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "GalleryCarousel",
   components: {
     GalleryPostDetail: _gallery_js_components_GalleryPostDetail__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  data: function data() {
+    return {
+      tabIndex: null
+    };
   },
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])({
     getGalleryCount: 'galleryData/getGalleryCount',
@@ -264,9 +270,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     navigateGalleryHandler: function navigateGalleryHandler(e) {
       var key = e.key;
-      var allowedKeys = ['ArrowLeft', 'ArrowRight', 'Escape'];
+      var allowedKeys = ['ArrowLeft', 'ArrowRight', 'Escape', 'Tab'];
 
       if (allowedKeys.indexOf(key) < 0) {
+        return;
+      }
+
+      if (key === 'Tab') {
+        this.navigateTabIndexes(e);
         return;
       }
 
@@ -282,6 +293,53 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       this.SET_OPENED_POST_INDEX(newOpenedPostIndex);
+    },
+    navigateTabIndexes: function navigateTabIndexes(e) {
+      e.preventDefault();
+      var carouselElm = this.$refs.carousel.$el;
+      var buttons = this.findCarouselButtons(carouselElm);
+      var attached = this.findOpenGalleryAttachments(carouselElm);
+      var focusable = buttons.concat(attached);
+      var reverse = e.shiftKey === true;
+      var tabIndexIsNull = this.tabIndex === null;
+      var newTabIndex = null;
+
+      if (!reverse && tabIndexIsNull) {
+        newTabIndex = 0;
+      }
+
+      if (!reverse && !tabIndexIsNull) {
+        newTabIndex = this.tabIndex + 1;
+      }
+
+      if (reverse && !tabIndexIsNull) {
+        newTabIndex = this.tabIndex - 1;
+      }
+
+      if (newTabIndex < 0) {
+        newTabIndex = focusable.length - 1;
+      }
+
+      if (newTabIndex > focusable.length - 1) {
+        newTabIndex = 0;
+      }
+
+      this.tabIndex = newTabIndex;
+      var focusedElm = focusable[newTabIndex];
+      focusedElm.focus();
+    },
+    findCarouselButtons: function findCarouselButtons(carouselElm) {
+      var buttonNodes = carouselElm.querySelectorAll('button');
+      return this.nodeListToArray(buttonNodes);
+    },
+    findOpenGalleryAttachments: function findOpenGalleryAttachments(carouselElm) {
+      var items = carouselElm.querySelectorAll('.v-window-item');
+      var openItem = items[this.currentIndex];
+      var attachedImages = openItem.querySelectorAll('.gm-frontend-gallery__detail__image-area__attached-images__image');
+      return this.nodeListToArray(attachedImages);
+    },
+    nodeListToArray: function nodeListToArray(nodeList) {
+      return [].slice.call(nodeList);
     }
   }),
   computed: {
@@ -304,6 +362,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     document.body.style.top = '';
     window.scrollTo(0, parseInt(scrollY || '0') * -1);
     document.removeEventListener('keyup', this.navigateGalleryHandler, true);
+  },
+  watch: {
+    currentIndex: function currentIndex() {
+      this.tabIndex = null;
+    }
   }
 });
 
@@ -1745,6 +1808,7 @@ var render = function() {
   return _c(
     "v-carousel",
     {
+      ref: "carousel",
       staticClass: "gm-frontend-gallery__carousel",
       attrs: {
         value: _vm.currentIndex,
