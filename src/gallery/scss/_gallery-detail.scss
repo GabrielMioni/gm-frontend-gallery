@@ -29,11 +29,15 @@
         &--active {
           box-shadow: 0 0 0 .25rem $themeColor4;
         }
-        &:not(#{$self}--active) {
+        /*&:not(#{$self}--active) {
           &:hover,
           &:focus {
             box-shadow: 0 0 0 .25rem rgba($themeColor4, .5);
           }
+        }*/
+        &:hover,
+        &:focus {
+          box-shadow: 0 0 0 .5rem $themeColor6;
         }
       }
     }

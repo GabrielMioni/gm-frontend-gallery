@@ -379,15 +379,21 @@ button:focus {
 
 .gm-frontend-gallery__detail__image-area__attached-images__image {
   min-width: 0;
+  /*&:not(.gm-frontend-gallery__detail__image-area__attached-images__image--active) {
+    &:hover,
+    &:focus {
+      box-shadow: 0 0 0 .25rem rgba($themeColor4, .5);
+    }
+  }*/
 }
 
 .gm-frontend-gallery__detail__image-area__attached-images__image--active {
   box-shadow: 0 0 0 0.25rem #5bc0de;
 }
 
-.gm-frontend-gallery__detail__image-area__attached-images__image:not(.gm-frontend-gallery__detail__image-area__attached-images__image--active):hover,
-.gm-frontend-gallery__detail__image-area__attached-images__image:not(.gm-frontend-gallery__detail__image-area__attached-images__image--active):focus {
-  box-shadow: 0 0 0 0.25rem rgba(91, 192, 222, 0.5);
+.gm-frontend-gallery__detail__image-area__attached-images__image:hover,
+.gm-frontend-gallery__detail__image-area__attached-images__image:focus {
+  box-shadow: 0 0 0 0.5rem #ffc107;
 }
 
 .gm-frontend-gallery__detail__col-1 {
