@@ -91,6 +91,10 @@
       setFocusableElms() {
         const buttons = this.updateCarouselButtons();
         const attachedImages = this.galleryPost.images.map((item, index)=>{
+          const attachedImageRef = this.$refs[`attachedImage${index}`];
+          if (typeof attachedImageRef === 'undefined') {
+            return ;
+          }
           return this.$refs[`attachedImage${index}`][0].$el;
         });
 
@@ -140,12 +144,7 @@
     mounted() {
       this.$nextTick(()=>{
         this.focusableElms = this.setFocusableElms();
-        // this.focusDetail();
       });
-      /*this.$refs.galleryDetail.$el.addEventListener('blur', ()=>{
-        this.focusDetail();
-      });*/
-      // document.addEventListener('keydown', this.tabHandler, true);
       if (this.currentIndex === this.index) {
         document.addEventListener('keydown', this.tabHandler, true);
       }
@@ -154,9 +153,6 @@
       document.removeEventListener('keydown', this.tabHandler, true);
     },
     watch: {
-      /*currentIndex() {
-        this.focusDetail();
-      },*/
       currentIndex() {
         if (this.currentIndex === this.index) {
           document.addEventListener('keydown', this.tabHandler, true);
@@ -169,7 +165,6 @@
       focusedElmIndex() {
         if (this.focusedElmIndex !== null) {
           this.focusableElms[this.focusedElmIndex].focus();
-          console.log(this.focusableElms[this.focusedElmIndex]);
         }
       }
     }
