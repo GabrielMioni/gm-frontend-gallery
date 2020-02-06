@@ -297,29 +297,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.SET_OPENED_POST_INDEX(newOpenedPostIndex);
     }
-    /*findCarouselButtons(carouselElm) {
-      const buttonNodes = carouselElm.querySelectorAll('button');
-      return this.nodeListToArray(buttonNodes)
-    },*/
-
-    /*findOpenGalleryAttachments(carouselElm) {
-      const items = carouselElm.querySelectorAll('.v-window-item');
-      const openItem = items[this.currentIndex];
-      const attachedImages = openItem.querySelectorAll('.gm-frontend-gallery__detail__image-area__attached-images__image');
-      return this.nodeListToArray(attachedImages);
-    },*/
-
-    /*      nodeListToArray(nodeList) {
-            return [].slice.call(nodeList);
-          },*/
-
-    /*      findFocusableElms() {
-            const carouselElm = this.$refs.carousel.$el;
-            const buttons = this.findCarouselButtons(carouselElm);
-            const attached = this.findOpenGalleryAttachments(carouselElm);
-            return buttons.concat(attached);
-          }*/
-
   }),
   computed: {
     galleryPosts: function galleryPosts() {
@@ -549,7 +526,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     focusedElmIndex: function focusedElmIndex() {
-      if (this.focusedElmIndex !== null) {
+      if (this.focusedElmIndex !== null && typeof this.focusableElms[this.focusedElmIndex] !== 'undefined') {
         this.focusableElms[this.focusedElmIndex].focus();
       }
     }

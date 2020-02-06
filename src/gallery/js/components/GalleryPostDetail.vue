@@ -163,7 +163,7 @@
         }
       },
       focusedElmIndex() {
-        if (this.focusedElmIndex !== null) {
+        if (this.focusedElmIndex !== null && typeof this.focusableElms[this.focusedElmIndex] !== 'undefined') {
           this.focusableElms[this.focusedElmIndex].focus();
         }
       }
