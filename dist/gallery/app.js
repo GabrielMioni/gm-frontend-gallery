@@ -284,11 +284,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       e.preventDefault();
 
-      if (key === 'Tab') {
-        this.navigateTabIndexes(e);
-        return;
-      }
-
       if (key === 'Escape') {
         this.closeCarousel();
         return;
@@ -301,65 +296,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       this.SET_OPENED_POST_INDEX(newOpenedPostIndex);
-    },
-    navigateTabIndexes: function navigateTabIndexes(e) {
-      var focusable = this.findFocusableElms();
-      var reverse = e.shiftKey === true;
-      var tabIndexIsNull = this.tabIndex === null;
-      var maxFocusableIndex = focusable.length - 1;
-      var newTabIndex = null;
-      var navNext = !reverse && !tabIndexIsNull;
-      var navPrev = reverse && !tabIndexIsNull;
-      var nextIsValid = this.tabIndex + 1 <= maxFocusableIndex;
-      var prevIsValid = this.tabIndex - 1 >= 0;
-
-      if (tabIndexIsNull) {
-        newTabIndex = 0;
-      } // Forward is valid
-
-
-      if (navNext && nextIsValid) {
-        newTabIndex = this.tabIndex + 1;
-      } // Reverse is valid
-
-
-      if (navPrev && prevIsValid) {
-        newTabIndex = this.tabIndex - 1;
-      } // Forward is invalid
-
-
-      if (navNext && !nextIsValid) {
-        newTabIndex = 0;
-      } // Reverse is invalid
-
-
-      if (navPrev && !prevIsValid) {
-        newTabIndex = maxFocusableIndex;
-      }
-
-      this.tabIndex = newTabIndex;
-      var focusedElm = focusable[newTabIndex];
-      focusedElm.focus();
-    },
-    findCarouselButtons: function findCarouselButtons(carouselElm) {
-      var buttonNodes = carouselElm.querySelectorAll('button');
-      return this.nodeListToArray(buttonNodes);
-    },
-    findOpenGalleryAttachments: function findOpenGalleryAttachments(carouselElm) {
-      var items = carouselElm.querySelectorAll('.v-window-item');
-      var openItem = items[this.currentIndex];
-      var attachedImages = openItem.querySelectorAll('.gm-frontend-gallery__detail__image-area__attached-images__image');
-      return this.nodeListToArray(attachedImages);
-    },
-    nodeListToArray: function nodeListToArray(nodeList) {
-      return [].slice.call(nodeList);
-    },
-    findFocusableElms: function findFocusableElms() {
-      var carouselElm = this.$refs.carousel.$el;
-      var buttons = this.findCarouselButtons(carouselElm);
-      var attached = this.findOpenGalleryAttachments(carouselElm);
-      return buttons.concat(attached);
     }
+    /*findCarouselButtons(carouselElm) {
+      const buttonNodes = carouselElm.querySelectorAll('button');
+      return this.nodeListToArray(buttonNodes)
+    },*/
+
+    /*findOpenGalleryAttachments(carouselElm) {
+      const items = carouselElm.querySelectorAll('.v-window-item');
+      const openItem = items[this.currentIndex];
+      const attachedImages = openItem.querySelectorAll('.gm-frontend-gallery__detail__image-area__attached-images__image');
+      return this.nodeListToArray(attachedImages);
+    },*/
+
+    /*      nodeListToArray(nodeList) {
+            return [].slice.call(nodeList);
+          },*/
+
+    /*      findFocusableElms() {
+            const carouselElm = this.$refs.carousel.$el;
+            const buttons = this.findCarouselButtons(carouselElm);
+            const attached = this.findOpenGalleryAttachments(carouselElm);
+            return buttons.concat(attached);
+          }*/
+
   }),
   computed: {
     galleryPosts: function galleryPosts() {
@@ -372,13 +332,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   mounted: function mounted() {
     var scrollY = document.getElementsByTagName('html')[0].scrollTop;
     document.body.style.top = "-".concat(scrollY, "px");
-    document.body.style.position = 'fixed'; // document.addEventListener('keyup', this.navigateGalleryHandler, true);
+    document.body.style.position = 'fixed';
+    document.addEventListener('keydown', this.navigateGalleryHandler, true);
   },
   beforeDestroy: function beforeDestroy() {
     var scrollY = document.body.style.top;
     document.body.style.position = '';
     document.body.style.top = '';
-    window.scrollTo(0, parseInt(scrollY || '0') * -1); // document.removeEventListener('keyup', this.navigateGalleryHandler, true);
+    window.scrollTo(0, parseInt(scrollY || '0') * -1);
+    document.removeEventListener('keydown', this.navigateGalleryHandler, true);
   },
   watch: {
     currentIndex: function currentIndex() {
@@ -503,6 +465,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       var buttons = this.updateCarouselButtons();
       var attachedImages = this.galleryPost.images.map(function (item, index) {
+        var attachedImageRef = _this.$refs["attachedImage".concat(index)];
+
+        if (typeof attachedImageRef === 'undefined') {
+          return;
+        }
+
         return _this.$refs["attachedImage".concat(index)][0].$el;
       });
       return buttons.concat(attachedImages);
@@ -559,12 +527,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var _this2 = this;
 
     this.$nextTick(function () {
-      _this2.focusableElms = _this2.setFocusableElms(); // this.focusDetail();
+      _this2.focusableElms = _this2.setFocusableElms();
     });
-    /*this.$refs.galleryDetail.$el.addEventListener('blur', ()=>{
-      this.focusDetail();
-    });*/
-    // document.addEventListener('keydown', this.tabHandler, true);
 
     if (this.currentIndex === this.index) {
       document.addEventListener('keydown', this.tabHandler, true);
@@ -574,9 +538,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     document.removeEventListener('keydown', this.tabHandler, true);
   },
   watch: {
-    /*currentIndex() {
-      this.focusDetail();
-    },*/
     currentIndex: function currentIndex() {
       if (this.currentIndex === this.index) {
         document.addEventListener('keydown', this.tabHandler, true);
@@ -590,7 +551,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     focusedElmIndex: function focusedElmIndex() {
       if (this.focusedElmIndex !== null) {
         this.focusableElms[this.focusedElmIndex].focus();
-        console.log(this.focusableElms[this.focusedElmIndex]);
       }
     }
   }
