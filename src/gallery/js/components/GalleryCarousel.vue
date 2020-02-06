@@ -72,10 +72,6 @@
           return;
         }
         e.preventDefault();
-        if (key === 'Tab') {
-          this.navigateTabIndexes(e);
-          return;
-        }
         if (key === 'Escape') {
           this.closeCarousel();
           return;
@@ -88,61 +84,6 @@
         }
         this.SET_OPENED_POST_INDEX(newOpenedPostIndex);
       },
-      navigateTabIndexes(e) {
-        const focusable = this.findFocusableElms();
-
-        const reverse = e.shiftKey === true;
-        const tabIndexIsNull = this.tabIndex === null;
-        const maxFocusableIndex = focusable.length -1;
-        let newTabIndex = null;
-
-        const navNext = !reverse && !tabIndexIsNull;
-        const navPrev = reverse && !tabIndexIsNull;
-        const nextIsValid = this.tabIndex + 1 <= maxFocusableIndex;
-        const prevIsValid = this.tabIndex - 1 >= 0;
-
-        if (tabIndexIsNull) {
-          newTabIndex = 0;
-        }
-        // Forward is valid
-        if (navNext && nextIsValid) {
-          newTabIndex = this.tabIndex + 1;
-        }
-        // Reverse is valid
-        if (navPrev && prevIsValid) {
-          newTabIndex = this.tabIndex - 1;
-        }
-        // Forward is invalid
-        if (navNext && !nextIsValid) {
-          newTabIndex = 0;
-        }
-        // Reverse is invalid
-        if (navPrev && !prevIsValid) {
-          newTabIndex = maxFocusableIndex;
-        }
-        this.tabIndex = newTabIndex;
-        const focusedElm = focusable[newTabIndex];
-        focusedElm.focus();
-      },
-      findCarouselButtons(carouselElm) {
-        const buttonNodes = carouselElm.querySelectorAll('button');
-        return this.nodeListToArray(buttonNodes)
-      },
-      findOpenGalleryAttachments(carouselElm) {
-        const items = carouselElm.querySelectorAll('.v-window-item');
-        const openItem = items[this.currentIndex];
-        const attachedImages = openItem.querySelectorAll('.gm-frontend-gallery__detail__image-area__attached-images__image');
-        return this.nodeListToArray(attachedImages);
-      },
-      nodeListToArray(nodeList) {
-        return [].slice.call(nodeList);
-      },
-      findFocusableElms() {
-        const carouselElm = this.$refs.carousel.$el;
-        const buttons = this.findCarouselButtons(carouselElm);
-        const attached = this.findOpenGalleryAttachments(carouselElm);
-        return buttons.concat(attached);
-      }
     },
     computed: {
       galleryPosts() {
@@ -156,14 +97,14 @@
       const scrollY = document.getElementsByTagName('html')[0].scrollTop;
       document.body.style.top = `-${scrollY}px`;
       document.body.style.position = 'fixed';
-      // document.addEventListener('keyup', this.navigateGalleryHandler, true);
+      document.addEventListener('keydown', this.navigateGalleryHandler, true);
     },
     beforeDestroy() {
       const scrollY = document.body.style.top;
       document.body.style.position = '';
       document.body.style.top = '';
       window.scrollTo(0, parseInt(scrollY || '0') * -1);
-      // document.removeEventListener('keyup', this.navigateGalleryHandler, true);
+      document.removeEventListener('keydown', this.navigateGalleryHandler, true);
     },
     watch: {
       currentIndex() {
