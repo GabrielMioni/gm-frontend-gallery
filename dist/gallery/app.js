@@ -246,6 +246,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -275,7 +276,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     navigateGalleryHandler: function navigateGalleryHandler(e) {
       var key = e.key;
-      var allowedKeys = ['ArrowLeft', 'ArrowRight', 'Escape', 'Tab'];
+      var allowedKeys = ['ArrowLeft', 'ArrowRight', 'Escape'];
 
       if (allowedKeys.indexOf(key) < 0) {
         return;
@@ -371,15 +372,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   mounted: function mounted() {
     var scrollY = document.getElementsByTagName('html')[0].scrollTop;
     document.body.style.top = "-".concat(scrollY, "px");
-    document.body.style.position = 'fixed';
-    document.addEventListener('keyup', this.navigateGalleryHandler, true);
+    document.body.style.position = 'fixed'; // document.addEventListener('keyup', this.navigateGalleryHandler, true);
   },
   beforeDestroy: function beforeDestroy() {
     var scrollY = document.body.style.top;
     document.body.style.position = '';
     document.body.style.top = '';
-    window.scrollTo(0, parseInt(scrollY || '0') * -1);
-    document.removeEventListener('keyup', this.navigateGalleryHandler, true);
+    window.scrollTo(0, parseInt(scrollY || '0') * -1); // document.removeEventListener('keyup', this.navigateGalleryHandler, true);
   },
   watch: {
     currentIndex: function currentIndex() {
@@ -400,6 +399,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _gallery_js_components_GalleryPostDetailAttachedImage__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/gallery/js/components/GalleryPostDetailAttachedImage */ "./src/gallery/js/components/GalleryPostDetailAttachedImage.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
 //
 //
 //
@@ -442,6 +449,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "GalleryPostDetail",
   components: {
@@ -449,23 +457,141 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      selectedImageIndex: 0
+      selectedImageIndex: 0,
+      focusableElms: [],
+      focusedElmIndex: null
     };
   },
   props: {
     galleryPost: {
       type: Object,
       required: true
+    },
+    index: {
+      type: Number,
+      required: true
     }
   },
-  methods: {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])({
+    getOpenedPostIndex: 'galleryData/getOpenedPostIndex'
+  }), {
     chooseAttachedImage: function chooseAttachedImage(index) {
       this.selectedImageIndex = index;
+    },
+    updateCarouselButtons: function updateCarouselButtons() {
+      var buttons = [];
+      var closeButton = document.getElementsByClassName('gm-frontend-gallery__carousel__close-button');
+      var prevButton = document.querySelectorAll('.v-window__prev button');
+      var nextButton = document.querySelectorAll('.v-window__next button');
+
+      if (closeButton.length > 0) {
+        buttons.push(closeButton[0]);
+      }
+
+      if (prevButton.length > 0) {
+        buttons.push(prevButton[0]);
+      }
+
+      if (nextButton.length > 0) {
+        buttons.push(nextButton[0]);
+      }
+
+      return buttons;
+    },
+    setFocusableElms: function setFocusableElms() {
+      var _this = this;
+
+      var buttons = this.updateCarouselButtons();
+      var attachedImages = this.galleryPost.images.map(function (item, index) {
+        return _this.$refs["attachedImage".concat(index)][0].$el;
+      });
+      return buttons.concat(attachedImages);
+    },
+    focusDetail: function focusDetail() {
+      if (this.currentIndex === this.index) {
+        this.$refs['galleryDetail'].$el.focus();
+      }
+    },
+    tabHandler: function tabHandler(e) {
+      if (e.key !== 'Tab') {
+        return;
+      }
+
+      e.preventDefault();
+      var reverse = e.shiftKey;
+
+      if (this.focusedElmIndex === null) {
+        this.focusedElmIndex = 0;
+        return;
+      }
+
+      var maxFocusableIndex = this.focusableElms.length - 1;
+
+      if (!reverse && this.focusedElmIndex + 1 <= maxFocusableIndex) {
+        this.focusedElmIndex = this.focusedElmIndex + 1;
+        return;
+      }
+
+      if (!reverse && this.focusedElmIndex + 1 > maxFocusableIndex) {
+        this.focusedElmIndex = 0;
+        return;
+      }
+
+      if (reverse && this.focusedElmIndex - 1 >= 0) {
+        this.focusedElmIndex = this.focusedElmIndex - 1;
+        return;
+      }
+
+      if (reverse && this.focusedElmIndex - 1 < 0) {
+        this.focusedElmIndex = maxFocusableIndex;
+      }
     }
-  },
+  }),
   computed: {
     selectedImage: function selectedImage() {
       return this.galleryPost.images[this.selectedImageIndex]['sized_images'].full;
+    },
+    currentIndex: function currentIndex() {
+      return this.getOpenedPostIndex();
+    }
+  },
+  mounted: function mounted() {
+    var _this2 = this;
+
+    this.$nextTick(function () {
+      _this2.focusableElms = _this2.setFocusableElms(); // this.focusDetail();
+    });
+    /*this.$refs.galleryDetail.$el.addEventListener('blur', ()=>{
+      this.focusDetail();
+    });*/
+    // document.addEventListener('keydown', this.tabHandler, true);
+
+    if (this.currentIndex === this.index) {
+      document.addEventListener('keydown', this.tabHandler, true);
+    }
+  },
+  beforeDestroy: function beforeDestroy() {
+    document.removeEventListener('keydown', this.tabHandler, true);
+  },
+  watch: {
+    /*currentIndex() {
+      this.focusDetail();
+    },*/
+    currentIndex: function currentIndex() {
+      if (this.currentIndex === this.index) {
+        document.addEventListener('keydown', this.tabHandler, true);
+      }
+
+      if (this.currentIndex !== this.index) {
+        document.removeEventListener('keydown', this.tabHandler, true);
+        this.focusedElmIndex = null;
+      }
+    },
+    focusedElmIndex: function focusedElmIndex() {
+      if (this.focusedElmIndex !== null) {
+        this.focusableElms[this.focusedElmIndex].focus();
+        console.log(this.focusableElms[this.focusedElmIndex]);
+      }
     }
   }
 });
@@ -1859,7 +1985,11 @@ var render = function() {
         return _c(
           "v-carousel-item",
           { key: i, attrs: { height: "100%", width: "100%" } },
-          [_c("gallery-post-detail", { attrs: { "gallery-post": post } })],
+          [
+            _c("gallery-post-detail", {
+              attrs: { "gallery-post": post, index: i }
+            })
+          ],
           1
         )
       })
@@ -1889,85 +2019,91 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("v-card", { staticClass: "gm-frontend-gallery__detail" }, [
-    _c("div", { staticClass: "gm-frontend-gallery__detail__col-1" }, [
-      _c(
-        "div",
-        { staticClass: "gm-frontend-gallery__detail__image-area" },
-        [
-          _c(
-            "v-card",
-            {
-              staticClass:
-                "gm-frontend-gallery__detail__image-area__selected-image"
-            },
-            [
-              _c("v-img", {
-                staticClass: "grey darken-4",
-                attrs: {
-                  src: _vm.selectedImage,
-                  contain: "",
-                  height: "100%",
-                  width: "100%"
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _vm.galleryPost.images.length > 1
-            ? _c(
-                "div",
-                {
-                  staticClass:
-                    "gm-frontend-gallery__detail__image-area__attached-images"
-                },
-                _vm._l(_vm.galleryPost.images, function(image, index) {
-                  return _c("gallery-post-detail-attached-image", {
-                    key: index,
-                    class: {
-                      "gm-frontend-gallery__detail__image-area__attached-images__image--active":
-                        _vm.selectedImageIndex === index
-                    },
-                    attrs: { image: image, index: index },
-                    on: {
-                      updateSelectedImageIndex: function($event) {
-                        return _vm.chooseAttachedImage(index)
+  return _c(
+    "v-card",
+    { ref: "galleryDetail", staticClass: "gm-frontend-gallery__detail" },
+    [
+      _c("div", { staticClass: "gm-frontend-gallery__detail__col-1" }, [
+        _c(
+          "div",
+          { staticClass: "gm-frontend-gallery__detail__image-area" },
+          [
+            _c(
+              "v-card",
+              {
+                staticClass:
+                  "gm-frontend-gallery__detail__image-area__selected-image"
+              },
+              [
+                _c("v-img", {
+                  staticClass: "grey darken-4",
+                  attrs: {
+                    src: _vm.selectedImage,
+                    contain: "",
+                    height: "100%",
+                    width: "100%"
+                  }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _vm.galleryPost.images.length > 1
+              ? _c(
+                  "div",
+                  {
+                    staticClass:
+                      "gm-frontend-gallery__detail__image-area__attached-images"
+                  },
+                  _vm._l(_vm.galleryPost.images, function(image, index) {
+                    return _c("gallery-post-detail-attached-image", {
+                      key: index,
+                      ref: "attachedImage" + index,
+                      refInFor: true,
+                      class: {
+                        "gm-frontend-gallery__detail__image-area__attached-images__image--active":
+                          _vm.selectedImageIndex === index
+                      },
+                      attrs: { image: image, index: index },
+                      on: {
+                        updateSelectedImageIndex: function($event) {
+                          return _vm.chooseAttachedImage(index)
+                        }
                       }
-                    }
-                  })
-                }),
-                1
-              )
-            : _vm._e()
-        ],
-        1
-      )
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "gm-frontend-gallery__detail__col-2" }, [
-      _c("h3", [_vm._v(_vm._s(_vm.galleryPost.post_title))]),
+                    })
+                  }),
+                  1
+                )
+              : _vm._e()
+          ],
+          1
+        )
+      ]),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "gm-frontend-gallery__detail__col-2__content" },
-        [
-          _c("transition", { attrs: { name: "fade", mode: "out-in" } }, [
-            _c("p", { key: _vm.selectedImageIndex }, [
-              _vm._v(
-                "\n                    " +
-                  _vm._s(
-                    _vm.galleryPost.images[_vm.selectedImageIndex].content
-                  ) +
-                  "\n                "
-              )
+      _c("div", { staticClass: "gm-frontend-gallery__detail__col-2" }, [
+        _c("h3", [_vm._v(_vm._s(_vm.galleryPost.post_title))]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "gm-frontend-gallery__detail__col-2__content" },
+          [
+            _c("transition", { attrs: { name: "fade", mode: "out-in" } }, [
+              _c("p", { key: _vm.selectedImageIndex }, [
+                _vm._v(
+                  "\n                    " +
+                    _vm._s(
+                      _vm.galleryPost.images[_vm.selectedImageIndex].content
+                    ) +
+                    "\n                "
+                )
+              ])
             ])
-          ])
-        ],
-        1
-      )
-    ])
-  ])
+          ],
+          1
+        )
+      ])
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
