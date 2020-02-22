@@ -9,11 +9,9 @@
           group>
           <gallery-post-image
             v-for="(galleryPost, index) in galleryPosts"
-            v-if="galleryPost.images.length > 0"
             :gallery-post="galleryPost"
             :index="index"
-            :key="index"
-          >
+            :key="index">
           </gallery-post-image>
         </v-fade-transition>
       </div>
@@ -65,7 +63,10 @@ export default {
   },
   computed: {
     galleryPosts () {
-      return this.getGalleryPosts()
+      const galleryPosts = this.getGalleryPosts()
+      return galleryPosts.filter((post) => {
+        return post.images.length > 0
+      })
     },
     openedPostIndex: {
       get () {

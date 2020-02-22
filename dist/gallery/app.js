@@ -139,8 +139,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
 
 
 
@@ -170,7 +168,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   }),
   computed: {
     galleryPosts: function galleryPosts() {
-      return this.getGalleryPosts();
+      var galleryPosts = this.getGalleryPosts();
+      return galleryPosts.filter(function (post) {
+        return post.images.length > 0;
+      });
     },
     openedPostIndex: {
       get: function get() {
@@ -1817,12 +1818,10 @@ var render = function() {
                   attrs: { group: "" }
                 },
                 _vm._l(_vm.galleryPosts, function(galleryPost, index) {
-                  return galleryPost.images.length > 0
-                    ? _c("gallery-post-image", {
-                        key: index,
-                        attrs: { "gallery-post": galleryPost, index: index }
-                      })
-                    : _vm._e()
+                  return _c("gallery-post-image", {
+                    key: index,
+                    attrs: { "gallery-post": galleryPost, index: index }
+                  })
                 }),
                 1
               )
