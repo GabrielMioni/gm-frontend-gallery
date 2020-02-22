@@ -186,7 +186,17 @@ class gmFrontendGallery
         return '<div id="gm-frontend-submit" data-nonce="'.$nonce.'" data-options="'.$jsonEncodedOptions.'"></div>';
     }
 
-    protected function createOptionsJson() {
+    public function galleryPostTypeTemplate()
+    {
+        global $post;
+
+        if ($post->post_type === $this->galleryPostType) {
+            // Do template stuff
+        }
+    }
+
+    protected function createOptionsJson()
+    {
         $options = get_option($this->pluginOptionName);
 
         $setOptions = [
