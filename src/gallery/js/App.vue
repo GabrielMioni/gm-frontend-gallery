@@ -20,14 +20,12 @@
           v-if="galleryPosts.length < getGalleryCount()"
           color="primary"
           :loading="getGalleryLoading()"
-          @click="SET_GALLERY_POSTS(1000)"
-        >
+          @click="SET_GALLERY_POSTS(1000)">
           Load More
         </v-btn>
       </div>
       <gallery-carousel
-        v-if="carouselIsOpen"
-      >
+        v-if="carouselIsOpen">
       </gallery-carousel>
     </v-container>
   </v-app>
