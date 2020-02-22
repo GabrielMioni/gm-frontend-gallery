@@ -23,145 +23,144 @@
 </template>
 
 <script>
-  import axios from "axios";
-  import {mapGetters, mapActions} from 'vuex';
-  import {getOptionsType} from '@/utilities/helpers';
-  import ConfirmationModal from "@/utilities/vue/components/ConfirmationModal";
+import axios from 'axios'
+import { mapGetters, mapActions } from 'vuex'
+import { getOptionsType } from '@/utilities/helpers'
+import ConfirmationModal from '@/utilities/vue/components/ConfirmationModal'
 
-  export default {
-    name: "SubmitPostButton",
-    components: {ConfirmationModal},
-    data () {
-      return {
-        showModal: false,
+export default {
+  name: 'SubmitPostButton',
+  components: { ConfirmationModal },
+  data () {
+    return {
+      showModal: false
+    }
+  },
+  props: {
+    disabled: {
+      type: Boolean,
+      required: true
+    }
+  },
+  methods: {
+    ...mapActions({
+      SET_MAIN_TITLE_ERROR: 'mainData/SET_MAIN_TITLE_ERROR',
+      SET_MAIN_SUBMITTING: 'mainData/SET_MAIN_SUBMITTING',
+      SET_POST_ERROR: 'postData/SET_POST_ERROR',
+      RESET_MAIN_DATA: 'mainData/RESET_MAIN_DATA',
+      RESET_GALLERY_POST_DATA: 'postData/RESET_GALLERY_POST_DATA'
+    }),
+    ...mapGetters({
+      getMainTitle: 'mainData/getMainTitle',
+      getMainNonce: 'mainData/getMainNonce',
+      getMainSubmitting: 'mainData/getMainSubmitting',
+      getGalleryPosts: 'postData/getGalleryPosts',
+      getMainOptions: 'mainData/getMainOptions'
+    }),
+    createValidateFormData () {
+      const attachmentContents = []
+      const formData = new FormData()
+      let hasErrors = false
+
+      const galleryPosts = this.getGalleryPosts()
+
+      galleryPosts.map((galleryPost, index) => {
+        const postContent = galleryPost.content.trim()
+        const imageFile = galleryPost.file
+
+        if (postContent === '' || postContent.length > this.maxContentLength) {
+          const contentError = postContent === ''
+            ? 'Content is required'
+            : `Content cannot be greater than ${this.maxContentLength} characters`
+
+          this.SET_POST_ERROR({
+            index: index,
+            type: 'content',
+            error: contentError
+          })
+          hasErrors = true
+        } else {
+          attachmentContents.push(postContent)
+        }
+
+        if (imageFile === null) {
+          this.SET_POST_ERROR({
+            index: index,
+            type: 'imageUrl',
+            error: 'An image is required'
+          })
+          hasErrors = true
+        } else {
+          formData.append('image_files[]', imageFile)
+        }
+      })
+
+      const mainTitle = this.getMainTitle()
+
+      if (mainTitle === '') {
+        this.SET_MAIN_TITLE_ERROR('A title is required')
+        hasErrors = true
       }
-    },
-    props: {
-      disabled: {
-        type: Boolean,
-        required: true
+
+      if (hasErrors) {
+        return false
       }
+
+      formData.append('mainTitle', mainTitle)
+      formData.append('attachmentContents', JSON.stringify(attachmentContents))
+
+      return formData
     },
-    methods: {
-      ...mapActions({
-        SET_MAIN_TITLE_ERROR: 'mainData/SET_MAIN_TITLE_ERROR',
-        SET_MAIN_SUBMITTING: 'mainData/SET_MAIN_SUBMITTING',
-        SET_POST_ERROR: 'postData/SET_POST_ERROR',
-        RESET_MAIN_DATA: 'mainData/RESET_MAIN_DATA',
-        RESET_GALLERY_POST_DATA: 'postData/RESET_GALLERY_POST_DATA'
-      }),
-      ...mapGetters({
-        getMainTitle: 'mainData/getMainTitle',
-        getMainNonce: 'mainData/getMainNonce',
-        getMainSubmitting: 'mainData/getMainSubmitting',
-        getGalleryPosts: 'postData/getGalleryPosts',
-        getMainOptions: 'mainData/getMainOptions'
-      }),
-      createValidateFormData () {
-        let attachmentContents = [];
-        let formData = new FormData();
-        let hasErrors = false;
+    submitPosts () {
+      if (this.submitting) {
+        return
+      }
 
-        const galleryPosts = this.getGalleryPosts();
+      const formData = this.createValidateFormData()
+      if (formData === false) {
+        return
+      }
 
-        galleryPosts.map((galleryPost, index) => {
-          const postContent = galleryPost.content.trim();
-          const imageFile = galleryPost.file;
+      const self = this
+      self.submitting = true
+      const mainNonce = self.getMainNonce()
 
-          if (postContent === '' || postContent.length > this.maxContentLength) {
-
-            const contentError = postContent === '' ?
-              'Content is required' :
-              `Content cannot be greater than ${this.maxContentLength} characters`;
-
-            this.SET_POST_ERROR({
-              'index': index,
-              'type': 'content',
-              'error': contentError,
-            });
-            hasErrors = true;
-          } else {
-            attachmentContents.push(postContent);
-          }
-
-          if (imageFile === null) {
-            this.SET_POST_ERROR({
-              'index': index,
-              'type': 'imageUrl',
-              'error': 'An image is required',
-            });
-            hasErrors = true;
-          } else {
-            formData.append('image_files[]', imageFile);
-          }
-        });
-
-        const mainTitle = this.getMainTitle();
-
-        if (mainTitle === '') {
-          this.SET_MAIN_TITLE_ERROR('A title is required');
-          hasErrors = true;
+      axios.post('/wp-json/gm-frontend-gallery/v1/submit/', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'X-WP-Nonce': mainNonce
         }
-
-        if (hasErrors) {
-          return false;
-        }
-
-        formData.append('mainTitle', mainTitle);
-        formData.append('attachmentContents', JSON.stringify(attachmentContents));
-
-        return formData;
-      },
-      submitPosts () {
-        if (this.submitting) {
-          return;
-        }
-
-        const formData = this.createValidateFormData();
-        if (formData === false) {
-          return;
-        }
-
-        const self = this;
-        self.submitting = true;
-        const mainNonce = self.getMainNonce();
-
-        axios.post('/wp-json/gm-frontend-gallery/v1/submit/', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            'X-WP-Nonce': mainNonce,
-          }
+      })
+        .then((response) => {
+          setTimeout(() => {
+            self.showModal = true
+            self.submitting = false
+          }, 1000)
+        }).catch((error) => {
+          const responseData = error.response.data
+          self.error = responseData.message
         })
-          .then((response) => {
-            setTimeout(() => {
-              self.showModal = true;
-              self.submitting = false;
-            }, 1000);
-          }).catch((error) => {
-          const responseData = error.response.data;
-          self.error = responseData.message;
-        });
+    },
+    confirmNoHandler () {
+      this.RESET_MAIN_DATA()
+      this.RESET_GALLERY_POST_DATA()
+      this.showModal = false
+    }
+  },
+  computed: {
+    submitting: {
+      get () {
+        return this.getMainSubmitting()
       },
-      confirmNoHandler () {
-        this.RESET_MAIN_DATA();
-        this.RESET_GALLERY_POST_DATA();
-        this.showModal = false;
+      set (value) {
+        return this.SET_MAIN_SUBMITTING(value)
       }
     },
-    computed: {
-      submitting: {
-        get () {
-          return this.getMainSubmitting();
-        },
-        set (value) {
-          return this.SET_MAIN_SUBMITTING(value);
-        }
-      },
-      maxContentLength: {
-        get () {
-          return getOptionsType(this.getMainOptions, 'maxContentLength');
-        }
+    maxContentLength: {
+      get () {
+        return getOptionsType(this.getMainOptions, 'maxContentLength')
       }
     }
   }
+}
 </script>

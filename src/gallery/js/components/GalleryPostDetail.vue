@@ -38,133 +38,133 @@
 </template>
 
 <script>
-  import GalleryPostDetailAttachedImage from "@/gallery/js/components/GalleryPostDetailAttachedImage";
-  import {mapGetters} from 'vuex';
+import GalleryPostDetailAttachedImage from '@/gallery/js/components/GalleryPostDetailAttachedImage'
+import { mapGetters } from 'vuex'
 
-  export default {
-    name: "GalleryPostDetail",
-    components: {GalleryPostDetailAttachedImage},
-    data () {
-      return {
-        selectedImageIndex: 0,
-        focusableElms: [],
-        focusedElmIndex: null
-      }
+export default {
+  name: 'GalleryPostDetail',
+  components: { GalleryPostDetailAttachedImage },
+  data () {
+    return {
+      selectedImageIndex: 0,
+      focusableElms: [],
+      focusedElmIndex: null
+    }
+  },
+  props: {
+    galleryPost: {
+      type: Object,
+      required: true
     },
-    props: {
-      galleryPost: {
-        type: Object,
-        required: true
-      },
-      index: {
-        type: Number,
-        required: true
-      }
+    index: {
+      type: Number,
+      required: true
+    }
+  },
+  methods: {
+    ...mapGetters({
+      getOpenedPostIndex: 'galleryData/getOpenedPostIndex'
+    }),
+    chooseAttachedImage (index) {
+      this.selectedImageIndex = index
     },
-    methods: {
-      ...mapGetters({
-        getOpenedPostIndex: 'galleryData/getOpenedPostIndex'
-      }),
-      chooseAttachedImage (index) {
-        this.selectedImageIndex = index;
-      },
-      updateCarouselButtons () {
-        let buttons = [];
+    updateCarouselButtons () {
+      const buttons = []
 
-        const closeButton = document.getElementsByClassName('gm-frontend-gallery__carousel__close-button');
-        const prevButton = document.querySelectorAll('.v-window__prev button');
-        const nextButton = document.querySelectorAll('.v-window__next button');
+      const closeButton = document.getElementsByClassName('gm-frontend-gallery__carousel__close-button')
+      const prevButton = document.querySelectorAll('.v-window__prev button')
+      const nextButton = document.querySelectorAll('.v-window__next button')
 
-        if (closeButton.length > 0) {
-          buttons.push(closeButton[0]);
-        }
-        if (prevButton.length > 0) {
-          buttons.push(prevButton[0]);
-        }
-        if (nextButton.length > 0) {
-          buttons.push(nextButton[0]);
-        }
-        return buttons
-      },
-      setFocusableElms () {
-        const buttons = this.updateCarouselButtons();
-        const attachedImages = this.galleryPost.images.map((item, index) => {
-          const attachedImageRef = this.$refs[`attachedImage${index}`];
-          if (typeof attachedImageRef === 'undefined') {
-            return;
-          }
-          return this.$refs[`attachedImage${index}`][0].$el;
-        });
-
-        return buttons.concat(attachedImages);
-      },
-      focusDetail () {
-        if (this.currentIndex === this.index) {
-          this.$refs['galleryDetail'].$el.focus();
-        }
-      },
-      tabHandler (e) {
-        if (e.key !== 'Tab') {
-          return;
-        }
-        e.preventDefault();
-        const reverse = e.shiftKey;
-        if (this.focusedElmIndex === null) {
-          this.focusedElmIndex = 0;
-          return;
-        }
-        const maxFocusableIndex = this.focusableElms.length - 1;
-        if (!reverse && this.focusedElmIndex + 1 <= maxFocusableIndex) {
-          this.focusedElmIndex = this.focusedElmIndex + 1;
+      if (closeButton.length > 0) {
+        buttons.push(closeButton[0])
+      }
+      if (prevButton.length > 0) {
+        buttons.push(prevButton[0])
+      }
+      if (nextButton.length > 0) {
+        buttons.push(nextButton[0])
+      }
+      return buttons
+    },
+    setFocusableElms () {
+      const buttons = this.updateCarouselButtons()
+      const attachedImages = this.galleryPost.images.map((item, index) => {
+        const attachedImageRef = this.$refs[`attachedImage${index}`]
+        if (typeof attachedImageRef === 'undefined') {
           return
         }
-        if (!reverse && this.focusedElmIndex + 1 > maxFocusableIndex) {
-          this.focusedElmIndex = 0;
-          return
-        }
-        if (reverse && this.focusedElmIndex - 1 >= 0) {
-          this.focusedElmIndex = this.focusedElmIndex - 1;
-          return;
-        }
-        if (reverse && this.focusedElmIndex - 1 < 0) {
-          this.focusedElmIndex = maxFocusableIndex;
-        }
-      }
+        return this.$refs[`attachedImage${index}`][0].$el
+      })
+
+      return buttons.concat(attachedImages)
     },
-    computed: {
-      selectedImage () {
-        return this.galleryPost.images[this.selectedImageIndex]['sized_images'].full;
-      },
-      currentIndex () {
-        return this.getOpenedPostIndex();
-      }
-    },
-    mounted () {
-      this.$nextTick(() => {
-        this.focusableElms = this.setFocusableElms();
-      });
+    focusDetail () {
       if (this.currentIndex === this.index) {
-        document.addEventListener('keydown', this.tabHandler, true);
+        this.$refs.galleryDetail.$el.focus()
       }
     },
-    beforeDestroy () {
-      document.removeEventListener('keydown', this.tabHandler, true);
+    tabHandler (e) {
+      if (e.key !== 'Tab') {
+        return
+      }
+      e.preventDefault()
+      const reverse = e.shiftKey
+      if (this.focusedElmIndex === null) {
+        this.focusedElmIndex = 0
+        return
+      }
+      const maxFocusableIndex = this.focusableElms.length - 1
+      if (!reverse && this.focusedElmIndex + 1 <= maxFocusableIndex) {
+        this.focusedElmIndex = this.focusedElmIndex + 1
+        return
+      }
+      if (!reverse && this.focusedElmIndex + 1 > maxFocusableIndex) {
+        this.focusedElmIndex = 0
+        return
+      }
+      if (reverse && this.focusedElmIndex - 1 >= 0) {
+        this.focusedElmIndex = this.focusedElmIndex - 1
+        return
+      }
+      if (reverse && this.focusedElmIndex - 1 < 0) {
+        this.focusedElmIndex = maxFocusableIndex
+      }
+    }
+  },
+  computed: {
+    selectedImage () {
+      return this.galleryPost.images[this.selectedImageIndex].sized_images.full
     },
-    watch: {
-      currentIndex () {
-        if (this.currentIndex === this.index) {
-          document.addEventListener('keydown', this.tabHandler, true);
-        }
-        if (this.currentIndex !== this.index) {
-          document.removeEventListener('keydown', this.tabHandler, true);
-          this.focusedElmIndex = null;
-        }
-      },
-      focusedElmIndex () {
-        if (this.focusedElmIndex !== null && typeof this.focusableElms[this.focusedElmIndex] !== 'undefined') {
-          this.focusableElms[this.focusedElmIndex].focus();
-        }
+    currentIndex () {
+      return this.getOpenedPostIndex()
+    }
+  },
+  mounted () {
+    this.$nextTick(() => {
+      this.focusableElms = this.setFocusableElms()
+    })
+    if (this.currentIndex === this.index) {
+      document.addEventListener('keydown', this.tabHandler, true)
+    }
+  },
+  beforeDestroy () {
+    document.removeEventListener('keydown', this.tabHandler, true)
+  },
+  watch: {
+    currentIndex () {
+      if (this.currentIndex === this.index) {
+        document.addEventListener('keydown', this.tabHandler, true)
+      }
+      if (this.currentIndex !== this.index) {
+        document.removeEventListener('keydown', this.tabHandler, true)
+        this.focusedElmIndex = null
+      }
+    },
+    focusedElmIndex () {
+      if (this.focusedElmIndex !== null && typeof this.focusableElms[this.focusedElmIndex] !== 'undefined') {
+        this.focusableElms[this.focusedElmIndex].focus()
       }
     }
   }
+}
 </script>

@@ -32,23 +32,23 @@
 </template>
 
 <script>
-  import TrashPostButton from "./TrashPostButton";
-  import GalleryPostImage from "./GalleryPostImage";
-  import GalleryPostContent from "./GalleryPostContent";
-  import GalleryPostButtonAdd from "./GalleryPostButtonAdd";
+import TrashPostButton from './TrashPostButton'
+import GalleryPostImage from './GalleryPostImage'
+import GalleryPostContent from './GalleryPostContent'
+import GalleryPostButtonAdd from './GalleryPostButtonAdd'
 
-  export default {
-    name: "GalleryPost",
-    components: {GalleryPostContent, GalleryPostImage, TrashPostButton, GalleryPostButtonAdd},
-    props: {
-      index: {
-        type: Number,
-        required: true
-      },
-      postState: {
-        type: Object,
-        required: true
-      }
+export default {
+  name: 'GalleryPost',
+  components: { GalleryPostContent, GalleryPostImage, TrashPostButton, GalleryPostButtonAdd },
+  props: {
+    index: {
+      type: Number,
+      required: true
+    },
+    postState: {
+      type: Object,
+      required: true
     }
   }
+}
 </script>

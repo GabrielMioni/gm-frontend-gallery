@@ -36,51 +36,51 @@
 </template>
 
 <script>
-  import GalleryPostImage from "./components/galleryPostImage"
-  import GalleryCarousel from "./components/GalleryCarousel";
-  import {mapGetters, mapActions} from 'vuex';
+import GalleryPostImage from './components/galleryPostImage'
+import GalleryCarousel from './components/GalleryCarousel'
+import { mapGetters, mapActions } from 'vuex'
 
-  export default {
-    name: 'gmGallery',
-    components: {GalleryCarousel, GalleryPostImage},
-    data () {
-      return {
-        showCarousel: true,
-      }
-    },
-    methods: {
-      ...mapGetters({
-        getGalleryCount: 'galleryData/getGalleryCount',
-        getGalleryPosts: 'galleryData/getGalleryPosts',
-        getOpenedPostIndex: 'galleryData/getOpenedPostIndex',
-        getGalleryLoading: 'galleryData/getGalleryLoading'
-      }),
-      ...mapActions({
-        SET_GALLERY_POSTS: 'galleryData/SET_GALLERY_POSTS',
-        SET_OPENED_POST_INDEX: 'galleryData/SET_OPENED_POST_INDEX'
-      }),
-      close () {
-        this.showCarousel = false;
-      }
-    },
-    computed: {
-      galleryPosts () {
-        return this.getGalleryPosts();
-      },
-      openedPostIndex: {
-        get () {
-          return this.getOpenedPostIndex();
-        },
-        set (index) {
-          return this.SET_OPENED_POST_INDEX(index)
-        }
-      },
-      carouselIsOpen () {
-        return this.getOpenedPostIndex() !== null;
-      }
-    },
-    mounted () {
-      this.SET_GALLERY_POSTS(1000);
+export default {
+  name: 'gmGallery',
+  components: { GalleryCarousel, GalleryPostImage },
+  data () {
+    return {
+      showCarousel: true
     }
+  },
+  methods: {
+    ...mapGetters({
+      getGalleryCount: 'galleryData/getGalleryCount',
+      getGalleryPosts: 'galleryData/getGalleryPosts',
+      getOpenedPostIndex: 'galleryData/getOpenedPostIndex',
+      getGalleryLoading: 'galleryData/getGalleryLoading'
+    }),
+    ...mapActions({
+      SET_GALLERY_POSTS: 'galleryData/SET_GALLERY_POSTS',
+      SET_OPENED_POST_INDEX: 'galleryData/SET_OPENED_POST_INDEX'
+    }),
+    close () {
+      this.showCarousel = false
+    }
+  },
+  computed: {
+    galleryPosts () {
+      return this.getGalleryPosts()
+    },
+    openedPostIndex: {
+      get () {
+        return this.getOpenedPostIndex()
+      },
+      set (index) {
+        return this.SET_OPENED_POST_INDEX(index)
+      }
+    },
+    carouselIsOpen () {
+      return this.getOpenedPostIndex() !== null
+    }
+  },
+  mounted () {
+    this.SET_GALLERY_POSTS(1000)
   }
+}
 </script>

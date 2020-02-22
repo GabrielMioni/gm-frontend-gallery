@@ -16,22 +16,22 @@
 </template>
 
 <script>
-  export default {
-    name: "GalleryPostDetailAttachedImage",
-    props: {
-      image: {
-        type: Object,
-        required: true,
-      },
-      index: {
-        type: Number,
-        required: true,
-      }
+export default {
+  name: 'GalleryPostDetailAttachedImage',
+  props: {
+    image: {
+      type: Object,
+      required: true
     },
-    methods: {
-      updateSelectedImageIndex () {
-        this.$emit('updateSelectedImageIndex', this.index);
-      }
+    index: {
+      type: Number,
+      required: true
+    }
+  },
+  methods: {
+    updateSelectedImageIndex () {
+      this.$emit('updateSelectedImageIndex', this.index)
     }
   }
+}
 </script>

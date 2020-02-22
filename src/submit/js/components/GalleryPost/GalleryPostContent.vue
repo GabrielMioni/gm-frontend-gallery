@@ -15,61 +15,61 @@
 </template>
 
 <script>
-  import {mapGetters, mapActions} from 'vuex';
-  import {getOptionsType} from '@/utilities/helpers';
+import { mapGetters, mapActions } from 'vuex'
+import { getOptionsType } from '@/utilities/helpers'
 
-  export default {
-    name: "GalleryPostContent",
-    props: {
-      index: {
-        type: Number,
-        required: true
+export default {
+  name: 'GalleryPostContent',
+  props: {
+    index: {
+      type: Number,
+      required: true
+    },
+    content: {
+      type: String,
+      required: true
+    },
+    contentError: {
+      type: String,
+      required: true
+    }
+  },
+  methods: {
+    ...mapActions({
+      SET_POST_CONTENT: 'postData/SET_POST_CONTENT',
+      SET_POST_ERROR: 'postData/SET_POST_ERROR'
+    }),
+    ...mapGetters({
+      getMainOptions: 'mainData/getMainOptions'
+    }),
+    setElementId (idName) {
+      return `${idName}-${this.index}`
+    }
+  },
+  computed: {
+    postContent: {
+      get () {
+        return this.content
       },
-      content: {
-        type: String,
-        required: true
-      },
-      contentError: {
-        type: String,
-        required: true
+      set (value) {
+        if (this.contentError !== '') {
+          this.SET_POST_ERROR({
+            index: this.index,
+            type: 'content',
+            error: ''
+          })
+        }
+        return this.SET_POST_CONTENT({
+          index: this.index,
+          data: value
+        })
       }
     },
-    methods: {
-      ...mapActions({
-        SET_POST_CONTENT: 'postData/SET_POST_CONTENT',
-        SET_POST_ERROR: 'postData/SET_POST_ERROR'
-      }),
-      ...mapGetters({
-        getMainOptions: 'mainData/getMainOptions'
-      }),
-      setElementId (idName) {
-        return `${idName}-${this.index}`;
-      },
-    },
-    computed: {
-      postContent: {
-        get () {
-          return this.content;
-        },
-        set (value) {
-          if (this.contentError !== '') {
-            this.SET_POST_ERROR({
-              index: this.index,
-              type: 'content',
-              error: '',
-            });
-          }
-          return this.SET_POST_CONTENT({
-            index: this.index,
-            data: value,
-          });
-        }
-      },
-      maxContentLength: {
-        get () {
-          return getOptionsType(this.getMainOptions, 'maxContentLength');
-        }
+    maxContentLength: {
+      get () {
+        return getOptionsType(this.getMainOptions, 'maxContentLength')
       }
     }
   }
+}
 </script>

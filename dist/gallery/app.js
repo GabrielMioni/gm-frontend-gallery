@@ -250,7 +250,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "GalleryCarousel",
+  name: 'GalleryCarousel',
   components: {
     GalleryPostDetail: _gallery_js_components_GalleryPostDetail__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
@@ -387,7 +387,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "GalleryPostDetail",
+  name: 'GalleryPostDetail',
   components: {
     GalleryPostDetailAttachedImage: _gallery_js_components_GalleryPostDetailAttachedImage__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
@@ -451,7 +451,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     focusDetail: function focusDetail() {
       if (this.currentIndex === this.index) {
-        this.$refs['galleryDetail'].$el.focus();
+        this.$refs.galleryDetail.$el.focus();
       }
     },
     tabHandler: function tabHandler(e) {
@@ -491,7 +491,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   }),
   computed: {
     selectedImage: function selectedImage() {
-      return this.galleryPost.images[this.selectedImageIndex]['sized_images'].full;
+      return this.galleryPost.images[this.selectedImageIndex].sized_images.full;
     },
     currentIndex: function currentIndex() {
       return this.getOpenedPostIndex();
@@ -559,7 +559,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "GalleryPostDetailAttachedImage",
+  name: 'GalleryPostDetailAttachedImage',
   props: {
     image: {
       type: Object,
@@ -632,7 +632,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "GalleryPostImage",
+  name: 'GalleryPostImage',
   data: function data() {
     return {
       imageLoading: true
@@ -656,7 +656,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return image.match(/\.(gif)$/) != null;
     },
     getSizedImage: function getSizedImage(size) {
-      return this.galleryPost.images[0]['sized_images'][size];
+      return this.galleryPost.images[0].sized_images[size];
     },
     loadingComplete: function loadingComplete() {
       var _this = this;
@@ -57087,7 +57087,7 @@ var galleryDataModule = {
         var responseData = JSON.parse(xhr.responseText);
         setTimeout(function () {
           commit('updateGalleryPosts', responseData.posts);
-          commit('updateGalleryCount', responseData['gallery_count']);
+          commit('updateGalleryCount', responseData.gallery_count);
           commit('updatePageLoaded', pageLoaded + 1);
           commit('updateGalleryLoading', false);
         }, time);

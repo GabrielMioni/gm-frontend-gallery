@@ -39,106 +39,106 @@
 </template>
 
 <script>
-  import GalleryPost from "./components/GalleryPost/GalleryPost";
-  import SubmitPostButton from "./components/SubmitPostButton";
-  import {mapGetters, mapActions} from 'vuex';
+import GalleryPost from './components/GalleryPost/GalleryPost'
+import SubmitPostButton from './components/SubmitPostButton'
+import { mapGetters, mapActions } from 'vuex'
 
-  export default {
-    name: "gmGallerySubmit",
-    components: {SubmitPostButton, GalleryPost},
-    methods: {
-      ...mapActions({
-        SET_MAIN_TITLE: 'mainData/SET_MAIN_TITLE',
-        SET_MAIN_TITLE_ERROR: 'mainData/SET_MAIN_TITLE_ERROR',
-        SET_MAIN_NONCE: 'mainData/SET_MAIN_NONCE',
-        SET_MAIN_OPTIONS: 'mainData/SET_MAIN_OPTIONS',
-        ADD_POST: 'postData/ADD_POST'
-      }),
-      ...mapGetters({
-        getMainTitle: 'mainData/getMainTitle',
-        getMainTitleError: 'mainData/getMainTitleError',
-        getMainSubmitting: 'mainData/getMainSubmitting',
-        getMainOptions: 'mainData/getMainOptions',
-        getGalleryPosts: 'postData/getGalleryPosts',
-        getGalleryPostsLength: 'postData/getGalleryPostsLength',
-      }),
-      addPost () {
-        if (this.galleryPosts.length >= this.options['maxAttachments']) {
-          return;
-        }
-        this.ADD_POST();
+export default {
+  name: 'gmGallerySubmit',
+  components: { SubmitPostButton, GalleryPost },
+  methods: {
+    ...mapActions({
+      SET_MAIN_TITLE: 'mainData/SET_MAIN_TITLE',
+      SET_MAIN_TITLE_ERROR: 'mainData/SET_MAIN_TITLE_ERROR',
+      SET_MAIN_NONCE: 'mainData/SET_MAIN_NONCE',
+      SET_MAIN_OPTIONS: 'mainData/SET_MAIN_OPTIONS',
+      ADD_POST: 'postData/ADD_POST'
+    }),
+    ...mapGetters({
+      getMainTitle: 'mainData/getMainTitle',
+      getMainTitleError: 'mainData/getMainTitleError',
+      getMainSubmitting: 'mainData/getMainSubmitting',
+      getMainOptions: 'mainData/getMainOptions',
+      getGalleryPosts: 'postData/getGalleryPosts',
+      getGalleryPostsLength: 'postData/getGalleryPostsLength'
+    }),
+    addPost () {
+      if (this.galleryPosts.length >= this.options.maxAttachments) {
+        return
+      }
+      this.ADD_POST()
+    },
+    generateKey () {
+      const rand = Math.floor(Math.random() * 100)
+      return `submitPost-${rand}`
+    }
+  },
+  computed: {
+    mainTitle: {
+      get () {
+        return this.getMainTitle()
       },
-      generateKey () {
-        const rand = Math.floor(Math.random() * 100);
-        return `submitPost-${rand}`
+      set (newTitle) {
+        if (this.getMainTitleError() !== '') {
+          this.SET_MAIN_TITLE_ERROR('')
+        }
+        return this.SET_MAIN_TITLE(newTitle)
       }
     },
-    computed: {
-      mainTitle: {
-        get () {
-          return this.getMainTitle();
-        },
-        set (newTitle) {
-          if (this.getMainTitleError() !== '') {
-            this.SET_MAIN_TITLE_ERROR('');
-          }
-          return this.SET_MAIN_TITLE(newTitle);
-        }
-      },
-      mainTitleError: {
-        get () {
-          return this.getMainTitleError();
-        }
-      },
-      galleryPosts: {
-        get () {
-          return this.getGalleryPosts();
-        }
-      },
-      submitting: {
-        get () {
-          return this.getMainSubmitting();
-        }
-      },
-      options: {
-        get () {
-          return this.getMainOptions();
-        }
-      },
-      errorsPresentMessage: {
-        get () {
-          let errorsPresent = false;
-          this.galleryPosts.map((galleryPost) => {
-            const errors = Object.values(galleryPost.errors);
-            errors.map((error) => {
-              if (!errorsPresent && error.trim() !== '') {
-                errorsPresent = true;
-              }
-            })
-          });
-
-          if (this.getMainTitleError() !== '' && !errorsPresent) {
-            errorsPresent = true;
-          }
-
-          return errorsPresent === true ? 'Please check the errors above before submitting' : '';
-        }
-      },
-      allowedAttachmentsMessage: {
-        get () {
-          const maxAttachments = this.options.maxAttachments;
-          if (maxAttachments <= 1) {
-            return '';
-          }
-          return `Gallery attachments: ${this.getGalleryPostsLength()}/${maxAttachments}`;
-        }
+    mainTitleError: {
+      get () {
+        return this.getMainTitleError()
       }
     },
-    created () {
-      const mount = document.getElementById('gm-frontend-submit');
-
-      this.SET_MAIN_NONCE(mount.dataset.nonce);
-      this.SET_MAIN_OPTIONS(mount.dataset.options);
+    galleryPosts: {
+      get () {
+        return this.getGalleryPosts()
+      }
     },
+    submitting: {
+      get () {
+        return this.getMainSubmitting()
+      }
+    },
+    options: {
+      get () {
+        return this.getMainOptions()
+      }
+    },
+    errorsPresentMessage: {
+      get () {
+        let errorsPresent = false
+        this.galleryPosts.map((galleryPost) => {
+          const errors = Object.values(galleryPost.errors)
+          errors.map((error) => {
+            if (!errorsPresent && error.trim() !== '') {
+              errorsPresent = true
+            }
+          })
+        })
+
+        if (this.getMainTitleError() !== '' && !errorsPresent) {
+          errorsPresent = true
+        }
+
+        return errorsPresent === true ? 'Please check the errors above before submitting' : ''
+      }
+    },
+    allowedAttachmentsMessage: {
+      get () {
+        const maxAttachments = this.options.maxAttachments
+        if (maxAttachments <= 1) {
+          return ''
+        }
+        return `Gallery attachments: ${this.getGalleryPostsLength()}/${maxAttachments}`
+      }
+    }
+  },
+  created () {
+    const mount = document.getElementById('gm-frontend-submit')
+
+    this.SET_MAIN_NONCE(mount.dataset.nonce)
+    this.SET_MAIN_OPTIONS(mount.dataset.options)
   }
+}
 </script>

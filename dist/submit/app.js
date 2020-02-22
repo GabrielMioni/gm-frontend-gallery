@@ -1961,7 +1961,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "gmGallerySubmit",
+  name: 'gmGallerySubmit',
   components: {
     SubmitPostButton: _components_SubmitPostButton__WEBPACK_IMPORTED_MODULE_1__["default"],
     GalleryPost: _components_GalleryPost_GalleryPost__WEBPACK_IMPORTED_MODULE_0__["default"]
@@ -1981,7 +1981,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     getGalleryPostsLength: 'postData/getGalleryPostsLength'
   }), {
     addPost: function addPost() {
-      if (this.galleryPosts.length >= this.options['maxAttachments']) {
+      if (this.galleryPosts.length >= this.options.maxAttachments) {
         return;
       }
 
@@ -2116,7 +2116,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "GalleryPost",
+  name: 'GalleryPost',
   components: {
     GalleryPostContent: _GalleryPostContent__WEBPACK_IMPORTED_MODULE_2__["default"],
     GalleryPostImage: _GalleryPostImage__WEBPACK_IMPORTED_MODULE_1__["default"],
@@ -2168,7 +2168,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "GalleryPostButtonAdd",
+  name: 'GalleryPostButtonAdd',
   props: {
     index: {
       type: Number,
@@ -2183,7 +2183,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   }), {
     addPost: function addPost() {
       if (this.getGalleryPostsLength() >= this.maxAttachments) {
-        Object(_utilities_helpers__WEBPACK_IMPORTED_MODULE_1__["applyShake"])(this.$refs['addPostButton'].$el, 1000);
+        Object(_utilities_helpers__WEBPACK_IMPORTED_MODULE_1__["applyShake"])(this.$refs.addPostButton.$el, 1000);
         return;
       }
 
@@ -2194,7 +2194,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     maxAttachments: {
       get: function get() {
         var options = this.getMainOptions();
-        return options['maxAttachments'];
+        return options.maxAttachments;
       }
     }
   }
@@ -2238,7 +2238,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "GalleryPostContent",
+  name: 'GalleryPostContent',
   props: {
     index: {
       type: Number,
@@ -2407,11 +2407,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
-
 __webpack_require__(/*! blueimp-canvas-to-blob */ "./node_modules/blueimp-canvas-to-blob/js/canvas-to-blob.js");
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "GalleryPostImage",
+  name: 'GalleryPostImage',
   props: {
     index: {
       type: Number,
@@ -2628,7 +2627,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "TrashPostButton",
+  name: 'TrashPostButton',
   components: {
     ConfirmationModal: _utilities_vue_components_ConfirmationModal__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
@@ -2680,10 +2679,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       new Promise(function (resolve) {
         resolve(_this.REMOVE_POST(_this.index));
-        /*if (galleryPostLength > 1) {
-          resolve(this.REMOVE_POST(this.index));
-        }
-        resolve(this.CLEAR_POST(this.index));*/
+        /* if (galleryPostLength > 1) {
+            resolve(this.REMOVE_POST(this.index));
+          }
+          resolve(this.CLEAR_POST(this.index)); */
       }).then(function () {
         _this.showModal = false;
       });
@@ -2742,7 +2741,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "SubmitPostButton",
+  name: 'SubmitPostButton',
   components: {
     ConfirmationModal: _utilities_vue_components_ConfirmationModal__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
@@ -2785,9 +2784,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           var contentError = postContent === '' ? 'Content is required' : "Content cannot be greater than ".concat(_this.maxContentLength, " characters");
 
           _this.SET_POST_ERROR({
-            'index': index,
-            'type': 'content',
-            'error': contentError
+            index: index,
+            type: 'content',
+            error: contentError
           });
 
           hasErrors = true;
@@ -2797,9 +2796,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         if (imageFile === null) {
           _this.SET_POST_ERROR({
-            'index': index,
-            'type': 'imageUrl',
-            'error': 'An image is required'
+            index: index,
+            type: 'imageUrl',
+            error: 'An image is required'
           });
 
           hasErrors = true;

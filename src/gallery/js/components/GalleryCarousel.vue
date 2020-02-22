@@ -38,79 +38,79 @@
 </template>
 
 <script>
-  import {mapGetters, mapActions} from 'vuex';
-  import GalleryPostDetail from "@/gallery/js/components/GalleryPostDetail";
+import { mapGetters, mapActions } from 'vuex'
+import GalleryPostDetail from '@/gallery/js/components/GalleryPostDetail'
 
-  export default {
-    name: "GalleryCarousel",
-    components: {GalleryPostDetail},
-    data () {
-      return {
-        tabIndex: null
-      }
+export default {
+  name: 'GalleryCarousel',
+  components: { GalleryPostDetail },
+  data () {
+    return {
+      tabIndex: null
+    }
+  },
+  methods: {
+    ...mapGetters({
+      getGalleryCount: 'galleryData/getGalleryCount',
+      getGalleryPosts: 'galleryData/getGalleryPosts',
+      getOpenedPostIndex: 'galleryData/getOpenedPostIndex',
+      getGalleryLoading: 'galleryData/getGalleryLoading'
+    }),
+    ...mapActions({
+      SET_OPENED_POST_INDEX: 'galleryData/SET_OPENED_POST_INDEX'
+    }),
+    carouselChangeHandler (data) {
+      this.tabIndex = null
+      this.SET_OPENED_POST_INDEX(data)
     },
-    methods: {
-      ...mapGetters({
-        getGalleryCount: 'galleryData/getGalleryCount',
-        getGalleryPosts: 'galleryData/getGalleryPosts',
-        getOpenedPostIndex: 'galleryData/getOpenedPostIndex',
-        getGalleryLoading: 'galleryData/getGalleryLoading'
-      }),
-      ...mapActions({
-        SET_OPENED_POST_INDEX: 'galleryData/SET_OPENED_POST_INDEX'
-      }),
-      carouselChangeHandler (data) {
-        this.tabIndex = null;
-        this.SET_OPENED_POST_INDEX(data);
-      },
-      closeCarousel () {
-        this.SET_OPENED_POST_INDEX(null);
-      },
-      navigateGalleryHandler (e) {
-        const key = e.key;
-        const allowedKeys = ['ArrowLeft', 'ArrowRight', 'Escape'];
-        if (allowedKeys.indexOf(key) < 0) {
-          return;
-        }
-        e.preventDefault();
-        if (key === 'Escape') {
-          this.closeCarousel();
-          return;
-        }
-        let newOpenedPostIndex = key === 'ArrowLeft' ? this.currentIndex - 1 : this.currentIndex + 1;
-        if (newOpenedPostIndex < 0 ||
+    closeCarousel () {
+      this.SET_OPENED_POST_INDEX(null)
+    },
+    navigateGalleryHandler (e) {
+      const key = e.key
+      const allowedKeys = ['ArrowLeft', 'ArrowRight', 'Escape']
+      if (allowedKeys.indexOf(key) < 0) {
+        return
+      }
+      e.preventDefault()
+      if (key === 'Escape') {
+        this.closeCarousel()
+        return
+      }
+      const newOpenedPostIndex = key === 'ArrowLeft' ? this.currentIndex - 1 : this.currentIndex + 1
+      if (newOpenedPostIndex < 0 ||
           newOpenedPostIndex > this.galleryPosts.length - 1 ||
           newOpenedPostIndex === this.currentIndex) {
-          return;
-        }
-        this.SET_OPENED_POST_INDEX(newOpenedPostIndex);
-      },
-    },
-    computed: {
-      galleryPosts () {
-        return this.getGalleryPosts();
-      },
-      currentIndex () {
-        return this.getOpenedPostIndex();
+        return
       }
+      this.SET_OPENED_POST_INDEX(newOpenedPostIndex)
+    }
+  },
+  computed: {
+    galleryPosts () {
+      return this.getGalleryPosts()
     },
-    mounted () {
-      const scrollY = document.getElementsByTagName('html')[0].scrollTop;
-      document.body.style.top = `-${scrollY}px`;
-      document.body.style.position = 'fixed';
-      document.addEventListener('keydown', this.navigateGalleryHandler, true);
-    },
-    beforeDestroy () {
-      const scrollY = document.body.style.top;
-      document.body.style.position = '';
-      document.body.style.top = '';
-      window.scrollTo(0, parseInt(scrollY || '0') * -1);
-      document.removeEventListener('keydown', this.navigateGalleryHandler, true);
-    },
-    watch: {
-      currentIndex () {
-        this.tabIndex = null;
-      }
+    currentIndex () {
+      return this.getOpenedPostIndex()
+    }
+  },
+  mounted () {
+    const scrollY = document.getElementsByTagName('html')[0].scrollTop
+    document.body.style.top = `-${scrollY}px`
+    document.body.style.position = 'fixed'
+    document.addEventListener('keydown', this.navigateGalleryHandler, true)
+  },
+  beforeDestroy () {
+    const scrollY = document.body.style.top
+    document.body.style.position = ''
+    document.body.style.top = ''
+    window.scrollTo(0, parseInt(scrollY || '0') * -1)
+    document.removeEventListener('keydown', this.navigateGalleryHandler, true)
+  },
+  watch: {
+    currentIndex () {
+      this.tabIndex = null
     }
   }
+}
 </script>

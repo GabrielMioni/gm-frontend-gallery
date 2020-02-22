@@ -20,45 +20,45 @@ export const galleryDataModule = {
     getOpenedPostIndex: state => state.openedPostIndex
   },
   mutations: {
-    updateGalleryCount(state, count) {
-      state.galleryCount = count;
+    updateGalleryCount (state, count) {
+      state.galleryCount = count
     },
-    updateGalleryPosts(state, posts) {
-      state.galleryPosts = state.galleryPosts.concat(posts);
+    updateGalleryPosts (state, posts) {
+      state.galleryPosts = state.galleryPosts.concat(posts)
     },
-    updateGalleryLoading(state, value) {
-      state.galleryLoading = value;
+    updateGalleryLoading (state, value) {
+      state.galleryLoading = value
     },
-    updatePageLoaded(state, pageLoaded) {
-      state.pageLoaded = pageLoaded;
+    updatePageLoaded (state, pageLoaded) {
+      state.pageLoaded = pageLoaded
     },
-    setOpenedPostIndex(state, index) {
-      state.openedPostIndex = index;
+    setOpenedPostIndex (state, index) {
+      state.openedPostIndex = index
     }
   },
   actions: {
-    SET_GALLERY_POSTS({ commit, getters }, time) {
-      const namespace = getters.getRouteNameSpace;
-      const pageLoaded = getters.getPageLoaded;
-      const postsPerPage = getters.getPostsPerPage;
+    SET_GALLERY_POSTS ({ commit, getters }, time) {
+      const namespace = getters.getRouteNameSpace
+      const pageLoaded = getters.getPageLoaded
+      const postsPerPage = getters.getPostsPerPage
 
-      commit('updateGalleryLoading', true);
+      commit('updateGalleryLoading', true)
 
-      let xhr = new XMLHttpRequest();
-      xhr.open('GET', `${namespace}/get/${pageLoaded}/${postsPerPage}`);
+      const xhr = new XMLHttpRequest()
+      xhr.open('GET', `${namespace}/get/${pageLoaded}/${postsPerPage}`)
       xhr.onload = () => {
-        const responseData = JSON.parse(xhr.responseText);
-        setTimeout(()=>{
-          commit('updateGalleryPosts', responseData.posts);
-          commit('updateGalleryCount', responseData['gallery_count']);
-          commit('updatePageLoaded', pageLoaded + 1);
-          commit('updateGalleryLoading', false);
+        const responseData = JSON.parse(xhr.responseText)
+        setTimeout(() => {
+          commit('updateGalleryPosts', responseData.posts)
+          commit('updateGalleryCount', responseData.gallery_count)
+          commit('updatePageLoaded', pageLoaded + 1)
+          commit('updateGalleryLoading', false)
         }, time)
-      };
-      xhr.send();
+      }
+      xhr.send()
     },
-    SET_OPENED_POST_INDEX({commit}, index) {
-      commit('setOpenedPostIndex', index);
+    SET_OPENED_POST_INDEX ({ commit }, index) {
+      commit('setOpenedPostIndex', index)
     }
   }
-};
+}
