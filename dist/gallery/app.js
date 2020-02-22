@@ -384,9 +384,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1851,7 +1848,7 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("\n                Load More\n            ")]
+                    [_vm._v("\n        Load More\n      ")]
                   )
                 : _vm._e()
             ],
@@ -2029,11 +2026,11 @@ var render = function() {
             _c("transition", { attrs: { name: "fade", mode: "out-in" } }, [
               _c("p", { key: _vm.selectedImageIndex }, [
                 _vm._v(
-                  "\n                    " +
+                  "\n          " +
                     _vm._s(
                       _vm.galleryPost.images[_vm.selectedImageIndex].content
                     ) +
-                    "\n                "
+                    "\n        "
                 )
               ])
             ])

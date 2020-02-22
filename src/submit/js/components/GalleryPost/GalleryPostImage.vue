@@ -1,97 +1,98 @@
 <template>
-    <v-card class="gm-frontend-gallery-post-image">
-        <div class="gm-frontend-gallery-post-image-upload"
-             @keyup.enter="openFileInput"
-             @click="openFileInput"
-             :ref="'dropFile'">
-            <div v-if="imageUrl === null" class="gm-frontend-gallery-post-image-upload-main">
-                <v-btn class="gm-frontend-gallery-post-image-upload-main__button-big"
-                        absolute
-                        color="transparent"
-                        height="100%"
-                        width="100%"
-                ></v-btn>
-                <div class="gm-frontend-gallery-post-image-upload-main-icon">
-                    <v-icon>add_photo_alternate</v-icon>
-                </div>
-                <div>Click or drag and drop files to upload</div>
-                <div>
-                    Allowed file types: {{ displayAllowedMimes }}
-                </div>
-                <v-input
-                        :error-messages="imageError">
-                </v-input>
-            </div>
-            <template v-else>
-                <v-img
-                        :src="imageUrl"
-                        contain
-                        class="grey darken-4 gm-frontend-gallery-post-image-upload-main">
-                </v-img>
-                <div class="gm-frontend-gallery-post-image-upload-controls">
-                    <template v-if="canBeRotated">
+  <v-card class="gm-frontend-gallery-post-image">
+    <div class="gm-frontend-gallery-post-image-upload"
+         @keyup.enter="openFileInput"
+         @click="openFileInput"
+         :ref="'dropFile'">
+      <div v-if="imageUrl === null" class="gm-frontend-gallery-post-image-upload-main">
+        <v-btn class="gm-frontend-gallery-post-image-upload-main__button-big"
+               absolute
+               color="transparent"
+               height="100%"
+               width="100%"
+        ></v-btn>
+        <div class="gm-frontend-gallery-post-image-upload-main-icon">
+          <v-icon>add_photo_alternate</v-icon>
+        </div>
+        <div>Click or drag and drop files to upload</div>
+        <div>
+          Allowed file types: {{ displayAllowedMimes }}
+        </div>
+        <v-input
+          :error-messages="imageError">
+        </v-input>
+      </div>
+      <template v-else>
+        <v-img
+          :src="imageUrl"
+          contain
+          class="grey darken-4 gm-frontend-gallery-post-image-upload-main">
+        </v-img>
+        <div class="gm-frontend-gallery-post-image-upload-controls">
+          <template v-if="canBeRotated">
                         <span class="gm-frontend-gallery-post-image-upload-controls__button-container">
                             <v-btn
-                                    class="gm-frontend-gallery-post-image-upload-controls__button"
-                                    fab dark small color="primary"
-                                    @keyup.enter.stop
-                                    @click.stop="orientImage('left')">
+                              class="gm-frontend-gallery-post-image-upload-controls__button"
+                              fab dark small color="primary"
+                              @keyup.enter.stop
+                              @click.stop="orientImage('left')">
                                 <v-icon>rotate_left</v-icon>
                             </v-btn>
                         </span>
-                        <span class="gm-frontend-gallery-post-image-upload-controls__button-container">
+            <span class="gm-frontend-gallery-post-image-upload-controls__button-container">
                             <v-btn
-                                    class="gm-frontend-gallery-post-image-upload-controls__button"
-                                    fab dark small color="primary"
-                                    @keyup.enter.stop
-                                    @click.stop="orientImage('right')">
+                              class="gm-frontend-gallery-post-image-upload-controls__button"
+                              fab dark small color="primary"
+                              @keyup.enter.stop
+                              @click.stop="orientImage('right')">
                                 <v-icon>rotate_right</v-icon>
                             </v-btn>
                         </span>
-                        <span class="gm-frontend-gallery-post-image-upload-controls__button-container">
+            <span class="gm-frontend-gallery-post-image-upload-controls__button-container">
                             <v-btn
-                                    class="gm-frontend-gallery-post-image-upload-controls__button"
-                                    fab dark small color="primary"
-                                    @keyup.enter.stop
-                                    @click.stop="orientImage('vertical')">
+                              class="gm-frontend-gallery-post-image-upload-controls__button"
+                              fab dark small color="primary"
+                              @keyup.enter.stop
+                              @click.stop="orientImage('vertical')">
                                 <v-icon>flip</v-icon>
                             </v-btn>
                         </span>
-                        <span class="gm-frontend-gallery-post-image-upload-controls__button-container">
+            <span class="gm-frontend-gallery-post-image-upload-controls__button-container">
                             <v-btn
-                                    class="gm-frontend-gallery-post-image-upload-controls__button"
-                                    style="transform: rotate(90deg)"
-                                    fab dark small color="primary"
-                                    @keyup.enter.stop
-                                    @click.stop="orientImage('horizontal')">
+                              class="gm-frontend-gallery-post-image-upload-controls__button"
+                              style="transform: rotate(90deg)"
+                              fab dark small color="primary"
+                              @keyup.enter.stop
+                              @click.stop="orientImage('horizontal')">
                                 <v-icon>flip</v-icon>
                             </v-btn>
                         </span>
-                    </template>
-                    <span class="gm-frontend-gallery-post-image-upload-controls__trash-container">
+          </template>
+          <span class="gm-frontend-gallery-post-image-upload-controls__trash-container">
                         <v-btn
-                                class="gm-frontend-gallery-post-image-upload-controls__button"
-                                @keyup.enter.stop
-                                @click.stop="trashImage"
-                                fab dark small color="red darken-4">
+                          class="gm-frontend-gallery-post-image-upload-controls__button"
+                          @keyup.enter.stop
+                          @click.stop="trashImage"
+                          fab dark small color="red darken-4">
                             <v-icon>delete</v-icon>
                         </v-btn>
                     </span>
-                </div>
-            </template>
         </div>
-        <form class="gm-frontend-gallery-post-image-upload-file" :ref="'fileInputForm'">
-            <input type="file" name="image" @change="imageUpdate" :ref="'fileInput'">
-        </form>
-    </v-card>
+      </template>
+    </div>
+    <form class="gm-frontend-gallery-post-image-upload-file" :ref="'fileInputForm'">
+      <input type="file" name="image" @change="imageUpdate" :ref="'fileInput'">
+    </form>
+  </v-card>
 </template>
 
 <script>
   import dragDrop from "drag-drop";
-  import { mapGetters, mapActions } from 'vuex';
-  import { getOptionsType } from '@/utilities/helpers';
-  import { imageUrlValidator } from "@/utilities/helpers";
+  import {mapGetters, mapActions} from 'vuex';
+  import {getOptionsType} from '@/utilities/helpers';
+  import {imageUrlValidator} from "@/utilities/helpers";
   import * as loadImage from 'blueimp-load-image';
+
   require('blueimp-canvas-to-blob');
 
   export default {
@@ -113,7 +114,7 @@
         required: true,
       }
     },
-    data() {
+    data () {
       return {
         canBeRotated: false
       }
@@ -126,7 +127,7 @@
       ...mapGetters({
         getMainOptions: 'mainData/getMainOptions'
       }),
-      imageUpdate(fileData) {
+      imageUpdate (fileData) {
         if (fileData.type === 'change') {
           fileData[0] = fileData.target.files[0];
         }
@@ -162,7 +163,7 @@
         this.clearFileInput();
         this.focusTextArea();
       },
-      processImage(imageFile, orientationValue = true) {
+      processImage (imageFile, orientationValue = true) {
         const self = this;
         const imageData = {
           lastModified: Math.round((new Date()).getTime() / 1000),
@@ -189,7 +190,7 @@
             canvas: true
           });
       },
-      orientImage(direction) {
+      orientImage (direction) {
         const directions = {
           left: 8,
           right: 6,
@@ -200,21 +201,21 @@
         const directionValue = typeof directions[direction] !== 'undefined' ? directions[direction] : true;
         this.processImage(this.imageFile, directionValue);
       },
-      clearFileInput() {
+      clearFileInput () {
         const fileInputForm = this.$refs.fileInputForm;
         fileInputForm.reset();
       },
-      openFileInput() {
+      openFileInput () {
         const fileInput = this.$refs.fileInput;
         fileInput.click();
       },
-      trashImage() {
+      trashImage () {
         this.SET_POST_IMAGE_DATA({
           index: this.index,
           imageUrl: '',
           file: '',
-        }).then(()=>{
-          setTimeout(()=>{
+        }).then(() => {
+          setTimeout(() => {
             this.SET_POST_IMAGE_DATA({
               index: this.index,
               imageUrl: null,
@@ -224,7 +225,7 @@
           this.clearFileInput();
         });
       },
-      focusTextArea() {
+      focusTextArea () {
         const parent = this.$parent.$el;
         const textarea = parent.querySelectorAll('textarea');
 
@@ -235,10 +236,10 @@
     },
     computed: {
       imageError: {
-        get() {
+        get () {
           return this.imageUrlError;
         },
-        set(error) {
+        set (error) {
           return this.SET_POST_ERROR({
             index: this.index,
             type: 'imageUrl',
@@ -247,12 +248,12 @@
         }
       },
       allowedMimes: {
-        get() {
+        get () {
           return getOptionsType(this.getMainOptions, 'allowedMimes');
         }
       },
       displayAllowedMimes: {
-        get() {
+        get () {
           const allowedMimes = getOptionsType(this.getMainOptions, 'allowedMimes');
 
           const display = allowedMimes.map((mime) => {
@@ -263,7 +264,7 @@
         }
       }
     },
-    mounted() {
+    mounted () {
       const dropArea = this.$refs.dropFile;
       const self = this;
       dragDrop(dropArea, (files) => {

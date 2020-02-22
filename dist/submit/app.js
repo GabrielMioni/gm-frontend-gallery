@@ -1956,6 +1956,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 
@@ -6553,13 +6554,13 @@ var render = function() {
                     }
                   }
                 },
-                [_vm._v("\n                Add A Post!\n            ")]
+                [_vm._v("\n        Add A Post!\n      ")]
               ),
               _vm._v(" "),
               _c(
                 "submit-post-button",
                 { attrs: { disabled: _vm.errorsPresentMessage.length > 0 } },
-                [_vm._v("\n                Submit\n            ")]
+                [_vm._v("\n        Submit\n      ")]
               )
             ],
             1
@@ -6813,9 +6814,9 @@ var render = function() {
                 _vm._v(" "),
                 _c("div", [
                   _vm._v(
-                    "\n                Allowed file types: " +
+                    "\n        Allowed file types: " +
                       _vm._s(_vm.displayAllowedMimes) +
-                      "\n            "
+                      "\n      "
                   )
                 ]),
                 _vm._v(" "),
@@ -7155,7 +7156,7 @@ var render = function() {
                 },
                 [
                   _vm._v(
-                    "\n            Are you sure you want to delete this post?\n        "
+                    "\n      Are you sure you want to delete this post?\n    "
                   )
                 ]
               )
@@ -7221,11 +7222,9 @@ var render = function() {
               slot: "confirmationModal"
             },
             [
-              _vm._v(
-                "\n        Your gallery submission was successful!\n        "
-              ),
+              _vm._v("\n    Your gallery submission was successful!\n    "),
               _c("div", { attrs: { slot: "confirmNo" }, slot: "confirmNo" }, [
-                _vm._v("\n            Return to Gallery Submit Form\n        ")
+                _vm._v("\n      Return to Gallery Submit Form\n    ")
               ])
             ]
           )

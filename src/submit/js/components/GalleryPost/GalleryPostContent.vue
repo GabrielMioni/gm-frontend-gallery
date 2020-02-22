@@ -1,22 +1,23 @@
 <template>
-    <v-card class="gm-frontend-gallery-post-content" ref="content">
-        <v-textarea
-                ref="textArea"
-                v-model="postContent"
-                solo
-                flat
-                :counter="maxContentLength"
-                :name="setElementId('gm-frontend-submit-content')"
-                :error-messages="contentError"
-                label="Content"
-                hint="Say something about the image"
-        ></v-textarea>
-    </v-card>
+  <v-card class="gm-frontend-gallery-post-content" ref="content">
+    <v-textarea
+      ref="textArea"
+      v-model="postContent"
+      solo
+      flat
+      :counter="maxContentLength"
+      :name="setElementId('gm-frontend-submit-content')"
+      :error-messages="contentError"
+      label="Content"
+      hint="Say something about the image"
+    ></v-textarea>
+  </v-card>
 </template>
 
 <script>
-  import { mapGetters, mapActions } from 'vuex';
-  import { getOptionsType } from '@/utilities/helpers';
+  import {mapGetters, mapActions} from 'vuex';
+  import {getOptionsType} from '@/utilities/helpers';
+
   export default {
     name: "GalleryPostContent",
     props: {
@@ -41,16 +42,16 @@
       ...mapGetters({
         getMainOptions: 'mainData/getMainOptions'
       }),
-      setElementId(idName) {
+      setElementId (idName) {
         return `${idName}-${this.index}`;
       },
     },
     computed: {
       postContent: {
-        get() {
+        get () {
           return this.content;
         },
-        set(value) {
+        set (value) {
           if (this.contentError !== '') {
             this.SET_POST_ERROR({
               index: this.index,
@@ -65,7 +66,7 @@
         }
       },
       maxContentLength: {
-        get() {
+        get () {
           return getOptionsType(this.getMainOptions, 'maxContentLength');
         }
       }

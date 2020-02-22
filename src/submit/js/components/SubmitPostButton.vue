@@ -1,42 +1,43 @@
 <template>
-    <div class="gm-frontend-gallery-submit-button">
-        <v-btn
-                @click="submitPosts"
-                :loading="submitting"
-                :disabled="disabled"
-                large color="primary">
-            <slot>Do Thing</slot>
-        </v-btn>
-        <confirmation-modal
-                slot="confirmationModal"
-                v-if="showModal"
-                :single-button="true"
-                :confirm-is-dangerous="false"
-                @confirmNo="confirmNoHandler"
-        >
-            Your gallery submission was successful!
-            <div slot="confirmNo">
-                Return to Gallery Submit Form
-            </div>
-        </confirmation-modal>
-    </div>
+  <div class="gm-frontend-gallery-submit-button">
+    <v-btn
+      @click="submitPosts"
+      :loading="submitting"
+      :disabled="disabled"
+      large color="primary">
+      <slot>Do Thing</slot>
+    </v-btn>
+    <confirmation-modal
+      slot="confirmationModal"
+      v-if="showModal"
+      :single-button="true"
+      :confirm-is-dangerous="false"
+      @confirmNo="confirmNoHandler"
+    >
+      Your gallery submission was successful!
+      <div slot="confirmNo">
+        Return to Gallery Submit Form
+      </div>
+    </confirmation-modal>
+  </div>
 </template>
 
 <script>
   import axios from "axios";
-  import { mapGetters, mapActions } from 'vuex';
-  import { getOptionsType } from '@/utilities/helpers';
+  import {mapGetters, mapActions} from 'vuex';
+  import {getOptionsType} from '@/utilities/helpers';
   import ConfirmationModal from "@/utilities/vue/components/ConfirmationModal";
+
   export default {
     name: "SubmitPostButton",
     components: {ConfirmationModal},
-    data() {
+    data () {
       return {
         showModal: false,
       }
     },
     props: {
-      disabled:  {
+      disabled: {
         type: Boolean,
         required: true
       }
@@ -56,7 +57,7 @@
         getGalleryPosts: 'postData/getGalleryPosts',
         getMainOptions: 'mainData/getMainOptions'
       }),
-      createValidateFormData() {
+      createValidateFormData () {
         let attachmentContents = [];
         let formData = new FormData();
         let hasErrors = false;
@@ -111,7 +112,7 @@
 
         return formData;
       },
-      submitPosts() {
+      submitPosts () {
         if (this.submitting) {
           return;
         }
@@ -131,17 +132,17 @@
             'X-WP-Nonce': mainNonce,
           }
         })
-        .then((response)=>{
-          setTimeout(()=>{
-            self.showModal = true;
-            self.submitting = false;
-          }, 1000);
-        }).catch((error)=>{
+          .then((response) => {
+            setTimeout(() => {
+              self.showModal = true;
+              self.submitting = false;
+            }, 1000);
+          }).catch((error) => {
           const responseData = error.response.data;
           self.error = responseData.message;
         });
       },
-      confirmNoHandler() {
+      confirmNoHandler () {
         this.RESET_MAIN_DATA();
         this.RESET_GALLERY_POST_DATA();
         this.showModal = false;
@@ -149,15 +150,15 @@
     },
     computed: {
       submitting: {
-        get() {
+        get () {
           return this.getMainSubmitting();
         },
-        set(value) {
+        set (value) {
           return this.SET_MAIN_SUBMITTING(value);
         }
       },
       maxContentLength: {
-        get() {
+        get () {
           return getOptionsType(this.getMainOptions, 'maxContentLength');
         }
       }

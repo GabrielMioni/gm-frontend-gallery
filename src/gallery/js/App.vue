@@ -1,48 +1,49 @@
 <template>
-    <v-app
-            :dark="false"
-            id="gm-frontend-gallery">
-        <v-container fluid>
-            <div class="gm-frontend-gallery">
-                <v-fade-transition
-                        class="gm-frontend-gallery__main"
-                        group>
-                    <gallery-post-image
-                            v-for="(galleryPost, index) in galleryPosts"
-                            v-if="galleryPost.images.length > 0"
-                            :gallery-post="galleryPost"
-                            :index="index"
-                            :key="index"
-                    >
-                    </gallery-post-image>
-                </v-fade-transition>
-            </div>
-            <div class="gm-frontend-gallery__footer">
-                <v-btn
-                        v-if="galleryPosts.length < getGalleryCount()"
-                        color="primary"
-                        :loading="getGalleryLoading()"
-                        @click="SET_GALLERY_POSTS(1000)"
-                >
-                    Load More
-                </v-btn>
-            </div>
-            <gallery-carousel
-                    v-if="carouselIsOpen"
-            >
-            </gallery-carousel>
-        </v-container>
-    </v-app>
+  <v-app
+    :dark="false"
+    id="gm-frontend-gallery">
+    <v-container fluid>
+      <div class="gm-frontend-gallery">
+        <v-fade-transition
+          class="gm-frontend-gallery__main"
+          group>
+          <gallery-post-image
+            v-for="(galleryPost, index) in galleryPosts"
+            v-if="galleryPost.images.length > 0"
+            :gallery-post="galleryPost"
+            :index="index"
+            :key="index"
+          >
+          </gallery-post-image>
+        </v-fade-transition>
+      </div>
+      <div class="gm-frontend-gallery__footer">
+        <v-btn
+          v-if="galleryPosts.length < getGalleryCount()"
+          color="primary"
+          :loading="getGalleryLoading()"
+          @click="SET_GALLERY_POSTS(1000)"
+        >
+          Load More
+        </v-btn>
+      </div>
+      <gallery-carousel
+        v-if="carouselIsOpen"
+      >
+      </gallery-carousel>
+    </v-container>
+  </v-app>
 </template>
 
 <script>
   import GalleryPostImage from "./components/galleryPostImage"
   import GalleryCarousel from "./components/GalleryCarousel";
-  import { mapGetters, mapActions } from 'vuex';
+  import {mapGetters, mapActions} from 'vuex';
+
   export default {
     name: 'gmGallery',
     components: {GalleryCarousel, GalleryPostImage},
-    data() {
+    data () {
       return {
         showCarousel: true,
       }
@@ -58,27 +59,27 @@
         SET_GALLERY_POSTS: 'galleryData/SET_GALLERY_POSTS',
         SET_OPENED_POST_INDEX: 'galleryData/SET_OPENED_POST_INDEX'
       }),
-      close() {
+      close () {
         this.showCarousel = false;
       }
     },
     computed: {
-      galleryPosts() {
+      galleryPosts () {
         return this.getGalleryPosts();
       },
       openedPostIndex: {
-        get() {
+        get () {
           return this.getOpenedPostIndex();
         },
-        set(index) {
+        set (index) {
           return this.SET_OPENED_POST_INDEX(index)
         }
       },
-      carouselIsOpen() {
+      carouselIsOpen () {
         return this.getOpenedPostIndex() !== null;
       }
     },
-    mounted() {
+    mounted () {
       this.SET_GALLERY_POSTS(1000);
     }
   }

@@ -1,49 +1,50 @@
 <template>
-    <v-carousel
-            v-bind:value="currentIndex"
-            class="gm-frontend-gallery__carousel"
-            height="100%"
-            width="100%"
-            hide-delimiter-background
-            show-arrows
-            prev-icon="chevron_left"
-            next-icon="chevron_right"
-            :dark="$vuetify.theme.dark"
-            :light="!$vuetify.theme.dark"
-            :continuous="false"
-            :hide-delimiters="true"
-            ref="carousel"
-            v-on:change="carouselChangeHandler"
+  <v-carousel
+    v-bind:value="currentIndex"
+    class="gm-frontend-gallery__carousel"
+    height="100%"
+    width="100%"
+    hide-delimiter-background
+    show-arrows
+    prev-icon="chevron_left"
+    next-icon="chevron_right"
+    :dark="$vuetify.theme.dark"
+    :light="!$vuetify.theme.dark"
+    :continuous="false"
+    :hide-delimiters="true"
+    ref="carousel"
+    v-on:change="carouselChangeHandler"
+  >
+    <v-btn
+      class="gm-frontend-gallery__carousel__close-button"
+      icon
+      @click="closeCarousel"
     >
-        <v-btn
-                class="gm-frontend-gallery__carousel__close-button"
-                icon
-                @click="closeCarousel"
-        >
-            <v-icon>close</v-icon>
-        </v-btn>
-        <v-carousel-item
-                height="100%"
-                width="100%"
-                v-for="(post, i) in galleryPosts"
-                :key="i"
-        >
-            <gallery-post-detail
-                    :gallery-post="post"
-                    :index="i"
-            >
-            </gallery-post-detail>
-        </v-carousel-item>
-    </v-carousel>
+      <v-icon>close</v-icon>
+    </v-btn>
+    <v-carousel-item
+      height="100%"
+      width="100%"
+      v-for="(post, i) in galleryPosts"
+      :key="i"
+    >
+      <gallery-post-detail
+        :gallery-post="post"
+        :index="i"
+      >
+      </gallery-post-detail>
+    </v-carousel-item>
+  </v-carousel>
 </template>
 
 <script>
-  import { mapGetters, mapActions } from 'vuex';
+  import {mapGetters, mapActions} from 'vuex';
   import GalleryPostDetail from "@/gallery/js/components/GalleryPostDetail";
+
   export default {
     name: "GalleryCarousel",
     components: {GalleryPostDetail},
-    data() {
+    data () {
       return {
         tabIndex: null
       }
@@ -58,14 +59,14 @@
       ...mapActions({
         SET_OPENED_POST_INDEX: 'galleryData/SET_OPENED_POST_INDEX'
       }),
-      carouselChangeHandler(data) {
+      carouselChangeHandler (data) {
         this.tabIndex = null;
         this.SET_OPENED_POST_INDEX(data);
       },
-      closeCarousel() {
+      closeCarousel () {
         this.SET_OPENED_POST_INDEX(null);
       },
-      navigateGalleryHandler(e) {
+      navigateGalleryHandler (e) {
         const key = e.key;
         const allowedKeys = ['ArrowLeft', 'ArrowRight', 'Escape'];
         if (allowedKeys.indexOf(key) < 0) {
@@ -78,28 +79,28 @@
         }
         let newOpenedPostIndex = key === 'ArrowLeft' ? this.currentIndex - 1 : this.currentIndex + 1;
         if (newOpenedPostIndex < 0 ||
-            newOpenedPostIndex > this.galleryPosts.length -1 ||
-            newOpenedPostIndex === this.currentIndex) {
+          newOpenedPostIndex > this.galleryPosts.length - 1 ||
+          newOpenedPostIndex === this.currentIndex) {
           return;
         }
         this.SET_OPENED_POST_INDEX(newOpenedPostIndex);
       },
     },
     computed: {
-      galleryPosts() {
+      galleryPosts () {
         return this.getGalleryPosts();
       },
-      currentIndex() {
+      currentIndex () {
         return this.getOpenedPostIndex();
       }
     },
-    mounted() {
+    mounted () {
       const scrollY = document.getElementsByTagName('html')[0].scrollTop;
       document.body.style.top = `-${scrollY}px`;
       document.body.style.position = 'fixed';
       document.addEventListener('keydown', this.navigateGalleryHandler, true);
     },
-    beforeDestroy() {
+    beforeDestroy () {
       const scrollY = document.body.style.top;
       document.body.style.position = '';
       document.body.style.top = '';
@@ -107,7 +108,7 @@
       document.removeEventListener('keydown', this.navigateGalleryHandler, true);
     },
     watch: {
-      currentIndex() {
+      currentIndex () {
         this.tabIndex = null;
       }
     }

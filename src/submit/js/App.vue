@@ -1,46 +1,48 @@
 <template>
-    <v-app id="gm-frontend-submit">
-        <v-container fluid>
-            <div class="gm-frontend-submit__header">
-                <v-text-field
-                        v-model="mainTitle"
-                        :error-messages="mainTitleError"
-                        :label="'Title'">
-                </v-text-field>
-            </div>
-            <transition-group name="fade">
-                <gallery-post
-                        v-for="(post, index) in galleryPosts"
-                        v-bind:key="`submitPost-${post.uniqueId}`"
-                        :index="index"
-                        :post-state="post">
-                </gallery-post>
-            </transition-group>
-            <div class="gm-frontend-submit__footer">
-                <div class="gm-frontend-submit__footer__messages">
-                    <v-input
-                            :error-messages="errorsPresentMessage">
-                    </v-input>
-                    <v-input class="gm-frontend-submit__footer__messages__max-attachment"
-                             :messages="allowedAttachmentsMessage">
-                    </v-input>
-                </div>
-                <v-btn class="gm-frontend-submit__footer__add-one-button" large color="teal" :ref="'addPostButton'" @click.stop="addPost">
-                    Add A Post!
-                </v-btn>
-                <submit-post-button :disabled="errorsPresentMessage.length > 0">
-                    Submit
-                </submit-post-button>
-            </div>
-            <portal-target name="modals" slim></portal-target>
-        </v-container>
-    </v-app>
+  <v-app id="gm-frontend-submit">
+    <v-container fluid>
+      <div class="gm-frontend-submit__header">
+        <v-text-field
+          v-model="mainTitle"
+          :error-messages="mainTitleError"
+          :label="'Title'">
+        </v-text-field>
+      </div>
+      <transition-group name="fade">
+        <gallery-post
+          v-for="(post, index) in galleryPosts"
+          v-bind:key="`submitPost-${post.uniqueId}`"
+          :index="index"
+          :post-state="post">
+        </gallery-post>
+      </transition-group>
+      <div class="gm-frontend-submit__footer">
+        <div class="gm-frontend-submit__footer__messages">
+          <v-input
+            :error-messages="errorsPresentMessage">
+          </v-input>
+          <v-input class="gm-frontend-submit__footer__messages__max-attachment"
+                   :messages="allowedAttachmentsMessage">
+          </v-input>
+        </div>
+        <v-btn class="gm-frontend-submit__footer__add-one-button" large color="teal" :ref="'addPostButton'"
+               @click.stop="addPost">
+          Add A Post!
+        </v-btn>
+        <submit-post-button :disabled="errorsPresentMessage.length > 0">
+          Submit
+        </submit-post-button>
+      </div>
+      <portal-target name="modals" slim></portal-target>
+    </v-container>
+  </v-app>
 </template>
 
 <script>
   import GalleryPost from "./components/GalleryPost/GalleryPost";
   import SubmitPostButton from "./components/SubmitPostButton";
-  import { mapGetters, mapActions } from 'vuex';
+  import {mapGetters, mapActions} from 'vuex';
+
   export default {
     name: "gmGallerySubmit",
     components: {SubmitPostButton, GalleryPost},
@@ -60,23 +62,23 @@
         getGalleryPosts: 'postData/getGalleryPosts',
         getGalleryPostsLength: 'postData/getGalleryPostsLength',
       }),
-      addPost() {
+      addPost () {
         if (this.galleryPosts.length >= this.options['maxAttachments']) {
           return;
         }
         this.ADD_POST();
       },
-      generateKey() {
+      generateKey () {
         const rand = Math.floor(Math.random() * 100);
         return `submitPost-${rand}`
       }
     },
     computed: {
       mainTitle: {
-        get() {
+        get () {
           return this.getMainTitle();
         },
-        set(newTitle) {
+        set (newTitle) {
           if (this.getMainTitleError() !== '') {
             this.SET_MAIN_TITLE_ERROR('');
           }
@@ -84,31 +86,31 @@
         }
       },
       mainTitleError: {
-        get() {
+        get () {
           return this.getMainTitleError();
         }
       },
       galleryPosts: {
-        get() {
+        get () {
           return this.getGalleryPosts();
         }
       },
       submitting: {
-        get() {
+        get () {
           return this.getMainSubmitting();
         }
       },
       options: {
-        get() {
+        get () {
           return this.getMainOptions();
         }
       },
       errorsPresentMessage: {
-        get() {
+        get () {
           let errorsPresent = false;
           this.galleryPosts.map((galleryPost) => {
             const errors = Object.values(galleryPost.errors);
-            errors.map((error)=>{
+            errors.map((error) => {
               if (!errorsPresent && error.trim() !== '') {
                 errorsPresent = true;
               }
@@ -123,7 +125,7 @@
         }
       },
       allowedAttachmentsMessage: {
-        get() {
+        get () {
           const maxAttachments = this.options.maxAttachments;
           if (maxAttachments <= 1) {
             return '';
@@ -132,7 +134,7 @@
         }
       }
     },
-    created() {
+    created () {
       const mount = document.getElementById('gm-frontend-submit');
 
       this.SET_MAIN_NONCE(mount.dataset.nonce);

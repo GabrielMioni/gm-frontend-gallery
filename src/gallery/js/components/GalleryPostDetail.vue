@@ -1,52 +1,50 @@
 <template>
-    <v-card class="gm-frontend-gallery__detail" ref="galleryDetail">
-        <div class="gm-frontend-gallery__detail__col-1">
-            <div class="gm-frontend-gallery__detail__image-area">
-                <v-card class="gm-frontend-gallery__detail__image-area__selected-image">
-                    <v-img
-                            :src="selectedImage"
-                            contain
-                            height="100%"
-                            width="100%"
-                            class="grey darken-4"
-                    />
-                </v-card>
-                <div
-                        v-if="galleryPost.images.length > 1"
-                        class="gm-frontend-gallery__detail__image-area__attached-images"
-                >
-                    <gallery-post-detail-attached-image
-                            v-for="(image, index) in galleryPost.images"
-                            :image="image"
-                            :index="index"
-                            :key="index"
-                            @updateSelectedImageIndex="chooseAttachedImage(index)"
-                            :ref="`attachedImage${index}`"
-                            v-bind:class="{'gm-frontend-gallery__detail__image-area__attached-images__image--active': selectedImageIndex === index}"
-                    />
-                </div>
-            </div>
+  <v-card class="gm-frontend-gallery__detail" ref="galleryDetail">
+    <div class="gm-frontend-gallery__detail__col-1">
+      <div class="gm-frontend-gallery__detail__image-area">
+        <v-card class="gm-frontend-gallery__detail__image-area__selected-image">
+          <v-img
+            :src="selectedImage"
+            contain
+            height="100%"
+            width="100%"
+            class="grey darken-4"/>
+        </v-card>
+        <div
+          v-if="galleryPost.images.length > 1"
+          class="gm-frontend-gallery__detail__image-area__attached-images">
+          <gallery-post-detail-attached-image
+            v-for="(image, index) in galleryPost.images"
+            :image="image"
+            :index="index"
+            :key="index"
+            @updateSelectedImageIndex="chooseAttachedImage(index)"
+            :ref="`attachedImage${index}`"
+            v-bind:class="{'gm-frontend-gallery__detail__image-area__attached-images__image--active': selectedImageIndex === index}"/>
         </div>
-        <div class="gm-frontend-gallery__detail__col-2">
-            <h3>{{galleryPost.post_title}}</h3>
-            <div class="gm-frontend-gallery__detail__col-2__content">
-                <transition name="fade" mode="out-in">
-                    <p :key="selectedImageIndex">
-                        {{ galleryPost.images[selectedImageIndex].content }}
-                    </p>
-                </transition>
-            </div>
-        </div>
-    </v-card>
+      </div>
+    </div>
+    <div class="gm-frontend-gallery__detail__col-2">
+      <h3>{{galleryPost.post_title}}</h3>
+      <div class="gm-frontend-gallery__detail__col-2__content">
+        <transition name="fade" mode="out-in">
+          <p :key="selectedImageIndex">
+            {{ galleryPost.images[selectedImageIndex].content }}
+          </p>
+        </transition>
+      </div>
+    </div>
+  </v-card>
 </template>
 
 <script>
   import GalleryPostDetailAttachedImage from "@/gallery/js/components/GalleryPostDetailAttachedImage";
-  import { mapGetters } from 'vuex';
+  import {mapGetters} from 'vuex';
+
   export default {
     name: "GalleryPostDetail",
     components: {GalleryPostDetailAttachedImage},
-    data() {
+    data () {
       return {
         selectedImageIndex: 0,
         focusableElms: [],
@@ -67,10 +65,10 @@
       ...mapGetters({
         getOpenedPostIndex: 'galleryData/getOpenedPostIndex'
       }),
-      chooseAttachedImage(index) {
+      chooseAttachedImage (index) {
         this.selectedImageIndex = index;
       },
-      updateCarouselButtons() {
+      updateCarouselButtons () {
         let buttons = [];
 
         const closeButton = document.getElementsByClassName('gm-frontend-gallery__carousel__close-button');
@@ -88,24 +86,24 @@
         }
         return buttons
       },
-      setFocusableElms() {
+      setFocusableElms () {
         const buttons = this.updateCarouselButtons();
-        const attachedImages = this.galleryPost.images.map((item, index)=>{
+        const attachedImages = this.galleryPost.images.map((item, index) => {
           const attachedImageRef = this.$refs[`attachedImage${index}`];
           if (typeof attachedImageRef === 'undefined') {
-            return ;
+            return;
           }
           return this.$refs[`attachedImage${index}`][0].$el;
         });
 
         return buttons.concat(attachedImages);
       },
-      focusDetail() {
+      focusDetail () {
         if (this.currentIndex === this.index) {
           this.$refs['galleryDetail'].$el.focus();
         }
       },
-      tabHandler(e) {
+      tabHandler (e) {
         if (e.key !== 'Tab') {
           return;
         }
@@ -115,45 +113,45 @@
           this.focusedElmIndex = 0;
           return;
         }
-        const maxFocusableIndex = this.focusableElms.length -1;
-        if (!reverse && this.focusedElmIndex +1 <= maxFocusableIndex) {
-          this.focusedElmIndex = this.focusedElmIndex +1;
+        const maxFocusableIndex = this.focusableElms.length - 1;
+        if (!reverse && this.focusedElmIndex + 1 <= maxFocusableIndex) {
+          this.focusedElmIndex = this.focusedElmIndex + 1;
           return
         }
-        if (!reverse && this.focusedElmIndex +1 > maxFocusableIndex) {
+        if (!reverse && this.focusedElmIndex + 1 > maxFocusableIndex) {
           this.focusedElmIndex = 0;
           return
         }
-        if (reverse && this.focusedElmIndex -1 >= 0) {
-          this.focusedElmIndex = this.focusedElmIndex -1;
+        if (reverse && this.focusedElmIndex - 1 >= 0) {
+          this.focusedElmIndex = this.focusedElmIndex - 1;
           return;
         }
-        if (reverse && this.focusedElmIndex -1 < 0) {
+        if (reverse && this.focusedElmIndex - 1 < 0) {
           this.focusedElmIndex = maxFocusableIndex;
         }
       }
     },
     computed: {
-      selectedImage() {
+      selectedImage () {
         return this.galleryPost.images[this.selectedImageIndex]['sized_images'].full;
       },
-      currentIndex() {
+      currentIndex () {
         return this.getOpenedPostIndex();
       }
     },
-    mounted() {
-      this.$nextTick(()=>{
+    mounted () {
+      this.$nextTick(() => {
         this.focusableElms = this.setFocusableElms();
       });
       if (this.currentIndex === this.index) {
         document.addEventListener('keydown', this.tabHandler, true);
       }
     },
-    beforeDestroy() {
+    beforeDestroy () {
       document.removeEventListener('keydown', this.tabHandler, true);
     },
     watch: {
-      currentIndex() {
+      currentIndex () {
         if (this.currentIndex === this.index) {
           document.addEventListener('keydown', this.tabHandler, true);
         }
@@ -162,7 +160,7 @@
           this.focusedElmIndex = null;
         }
       },
-      focusedElmIndex() {
+      focusedElmIndex () {
         if (this.focusedElmIndex !== null && typeof this.focusableElms[this.focusedElmIndex] !== 'undefined') {
           this.focusableElms[this.focusedElmIndex].focus();
         }
