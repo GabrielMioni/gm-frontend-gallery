@@ -9,7 +9,7 @@ Vue.use(Vuetify)
 
 const vuetify = new Vuetify()
 
-new Vue({
+new Vue({ // eslint-disable-line no-new
   vuetify,
   el: '#gm-frontend-submit',
   store,

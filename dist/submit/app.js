@@ -61834,6 +61834,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(portal_vue__WEBPACK_IMPORTED_MODU
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuetify__WEBPACK_IMPORTED_MODULE_2___default.a);
 var vuetify = new vuetify__WEBPACK_IMPORTED_MODULE_2___default.a();
 new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
+  // eslint-disable-line no-new
   vuetify: vuetify,
   el: '#gm-frontend-submit',
   store: _store_store__WEBPACK_IMPORTED_MODULE_3__["store"],
