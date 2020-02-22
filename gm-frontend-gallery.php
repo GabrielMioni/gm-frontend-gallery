@@ -19,6 +19,9 @@ register_activation_hook(__FILE__, function() use ($gmFrontendGallery) {
 add_action('init', function () use ($gmFrontendGallery) {
     $gmFrontendGallery->registerPostType();
 });
+add_filter('single_template', function () use ($gmFrontendGallery) {
+    $gmFrontendGallery->galleryPostTypeTemplate();
+});
 add_action('rest_api_init', function() use ($gmFrontendGallery) {
     $gmFrontendGallery->registerApiRoutes();
 });
