@@ -186,13 +186,14 @@ class gmFrontendGallery
         return '<div id="gm-frontend-submit" data-nonce="'.$nonce.'" data-options="'.$jsonEncodedOptions.'"></div>';
     }
 
-    public function galleryPostTypeTemplate()
+    public function setGalleryPostVueMountElm($content)
     {
         global $post;
 
         if ($post->post_type === $this->galleryPostType) {
-            // Do template stuff
+            $content = '<div id="gallery-post-vue"></div>';
         }
+        return $content;
     }
 
     protected function createOptionsJson()
