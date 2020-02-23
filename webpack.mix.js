@@ -26,6 +26,9 @@ mix.js('src/submit/js/app.js', 'dist/submit')
   .sass('src/submit/scss/app.scss', 'dist/submit')
   .setPublicPath('dist')
 
+mix.js('src/single/js/app.js', 'dist/single')
+  .setPublicPath('dist')
+
 // Full API
 // mix.js(src, output);
 // mix.react(src, output); <-- Identical to mix.js(), but registers React Babel compilation.

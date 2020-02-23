@@ -2,5 +2,6 @@
     "/gallery/app.js": "/gallery/app.js",
     "/gallery/app.css": "/gallery/app.css",
     "/submit/app.css": "/submit/app.css",
+    "/single/app.js": "/single/app.js",
     "/submit/app.js": "/submit/app.js"
 }
