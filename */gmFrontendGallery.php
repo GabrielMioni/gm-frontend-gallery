@@ -16,6 +16,7 @@ class gmFrontendGallery
 
     protected $scriptHandleGallery = 'gm-frontend-gallery';
     protected $scriptHandleSubmit  = 'gm-frontend-submit';
+    protected $scriptHandleSingle  = 'gm-frontend-single';
 
     protected $galleryVersion = '1.0.0';
 
@@ -184,6 +185,21 @@ class gmFrontendGallery
         $jsonEncodedOptions = $this->createOptionsJson();
 
         return '<div id="gm-frontend-submit" data-nonce="'.$nonce.'" data-options="'.$jsonEncodedOptions.'"></div>';
+    }
+
+    public function registerSingleVue()
+    {
+        $singleUrlJS  = plugins_url() . '/gm-frontend-gallery/dist/single/app.js';
+        wp_register_script($this->scriptHandleSingle, $singleUrlJS, [], $this->galleryVersion, true);
+    }
+
+    public function enqueueSingleVue()
+    {
+        global $post;
+
+        if ($post->post_type === $this->galleryPostType) {
+            wp_enqueue_script($this->scriptHandleSingle);
+        }
     }
 
     public function setGalleryPostVueMountElm($content)
