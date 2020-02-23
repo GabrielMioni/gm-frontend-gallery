@@ -1,5 +1,5 @@
-let mix = require('laravel-mix');
-const config = require('./webpack.config');
+const mix = require('laravel-mix')
+const config = require('./webpack.config')
 
 /*
  |--------------------------------------------------------------------------
@@ -12,19 +12,19 @@ const config = require('./webpack.config');
  |
  */
 
-/*mix.js('src/app.js', 'dist')
+/* mix.js('src/app.js', 'dist')
     .sass('src/app.scss', 'dist')
-    .setPublicPath('dist');*/
+    .setPublicPath('dist'); */
 
-mix.webpackConfig(config);
+mix.webpackConfig(config)
 
 mix.js('src/gallery/js/app.js', 'dist/gallery')
   .sass('src/gallery/scss/app.scss', 'dist/gallery')
-  .setPublicPath('dist');
+  .setPublicPath('dist')
 
 mix.js('src/submit/js/app.js', 'dist/submit')
   .sass('src/submit/scss/app.scss', 'dist/submit')
-  .setPublicPath('dist');
+  .setPublicPath('dist')
 
 // Full API
 // mix.js(src, output);
