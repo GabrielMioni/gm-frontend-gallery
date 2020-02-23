@@ -191,7 +191,7 @@ class gmFrontendGallery
         global $post;
 
         if ($post->post_type === $this->galleryPostType) {
-            $content = '<div id="gallery-post-vue"></div>';
+            $content = '<div id="gm-frontend-gallery-post-single"></div>';
         }
         return $content;
     }
