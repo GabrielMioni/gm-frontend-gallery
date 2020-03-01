@@ -207,8 +207,7 @@ class gmFrontendGallery
         global $post;
 
         if ($post->post_type === $this->galleryPostType) {
-            $id = 13;
-            $content = '<div id="gm-frontend-gallery-post-single" data-id="'.$id.'"></div>';
+            $content = '<div id="gm-frontend-gallery-post-single" data-id="' . $post->ID . '"></div>';
         }
         return $content;
     }
