@@ -353,11 +353,36 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'App',
+  name: 'GalleryPostSingle',
   components: {
     GalleryPostDetail: _gallery_js_components_GalleryPostDetail__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    return {
+      galleryPostId: false,
+      galleryPost: {}
+    };
+  },
+  methods: {
+    getSingleGalleryPost: function getSingleGalleryPost() {// Go get that Gallery Post.
+    }
+  },
+  watch: {
+    galleryPostId: function galleryPostId(value) {
+      if (value === false) {
+        return;
+      }
+
+      this.getSingleGalleryPost();
+    }
+  },
+  created: function created() {
+    var mount = document.getElementById('gm-frontend-gallery-post-single');
+    this.galleryPostId = mount.dataset.id;
   }
 });
 
@@ -1023,7 +1048,10 @@ var render = function() {
   return _c(
     "div",
     { staticClass: "gm-frontend-gallery__detail__single" },
-    [_c("gallery-post-detail")],
+    [
+      _vm._v("\n  This is my Vue elm.\n  "),
+      false ? undefined : _vm._e()
+    ],
     1
   )
 }
