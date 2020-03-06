@@ -57017,6 +57017,8 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "galleryDataModule", function() { return galleryDataModule; });
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 var galleryDataModule = {
   namespaced: true,
   state: {
@@ -57070,15 +57072,28 @@ var galleryDataModule = {
     }
   },
   actions: {
-    SET_GALLERY_POSTS: function SET_GALLERY_POSTS(_ref, time) {
+    SET_GALLERY_POSTS: function SET_GALLERY_POSTS(_ref, payload) {
       var commit = _ref.commit,
           getters = _ref.getters;
       var namespace = getters.getRouteNameSpace;
       var pageLoaded = getters.getPageLoaded;
       var postsPerPage = getters.getPostsPerPage;
+      var time = null;
+      var postId = false;
+
+      if (typeof payload === 'number') {
+        time = payload;
+      }
+
+      if (_typeof(payload) === 'object') {
+        time = payload.time;
+        postId = payload.postId;
+      }
+
       commit('updateGalleryLoading', true);
+      var xhrEndPoint = postId === false ? "".concat(namespace, "/get/").concat(pageLoaded, "/").concat(postsPerPage) : "".concat(namespace, "/").concat(postId);
       var xhr = new XMLHttpRequest();
-      xhr.open('GET', "".concat(namespace, "/get/").concat(pageLoaded, "/").concat(postsPerPage));
+      xhr.open('GET', xhrEndPoint);
 
       xhr.onload = function () {
         var responseData = JSON.parse(xhr.responseText);
