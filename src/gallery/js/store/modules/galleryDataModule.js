@@ -37,15 +37,30 @@ export const galleryDataModule = {
     }
   },
   actions: {
-    SET_GALLERY_POSTS ({ commit, getters }, time) {
+    SET_GALLERY_POSTS ({ commit, getters }, payload) {
       const namespace = getters.getRouteNameSpace
       const pageLoaded = getters.getPageLoaded
       const postsPerPage = getters.getPostsPerPage
 
+      let time = null
+      let postId = false
+
+      if (typeof payload === 'number') {
+        time = payload
+      }
+      if (typeof payload === 'object') {
+        time = payload.time
+        postId = payload.postId
+      }
+
       commit('updateGalleryLoading', true)
 
+      const xhrEndPoint = postId === false
+        ? `${namespace}/get/${pageLoaded}/${postsPerPage}`
+        : `${namespace}/${postId}`
+
       const xhr = new XMLHttpRequest()
-      xhr.open('GET', `${namespace}/get/${pageLoaded}/${postsPerPage}`)
+      xhr.open('GET', xhrEndPoint)
       xhr.onload = () => {
         const responseData = JSON.parse(xhr.responseText)
         setTimeout(() => {
