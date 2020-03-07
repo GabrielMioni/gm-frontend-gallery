@@ -42,31 +42,34 @@ export const galleryDataModule = {
       const pageLoaded = getters.getPageLoaded
       const postsPerPage = getters.getPostsPerPage
 
-      let time = null
-      let postId = false
+      let time
+      let xhrEndPoint
 
-      if (typeof payload === 'number') {
+      const galleryPostDataType = typeof payload === 'object' ? 'single' : 'multiple'
+
+      if (galleryPostDataType === 'multiple') {
         time = payload
-      }
-      if (typeof payload === 'object') {
+        xhrEndPoint = `${namespace}/get/${pageLoaded}/${postsPerPage}`
+      } else {
         time = payload.time
-        postId = payload.postId
+        xhrEndPoint = `${namespace}/${payload.postId}`
       }
 
       commit('updateGalleryLoading', true)
-
-      const xhrEndPoint = postId === false
-        ? `${namespace}/get/${pageLoaded}/${postsPerPage}`
-        : `${namespace}/${postId}`
 
       const xhr = new XMLHttpRequest()
       xhr.open('GET', xhrEndPoint)
       xhr.onload = () => {
         const responseData = JSON.parse(xhr.responseText)
         setTimeout(() => {
-          commit('updateGalleryPosts', responseData.posts)
-          commit('updateGalleryCount', responseData.gallery_count)
-          commit('updatePageLoaded', pageLoaded + 1)
+          if (galleryPostDataType === 'multiple') {
+            commit('updateGalleryPosts', responseData.posts)
+            commit('updateGalleryCount', responseData.gallery_count)
+            commit('updatePageLoaded', pageLoaded + 1)
+          }
+          if (galleryPostDataType === 'single') {
+            console.log(responseData)
+          }
           commit('updateGalleryLoading', false)
         }, time)
       }
