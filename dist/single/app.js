@@ -362,6 +362,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -371,13 +374,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   data: function data() {
     return {
-      galleryPostId: false,
-      galleryPost: {}
+      galleryPostId: false
     };
   },
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])({
     SET_GALLERY_POSTS: 'galleryData/SET_GALLERY_POSTS'
+  }), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])({
+    getGalleryPosts: 'galleryData/getGalleryPosts',
+    getGalleryLoading: 'galleryData/getGalleryLoading'
   })),
+  computed: {
+    galleryPosts: function galleryPosts() {
+      // const blah = this.getGalleryPosts()
+      // return blah
+      return this.getGalleryPosts();
+    }
+  },
   created: function created() {
     var mount = document.getElementById('gm-frontend-gallery-post-single');
     this.galleryPostId = mount.dataset.id;
@@ -1080,7 +1092,11 @@ var render = function() {
     { staticClass: "gm-frontend-gallery__detail__single" },
     [
       _vm._v("\n  This is my Vue elm.\n  "),
-      false ? undefined : _vm._e()
+      _vm.galleryPosts.length > 0
+        ? _c("gallery-post-detail", {
+            attrs: { "gallery-post": _vm.galleryPosts[0], index: 0 }
+          })
+        : _vm._e()
     ],
     1
   )
@@ -55818,29 +55834,36 @@ var galleryDataModule = {
       var namespace = getters.getRouteNameSpace;
       var pageLoaded = getters.getPageLoaded;
       var postsPerPage = getters.getPostsPerPage;
-      var time = null;
-      var postId = false;
+      var time;
+      var xhrEndPoint;
+      var galleryPostDataType = _typeof(payload) === 'object' ? 'single' : 'multiple';
 
-      if (typeof payload === 'number') {
+      if (galleryPostDataType === 'multiple') {
         time = payload;
-      }
-
-      if (_typeof(payload) === 'object') {
+        xhrEndPoint = "".concat(namespace, "/get/").concat(pageLoaded, "/").concat(postsPerPage);
+      } else {
         time = payload.time;
-        postId = payload.postId;
+        xhrEndPoint = "".concat(namespace, "/").concat(payload.postId);
       }
 
       commit('updateGalleryLoading', true);
-      var xhrEndPoint = postId === false ? "".concat(namespace, "/get/").concat(pageLoaded, "/").concat(postsPerPage) : "".concat(namespace, "/").concat(postId);
       var xhr = new XMLHttpRequest();
       xhr.open('GET', xhrEndPoint);
 
       xhr.onload = function () {
         var responseData = JSON.parse(xhr.responseText);
         setTimeout(function () {
-          commit('updateGalleryPosts', responseData.posts);
-          commit('updateGalleryCount', responseData.gallery_count);
-          commit('updatePageLoaded', pageLoaded + 1);
+          if (galleryPostDataType === 'multiple') {
+            commit('updateGalleryPosts', responseData.posts);
+            commit('updateGalleryCount', responseData.gallery_count);
+            commit('updatePageLoaded', pageLoaded + 1);
+          }
+
+          if (galleryPostDataType === 'single') {
+            commit('updateGalleryPosts', [responseData]);
+            commit('updateGalleryCount', 1);
+          }
+
           commit('updateGalleryLoading', false);
         }, time);
       };

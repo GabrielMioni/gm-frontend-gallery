@@ -1,14 +1,17 @@
 <template>
   <div class="gm-frontend-gallery__detail__single">
     This is my Vue elm.
-    <gallery-post-detail v-if="false">
+    <gallery-post-detail
+      v-if="galleryPosts.length > 0"
+      :gallery-post="galleryPosts[0]"
+      :index="0">
     </gallery-post-detail>
   </div>
 </template>
 
 <script>
 import GalleryPostDetail from '@/gallery/js/components/GalleryPostDetail'
-import {mapActions, mapGetters} from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'GalleryPostSingle',
   components: { GalleryPostDetail },
@@ -27,7 +30,9 @@ export default {
     })
   },
   computed: {
-    galleryPost () {
+    galleryPosts () {
+      // const blah = this.getGalleryPosts()
+      // return blah
       return this.getGalleryPosts()
     }
   },

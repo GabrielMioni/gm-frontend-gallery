@@ -68,7 +68,8 @@ export const galleryDataModule = {
             commit('updatePageLoaded', pageLoaded + 1)
           }
           if (galleryPostDataType === 'single') {
-            console.log(responseData)
+            commit('updateGalleryPosts', [responseData])
+            commit('updateGalleryCount', 1)
           }
           commit('updateGalleryLoading', false)
         }, time)

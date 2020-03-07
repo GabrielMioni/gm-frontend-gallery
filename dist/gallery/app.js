@@ -57078,29 +57078,36 @@ var galleryDataModule = {
       var namespace = getters.getRouteNameSpace;
       var pageLoaded = getters.getPageLoaded;
       var postsPerPage = getters.getPostsPerPage;
-      var time = null;
-      var postId = false;
+      var time;
+      var xhrEndPoint;
+      var galleryPostDataType = _typeof(payload) === 'object' ? 'single' : 'multiple';
 
-      if (typeof payload === 'number') {
+      if (galleryPostDataType === 'multiple') {
         time = payload;
-      }
-
-      if (_typeof(payload) === 'object') {
+        xhrEndPoint = "".concat(namespace, "/get/").concat(pageLoaded, "/").concat(postsPerPage);
+      } else {
         time = payload.time;
-        postId = payload.postId;
+        xhrEndPoint = "".concat(namespace, "/").concat(payload.postId);
       }
 
       commit('updateGalleryLoading', true);
-      var xhrEndPoint = postId === false ? "".concat(namespace, "/get/").concat(pageLoaded, "/").concat(postsPerPage) : "".concat(namespace, "/").concat(postId);
       var xhr = new XMLHttpRequest();
       xhr.open('GET', xhrEndPoint);
 
       xhr.onload = function () {
         var responseData = JSON.parse(xhr.responseText);
         setTimeout(function () {
-          commit('updateGalleryPosts', responseData.posts);
-          commit('updateGalleryCount', responseData.gallery_count);
-          commit('updatePageLoaded', pageLoaded + 1);
+          if (galleryPostDataType === 'multiple') {
+            commit('updateGalleryPosts', responseData.posts);
+            commit('updateGalleryCount', responseData.gallery_count);
+            commit('updatePageLoaded', pageLoaded + 1);
+          }
+
+          if (galleryPostDataType === 'single') {
+            commit('updateGalleryPosts', [responseData]);
+            commit('updateGalleryCount', 1);
+          }
+
           commit('updateGalleryLoading', false);
         }, time);
       };
