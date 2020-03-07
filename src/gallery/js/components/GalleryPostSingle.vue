@@ -8,20 +8,28 @@
 
 <script>
 import GalleryPostDetail from '@/gallery/js/components/GalleryPostDetail'
-import { mapActions } from 'vuex'
+import {mapActions, mapGetters} from 'vuex'
 export default {
   name: 'GalleryPostSingle',
   components: { GalleryPostDetail },
   data () {
     return {
-      galleryPostId: false,
-      galleryPost: {}
+      galleryPostId: false
     }
   },
   methods: {
     ...mapActions({
       SET_GALLERY_POSTS: 'galleryData/SET_GALLERY_POSTS'
+    }),
+    ...mapGetters({
+      getGalleryPosts: 'galleryData/getGalleryPosts',
+      getGalleryLoading: 'galleryData/getGalleryLoading'
     })
+  },
+  computed: {
+    galleryPost () {
+      return this.getGalleryPosts()
+    }
   },
   created () {
     const mount = document.getElementById('gm-frontend-gallery-post-single')
